@@ -1,0 +1,55 @@
+{% extends "help/help_nav.html" %}
+
+{% block head %}
+<head>
+    {{ super() }}
+    <style>
+
+        #help-content{
+            position: relative;
+            width: 80%;
+            margin: 0 auto;
+            padding-top: 100px;
+             padding-bottom: 100px;
+        }
+        #help-content .container{
+            width: 80%;
+        }
+         #help-content  h3{
+             font-size: 24px;
+             line-height: 1;
+         }
+         #help-content  p{
+             font-size: 16px;
+             line-height: 2;
+             color: #666;
+         }
+
+
+    </style>
+</head>
+{% endblock %}
+
+{% block body %}
+<body>
+    {{ super() }}
+     <div id='help-content'>
+         <div class="container">
+             <h3>合作建议</h3>
+                    <p>产品反馈：dyh@houxiaopang.com</p>
+                    <p>商务合作：dy@houxiaopang.com</p>
+                    <h3>社交媒体</h3>
+                    <p>微信公众号：猴小胖爱设计</p>
+         </div>
+    </div>
+
+    <script type="application/javascript">
+        document.getElementById("li-5").className='active-li';
+    </script>
+</body>
+{% endblock %}
+
+
+
+
+

@@ -1,0 +1,117 @@
+{% extends "main/base.html" %}
+{% block head %}
+<head>
+    {{ super() }}
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+     {% assets "workgallery_css" %}
+         <link rel = "stylesheet" href = "{{ ASSET_URL }}" />
+     {% endassets %}
+    <style>
+    </style>
+</head>
+{% endblock %}
+
+{% block body %}
+<body>
+    {{ super() }}
+	<div class="container" id="win">
+		<div class="waterfall">
+            <waterfall_ul v-for="work in worklist" v-bind:work="work"></waterfall_ul>
+        </div>
+	</div>
+
+	<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+    <script src="https://cdn.staticfile.org/vue/2.2.6/vue.min.js"></script>
+	 {%  assets 'workgallery_js' %}
+         <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+    {% endassets %}
+
+     <script>
+        Vue.config.devtools = true;
+
+        var waterfall_ul = {
+            props:['work'],
+            template:`
+            <ul class="list-group">
+                <li class="list-group-item">
+                  <a href="javascript:;">
+                    <img v-bind:src="work.work_url" />
+                  </a>
+                </li>
+                <li class="list-group-item">
+                  <!--<div class="media">
+                    <div class="media-left">
+                      <a href="javascript:;">
+                        <img class="media-object img-rounded" style="width: 30px; height: 30px;" v-bind:src="work.designer.headimg" />
+                      </a>
+                    </div>
+                    <div class="media-body">
+                      <h5 class="media-heading" v-text=' work.designer.nickname'></h5>
+                      <small>浙江 杭州</small>
+                    </div>
+                  </div>-->
+
+                   <div class="headinfo">
+                    <div class="info-left">
+                      <a href="javascript:;">
+                        <img class="media-object img-rounded" style="width: 30px; height: 30px;" v-bind:src="work.designer.headimg" />
+                      </a>
+                    </div>
+                    <div class="info-right">
+                      <h5 class="media-heading" v-text=' work.designer.nickname'></h5>
+                    </div>
+                  </div>
+                  <div class='clearfix'></div>
+                </li>
+            </ul>
+            `
+        }
+
+        var vm = new Vue({
+            el:"#win",
+         data:{
+                worklist:[]
+            },
+            components:{
+                'waterfall_ul':waterfall_ul
+            },
+            created:function(){
+                var that = this;
+                $.ajax({
+                     url:'api/v1.0/workgallery',
+                    type:'GET',
+                    async: false,
+                   timeout:5000,    //超时时间
+                    dataType:'json',
+                    data:{
+                        cat:0,
+                        page:1
+                    },
+                    success:function(result) {
+                        //shuffle
+                        that.worklist = that.worklist.concat(result);
+                        shuffle( that.worklist);
+                    },
+                    error:function(result){
+                        alert("服务器忙");
+                    }
+                });
+            },
+            mounted:function () {
+                 $('.waterfall').waterfall();
+            }
+        })
+
+
+         function shuffle(a) {
+    var j, x, i;
+    for (i = a.length; i; i--) {
+        j = Math.floor(Math.random() * i);
+        x = a[i - 1];
+        a[i - 1] = a[j];
+        a[j] = x;
+    }
+}
+    </script>
+</body>
+{% endblock %}

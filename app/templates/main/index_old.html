@@ -1,0 +1,251 @@
+{% extends "main/base.html" %}
+
+{% block head %}
+<head>
+    {{ super() }}
+    <link href="https://cdn.bootcss.com/vegas/2.4.0/vegas.min.css" rel="stylesheet">
+     <link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_eyv9vsowj0vpwrk9.css">
+    {% assets "index_css" %}
+            <link rel="stylesheet" href="{{ ASSET_URL }}" />
+    {% endassets %}
+    <link rel="stylesheet" href="https://cdn.staticfile.org/owl-carousel/1.32/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/owl-carousel/1.32/owl.theme.min.css">
+    <style>
+        #evaluation{
+            background: rgb(82,96,105);
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 400px;
+            margin-top: 100px;
+            margin-bottom: 100px;
+            padding: 100px 100px 0px 100px;
+            color: white;
+            text-align: center;
+            font-size: 20px;
+            letter-spacing: 1px;
+            line-height: 40px;
+        }
+        .eva-q{
+            font-size: 80px;
+        }
+        .evaluation_title{
+            font-size: 16px;
+        }
+
+    </style>
+    <!-- 统计代码 -->
+    <script>
+    //声明_czc对象:
+    var _czc = _czc || [];
+    //绑定siteid，请用您的siteid替换下方"XXXXXXXX"部分
+    _czc.push(["_setAccount", "1261952519"]);
+    </script>
+
+</head>
+{% endblock %}
+{% block body %}
+<body>
+        {{ super() }}
+
+        <section id="home">
+          <div class="overlay"></div>
+          <div id="homehead">
+            <h1>在猴小胖, 找到更好的设计师</h1>
+            <p>UI | 平面 | 游戏 | 插画 ...</p>
+            <a id="ask-demand" href="http://cn.mikecrm.com/smA81u2" target="_blank" onclick="_czc.push(['_trackEvent', '首页', '我有需求按钮－点击']);">我有需求</a>
+          </div>
+        </section>
+        <div class="windows">
+            <div class="container">
+                <section class="strength">
+                    <div class="intro-img">
+                              <img src="http://image.houxiaopang.com/index/strength.jpg?imageView2/2/h/600">
+                    </div>
+                    <div class="intro-content">
+                            <h2>猴小胖<br>好设计, 不费力</h2>
+                            <ul>
+                                <li>
+                                    <span>专业</span>
+                                    <p>严格入驻门槛筛选</p>
+                                </li>
+                                <li>
+                                    <span>精准</span>
+                                    <p>多维度精准匹配</p>
+                                </li>
+                                <li>
+                                    <span>规范</span>
+                                    <p>项目管理系统分阶段交稿</p>
+                                </li><li>
+                                    <span>安全</span>
+                                    <p>资金托管，先行赔付</p>
+                                </li>
+
+
+                            </ul>
+                        </div>
+
+                <div class="clearfloat"></div>
+            </section>
+                <section id="evaluation">
+                    <div class="owl-carousel">
+                         <div>
+                            <p><span class="eva-q">“</span>因为猴小胖，初心资本的年会与众不同。猴小胖匹配联合4位设计师及广告行业人才，在一周内提供了3套年会电子邀请函的创意方案与设计方案，并保障了其他平面会议材料的构思与设计。<span>”</span></p>
+                            <p<span class="evaluation_title">初心资本年会物料设计</span></p>
+                        </div>
+                        <div>
+                           <p><span class="eva-q">“</span>因为猴小胖，Idea Bank的周年庆典充满活力。猴小胖在1小时内匹配3三位幼稚设计人才，迅速确立合作双方。从联系猴小胖到庆典材料印刷，猴小胖始终陪伴在客户与设计师身边，尽力满足客户多样的设计需求。<span>”</span></p>
+                            <p<span class="evaluation_title">浙江大学&宜宾临港开发区Idea Bank创客空间</span></p>
+                        </div>
+                         <div>
+                           <p><span class="eva-q">“</span>因为猴小胖，MyOrange的视觉识别系统（Visual Identity）独具特色。猴小胖与客户深入接触交流，梳理设计需求，帮助客户确定了产品的Logo及包装设计方案，为客户的产品宣传营销注入一针强心剂。<span>”</span></p>
+                            <p<span class="evaluation_title">MyOrange冰糖橙
+</span></p>
+                        </div>
+                    </div>
+                </section>
+                 <section id="workflow">
+                 <h2 class="block_title">服务流程</h2>
+                 <div class="workflow-box">
+                        <img src="http://image.houxiaopang.com/index/workflow/01.jpg">
+                        <h3>联系我们<br>帮您梳理需求</h3>
+                 </div>
+                 <div class="workflow-array">
+                        <img src="http://image.houxiaopang.com/index/workflow/array.png">
+                 </div>
+                 <div class="workflow-box">
+                        <img src="http://image.houxiaopang.com/index/workflow/02.jpg">
+                        <h3>智能匹配设计师<br>供您挑选</h3>
+                 </div>
+                  <div class="workflow-array">
+                        <img src="http://image.houxiaopang.com/index/workflow/array.png">
+                 </div>
+                 <div class="workflow-box">
+                        <img src="http://image.houxiaopang.com/index/workflow/03.jpg">
+                        <h3>确定报价<br>托管资金</h3>
+                 </div>
+                  <div class="workflow-array">
+                        <img src="http://image.houxiaopang.com/index/workflow/array.png">
+                 </div>
+                 <div class="workflow-box">
+                        <img src="http://image.houxiaopang.com/index/workflow/04.jpg">
+                        <h3>分阶段交稿<br>实时查看</h3>
+                 </div>
+                  <div class="workflow-array">
+                        <img src="http://image.houxiaopang.com/index/workflow/array.png">
+                 </div>
+                 <div class="workflow-box">
+                        <img src="http://image.houxiaopang.com/index/workflow/05.jpg">
+                        <h3>项目验收<br>获取源文件</h3>
+                 </div>
+
+             </section>
+                 <section id="category">
+                     <h2 class="block_title">服务品类</h2>
+                <div class="category-block">
+                        <div class="caption">
+                            <div class="caption-content">
+                                <h3>PPT定制</h3>
+                                <h4>发布会 / 商业计划书等</h4>
+                            </div>
+                        </div>
+                        <img src="http://image.houxiaopang.com/index/category/cat1.jpg?v1.1">
+                </div>
+                <div class="category-block">
+                    <div class="caption">
+                            <div class="caption-content">
+                                <h3>UI设计</h3>
+                                <h4>网页 / APP / H5 / 游戏</h4>
+                            </div>
+                        </div>
+                        <img src="http://image.houxiaopang.com/index/category/cat2.jpg?v1.1">
+                </div>
+                <div class="category-block">
+                    <div class="caption">
+                            <div class="caption-content">
+                                <h3>企业画册</h3>
+                                <h4>三折页 / 传单 / 图书编排等</h4>
+                            </div>
+                        </div>
+                          <img src="http://image.houxiaopang.com/index/category/cat3.jpg?v1.1">
+                </div>
+                <div class="category-block">
+                    <div class="caption">
+                            <div class="caption-content">
+                                <h3>海报展板</h3>
+                                <h4>易拉宝 / 灯箱 / 户外广告 / 电商海报等</h4>
+                            </div>
+                        </div>
+                      <img src="http://image.houxiaopang.com/index/category/cat4.jpg?v1.1">
+                </div>
+                <div class="category-block">
+                    <div class="caption">
+                            <div class="caption-content">
+                                <h3>LOGO</h3>
+                            </div>
+                        </div>
+                      <img src="http://image.houxiaopang.com/index/category/cat5.jpg?v1.1">
+                </div>
+                <div class="category-block">
+                     <div class="caption">
+                        <div class="caption-content">
+                                <h3>企业形象设计 VI</h3>
+                                <h4>名片 / 纪念品 / 包装设计等</h4>
+                        </div>
+                     </div>
+                      <img src="http://image.houxiaopang.com/index/category/cat6.jpg?v1.1">
+                </div>
+                <!-- 用来使整个section高度自动撑开-->
+                <div class="clearfloat"></div>
+            </section>
+
+            <footer>
+                <div class="footer-info">
+                    <ul>
+                        <li><a href="/help/customer">客户指南</a></li>
+                        <li><a href="/help/designer">设计师指南</a></li>
+                         <li><a href="/help/faq">常见问题</a></li>
+                        <!-- <li><a>服务条款</a></li>-->
+                    </ul>
+                    <ul>
+                        <li><a href="/help/aboutus">关于猴小胖</a></li>
+                        <!--<li><a>新闻动态</a></li>-->
+                        <li><a href="/help/contact">联系我们</a></li>
+                        <li><a href="/help/contact">意见反馈</a></li>
+                    </ul>
+                </div>
+                <div class="footer-info">
+                    <p>©2017 杭州求否科技有限公司</p>
+                    <p>浙ICP备17006185号</p>
+                </div>
+            </footer>
+            </div>
+        </div>
+   <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1261952519'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1261952519' type='text/javascript'%3E%3C/script%3E"));</script>
+    <script src="http://code.jquery.com/jquery.min.js"></script>
+    <script src="http://jaysalvat.github.io/vegas/releases/latest/vegas.js"></script>
+    <script>
+            $('body').vegas({
+                slides: [
+                    { src: 'http://image.houxiaopang.com/index/slide-1.jpg' },
+                    { src: 'http://image.houxiaopang.com/index/slide-2.jpg' },
+                    { src: 'http://image.houxiaopang.com/index/slide-3.jpg' }
+                ],
+                timer: false,
+                transition: [ 'zoomIn', ],
+                animation: ['kenburns']
+            });
+    </script>
+    <script src="https://cdn.staticfile.org/owl-carousel/1.32/owl.carousel.min.js"></script>
+    <script>
+          $(document).ready(function() {
+              $(".owl-carousel").owlCarousel({
+                  items: 1,
+                  center:true,
+
+              });
+          })
+    </script>
+        <script src="https://qiyukf.com/script/225bba1c2b7fabfacb840be96e495033.js" defer async></script>
+</body>
+{% endblock %}

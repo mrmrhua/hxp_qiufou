@@ -1,0 +1,130 @@
+{% extends "help/help_nav.html" %}
+
+{% block head %}
+<head>
+    {{ super() }}
+   <style>
+
+        #help-content{
+            position: relative;
+            width: 80%;
+            margin: 0 auto;
+            padding-top: 100px;
+             padding-bottom: 100px;
+        }
+        #help-content .container{
+            width: 80%;
+        }
+         #help-content .container img{
+             width: 200px;
+             margin-right: 60px;
+         }
+          #help-content .container tr{
+              height: 200px;
+          }
+
+
+         #help-content  h3{
+             font-size: 24px;
+             line-height: 1.5;
+             margin-bottom: 10px;
+             display: inline-block;
+         }
+         #help-content  h3 a{
+             cursor: pointer;
+         }
+         #help-content  p{
+             font-size: 16px;
+             line-height: 2;
+             color: #666;
+             margin-top: 10px;
+         }
+
+
+    </style>
+</head>
+{% endblock %}
+
+{% block body %}
+<body>
+    {{ super() }}
+    <div id='help-content'>
+       <table class="container">
+            <tr>
+                <td>
+                    <img src='http://image.houxiaopang.com/help/customer/1.jpg'>
+                </td>
+                <td>
+                    <h3>
+                        一键发布，<br>
+                        让服务回归服务
+                    </h3>
+                    <p>
+                        告别四处咨询问价，只需一键联系我们，专业设计顾问助您梳理需求，让寻找服务回归最本质的形式。
+                    </p>
+                </td>
+            </tr>
+            <tr>
+               <td>
+                    <img src='http://image.houxiaopang.com/help/customer/2.jpg'>
+                </td>
+                <td>
+                    <h3>
+                        精细匹配，<br>
+                        只挑最对的人
+                    </h3>
+                    <p>
+                        我们将根据您的需求，利用智能匹配算法，从庞大的设计师库中初筛出多名设计师，再由您根据作品、经历、价格、工期等信息亲自细筛，精挑设计师。
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <img src='http://image.houxiaopang.com/help/customer/3.jpg'>
+                </td>
+                <td>
+                    <h3>
+                        规范合同，<br>
+                        保障服务的每一点滴
+                    </h3>
+                    <p>
+                        通过合同事先约定好加价方式、工期、交付流程、修改次数等，防止产生纠纷，耽搁业务进度。
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <img src='http://image.houxiaopang.com/help/customer/4.jpg'>
+                </td>
+                <td>
+                    <h3>
+                        资金托管，<br>
+                        即时赔付，保障安全
+                    </h3>
+                    <p>
+                        由我们托管全部设计款项，在您确认每个阶段的设计作品后再分阶段付款，让每一分钱都花在刀刃上。
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <img src='http://image.houxiaopang.com/help/customer/5.jpg'>
+                </td>
+                <td>
+                    <h3>
+                        项目管理系统，<br>
+                        随时随地查看项目进展
+                    </h3>
+                    <p>
+                        通过我们的项目管理系统，可从PC端或微信端查看项目进度稿，实时反馈实时修改。
+                    </p>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <script type="application/javascript">
+        document.getElementById("li-1").className='active-li';
+    </script>
+</body>
+{% endblock %}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+     <head>
+        {% block head %}
+             <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <meta name="keywords" content="">
+            <meta name="description" content="">
+           <link rel="shortcut icon" href="http://image.houxiaopang.com/houicon.ico">
+            <title>猴小胖设计服务专家——找到更好的设计师</title>
+            {% assets "base_css" %}
+                <link rel="stylesheet" href="{{ ASSET_URL }}" />
+            {% endassets %}
+          {% endblock %}
+     </head>
+     <body>
+        {% block body %}
+        <section class="navbar">
+            <div id='navbar-logo'>
+                <a href="/"><img src="http://image.houxiaopang.com/logotxt.png"></a>
+            </div>
+            <div id="navbar-li">
+                <ul id="nav-li">
+                  <li><a href="/">主页</a></li>
+                  <li><a href="/workgallery">作品精选</a></li>
+                 <!-- <li><a href="#">服务品类</a></li>-->
+                </ul>
+                <div class="applybtn">
+                     <a href="/login" onclick="_czc.push(['_trackEvent', '首页', '我是设计师按钮－点击']);">我是设计师</a>
+                </div>
+            </div>
+        </section>
+        {% endblock %}
+     </body>
+</html>

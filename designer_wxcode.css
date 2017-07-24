@@ -1,0 +1,13 @@
+@charset "UTF-8";
+/* CSS Document */
+
+
+	.impowerBox .title{
+		display:none;
+	}
+	.impowerBox .info{
+		width: 155px;
+	}
+	.impowerBox .qrcode{
+		width: 155px;
+	}

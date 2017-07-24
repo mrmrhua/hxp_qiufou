@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="UTF-8">
+    <title>入驻页</title>
+     {% assets "designerlogin_css" %}
+                <link rel="stylesheet" href="{{ ASSET_URL }}" />
+        {% endassets %}
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
+</head>
+<body>
+<div id="warp" class="warp">
+    <div class="banner">
+        <div class="banner_fg">
+            <div class="box">
+                <div class="logo" onclick="javascript:location.href='/';" style="cursor: pointer"></div>
+                <div class="context">
+                    <div class="text1">设计师的接单神器</div>
+                    <div class="text2">新设计师扫一扫申请入驻</div>
+                </div>
+                <div class="qrcode">
+                    <div id="wxqrcode" style="text-align: center"></div>
+                </div>                
+            </div>
+        </div>
+    </div>
+    <div class="more"></div>
+    <div class="bg">
+        <p class="p1">入驻猴小胖让全国优质客户找到你</p>
+        <p class="p2">猴小胖70%的外包业务客单价在2000-5000区间</p>
+        <p class="p3">目前我们已成功为初心资本（北京）、上海嘉里中心等行业知名客户匹配了设计师</p>
+    </div>
+
+    <div class="th">
+        <ul>
+            <li><em></em><span>提交个人材料，完成审核后签约入驻猴小胖平台</span></li>
+            <li><em></em><span>猴小胖在收到客户设计需求时，通过智能匹配算法将客户需求推送给若干名合适的设计师</span></li>
+            <li><em></em><span>设计师根据需求进行报价</span></li>
+            <li><em></em><span>由客户确定最后接单的设计师，托管资金后进入业务设计流程</span></li>
+            <li><em></em><span>在猴小胖设计师经理人帮助下进行三方沟通，保障设计师权益</span></li>
+        </ul>
+    </div>
+
+    <div class="bg2">
+        <div class="content">
+            <p>流程规范有保障</p>
+            <ul>
+                <li><em></em><span >项目确认开始后预付定金给设计师，结束后先结款再交付源文件</span></li>
+                <li><em></em><span>平台托管资金，不怕客户跑路了</span></li>
+                <li><em></em><span>约定修改次数，拒绝无条件改改改</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="bg3">
+        <div class="content">
+            <p>沟通真麻烦</p>
+            <p>项目协作系统来帮忙？</p>
+            <ul>
+                <li><em></em><span>客户微信小程序直接看稿</span></li>
+                <li><em></em><span>告别压缩文件满天飞</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="six">
+        <p>猴小胖怎么收费？</p>
+        <div class="line"></div>
+        <p>我们将从设计项目费用中收取<span>15%</span>的经纪人服务费</p>
+        <p>现在入驻，前6个月仅收取<span>5%</span>的服务费</p>
+        <div class="btn" onclick="jump()"></div>
+    </div>
+</div>
+<script>
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
+    function jump() {
+        $('html,body').animate({scrollTop: $('#warp').offset().top}, 200);
+    }
+    var code = getQueryString("code");
+    if (!code) {
+        var obj = new WxLogin({
+            id: "wxqrcode",
+            appid: "wxbfacdb1b99885182",
+            scope: "snsapi_login",
+            redirect_uri: "http%3a%2f%2fhouxiaopang.com%2fqrlogin",
+           // redirect_uri:"http%3a%2f%2fhouxiaopang.com%3a8000%2fqrlogin",
+            state: "",
+            style: "",
+            href: ""
+        });
+    } else {
+
+        $.get('/api/v1.1/wx_verify?code='+code,function (result){
+            if(result.code=='0'){
+            location.href = result.data.url;
+             }else{
+            alert('微信授权失败');
+            location.href= "localhost:8000/qrlogin";  //to do (dyh)
+          }
+        });
+
+    }
+</script>
+</body>
+</html>

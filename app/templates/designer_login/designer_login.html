@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+            <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <meta name="keywords" content="">
+            <meta name="description" content="">
+            <title>猴小胖设计服务专家——找到更好的设计师</title>
+            <link rel="shortcut icon" href="http://image.houxiaopang.com/houicon.ico">
+            {% assets "designerlogin_css" %}
+                <link rel="stylesheet" href="{{ ASSET_URL }}" />
+            {% endassets %}
+</head>
+<body>
+	<div class="logo-nav">
+		<a href="/">
+			<img src="http://image.houxiaopang.com/logo.png" alt="">
+		</a>
+	</div>
+	<section id="head" name="head">
+		<div class="login-wrap">
+			<div class="main-wide">
+				<div class="login-form">
+					<div class="login-title">
+						<label>设计师登陆</label>
+					</div>
+					<div class="login-box">
+						<div id="wxqrcode">
+						</div>
+					</div>
+					<div class="login-notice">
+						<label><i class="iconfontyyy">&#xe605;</i> 新设计师扫一扫申请入驻</label>
+					</div>
+
+				</div>
+			</div>
+		<div class="login-banner">
+            <img src="http://image.houxiaopang.com/designerlogin/banner.jpg" alt="">
+		</div>
+		</div>
+	</section>
+    <section id="data-info">
+        <div>
+            <h2>入驻猴小胖，让来自全国的优质客户找到你</h2>
+	        <p>猴小胖70%的外包业务客单价在<span>2000～5000</span>区间</p>
+	        <p>目前我们已成功为初心资本（北京）、上海嘉里中心等知名行业知名客户匹配了设计师</p>
+        </div>
+    </section>
+    <div class="mask"></div>
+	<section id="flow-info">
+		<ul>
+			<li>
+			<i class="iconfontyyy">&#xe624;</i>提交个人材料，完成审核后签约入驻猴小胖平台</p>
+			</li>
+			<li>
+			<i class="iconfontyyy">&#xe625;</i>猴小胖在收到客户设计需求时，通过智能匹配算法将客户需求推送给若干名合适的设计师</p>
+			</li>
+			<li>
+			<i class="iconfontyyy">&#xe627;</i>设计师根据需求进行报价</p>
+			</li>
+			<li>
+			<i class="iconfontyyy">&#xe626;</i>由客户确定最终接单的设计师，托管资金后进入业务设计流程</p>
+			</li>
+			<li>
+			<i class="iconfontyyy">&#xe606;</i>在猴小胖设计师经纪人帮助下进行三方沟通，保障设计师权益</p>
+			</li>
+		</ul>
+	</section>
+	<section id="whyus-1">
+		<div class="why-img">
+			<img src="http://image.houxiaopang.com/help/customer/3.jpg" alt="">
+		</div>
+		<div class="why-content">
+			<h3>流程规范有保障</h3>
+			<p><i class="iconfontyyy">&#xe61c;</i>项目确认开始后预付定金给设计师，结束后<span>先结款再交付源文件</span></p>
+			<p><i class="iconfontyyy">&#xe61c;</i>平台托管资金，不怕客户跑路啦</p>
+			<p><i class="iconfontyyy">&#xe61c;</i>约定<span>修改次数</span>，拒绝无条件改改改</p>
+		</div>
+		<div class="clearfix"></div>
+		</section>
+	<section id="whyus-2">
+		<div class="why-content">
+			<h3>沟通真麻烦？
+			<br>
+			项目协作系统来帮忙</h3>
+			<p><i class="iconfontyyy">&#xe61c;</i>客户微信小程序直接看稿</p>
+			<p><i class="iconfontyyy">&#xe61c;</i>告别压缩文件满天飞</p>
+		</div>
+		<div class="why-img">
+			<img src="http://image.houxiaopang.com/help/customer/5.jpg" alt="">
+		</div>
+	</section>
+	<section id="applynow">
+        <div class="title">猴小胖怎么收费?</div>
+        <p>我们将从设计项目费用中收取15%的经纪人服务费。</p>
+        <p>现在入驻,前6个月仅收取<span>5%</span>的服务费!</p>
+		<div class="applybtn">立即入驻</div>
+	</section>
+
+	<!--<section>猴小胖怎么收费</section>-->
+	
+	<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script> 
+	<script src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
+	<script>
+		var obj = new WxLogin({
+                              id:"wxqrcode", 
+                              appid: "wxbfacdb1b99885182", 
+                              scope: "snsapi_login", 
+                              redirect_uri: "http%3a%2f%2fhouxiaopang.com%2fauth",
+                              state: "",
+                              style: "",
+                              href: ""
+                            });
+        jQuery(document).ready(function($) {
+            $('.applybtn').click(function(){
+                $('html,body').animate(
+                        {scrollTop:$('#head').offset().top}
+                        , 200);
+            $(".mask").show();
+            });
+            $(".mask").click(function () {
+                $(this).hide();
+            })
+        });
+
+
+	</script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <title>上传进度文件</title>
+    <link rel="stylesheet" href="../../static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../static/css/jquery.eeyellow.Timeline.css">
+    <link rel="stylesheet" href="../../static/css/project/project.css">
+    <link rel="stylesheet" href="../../static/css/project/fsgallery.css"></link>
+    <script src="../../static/js/jquery.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="../../static/js/jquery.eeyellow.Timeline.js"></script>
+    <script src="../../static/js/project/fs_forse.js"></script>
+    <script src="../../static/js/project/project.js"></script>
+    <script src="https://cdn.staticfile.org/plupload/2.1.8/plupload.full.min.js"></script>
+    <script src="../../static/js/qiniu.js"></script>
+    <script src="../../static/js/project/upqiniu.js?v2.0"></script>
+</head>
+<body>
+<!-- <div id="gallery">
+<a href="../../static/images/addpic.png"><img alt="" src="../../static/images/slide-1.jpg"></a>
+</--div>  -->
+
+<div class="up-box" id="up-box">
+   <!--<input type="file" value="" class="up-btn" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />-->
+    <button class="btn btn-default up-btn" id="up-btn">upload</button>
+    <input class="file-input" type="file" id='file-input' accept="image/jpg,image/jpeg,image/png,image/bmp" multiple >
+</div>
+<div class="show-win">
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="container">
+    <div class="VivaTimeline">
+        <dl>
+        <dt>2017-04-13 20:00</dt>
+       <dd class="pos-left clearfix">
+            <div class="circ"></div>
+            <div class="time">Feb 03</div>
+            <div class="imghistory"></div>
+
+            <div class="events">
+                <div class="events-header">Event Heading</div>
+                <div class="events-body">
+                    <div class="row">
+                        <div class="col-md-6 pull-left">
+                            <img class="events-object img-responsive img-rounded" src="img/dog01.png" />
+                        </div>
+                        <div class="events-desc">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 pull-left">
+                            <img class="events-object img-responsive img-rounded" src="img/dog02.png" />
+                        </div>
+                        <div class="events-desc">
+                            Morbi at nisi vitae mauris pretium egestas. Morbi placerat risus ligula, nec placerat urna porta vel. Nullam sollicitudin orci quis odio eleifend, ut facilisis orci lobortis. Vivamus sed lobortis odio. Nam volutpat, leo a ullamcorper luctus, sapien libero auctor est, sed semper massa turpis sed quam. Mauris posuere, libero in ultricies dignissim, lacus purus egestas urna, nec semper lorem tellus non eros. Nam at bibendum libero. Curabitur a ante et orci cursus tincidunt. Vivamus dictum, libero et rhoncus congue, nulla erat mollis dui, vitae cursus dui justo quis velit. In a tellus arcu. Nam at lobortis nisl. Donec consequat placerat eros, quis elementum mauris sodales a. Maecenas id feugiat velit. Phasellus dictum eleifend varius. Cras nec orci turpis. Aenean ut turpis nibh.
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 pull-left">
+                            <img class="events-object img-responsive img-rounded" src="img/dog03.png" />
+                        </div>
+                        <div class="events-desc">
+                            Cras condimentum, metus ut vehicula euismod, odio massa pulvinar neque, id gravida neque est et sem. Proin consequat id nibh quis molestie. Quisque vehicula purus id purus elementum facilisis. Phasellus sodales nibh quis neque rhoncus aliquet. Nunc eget ipsum efficitur, pretium arcu et, gravida purus. Phasellus tempor lacus ac enim pulvinar elementum. Integer aliquet justo lacinia nunc tempus vulputate.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </dd>
+    </dl>
+    </div>
+</div>
+<script>
+   /* $.ajax({
+        url:'/api/v1.0/project/milestone',
+        type:'GET',
+        async: true,
+        data:{
+            id:'3'
+        },
+       timeout:5000,    //超时时间
+        dataType:'json',
+        success:function(result) {
+            console.log(result['description']);
+             console.log(result['milestone_num']);
+             console.log(result['milestone']);
+           var milestone =  result['milestone'];//array
+                        //渲染到界面上
+
+        }
+
+    });
+*/
+
+
+
+
+     $(document).ready(function () {
+            $('.VivaTimeline').vivaTimeline({
+                carousel: true,
+                carouselTime: 3000
+            });
+
+        /*     $.ajax({
+        url:'/api/v1.0/file/uptoken',
+        type:'GET',
+        async: true,
+       timeout:5000,    //超时时间
+        dataType:'json',
+        success:function(result) {
+            alert("result['uptoken']");
+        }
+
+    });*/
+
+        });
+
+
+
+
+</script>
+</body>
+</html>

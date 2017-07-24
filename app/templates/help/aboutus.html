@@ -1,0 +1,50 @@
+{% extends "help/help_nav.html" %}
+
+{% block head %}
+<head>
+    {{ super() }}
+    <style>
+
+
+        #help-content{
+            position: relative;
+            width: 80%;
+            margin: 0 auto;
+            padding-top: 100px;
+             padding-bottom: 100px;
+        }
+        #help-content .container{
+            width: 80%;
+        }
+         #help-content  h3{
+             font-size: 24px;
+             line-height: 1;
+         }
+         #help-content  p{
+             font-size: 16px;
+             line-height: 2;
+             color: #666;
+             margin-bottom: 20px;
+         }
+
+    </style>
+</head>
+{% endblock %}
+
+{% block body %}
+<body>
+    {{ super() }}
+    <div id='help-content'>
+        <div class="container">
+            <h3>关于猴小胖</h3>
+            <p>『猴小胖设计服务专家』（houxiaopang.com）是杭州求否科技旗下的设计师经纪服务平台，旨在为我国追求品质升级的设计需求与先进理念的新一代优秀设计师之间搭建一座桥梁，为日新月异的中国商业社会提供全新的设计服务解决方案。</p>
+            <p>目前，『猴小胖设计服务专家』主要提供平面设计领域的项目经纪服务，包括Logo、UI、包装、海报、企业画册、宣传材料、PPT、商务文本美化排版等品类。</p>
+            <p>传统的网店模式因其恶性竞价、难以挑选的特点，对优秀设计师存在着巨大的挤出效应，已经难以满足未来中国企业日益提高的设计需求。猴小胖希望，我们能为中国在设计领域的消费升级出一份力，让中国人也能轻松地享受更优雅的设计。</p>
+        </div>
+    </div>
+
+    <script type="application/javascript">
+        document.getElementById("li-4").className='active-li';
+    </script>
+</body>
+{% endblock %}

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+
+<html lang="zh-cmn-Hans">
+
+	<head>
+
+		<meta charset="UTF-8" />
+
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>设计师交稿系统</title>
+        <link rel="shortcut icon" href="http://image.houxiaopang.com/houicon.ico">
+        <link rel="stylesheet" href="/app/static/css/bootstrap.min.css">
+
+        <link rel="stylesheet" href="/app/static/css/project/fsgallery.css?v1.7">
+        <link rel="stylesheet" href="/app/static/css/project/project.css?v2.92">
+        <link rel="stylesheet" type="text/css" href="/app/static/css/project/timeline.css?v1" />
+	</head>
+
+	<body>
+        <div class="loader">
+
+        <div class="loader-inner line-scale">
+
+          <div></div>
+
+          <div></div>
+
+          <div></div>
+
+          <div></div>
+
+          <div></div>
+
+        </div>
+
+</div>
+
+		<div class="container">
+
+			<header class="clearfix">
+
+				<span>猴小胖设计服务专家</span>
+
+				<h1>设计师在线交稿系统</h1>
+
+            <div class="up-box" id="up-box">
+                <button class="btn btn-lg up-btn " id="up-btn">上传进度稿</button>
+                <input class="file-input" type="file" id='file-input' accept="image/jpg,image/jpeg,image/png,image/bmp" multiple >
+            </div>
+
+			</header>
+
+
+
+			<div class="main">
+                <ul id="cbp_tmtimeline" class="cbp_tmtimeline list-unstyled">
+                    <li>
+				     <div class="cbp_tmtime"><span></span><span>启动</span></div>
+						<div class="cbp_tmicon cbp_tmicon-phone"></div>
+						<div class="cbp_tmlabel"  id="cbp_tmlabel">
+							<h2>项目简介</h2>
+                            <p v-text="description"></p>
+						</div>
+					</li>
+                    <milestone_list v-for="(milestone,index) in milestones"  v-bind:milestone_info="milestone" v-bind:index="index"></milestone_list>
+                    <fsgallery v-if="detailseen" v-bind:prev_id="prev">
+                    </fsgallery>
+
+
+                </ul>
+			</div>
+		</div>
+        <script>
+            //now in milestone
+           now_order = 0;
+           pro_id = {{ id_from_s|safe }};
+           work_li = null;
+        </script>
+
+         <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script> 
+        <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+          <script src="https://cdn.staticfile.org/plupload/2.1.8/plupload.full.min.js"></script>
+        <script src="https://cdn.bootcss.com/vue/2.2.6/vue.min.js"></script>
+        <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+
+        <script src="/app/static/js/modernizr.custom.js"></script>
+
+        <script src="/app/static/js/qiniu.js"></script>
+          <script src="/app/static/js/project/upqiniu.js?v4.85"></script>
+
+        <script src="/app/static/js/project/main.js?v2.10.1143837"></script>
+
+	</body>
+
+</html>
+

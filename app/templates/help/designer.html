@@ -1,0 +1,82 @@
+{% extends "help/help_nav.html" %}
+
+{% block head %}
+<head>
+    {{ super() }}
+    <style>
+
+        #help-content{
+            position: relative;
+            width: 80%;
+            margin: 0 auto;
+            padding-top: 100px;
+             padding-bottom: 100px;
+        }
+        #help-content .container{
+            width: 80%;
+        }
+         #help-content  h3{
+             font-size: 24px;
+             line-height: 1;
+             display: inline-block;
+         }
+         #help-content  h3 a{
+             cursor: pointer;
+         }
+         #help-content  p{
+             font-size: 16px;
+             line-height: 2;
+             color: #666;
+         }
+
+        #help-content .container .step{
+            background: red;
+            color: white;
+            height: 24px;
+            width: 24px;
+            margin-right: 10px;
+            border-radius: 50%;
+            text-align: center;
+            display: inline-block;
+        }
+
+    </style>
+</head>
+{% endblock %}
+
+{% block body %}
+<body>
+    {{ super() }}
+     <div id='help-content'>
+         <div class="container">
+             <h3><div class="step"><span>1</span></div>签约入驻</h3>
+             <p>为了保障『猴小胖』整体的设计品质，我们需要对入驻设计师进行审核与筛选。您只需点击『猴小胖』主页右上角的<a href="/login">“我是设计师”链接</a>并填写相关入驻信息，在审核通过后，就可以入驻成为『猴小胖』的签约设计师。</p>
+
+            <h3><div class="step"><span>2</span></div>等待项目推送</h3>
+            <p>在成为『猴小胖』的签约设计师后，我们会协助客户根据需求挑选心仪的设计师。如果您是该项目的合适人选，我们会第一时间推送给您，并由您自主提供报价、工期预估等信息。最后由客户确定接单设计师。</p>
+
+            <h3><div class="step"><span>3</span></div>签订合作协议，确定合作关系</h3>
+            <p>针对每一个项目，我们会依据合作细节拟定合同文件，与设计师、客户共同签署一份三方协议,为双方提供信用保障。当项目一方无法正常履约的情况下，我们会积极协调沟通,索赔维权。</p>
+
+            <h3><div class="step"><span>4</span></div>项目管理系统-分阶段交稿</h3>
+            <p>『猴小胖』有一套独特的项目管理系统，通过分阶段交稿/微信小程序看稿等功能，辅助设计项目更加顺滑的完成，同时让客户的反馈更及时，提升设计服务体验,减少设计师返工困扰。</p>
+
+            <h3><div class="step"><span>5</span></div>项目完成，结款提现</h3>
+            <p>在每个阶段以及最终的项目完成后，我们都会将从客户处收取的项目托管金按合同约定支付给设计师。</p>
+
+            <h3><div class="step"><span>6</span></div>项目反馈</h3>
+            <p>在项目完成后，我们会针对客户评价等信息对设计师进行反馈，依靠智能算法更有针对性地匹配项目。反馈越好、与我们合作经验越多的设计师，将获得更高的等级，我们在每笔项目中所抽取的经纪服务费也越少。</p>
+         </div>
+    </div>
+
+    <script type="application/javascript">
+        document.getElementById("li-2").className='active-li';
+    </script>
+</body>
+{% endblock %}
+
+
+
+
+
+

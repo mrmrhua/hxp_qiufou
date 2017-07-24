@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title>猴小胖设计服务专家——找到更好的设计师</title>
+    <link rel="shortcut icon" href="http://image.houxiaopang.com/houicon.ico">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.staticfile.org/jquery-datetimepicker/2.5.4/jquery.datetimepicker.min.css">
+
+    {% assets "baseform_css" %}
+                <link rel="stylesheet" href="{{ ASSET_URL }}" />
+    {% endassets %}
+    <style>
+        .logo-nav {
+            height: 60px;
+            margin: 20px 0px 20px 100px;
+        }
+
+        .logo-nav img {
+            height: 60px;
+        }
+    </style>
+
+</head>
+<body>
+<div class="logo-nav">
+    <a href="/">
+        <img src="http://image.houxiaopang.com/baseform/721/logodown.png" alt="">
+    </a>
+</div>
+<section class="container main" id="mainwin">
+    <div class="bg_f">
+    </div>
+    <div class="apply-status">
+        <div class="status statuson" v-bind:class="{statusnow:seen1}">
+            <div class="status-box">
+                <div class="status-icon"></div>
+            </div>
+            <div class="status-intro" v-bind:class="{statusintronow:seen1}">
+                填写基本信息
+            </div>
+        </div>
+        <div class="status-line-box">
+            <div class="status-line"></div>
+        </div>
+        <div class="status statustu" v-bind:class="{statusnowtu:seen2}">
+            <div class="status-box">
+                <div class="status-icon">
+                </div>
+            </div>
+            <div class="status-intro" v-bind:class="{statusintronow:seen2}">
+                填写接单信息
+            </div>
+        </div>
+        <div class="status-line-box">
+            <div class="status-line"></div>
+        </div>
+        <div class="status statusth" v-bind:class="{statusnowth:seen3}">
+            <div class="status-box">
+                <div class="status-icon">
+                </div>
+            </div>
+            <div class="status-intro" v-bind:class="{statusintronow:seen3}">
+                上传相关材料
+            </div>
+        </div>
+        <div class="status-line-box">
+            <div class="status-line"></div>
+        </div>
+        <div class="status statusfou" v-bind:class="{statusnowfou:seen4}">
+            <div class="status-box">
+                <div class="status-icon">
+                </div>
+            </div>
+            <div class="status-intro" v-bind:class="{statusintronow:seen4}">
+                完成审核
+            </div>
+        </div>
+    </div>
+    <div class="mainwidth" id="mainform">
+        <div v-if="isapplyed">
+            <form class="row" id='form' role="form" v-show="seen1">
+                <ul class="head-info" style="list-style: circle;">
+                    <li>为帮助客户更好的挑选心仪的设计师,请您根据下列要求如实填写。我们将对入驻申请进行审核,确保您有能力满足一般设计要求。<br>
+                    </li>
+                    <li>您的信任对我们而言意味着一切。正因如此，我们将绝对尊重并保护您的隐私。我们承诺您的隐私信息绝不会在未经许可的情况下外泄给不相关的第三方。
+                    </li>
+                </ul>
+                <div class="row">
+                    <div class="col-md-2 form-group form-left">
+                        <label>姓　　名</label>
+                    </div>
+                    <div class="col-md-3 form-group form-right">
+                        <i class="iconfontyyy">&#xe638;</i>
+                        <input v-model='name' type="text" name='name' class="form-control" placeholder="请填写真实姓名">
+                    </div>
+
+                    <div class="col-md-2 form-group form-left">
+                        <label>手　　机</label>
+                    </div>
+                    <div class="col-md-3 form-group form-right">
+                        <i class="iconfontyyy">&#xe600;</i>
+                        <input v-model='tel' name='tel' type="text" class="form-control">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-2 form-group form-left">
+                        <label>Q　　Q</label>
+                    </div>
+                    <div class="col-md-3 form-group form-right">
+                        <i class="iconfontyyy">&#xe668;</i>
+                        <input v-model='qq' placeholder="选填" type="text" class="form-control" name="qq">
+                    </div>
+
+                    <div class="col-md-2 form-group form-left">
+                        <label>微　　信</label>
+                    </div>
+                    <div class="col-md-3 form-group form-right">
+                        <i class="iconfontyyy">&#xe69e;</i>
+                        <input v-model='wx' type="text" placeholder="选填" class="form-control" name="wx">
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-2 form-group form-left">
+                        <label>所&nbsp;&nbsp;在&nbsp;&nbsp;地</label>
+                    </div>
+                    <div class="col-md-8 form-group form-right">
+                        <i class="iconfontyyy">&#xe61b;</i>
+                        <!--
+                <input v-model='city' name="city" type="text" class="form-control" placeholder="省份+城市">
+                        -->
+                        <div style="float: left" class="city-picker-selector" id="city-picker-search">
+                            <div class="selector-item storey province">
+                                <a href="javascript:;" class="selector-name reveal">请选择省份</a>
+                                <input type="hidden" name="userProvinceId" class="input-price val-error" value=""
+                                       data-required="userProvinceId">
+                                <div class="selector-list listing hide">
+                                    <div class="selector-search">
+                                        <input type="text" class="input-search" value="" placeholder="拼音、中文搜索">
+                                    </div>
+                                    <ul>
+                                        <li>北京市</li>
+                                        <li>天津市</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="selector-item storey city">
+                                <a href="javascript:;" class="selector-name reveal forbid">请选择城市</a>
+                                <input type="hidden" name="userCityId" class="input-price val-error" value=""
+                                       data-required="userCityId">
+                                <div class="selector-list listing hide">
+                                    <div class="selector-search">
+                                        <input type="text" class="input-search" value="" placeholder="拼音、中文搜索">
+                                    </div>
+                                    <ul></ul>
+                                </div>
+                            </div>
+                            <div class="selector-item storey district">
+                                <a href="javascript:;" class="selector-name reveal forbid">请选择区县</a>
+                                <input type="hidden" name="userDistrictId" class="input-price val-error" value=""
+                                       data-required="userDistrictId">
+                                <div class="selector-list listing hide">
+                                    <div class="selector-search">
+                                        <input type="text" class="input-search" value="" placeholder="拼音、中文搜索">
+                                    </div>
+                                    <ul></ul>
+                                </div>
+                            </div>
+                        </div>
+                        <span id="city-error" class="error" style="display: none">*必填</span>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-2 form-group form-left">
+                        <label>邮　　箱</label>
+                    </div>
+                    <div class="col-md-6 form-group form-right parentCls">
+                        <i class="iconfontyyy">&#xe61d;</i>
+                        <input name='email' type="text" data-validation="email"
+                               class="form-control inputElem" style="float: left" value="">
+                        <!--
+                                                <span id="email-error" class="error" style="display: none">*必填</span>
+                        -->
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-2 form-group form-left">
+                        <label>毕业院校</label>
+                    </div>
+                    <div class="col-md-6 form-group form-right">
+                        <i class="iconfontyyy">&#xe6f2;</i>
+                        <input v-model='school' type="text" name='school' class="form-control" placeholder="请填写院校全称">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-2 form-group form-left">
+                        <label>所学专业</label>
+                    </div>
+                    <div class="col-md-6 form-group form-right">
+                        <i class="iconfontyyy">&#xe8d6;</i>
+                        <input v-model='major' name='major' type="text" class="form-control" placeholder="请填写专业全称">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2 form-group form-left">
+                        <label>毕业年份</label>
+                    </div>
+                    <div class="col-md-6 form-group form-right">
+                        <i class="iconfontyyy">&#xe62a;</i>
+                        <input v-model='graduate' name='graduate' type="text" class="form-control" placeholder="如：2013">
+                    </div>
+                </div>
+                <div style="text-align: center">
+                    <input style="outline: none;border: none" type="submit" value="" class="mybtn"
+                           @click="valid_form1"/>
+                </div>
+            </form>
+            <form class="row" id="form2" role="form" v-show="seen2">
+                <!--start 企业形象设计-->
+                <div class="row">
+                    <div class="col-md-4 form-group form-left">
+                        <label>企业形象设计</label>
+                    </div>
+                    <div class="col-md-8 form-group form-right">
+                        <ul class="list-unstyled">
+                            <li><input type="checkbox" name='category' value="LOGO设计"><span class="lb">LOGO设计</span>
+                            </li>
+                            <li><input type="checkbox" name='category' value="宣传画册"><span class="lb">宣传画册</span>
+                            </li>
+                            <li><input type="checkbox" name='category' value="海报三折页"><span class="lb">海报三折页</span>
+                            </li>
+                            <li><input type="checkbox" name='category' value="PPT美化"><span class="lb">PPT美化</span>
+                            </li>
+                            <br>
+                            <li><input type="checkbox" name='category' value="包装设计"><span class="lb">包装设计</span>
+                            </li>
+                            <li><input type="checkbox" name='category' value="吉祥物设计"><span class="lb">吉祥物设计</span>
+                            </li>
+                            <li><input type="checkbox" name='category' value="VI系统"><span class="lb">VI系统</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!--end 企业形象设计-->
+                <hr class="formsepline">
+                <!--start ui-->
+                <div class="row">
+                    <div class="col-md-4 form-group form-left">
+                        <label>UI类</label>
+                    </div>
+                    <div class="col-md-8 form-group form-right">
+                        <ul class="list-unstyled">
+                            <li><input type="checkbox" name='category' value="网页UI"><span class="lb">网页UI</span>
+                            </li>
+                            <li><input type="checkbox" name='category' value="APP UI"><span class="lb">APP UI</span>
+                            </li>
+                            <li><input type="checkbox" name='category' value="网店美化"><span class="lb">网店美化</span>
+                            </li>
+                            <li><input type="checkbox" name='category' value="H5设计"><span class="lb">H5设计</span>
+                            </li>
+                            <li><input type="checkbox" name='category' value="图标设计"><span class="lb">图标设计</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!--end ui-->
+                <hr class="formsepline">
+                <!--start 插画类-->
+                <div class="row">
+                    <div class="col-md-4 form-group form-left">
+                        <label>插画类</label>
+                    </div>
+                    <div class="col-md-8 form-group form-right">
+                        <ul class="list-unstyled">
+                            <li><input type="checkbox" name='category' value="书报刊插画"><span class="lb">书报刊插画</span>
+                            </li>
+                            <li><input type="checkbox" name='category' value="手绘"><span class="lb">手绘</span></li>
+                            <li><input type="checkbox" name='category' value="墙绘"><span class="lb">墙绘</span></li>
+                            <li><input type="checkbox" name='category' value="卡通形象"><span class="lb">卡通形象</span>
+                            </li>
+                            <li><input type="checkbox" name='category' value="表情包"><span class="lb">表情包</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <!--end 插画类-->
+                <hr class="formsepline">
+                <div class="row">
+                    <div class="col-md-4 form-group form-left">
+                        <label>可工作时间</label>
+                    </div>
+                    <div class="col-md-8 form-group form-right">
+                        <ul class="list-unstyled">
+                            <li><input type="checkbox" value="1" name="worktime"><span class="lb">周一至周五白天</span></li>
+                            <li><input type="checkbox" value="2" name="worktime"><span class="lb">周一至周五晚间</span></li>
+                            <li><input type="checkbox" value="3" name="worktime"><span class="lb">周末</span></li>
+                            <li><input type="checkbox" value="4" name="worktime"><span class="lb">都可以</span></li>
+                            <li><input type="checkbox" value="5" name="worktime"><span class="lb">其他时间</span></li>
+                        </ul>
+
+                    </div>
+                </div>
+                <hr class="formsepline">
+                <div class="row">
+                    <div class="col-md-4 form-group form-left">
+                        <label>工作状态</label>
+                    </div>
+                    <div class="col-md-8 form-group form-right">
+                        <ul class="list-unstyled">
+                            <li><input type="radio" value="1" name="identity"><span class="lb">在校学生</span></li>
+                            <li><input type="radio" value="2" name="identity"><span class="lb">广告/设计公司的专职设计师</span></li>
+                            <li><input type="radio" value="3" name="identity"><span class="lb">其他公司的专职设计师</span></li>
+                            <li><input type="radio" value="4" name="identity"><span class="lb">以上都不是</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 form-group form-left">
+                        <label>项目经历 / 价格</label>
+                        <label class="help-block">(选填)</label>
+                    </div>
+                    <div class="col-md-8 form-group form-right">
+                        <textarea style="padding-left: 15px" id="textarea" maxlength="200" class="form-control"
+                                  v-model="project_text" id="pro-exp"
+                                  rows="6"></textarea>
+                        <span style="float: right;margin-right: 160px;"><var id="wordwrap"
+                                                                             class="word">200</var>/200</span>
+                    </div>
+                </div>
+                <div class="btns">
+                    <div class="nextbtn" v-on:click='valid_form2'></div>
+                    <div class="prevbtn" v-on:click='showform1'></div>
+                </div>
+            </form>
+            <form style="padding: 0 32px 32px 32px" class="row" v-show="seen3">
+                <div class="row">
+                    <div class="col-md-2 form-group form-left">
+                        <label>个人网址</label>
+                        <label class="help-block">(选填)</label>
+                    </div>
+                    <div class="col-md-8 form-group form-right" style="padding-left: 15px">
+                        <i class="iconfontyyy" style="left:15px">&#xe664;</i>
+                        <input class="form-control" type="text" v-model="blog_url" placeholder="站酷、lofter或其他个人博客">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2 form-group form-left">
+                        <label>作品图片</label>
+                        <label class="help-block">(不超过9张,每张小于10M的jpg,png等）</label>
+                    </div>
+                    <div class="img-box col-md-10">
+                        <div class="img-section">
+                            <!--<p class="up-p"><span class="up-span">最多可以上传9张图片</span></p>-->
+                            <div class="z_photo upimg-div clear">
+                                <imgthumb v-for="(each_file,index) in file_L" v-bind:each_file="each_file"
+                                          v-bind:index='index'></imgthumb>
+                                <section class="z_file fl" id="z_file">
+                                    <img src="http://image.houxiaopang.com/baseform/721/addpic.jpg" class="add-img">
+                                    <input type="file" name="file" id="testup" class="file" value=""
+                                           accept="image/jpg,image/jpeg,image/png,image/bmp" multiple/>
+                                </section>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="ag-row row col-md-offset-2" style="padding-left: 170px">
+                    <input type="checkbox" name='agreement'><span class="lb">我已知晓并同意<a target="_blank"
+                                                                                       href="http://image.houxiaopang.com/agreement/%E7%8C%B4%E5%B0%8F%E8%83%96%E7%BD%91%E7%AB%99%E6%9D%A1%E6%AC%BE.pdf">用户协议</a></span>
+                </div>
+                <hr style="margin-top: 20px">
+                <div class="btns">
+                    <div class="prevbtn" v-on:click='showform2'></div>
+                    <div class="submitbtn" v-on:click='submitapply'></div>
+                </div>
+
+            </form>
+            <div id="tt" class="btn" style="display:none"></div>
+            <div v-show="loaderseen">
+                <loader></loader>
+            </div>
+        </div>
+
+        <div class="waiting-check" v-if="seen4&&(applystatus != -1)">
+            <img src="http://image.houxiaopang.com/baseform/721/suc1.png" width="250">
+            <h2 style="color:#313131;margin-top: 50px;margin-bottom: 30px;">您的入驻申请已提交成功!</h2>
+            <p style="color: #797979;font-size: 14px;">我们的工作人员将在一周内联系您告知申请结果。非常感谢!</p>
+            <div class="backbtn" onclick="javascript:location.href='/'"></div>
+        </div>
+        <div class="waiting-check" v-if="seen4&&(applystatus == -1)">
+            <img src="http://image.houxiaopang.com/baseform/721/fail.png" width="250">
+            <h2 style="color:#313131;margin-top: 50px;margin-bottom: 30px;">您的入驻申请审核失败!</h2>
+            <p style="color: #797979;font-size: 14px;">请完善资料或重新提交。非常感谢!</p>
+            <div class="home" onclick="javascript:app.showform1();app.applystatus=0;"></div>
+        </div>
+
+    </div>
+</section>
+
+<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.staticfile.org/jquery-datetimepicker/2.5.4/build/jquery.datetimepicker.full.min.js"></script>
+<script src="https://cdn.staticfile.org/vue/2.2.6/vue.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdn.staticfile.org/plupload/2.1.8/plupload.full.min.js"></script>
+<script src="https://cdn.bootcss.com/iCheck/1.0.2/icheck.min.js"></script>
+<script src="http://image.houxiaopang.com/static/baseform/js/qiniu.js"></script>
+<!--<script src="http://image.houxiaopang.com/static/baseform/js/citydata.js"></script>
+<script src="http://image.houxiaopang.com/static/baseform/js/cityPicker-1.1.1.js"></script>-->
+{%  assets 'baseform_js' %}
+     <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+{% endassets %}
+
+
+
+</body>

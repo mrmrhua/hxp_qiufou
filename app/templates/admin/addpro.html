@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.staticfile.org/jquery-datetimepicker/2.5.4/jquery.datetimepicker.min.css">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/jquery-datetimepicker/2.5.4/build/jquery.datetimepicker.full.min.js"></script>
+    <script src="https://cdn.bootcss.com/vue/2.2.6/vue.min.js"></script>
+
+
+    <title>设计师经纪人添加项目</title>
+    <style>
+        .milestonebox{
+            border: 1px solid black;
+            border-radius: 3px;
+            padding-left: 10px;
+            padding-right: 10px;
+            padding-top: 20px;
+            margin-bottom: 10px;
+            margin-top: 10px;
+        }
+        .milestonebox .msinput{
+            display: inline;
+            width: 60%;
+
+        }
+        .milestonebox .row{
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="container">
+       <form role="form">
+           <div class="form-group">
+               <label>项目密码</label>
+               <input type="text" class="form-control" id="password" v-model="password">
+           </div>
+           <div class="form-group">
+               <label>项目简介</label>
+               <textarea type="text" class="form-control" id="description" rows="3" v-model="description"></textarea>
+           </div>
+           <div class="form-group" id="msblock">
+               <label>时间节点</label>
+               <input type="button" id="addmore" @click="addms" value="添加">
+               <milebox v-for="(item,index) in inputitem" v-bind:ordinpro="index+1" :item="item"></milebox>
+
+{#               <div class="milestonebox">#}
+{#                    <label>设计师交稿节点</label>#}
+{#                    <input type="text" class="form-control msinput" id="milestone-1" />#}
+{#                   <label>客户查阅节点</label>#}
+{#                   <input type="text" class="form-control msinput" id="milestone-1-cl" />#}
+{#               </div>#}
+
+           </div>
+
+
+
+           <input type="submit" id="submitbtn" class="btn btn-default">
+
+       </form>
+    </div>
+    <script>
+
+
+        var milebox = {
+            props:['ordinpro','item'],
+            template:`
+                <div class="milestonebox">
+                    <div class="row">
+                        <label class="col-md-2">设计师交稿节点</label>
+                         <input v-bind:id="'de_'+ordinpro" type="text" class="col-md-10 form-control msinput" v-model="item.value" />
+                        </div>
+                     <div class="row">
+                        <label class="col-md-2" >客户查阅节点</label>
+                         <input v-bind:id="'cl_'+ordinpro" type="text" class="col-md-10 form-control msinput" />
+
+                       </div>
+               </div>
+            `,
+            mounted:function(){
+                 $("#de_"+ this.ordinpro).datetimepicker();
+                $("#cl_"+ this.ordinpro).datetimepicker();
+            }
+        }
+
+
+
+        var vm = new Vue({
+            el:'#container',
+            components:{
+                'milebox':milebox
+            },
+            data:{
+                password:null,
+                description:null,
+               inputitem:[
+                   {value:null}
+               ]
+
+            },
+            methods:{
+                addms:function(){
+                    this.inputitem.push({value:null})
+                }
+            }
+        })
+
+
+//------------------------|||
+
+        $("form").submit(function(e) {
+            {#            var milestone = new Array();#}
+            {#            for (i = 1; i <= count; i++) {#}
+            {##}
+            {#                //var m = {'due_time':}#}
+            {#                milestone.push($("#milestone-" + String(i)).val());#}
+            {#            }#}
+            {#            var milestone = new Json();#}
+
+            milestone = [];
+            for (i = 1; i <= vm.inputitem.length; i++) {
+                var m = {
+                    'de_time': $("#de_" + i).val(),
+                    'cl_time': $("#cl_" + i).val(),
+                };
+                milestone.push(m);
+            }
+
+             $.ajax({
+                url:'/api/v1.0/admin/project',
+                type:'POST',
+                 async:true,
+                data: {
+                    'password':vm.password,
+	                'description': vm.description,
+	                'milestone_num': vm.inputitem.length,
+                    'milestone':JSON.stringify(milestone)
+                },
+                  timeout:5000,    //超时时间
+                dataType:'json',
+                success:function(result) {
+                     alert("成功添加.项目ID:"+result.pro_id);
+                }
+            })
+
+        })
+
+
+
+                //构造
+/*{
+	password:"123",
+	description:"hello",
+	milestone_num:3,
+	 milestone:[
+	 {
+	    de_time: "2017-01-01 20:00",
+	 	cl_time:  "2017-01-01 20:00"
+	 },
+	 {
+	    de_time: "2017-01-01 20:00",
+	 	cl_time:  "2017-01-01 20:00"
+	 }
+	 ]
+｝*/
+
+
+
+
+
+    </script>
+</body>
+</html>

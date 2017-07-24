@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+     <head>
+        {% block head %}
+             <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <meta name="keywords" content="">
+            <meta name="description" content="">
+           <link rel="shortcut icon" href="http://image.houxiaopang.com/houicon.ico">
+            <title>猴小胖设计服务专家——找到更好的设计师</title>
+            {% assets "helpnav_css" %}
+                <link rel="stylesheet" href="{{ ASSET_URL }}" />
+            {% endassets %}
+          {% endblock %}
+     </head>
+     <body>
+        {% block body %}
+            <aside id="help-nav">
+         <a href="/"><img src="http://image.houxiaopang.com/help/logo.png" alt=""></a>
+         <div class="menu">
+             <ul id="menu-ul">
+                <li id="li-1"><a href="/help/customer">客户指南</a></li>
+                <li id="li-2"><a href="/help/designer">设计师指南</a></li>
+                <li id="li-3"><a href="/help/faq">常见问题</a></li>
+                <li id="li-4"><a href="/help/aboutus">关于猴小胖</a></li>
+                <li id="li-5"><a href="/help/contact">联系我们</a></li>
+             </ul>
+        </div>
+    </aside>
+        {% endblock %}
+     </body>
+</html>
