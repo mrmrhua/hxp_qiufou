@@ -13,13 +13,16 @@ class UserBehavior(TaskSet):
     # def getuptoken(self):
     #     self.client.get('/api/v1.0/get/workgallery?cat=0&page=1')
 
+    # @task(1)
+    # def postapplyform(self):
+    #     self.client.post('/api/v1.0/apply/form',{'name:ding'})
     @task(1)
-    def postapplyform(self):
-        self.client.post('/api/v1.0/apply/form',{'name:ding'})
+    def index(self):
+        self.client.get("index")
 
 
 class WebsiteUser(HttpLocust):
     task_set = UserBehavior
     min_wait = 1000
     max_wait = 5000
-    host = 'http://127.0.0.1:5000'
+    host = 'houxiaopang.com'
