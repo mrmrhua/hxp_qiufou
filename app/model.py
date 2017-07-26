@@ -1,9 +1,10 @@
 from flask_login import UserMixin
 from app import lm,db
-from flask import request,json,current_app,session
+from flask import request,json,current_app,session,g
 from flask_login import current_user
 from config import APPLYSTATUS
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer,BadSignature,SignatureExpired
+from datetime import datetime
 
 class User(UserMixin,db.Model):
     __tablename__ = 'users'
@@ -14,7 +15,9 @@ class User(UserMixin,db.Model):
     sex =  db.Column(db.Integer)
     headimg = db.Column(db.String(255))
     # 可用Designwork.designer来访问
-    designworks = db.relationship('Designwork', backref='designer')
+    # designworks = db.relationship('Designwork', backref='designer')
+    # 可用Album.designer来访问
+    # albums = db.relationship('Album', backref='designer')
 
     def __repr__(self):
         return '<User %r>' % self.nickname
@@ -183,7 +186,6 @@ class Designwork(db.Model):
 class Album(db.Model):
     __tablename__ = 'albums'
     id = db.Column(db.Integer, primary_key=True)
-    # user_id =
     title = db.Column(db.String(50))
     description = db.Column(db.Text,nullable=True)
     category = db.Column(db.Integer)
@@ -191,3 +193,14 @@ class Album(db.Model):
     cover = db.Column(db.String(255))
     # 可用Designwork.album来访问
     designworks = db.relationship('Designwork',backref='album')
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+    @staticmethod
+    def from_request(request):
+        title = request.values.get("title")
+        cover = request.values.get("cover")
+        description= request.values.get("description")
+        category = request.values.get("category")
+        up_time = datetime.now()
+
+        return Album(title=title,cover=cover,description=description,category=category,up_time=up_time,user_id=g.user.id)

@@ -25,6 +25,7 @@ class Applyinfo(Resource):
             db.session.commit()
         except:
             db.session.rollback()
+            return jsonify({'code': -1})
 
         c = json.loads(request.form.get('category'))
         imgurl = json.loads(request.form.get('img_url'))
@@ -38,7 +39,7 @@ class Applyinfo(Resource):
             db.session.commit()
         except:
             db.session.rollback()
-
+            return jsonify({'code': -1})
         current_app.logger.info('新入驻设计师:%s' % af.name)
         # 通知
         name = request.form.get('name')
