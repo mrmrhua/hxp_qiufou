@@ -11,6 +11,7 @@ import os
 from flask_session import Session
 from flask_cors import CORS,cross_origin
 
+
 db = SQLAlchemy()
 lm = LoginManager()
 mail = Mail()
@@ -32,6 +33,9 @@ def create_app():
     mail.init_app(app)
     if app.debug:
         toolbar.init_app(app)
+        import logging
+        logging.getLogger('flask_cors').level = logging.DEBUG
+
     assets.init_app(app)
     sess.init_app(app)
     cors.init_app(app,resources={r"/api/*":{"origins":"*"}})
