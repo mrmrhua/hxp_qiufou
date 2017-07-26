@@ -15,10 +15,8 @@ import qiniu.config
 import os
 from  config import qiniu_access_key,qiniu_secret_key
 import  json
-from app.common import  crossdomain
 
 class GetApplyUptoken(Resource):
-    @crossdomain(origin='*')
     def get(self):
         # 构建鉴权对象
         q = Auth(qiniu_access_key, qiniu_secret_key)

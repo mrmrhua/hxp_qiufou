@@ -53,6 +53,8 @@ class WxVerify(Resource):
         else:
             url = url_for('main.apply')
 
+        token = user.generate_auth_token().decode()
+        print(token)
         return jsonify({'code': 0, 'data': {'url': url}})
 
 

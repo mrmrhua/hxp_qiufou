@@ -3,7 +3,6 @@ from app import lm,db
 from flask import request,json,current_app,session
 from flask_login import current_user
 from config import APPLYSTATUS
-from schema import Schema
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer,BadSignature,SignatureExpired
 
 class User(UserMixin,db.Model):
@@ -23,22 +22,24 @@ class User(UserMixin,db.Model):
     # def set_applied(self):
 
 
-    # # 生成一个会过期的token,默认20分钟
-    # def generate_auth_token(self, expiration=1200):
-    #     s = Serializer(current_app.config['SECRET_KEY'],
-    #                    expires_in=expiration)
-    #     return s.dumps({'id': self.id})
+    # # 生成一个会过期的token,默认200分钟
+    def generate_auth_token(self, expiration=12000):
+        s = Serializer(current_app.config['SECRET_KEY'],
+                       expires_in=expiration)
+        t = s.dumps({'id': self.id})
+        return t
 
-    # @staticmethod
-    # def verify_auth_token(token):
-    #     s = Serializer(current_app.config['SECRET_KEY'])
-    #     try:
-    #         data = s.loads(token)
-    #     except SignatureExpired:
-    #         return None  # valid token, but expired
-    #     except BadSignature:
-    #         return None  # invalid token
-    #     return User.query.get(data['id'])
+    #验证token
+    @staticmethod
+    def verify_auth_token(token):
+        s = Serializer(current_app.config['SECRET_KEY'])
+        try:
+            data = s.loads(token)
+        except SignatureExpired:
+            return None  # valid token, but expired
+        except BadSignature:
+            return None  # invalid token
+        return User.query.get(data['id'])
 
 
 @lm.user_loader
@@ -173,6 +174,20 @@ class Designwork(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     category = db.Column(db.Integer,default=0)
     up_time = db.Column(db.DateTime)
+    album_id = db.Column(db.Integer,db.ForeignKey('albums.id'))
 
     def __repr__(self):
         return '<Designwork of %r:%r>' % (self.user_id,self.work_url)
+
+
+class Album(db.Model):
+    __tablename__ = 'albums'
+    id = db.Column(db.Integer, primary_key=True)
+    # user_id =
+    title = db.Column(db.String(50))
+    description = db.Column(db.Text,nullable=True)
+    category = db.Column(db.Integer)
+    up_time = db.Column(db.DateTime)
+    cover = db.Column(db.String(255))
+    # 可用Designwork.album来访问
+    designworks = db.relationship('Designwork',backref='album')
