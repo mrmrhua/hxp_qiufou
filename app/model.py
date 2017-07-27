@@ -195,6 +195,9 @@ class Album(db.Model):
     designworks = db.relationship('Designwork',backref='album')
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
+    def __repr__(self):
+        return '<Album: %r at %r>' % (self.title,self.up_time)
+
     @staticmethod
     def from_request(request):
         title = request.values.get("title")
