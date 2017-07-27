@@ -37,6 +37,6 @@ api.add_resource(GetUserHead,'/designerdash/header')
 
 
 #获取最近上传的图片
-api.add_resource(GetRecent,'/designerdash/index/recent')
+# api.add_resource(GetRecent,'/designerdash/index/recent')
 
 api.add_resource(GetDesignerRecom,'/DesignerRecommend')
