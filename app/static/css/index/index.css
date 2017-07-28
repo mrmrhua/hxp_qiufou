@@ -1,3 +1,112 @@
+*{
+		padding: 0 0 ;
+		margin: 0 0;
+		box-sizing: border-box;
+		font-family: '黑体';
+	}
+	/*设计师展示style end*/
+	.show_div{
+		overflow: hidden;
+	}
+	.show_div > p{
+		font-size: 36px;
+		color: #313131;
+		text-align: center;
+		margin: 100px 0 70px 0;
+	}
+	.show_div > ul{
+		list-style: none;
+		width: 1130px;
+		margin:  0 auto;
+		overflow: hidden;
+	}
+
+	.show_div > ul > li {
+		width: 360px;
+		margin-bottom: 50px; 
+		margin-right: 25px;
+		background: url('images/bg.png') no-repeat;
+		float: left;
+		background-size: 360px;
+		height: 363px;;
+		position: relative;
+		cursor: pointer;
+	}
+	.show_div > ul > li >img{
+		width: 360px;
+		padding: 0 3px;
+		box-sizing: border-box;
+	}
+	.show_div > ul > li:nth-child(3){
+		margin-right: 0;
+	}
+	.show_div > ul > li:nth-child(6){
+		margin-right: 0;
+	}
+
+	.show_div > ul >li >.fg{
+		background: linear-gradient(to right,#fe6549,#d01667);
+		position: absolute;
+		top: 0;
+		left: 2px;
+		width: 99%;
+		height: 100%;
+		opacity: 0;
+		transition: all ease .5s;
+	}
+	.show_div > ul >li >.fg:hover{
+		opacity: 0.8;
+	}
+	.show_div > ul >li >.fg >ul{
+		width: 60%;
+		overflow: hidden;
+		margin:20px auto 0 auto;
+	}
+	.show_div > ul >li >.fg >ul>li{
+		min-width: 50px;
+		height: 30px;
+		line-height: 30px;
+		margin-bottom: 10px;
+		padding: 0 15px;
+		color: #fff;
+		border: 5px solid #fff;
+		border-radius: 25px;
+	}
+	.show_div > ul > li >p{
+		padding: 0 18px 0 25px;
+	}
+	.show_div > ul > li >p:nth-of-type(1){
+		margin-top: 10px;
+	}
+	.show_div > ul > li >p >i{
+		width: 50px;
+		height: 50px;
+		display: inline-block;
+		background: url('images/head.png') no-repeat;
+		background-size: cover;
+	}
+
+	.show_div > ul > li > p > span{
+	    font-size: 20px;
+	    vertical-align: top;
+	    line-height: 50px;
+	    padding-left: 10px;
+	    color: #313131;
+	}
+	.show_div > ul > li > .desc{
+		color: #727272;
+		font-size: 14px;
+		margin: 10px 0 0 0;
+	}
+	.show_div > .btn{
+		margin: 30px auto 40px auto;
+		width: 168px;
+		height: 53px;
+		background: url("images/btn.png") no-repeat;
+		cursor: pointer;
+	}
+	/*设计师展示style end*/
+
 body{
 	padding: 0;
 	margin: 0;
@@ -201,7 +310,6 @@ li,a{
 	letter-spacing: 1px;
 }
 .slider-wrapper{
-	
 	width: 100%;
 	overflow: hidden;
 	position: relative;
@@ -244,7 +352,7 @@ li,a{
 .service-process{
 	width: 100%;
 	text-align: center;
-	margin-top: 100px;
+	margin-top: 150px;
 }
 .service-title{
 	width: 180px;
@@ -255,8 +363,8 @@ li,a{
 	border-bottom: 2px solid #d01667;
 }
 .service-wrapper{
-	width: 100%;
-	margin-top: 80px;
+	width: 82%;
+	margin: 80px auto 0 auto;
 }
 .service-wrapper .service-content{
 	position: relative;
@@ -279,7 +387,7 @@ li,a{
 .service-category{
 	width: 100%;
 	text-align: center;
-	margin-top: 100px;
+	margin-top: 200px;
 }
 .category{
 	margin-top: 40px;
@@ -302,7 +410,8 @@ li,a{
 	border-bottom: 2px solid #d01667;
 }
 .image-wrapper{
-	width: 100%;
+	width: 90%;
+	margin: 0 auto;
 }
 .image-show{
 	width: 90%;
