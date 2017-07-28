@@ -55,6 +55,6 @@ class WxVerify(Resource):
 
         token = user.generate_auth_token().decode()
         print(token)
-        return jsonify({'code': 0, 'data': {'url': url}})
+        return jsonify({'code': 0, 'data': {'url': url,'token':token}})
 
 

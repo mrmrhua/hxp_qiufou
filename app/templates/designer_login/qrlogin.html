@@ -81,6 +81,13 @@
     </div>
 </div>
 <script>
+    //设置cookie
+  function setCookie(c_name, value, expiredays) {
+    var exdate = new Date()
+    exdate.setDate(exdate.getDate() + expiredays)
+    document.cookie = c_name + "=" + escape(value) +
+      ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString())
+  }
     function getQueryString(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
         var r = window.location.search.substr(1).match(reg);
@@ -109,6 +116,7 @@
             location.href = result.data.url;
              }else{
             alert('微信授权失败');
+            setCookie("token",json.data.token);
             location.href= "localhost:8000/qrlogin";  //to do (dyh)
           }
         });
