@@ -56,8 +56,8 @@ def create_app():
     app.register_blueprint(designers_bp)
 
     #个人中心
-    from .admindash import admindash as admindash_bp
-    app.register_blueprint(admindash_bp)
+    from .admindash import api_dash_bp as admindash_bp
+    app.register_blueprint(admindash_bp,url_prefix='/api/v1.1')
 
     #API_1_1
     from .api_1_1 import api_1_1 as a_1_1

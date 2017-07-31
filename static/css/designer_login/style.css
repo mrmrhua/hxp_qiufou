@@ -1,0 +1,266 @@
+
+      @font-face {
+  font-family: 'iconfont';  /* project id 200173 */
+  src: url('//at.alicdn.com/t/font_d5mjm1cduq478pvi.eot');
+  src: url('//at.alicdn.com/t/font_d5mjm1cduq478pvi.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_d5mjm1cduq478pvi.woff') format('woff'),
+  url('//at.alicdn.com/t/font_d5mjm1cduq478pvi.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_d5mjm1cduq478pvi.svg#iconfont') format('svg');
+}
+	 .iconfontyyy{
+    font-family:"iconfont" !important;
+    font-size:16px;font-style:normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;}
+
+      a{
+          text-decoration: none;
+          color: inherit;
+      }
+      body{
+          margin: 0;
+      }
+	.main-wide{
+		width: 1200px;
+		margin: 0 auto;
+	}
+	.logo-nav{
+		height: 60px;
+		width: 100%;
+		margin: 10px 0;
+		position: relative;
+		left: 100px;
+	}
+	.logo-nav img{
+		height: 60px;
+	}
+
+	.login-banner{
+		background: #f4d1b5;
+		position: absolute;
+		left: 0;
+		top:0;
+		width: 100%;
+		height: 100%;
+        padding-left: 100px;
+	}
+	.login-wrap{
+		position: relative;
+		height: 600px;
+	}
+	.login-wrap .login-form{
+		position: relative;
+		float:right;
+		top:40px;
+		background:#fff;
+		z-index: 40;
+		color: black;
+		width: 346px;
+		padding-top: 20px;
+	}
+
+	.login-wrap .login-form .login-title{
+		text-align: center;
+		border-bottom: 1px solid #f4f4f4;
+		height: 40px;
+		display: none;
+	}
+	.login-wrap .login-form .login-title label{
+		font-size: 18px;
+		line-height: 40px;
+	}
+	.login-wrap .login-form .login-notice{
+		border-top: 1px solid #f4f4f4;
+		background: #fcfcfc;
+		font-size: 14px;
+		padding-left: 20px;
+		padding-right: 20px;
+		line-height: 50px;
+		text-align: right;
+		color: #b61d1d;
+	}
+	#wxqrcode{
+		margin: 0 auto;
+		width: 300px;
+		height: 400px;
+		margin-bottom: 20px;
+	}
+	#data-info{
+		background: url(http://image.houxiaopang.com/designerlogin/back05.jpg);
+		background-size: cover;
+		padding-top: 100px;
+		padding-bottom: 100px;
+		color: grey;
+		text-align: center;
+
+	}
+	#data-info h2{
+		display: inline-block;
+		font-size: 2rem;
+		background: #b6e3aa;
+		padding: 5px 40px 5px 40px;
+		border-radius: 6px;
+		font-weight: normal;
+		-webkit-box-shadow: 10px 10px 5px #888888;
+ 		 -moz-box-shadow: 10px 10px 5px #888888;
+ 		 box-shadow: 10px 10px 5px #888888;
+		letter-spacing: 1px;
+	}
+	#data-info p{
+		font-size: 18px;
+		letter-spacing: 1px;
+	}
+	#data-info span{
+		color: #da8988;
+		font-weight: 300;
+	}
+
+
+	#flow-info{
+		padding-top: 100px;
+		padding-bottom: 100px;
+		background: url(http://image.houxiaopang.com/designerlogin/back03.jpg);
+		background-size: cover;
+		color: #fff8ee;
+
+	}
+	#flow-info ul{
+		list-style: none;
+		margin-left: 30%;
+	}
+	#flow-info li{
+		line-height: 50px;
+	}
+    #flow-info li i{
+        font-size: 48px;
+        margin-right: 10px;
+    }
+	#whyus-1{
+		padding-top:100px;
+		padding-bottom: 100px;
+		/*background: #fafafb;*/
+        background: url(http://image.houxiaopang.com/designerlogin/back01.jpg);
+		background-size:cover ;
+		color: white;
+		position: relative;
+		padding-left: 30%;
+		padding-right: 10%;
+	}
+	.why-img{
+		position: relative;
+		display: inline-block;
+		height: 240px;
+        padding-top: 20px;
+	}
+	.why-img img{
+	-webkit-box-shadow: 10px 10px 5px #888888;
+ 		 -moz-box-shadow: 10px 10px 5px #888888;
+ 		 box-shadow: 10px 10px 5px #888888;
+	}
+	#whyus-1 .why-img{
+		margin-right: 60px;
+	}
+	.why-content{
+		display: inline-block;
+		position: relative;
+		height: 240px;
+		vertical-align: top;
+		color: white;
+        padding-left: 30px;
+        padding-right: 30px;
+        background: grey;
+        border-radius: 8px;
+
+	}
+	#whyus-2{
+		padding-top:100px;
+		padding-bottom: 100px;
+		/*background: #fefefe;*/
+        background: url(http://image.houxiaopang.com/designerlogin/back02.jpg);
+		background-size:cover ;
+		color: white;
+		position: relative;
+		padding-left: 20%;
+		padding-right: 20%;
+	}
+	#whyus-2 .why-img{
+		margin-left: 60px;
+	}
+    #whyus-2 .why-content{
+        min-width: 400px;
+    }
+	.why-content h3{
+		font-size: 24px;
+		margin-bottom: 24px;
+		letter-spacing: 2px;
+		line-height: 48px;
+	}
+	.why-content p{
+		font-size: 16px;
+		line-height: 24px;
+		letter-spacing: 1px;
+	}
+	.why-content p i{
+        font-size: 20px;
+        margin-right: 8px;
+        color: #3cc8b4;
+    }
+	.why-content p span{
+		color: #3cc8b4;
+	}
+	#applynow{
+		padding-top: 100px;
+		padding-bottom: 100px;
+		background: #fafafb;
+        background: url(http://image.houxiaopang.com/designerlogin/back03.jpg);
+		background-size:cover ;
+		color: white;
+		text-align: center;
+	}
+	 #applynow .title{
+		 border-bottom: 4px #3cc8b4 solid;
+		 font-size: 2rem;
+		 display: inline-block;
+		 padding: 5px 40px 5px 50px;
+	 }
+	 #applynow p{
+		font-size: 18px;
+		 line-height: 24px;
+		 letter-spacing: 2px;
+	 }
+	 #applynow span{
+		 font-size: 32px;
+		 color: #3cc8b4;
+		 padding-left: 4px;
+		 padding-right: 4px;
+	 }
+
+	#applynow .applybtn{
+		width:80px;
+		padding: 5px 20px 5px 20px;
+		line-height: 40px;
+		text-align: center;
+		color: white;
+		letter-spacing: 1px;
+		border-radius: 5px;
+		background: #3cc8b4;
+		margin: 0 auto;
+        cursor: pointer;
+		margin-top: 60px;
+	}
+    #applynow .applybtn:hover{
+        -webkit-box-shadow: 10px 10px 5px #888888;
+ 		 -moz-box-shadow: 10px 10px 5px #888888;
+ 		 box-shadow: 5px 5px 5px #888888;
+    }
+	.mask{
+		position: fixed;
+		top:0;
+		display: none;
+		z-index: 20;
+		background: black;
+		width: 100%;
+		height: 100%;
+		opacity: 0.8!important;
+	}

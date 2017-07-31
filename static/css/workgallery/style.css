@@ -1,0 +1,92 @@
+        body, html { font-size: 100%; 	padding: 0; margin: 0;}
+
+        /* Reset */
+        *,
+        *:after,
+        *:before {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+
+        .clearfix:before,
+        .clearfix:after {
+            content: " ";
+            display: table;
+        }
+
+        .clearfix:after {
+            clear: both;
+        }
+
+        body{
+            font-family: "Microsoft YaHei","Segoe UI", "Lucida Grande", Helvetica, Arial,sans-serif;
+            background: lightgray;
+        }
+        a{ color: rgba(255, 255, 255, 0.6);outline: none;text-decoration: none;-webkit-transition: 0.2s;transition: 0.2s;}
+        a:hover,a:focus{color:#74777b;text-decoration: none;}
+
+        /*-----*/
+        .waterfall{
+            padding: 1em 0;
+            margin-top: 100px;
+        }
+        .waterfall .list-group {
+            margin-right: 14px;
+            box-shadow:0 1px 3px rgba(0,0,0,.3);
+            -moz-box-shadow:0 1px 3px rgba(0,0,0,.3);
+            -webkit-box-shadow:0 1px 3px rgba(0,0,0,.3);
+        }
+          .waterfall .list-group > li:first-child {
+            padding: 0;
+            background-color: white;
+            max-height: 60%;
+              overflow: hidden;
+          }
+            .waterfall .list-group > li:first-child img {
+              width: 100%;
+              border-top-right-radius: 4px;
+              border-top-left-radius: 4px; }
+          .waterfall .list-group > li {
+            background-color: #f5f5f5; }
+
+         .waterfall .list-group:hover{
+             box-shadow:10px 10px 5px #888888;
+         }
+
+         .info-left{
+             float: left;
+             display: inline-block;
+             margin-right: 10px;
+         }
+         .info-right{
+             float: left;
+             display: inline-block;
+         }
+         .info-right h5{
+             line-height: 30px;
+         }
+
+
+        @media (min-width: 768px) {
+          .waterfall .list-group {
+            width: 346px; } }
+        @media (min-width: 992px) {
+          .waterfall .list-group {
+            width: 299px; } }
+        @media (min-width: 1200px) {
+          .waterfall .list-group {
+            /*width: 271px;*/
+              width: 214px;
+           }
+        }
+
+        /*
+        总宽度1170
+        -左右padding各15  = 1140
+        每个UL 285 = 271(img)+14(margin)
+        */
+
+        /* .waterfall .list-group {
+            width: 200px; }*/

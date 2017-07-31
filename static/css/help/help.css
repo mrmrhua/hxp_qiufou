@@ -1,0 +1,48 @@
+        body{
+            margin:0;
+        }
+        .navbar{
+            position: relative;!important;
+            width: auto;!important;
+        }
+        .container{
+            margin: 50px auto;
+            padding: 30px;
+        }
+        .menu{
+            width:240px;
+            margin-left: 130px;
+            float: left;
+            border-right: 1px solid #aaa;
+        }
+        .menu a {
+            text-decoration: none;
+            color: #6c7279;
+        }
+        .menu h3{
+            font-size: 20px;
+            cursor: pointer;
+            letter-spacing: 2px;
+        }
+        .menu a:hover{
+            color: black;
+        }
+        .content{
+            margin-left: 400px;
+            margin-top: 15px;
+            margin-right: 150px;
+        }
+        .content .get-menu{
+            margin-left: -10px;
+        }
+        .content .help-content p{
+            font-size: 14px;
+            line-height: 20px;
+        }
+        .content table{
+            border-spacing: 30px;
+        }
+        .content img{
+            max-width: 300px;
+            max-height:200px;
+        }

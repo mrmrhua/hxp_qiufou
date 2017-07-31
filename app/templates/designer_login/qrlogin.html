@@ -1,4 +1,4 @@
-﻿﻿<!DOCTYPE html>
+﻿<!doctype html>
 <html lang="zh_CN">
 <head>
     <meta charset="UTF-8">
@@ -81,13 +81,8 @@
     </div>
 </div>
 <script>
-    //设置cookie
-  function setCookie(c_name, value, expiredays) {
-    var exdate = new Date()
-    exdate.setDate(exdate.getDate() + expiredays)
-    document.cookie = c_name + "=" + escape(value) +
-      ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString())
-  }
+
+
     function getQueryString(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
         var r = window.location.search.substr(1).match(reg);
@@ -110,14 +105,13 @@
             href: ""
         });
     } else {
-
         $.get('/api/v1.1/wx_verify?code='+code,function (result){
             if(result.code=='0'){
+            window.localStorage.token = result.data.token;
             location.href = result.data.url;
              }else{
             alert('微信授权失败');
-            setCookie("token",json.data.token);
-            location.href= "localhost:8000/qrlogin";  //to do (dyh)
+            location.href= "houxiaopang.com/qrlogin";
           }
         });
 
