@@ -6,10 +6,10 @@ api_v1_1 = Api(api_1_1)
 
 from .wxverify import WxVerify
 from .applystatus import GetApplyStatus
-# from app.admindash.newalbum import NewAlbum
-# from app.admindash.recentalbum import GetAlbum
-# from app.admindash.collection import GetCollection
 from .applyinfo import GetApplyinfo
+
+from .demandcenter import GetDemandCenter
+
 # wx verify info
 api_v1_1.add_resource(WxVerify,'/wx_verify')
 api_v1_1.add_resource(GetApplyStatus,'/apply/status')
@@ -17,3 +17,5 @@ api_v1_1.add_resource(GetApplyStatus,'/apply/status')
 # api_v1_1.add_resource(GetAlbum,'/designerdash/index/recent')
 # api_v1_1.add_resource(GetCollection,'/designerdash/collection')
 api_v1_1.add_resource(GetApplyinfo,'/apply/info')
+
+api_v1_1.add_resource(GetDemandCenter,'/demandcenter')
