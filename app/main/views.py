@@ -215,7 +215,6 @@ def toindex():
 #设计师入驻的详情页
 @main.route('/qrlogin')
 def qrlogin():
-    print(session)
     return render_template('designer_login/qrlogin.html')
 
 
@@ -225,8 +224,8 @@ def qrlogin():
 # 用户要持有一个OPENID和TOKEN作为验证
 @login_required
 def apply():
-    # if 'unionid' not in session:
-    #     return redirect(url_for('main.index'))
+    if 'unionid' not in session:
+        return redirect(url_for('main.index'))
     return render_template('designers/baseform.html')
 
 
@@ -238,3 +237,7 @@ def gallery():
 @main.route("/still-doing")
 def stilldoing():
     return render_template('main/404_todo.html')
+
+@main.route("/404")
+def NOTFOUND():
+    return render_template('main/404.html')

@@ -1,4 +1,4 @@
-﻿﻿<!DOCTYPE html>
+﻿<!doctype html>
 <html lang="zh_CN">
 <head>
     <meta charset="UTF-8">
@@ -75,19 +75,14 @@
     <div class="six">
         <p>猴小胖怎么收费？</p>
         <div class="line"></div>
-        <p>我们将从设计项目费用中收取一定的的经纪人服务费</p>
-        <p>具体将由我们的经纪人与您对接</p>
+        <p>我们将从您获得的设计项目费中抽取一定的经纪人服务费</p>
+        <!--<p>具体将由我们的经纪人与您对接</p>-->
         <div class="btn" onclick="jump()"></div>
     </div>
 </div>
 <script>
-    //设置cookie
-  function setCookie(c_name, value, expiredays) {
-    var exdate = new Date()
-    exdate.setDate(exdate.getDate() + expiredays)
-    document.cookie = c_name + "=" + escape(value) +
-      ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString())
-  }
+
+
     function getQueryString(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
         var r = window.location.search.substr(1).match(reg);
@@ -110,14 +105,13 @@
             href: ""
         });
     } else {
-
         $.get('/api/v1.1/wx_verify?code='+code,function (result){
             if(result.code=='0'){
+            window.localStorage.token = result.data.token;
             location.href = result.data.url;
              }else{
             alert('微信授权失败');
-            setCookie("token",json.data.token);
-            location.href= "localhost:8000/qrlogin";  //to do (dyh)
+            location.href= "houxiaopang.com/qrlogin";
           }
         });
 

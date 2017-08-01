@@ -18,7 +18,8 @@ class User(UserMixin,db.Model):
     # designworks = db.relationship('Designwork', backref='designer')
     # 可用Album.designer来访问
     # albums = db.relationship('Album', backref='designer')
-
+    # 可用Applyform.apply来访问
+    applyform = db.relationship("Applyform",backref="user")
     def __repr__(self):
         return '<User %r>' % self.nickname
 
@@ -117,6 +118,7 @@ class Applyform(db.Model):
     worktime = db.Column(db.String(16), nullable=True)
     identity = db.Column(db.Integer,nullable=True)
     unionid = db.Column(db.Integer,db.ForeignKey('users.id'),nullable=True)
+
 
     @staticmethod
     def  from_request(request):

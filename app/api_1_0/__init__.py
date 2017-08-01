@@ -13,7 +13,6 @@ from .applyform import   Applyinfo
 from .applystatus import GetApplyStatus
 from .workgallery.getwork import GetGalleryWork
 
-from .designerdash.getuserhead import GetUserHead
 from .designerdash.getrecent import GetRecent
 from .mobile.get_designer_recom import GetDesignerRecom
 
@@ -29,11 +28,6 @@ api.add_resource(Applyinfo,'/apply/form')
 api.add_resource(GetApplyStatus,'/apply/status')
 
 api.add_resource(GetGalleryWork,'/workgallery')
-
-
-# dashboard用
-# 获取设计师的昵称和头像
-api.add_resource(GetUserHead,'/designerdash/header')
 
 
 #获取最近上传的图片
