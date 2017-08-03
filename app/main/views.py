@@ -234,10 +234,10 @@ def gallery():
     #return  render_template('main/')
     return redirect(url_for('main.stilldoing'))
 
-@main.route("/still-doing")
-def stilldoing():
-    return render_template('main/404_todo.html')
-
-@main.route("/404")
-def NOTFOUND():
-    return render_template('main/404.html')
+# @main.route("/still-doing")
+# def stilldoing():
+#     return render_template('main/404_todo.html')
+#
+# @main.route("/404")
+# def NOTFOUND():
+#     return render_template('main/404.html')
