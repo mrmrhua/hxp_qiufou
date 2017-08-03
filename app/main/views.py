@@ -222,12 +222,12 @@ def qrlogin():
 @main.route('/apply')
 # 需要禁止没有通过扫码的用户进入该页面(重定向到扫码界面)
 # 用户要持有一个OPENID和TOKEN作为验证
-@login_required
+# @login_required
 def apply():
     if 'unionid' not in session:
         return redirect(url_for('main.index'))
-    return render_template('designers/baseform.html')
-
+    # return render_template('designers/baseform.html')
+    return render_template('main/apply.html')
 
 @main.route('/workgallery')
 def gallery():

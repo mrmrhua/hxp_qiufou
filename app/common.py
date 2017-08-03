@@ -77,7 +77,7 @@ def send_apply_email_to_admin(name):
               "from": "help@devmail.houxiaopang.com", \
               "fromName": "猴小胖", \
               "subject": '新的入驻申请', \
-              "to":'mrmhua@126.com',\
+              "to":'mrmrhua@126.com',\
               "html":"申请人:"+name,\
               "templateInvokeName": "designer_apply", \
               "replyTo": 'dyh@houxiaopang.com', \

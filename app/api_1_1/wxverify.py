@@ -6,7 +6,7 @@ from app.common import  support_jsonp,get_access_token,get_user_info,get_wx_head
 import json
 from app.model import User,db
 from config import APPLYSTATUS,SEX
-
+from app.common import auth
 class WxVerify(Resource):
     def get(self):
         if request.args.get("code") is None:
