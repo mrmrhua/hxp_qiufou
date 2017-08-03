@@ -17,7 +17,7 @@ class CompanyPostApply(Resource):
         current_user  = g.user
         current_app.logger.info('新收到入驻申请:%s' % request)
         af = Applyform.company_from_request(request)
-        print(af)
+        # print(af)
         db.session.add(af)
         # 修改状态
         session['applystatus'] = APPLYSTATUS['CHECKING']
