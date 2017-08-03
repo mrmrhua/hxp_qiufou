@@ -16,7 +16,7 @@ class GetCollection(Resource):
     @auth.login_required
     def get(self):
         category = request.args.get("category")
-        print(category)
+        # print(category)
         if not category:
             return jsonify({'code': -1, 'data': {'msg':"未得到品类"}})
         if(category=="-1"):  #取全部作品

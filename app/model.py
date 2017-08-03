@@ -14,6 +14,7 @@ class User(UserMixin,db.Model):
     applystatus = db.Column(db.Integer,default=APPLYSTATUS['APPLYING'])
     sex =  db.Column(db.Integer)
     headimg = db.Column(db.String(255))
+    usertype=db.Column(db.Integer)   #0:个人,1:公司
     # 可用Designwork.designer来访问
     # designworks = db.relationship('Designwork', backref='designer')
     # 可用Album.designer来访问
@@ -24,7 +25,6 @@ class User(UserMixin,db.Model):
         return '<User %r>' % self.nickname
 
     # def set_applied(self):
-
 
     # # 生成一个会过期的token,默认200分钟
     def generate_auth_token(self, expiration=12000):

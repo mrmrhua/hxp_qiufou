@@ -48,13 +48,18 @@ class WxVerify(Resource):
         session['applystatus'] = user.applystatus
         if user.applystatus == APPLYSTATUS['PASS']:  # 已审核
             # 更新一下个人资料
-            url= url_for('main.admin')  # 去个人中心
-
+            # url= url_for('main.admin')  # 去个人中心
+            url = "/admin"
+        elif user.applystatus == APPLYSTATUS['APPLYING']:
+            url = "/apply"
         else:
-            url = url_for('main.apply')
+            if user.usertype == 0: #个人
+                url = "/individual-apply"
+            else:
+                url = '/group-apply'
 
         token = user.generate_auth_token().decode()
-        print(token)
+        # print(token)
         return jsonify({'code': 0, 'data': {'url': url,'token':token}})
 
 

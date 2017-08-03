@@ -21,7 +21,7 @@ class GetApplyinfo(Resource):
         #     Applyform.major, Applyform.graduate, Applyform.project_text, Applyform.blog_url, Applyform.identity,
         #     Applyform.city, Applyform.worktime, Applyform.identity).all()
         data = []
-        print(m)
+        # print(m)
         for item in m:
             c = Category.query.filter_by(apply_id=item.Applyform.id).all()
             category = []
