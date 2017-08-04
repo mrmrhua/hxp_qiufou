@@ -14,15 +14,15 @@ class CompanyPostApply(Resource):
     @auth.login_required
     def post(self):
         #记录申请
-        current_user  = g.user
         current_app.logger.info('新收到入驻申请:%s' % request)
         af = Applyform.company_from_request(request)
         # print(af)
         db.session.add(af)
         # 修改状态
         session['applystatus'] = APPLYSTATUS['CHECKING']
-        current_user.applystatus = APPLYSTATUS['CHECKING']
-        db.session.add(current_user)
+        g.user.applystatus = APPLYSTATUS['CHECKING']
+        g.user.usertype = 1  # 申请类型:公司
+        db.session.add(g.user)
         #数据库中改动applyform
         try:
             db.session.commit()
