@@ -11,7 +11,7 @@ from .applyinfo import GetApplyinfo
 from .demandcenter import GetDemandCenter
 from .applyform import PostApply
 from .companyapply import CompanyPostApply
-
+from .allwork import GetAllWork
 
 # wx verify info
 api_v1_1.add_resource(WxVerify,'/wx_verify')
@@ -25,3 +25,4 @@ api_v1_1.add_resource(GetDemandCenter,'/demandcenter')
 
 api_v1_1.add_resource(PostApply,'/apply/form')
 api_v1_1.add_resource(CompanyPostApply,'/apply/companyform')
+api_v1_1.add_resource(GetAllWork,'/allwork')

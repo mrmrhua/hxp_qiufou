@@ -10,7 +10,7 @@ from qiniu import Auth,urlsafe_base64_encode
 import requests
 from app.common import send_designer_email,send_admin_email
 
-lm.login_view = 'main.qrlogin'
+lm.login_view = '/qrlogin'
 
 
 # @main.route('/login')
@@ -142,11 +142,11 @@ def auth():
 #
 #     return decorated_function
 
-@main.route('/admin')
-@login_required
-# @is_applying
-def admin():  #补充:只有审核完成的才能进
-    return "hello designers"
+# @main.route('/admin')
+# @login_required
+# # @is_applying
+# def admin():  #补充:只有审核完成的才能进
+#     return "hello designers"
 
 
 @main.route('/applyfail')
@@ -204,18 +204,18 @@ def test():
 
 ## 新一批路由  更新于2017.7.20
 
-@main.route('/')
-def index():
-    return  render_template('main/index.html')
+# @main.route('/')
+# def index():
+#     return  render_template('main/index.html')
+#
+# @main.route('/index')
+# def toindex():
+#         return redirect(url_for('main.index'))
 
-@main.route('/index')
-def toindex():
-        return redirect(url_for('main.index'))
-
-#设计师入驻的详情页
-@main.route('/qrlogin')
-def qrlogin():
-    return render_template('designer_login/qrlogin.html')
+# #设计师入驻的详情页
+# @main.route('/qrlogin')
+# def qrlogin():
+#     return render_template('designer_login/qrlogin.html')
 
 
 
