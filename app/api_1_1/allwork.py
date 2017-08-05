@@ -11,7 +11,6 @@ from app.model import Album,Designwork,Applyform,User,Category,Applywork
 from datetime import datetime
 
 
-
 class GetAllWork(Resource):
     def get(self):
 
@@ -26,105 +25,47 @@ class GetAllWork(Resource):
 
         # 第几页
         page = request.values.get("page")
-        if not page:
-            pass
+        if page:
+            page = int(page)
 
         # 每页数量
         num = request.values.get("num")
         if not num:
             num = 20
 
-
-
         # 去数据库中取这个品类\PAGE
 
-        # 根据category取album,按up_time排序
-        if cat=='-1':
-        # 根据album的USERID去USER表取nickname,headimg
-            return jsonify({
-            'code':0,
-            'data':{
-                'album':[
-                    {'cover':'http://work.houxiaopang.com/FljvySgtb1zs45jg5wrUxZ78UL1V',
-                    'title':'猴小胖页面设计', 'username':'ding','headimg':'http://userhead.houxiaopang.com/ovS1y1QNqRbuMENMA4Jbxj45SJHs.jpg',
-                     'up_time':'2017-08-01 17:17:53','user_id':22,'category':2,'work_id':1},
-                    {'cover': 'http://work.houxiaopang.com/FljvySgtb1zs45jg5wrUxZ78UL1V',
-                     'title': '猴小胖页面设计', 'username': 'ding',
-                     'headimg': 'http://userhead.houxiaopang.com/ovS1y1QNqRbuMENMA4Jbxj45SJHs.jpg',
-                     'up_time': '2017-08-01 17:17:53', 'user_id': 22, 'category': 1,'work_id':1},
-                    {'cover': 'http://work.houxiaopang.com/FljvySgtb1zs45jg5wrUxZ78UL1V',
-                     'title': '猴小胖页面设计', 'username': 'ding',
-                     'headimg': 'http://userhead.houxiaopang.com/ovS1y1QNqRbuMENMA4Jbxj45SJHs.jpg',
-                     'up_time': '2017-08-01 17:17:53', 'user_id': 22, 'category': 4,'work_id':1},
-                    {'cover': 'http://work.houxiaopang.com/FljvySgtb1zs45jg5wrUxZ78UL1V',
-                     'title': '猴小胖页面设计', 'username': 'ding',
-                     'headimg': 'http://userhead.houxiaopang.com/ovS1y1QNqRbuMENMA4Jbxj45SJHs.jpg',
-                     'up_time': '2017-08-01 17:17:53', 'user_id': 22, 'category': 2,'work_id':1},
-                    {'cover': 'http://work.houxiaopang.com/FljvySgtb1zs45jg5wrUxZ78UL1V',
-                     'title': '猴小胖页面设计', 'username': 'ding',
-                     'headimg': 'http://userhead.houxiaopang.com/ovS1y1QNqRbuMENMA4Jbxj45SJHs.jpg',
-                     'up_time': '2017-08-01 17:17:53', 'user_id': 22, 'category': 1,'work_id':1},
-                    {'cover': 'http://work.houxiaopang.com/FljvySgtb1zs45jg5wrUxZ78UL1V',
-                     'title': '猴小胖页面设计', 'username': 'ding',
-                     'headimg': 'http://userhead.houxiaopang.com/ovS1y1QNqRbuMENMA4Jbxj45SJHs.jpg',
-                     'up_time': '2017-08-01 17:17:53', 'user_id': 22, 'category': 5,'work_id':1}
+        # 根据品类挑选
+        # if cat == '-1':   #全部都要
+        # Album.query.filter_by(category = cat)
+        PER_PAGE = num
 
-                ]
-            }
-        })
-        elif cat=='1':
-            return jsonify({
-                'code': 0,
-                'data': {
-                    'album': [
-                        {'cover': 'http://work.houxiaopang.com/Fp2CeTKS2COElLXk1Rj1graAr6ZV',
-                         'title': 'PPT项目', 'username': 'ding',
-                         'headimg': 'http://userhead.houxiaopang.com/ovS1y1X5otcOS9j3ZFbKt00e8IMA.jpg',
-                         'up_time': '2017-07-01 17:17:53', 'user_id': 22, 'category': 1, 'work_id': 1},
-                        {'cover': 'http://work.houxiaopang.com/Fp2CeTKS2COElLXk1Rj1graAr6ZV',
-                         'title': 'PPT项目', 'username': 'ding',
-                         'headimg': 'http://userhead.houxiaopang.com/ovS1y1X5otcOS9j3ZFbKt00e8IMA.jpg',
-                         'up_time': '2017-07-01 17:17:53', 'user_id': 22, 'category': 1, 'work_id': 1},
-                        {'cover': 'http://work.houxiaopang.com/Fp2CeTKS2COElLXk1Rj1graAr6ZV',
-                         'title': 'PPT项目', 'username': 'ding',
-                         'headimg': 'http://userhead.houxiaopang.com/ovS1y1X5otcOS9j3ZFbKt00e8IMA.jpg',
-                         'up_time': '2017-07-01 17:17:53', 'user_id': 22, 'category': 1, 'work_id': 1},
-                        {'cover': 'http://work.houxiaopang.com/Fp2CeTKS2COElLXk1Rj1graAr6ZV',
-                         'title': 'PPT项目', 'username': 'ding',
-                         'headimg': 'http://userhead.houxiaopang.com/ovS1y1X5otcOS9j3ZFbKt00e8IMA.jpg',
-                         'up_time': '2017-07-01 17:17:53', 'user_id': 22, 'category': 1, 'work_id': 1},
-                        {'cover': 'http://work.houxiaopang.com/Fp2CeTKS2COElLXk1Rj1graAr6ZV',
-                         'title': 'PPT项目', 'username': 'ding',
-                         'headimg': 'http://userhead.houxiaopang.com/ovS1y1X5otcOS9j3ZFbKt00e8IMA.jpg',
-                         'up_time': '2017-07-01 17:17:53', 'user_id': 22, 'category': 1, 'work_id': 1},
-                        {'cover': 'http://work.houxiaopang.com/Fp2CeTKS2COElLXk1Rj1graAr6ZV',
-                         'title': 'PPT项目', 'username': 'ding',
-                         'headimg': 'http://userhead.houxiaopang.com/ovS1y1X5otcOS9j3ZFbKt00e8IMA.jpg',
-                         'up_time': '2017-07-01 17:17:53', 'user_id': 22, 'category': 1, 'work_id': 1},{'cover': 'http://work.houxiaopang.com/Fp2CeTKS2COElLXk1Rj1graAr6ZV',
-                         'title': 'PPT项目', 'username': 'ding',
-                         'headimg': 'http://userhead.houxiaopang.com/ovS1y1X5otcOS9j3ZFbKt00e8IMA.jpg',
-                         'up_time': '2017-07-01 17:17:53', 'user_id': 22, 'category': 1, 'work_id': 1}
-                    ]
-                }
-            })
+        if not designer_id:
+            if cat == '-1':  # 全部都要
+                al = Album.query.order_by(Album.up_time.desc()).paginate(page,PER_PAGE,False).items
+            else:
+                al = Album.query.filter_by(category=cat).order_by(Album.up_time.desc()).paginate(page,PER_PAGE,False).items
         else:
-            return jsonify({
-                'code': 0,
-                'data': {
-                    'album': [
-                        {'cover': 'http://work.houxiaopang.com/FjHkT8-cmDW-aOJmgzHeiyxw-WpJ',
-                         'title': 'UI设计', 'username': 'WU',
-                         'headimg': 'http://userhead.houxiaopang.com/ovS1y1eqGJuYTLmesIuyEY5d4Ttg.jpg',
-                         'up_time': '2017-05-01 17:17:53', 'user_id': 22, 'category': 2, 'work_id': 1},
-                        {'cover': 'http://work.houxiaopang.com/FjHkT8-cmDW-aOJmgzHeiyxw-WpJ',
-                         'title': 'UI设计', 'username': 'WU',
-                         'headimg': 'http://userhead.houxiaopang.com/ovS1y1eqGJuYTLmesIuyEY5d4Ttg.jpg',
-                         'up_time': '2017-05-01 17:17:53', 'user_id': 22, 'category': 2, 'work_id': 1},
-                        {'cover': 'http://work.houxiaopang.com/FjHkT8-cmDW-aOJmgzHeiyxw-WpJ',
-                         'title': 'UI设计', 'username': 'WU',
-                         'headimg': 'http://userhead.houxiaopang.com/ovS1y1eqGJuYTLmesIuyEY5d4Ttg.jpg',
-                         'up_time': '2017-05-01 17:17:53', 'user_id': 22, 'category': 2, 'work_id': 1},
+            if cat == '-1':  # 全部都要
+                al = Album.query.filter_by(user_id=designer_id).order_by(Album.up_time.desc()).paginate(page,PER_PAGE,False).items
+            else:
+                al = Album.query.filter_by(user_id=designer_id,category=cat).order_by(Album.up_time.desc()).paginate(page,PER_PAGE,False).items
 
-                    ]
-                }
-            })
+        count = len(al)
+        album = []
+        for i in al:
+            print(i)
+            each_album={
+             'work_id':i.id,
+             'category':i.category,
+             'cover':i.cover,
+             'title':i.title,
+             'up_time':i.up_time,
+             'category':i.category,
+             'username':i.designer.nickname,
+             'headimg' :  i.designer.headimg,
+             'user_id' : i.designer.id,
+            }
+            album.append(each_album)
+
+        return jsonify({'code':0,'data':{'album':album,'total':count}})

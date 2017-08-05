@@ -18,9 +18,11 @@ class User(UserMixin,db.Model):
     # 可用Designwork.designer来访问
     # designworks = db.relationship('Designwork', backref='designer')
     # 可用Album.designer来访问
-    # albums = db.relationship('Album', backref='designer')
+    albums = db.relationship('Album', backref='designer')
     # 可用Applyform.apply来访问
     applyform = db.relationship("Applyform",backref="user")
+
+
     def __repr__(self):
         return '<User %r>' % self.nickname
 
@@ -110,7 +112,7 @@ class Applyform(db.Model):
     wx = db.Column(db.String(64), nullable=True)
     project_text = db.Column(db.Text, nullable=True)
     blog_url = db.Column(db.String(255), nullable=True)
-    unionid = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
+    unionid = db.Column(db.Integer, db.ForeignKey('users.unionid'), nullable=True)
 
     # 个人设计师
     sex = db.Column(db.Integer,nullable=True)
