@@ -10,7 +10,7 @@
  * Features & Bugs: https://github.com/warby-/jquery-pagewalkthrough/issues
  ***/
 
-;(function($, window, document, undefined) {
+;(function ($, window, document, undefined) {
   'use strict';
 
   /**
@@ -36,11 +36,11 @@
    */
 
   var methods = {
-    isActive: function() {
+    isActive: function () {
       return !!_isWalkthroughActive;
     },
 
-    index: function(value) {
+    index: function (value) {
       if (typeof value !== 'undefined') {
         _index = value;
       }
@@ -49,7 +49,7 @@
     },
 
     //init method
-    init: function(options) {
+    init: function (options) {
       options = $.extend(true, {}, $.fn.pagewalkthrough.defaults, options);
       var that = this;
 
@@ -62,7 +62,7 @@
 
       options._element = this;
 
-      return this.each(function(i) {
+      return this.each(function (i) {
         options = options || {};
         options.elementID = options.name;
 
@@ -90,7 +90,7 @@
       });
     },
 
-    renderOverlay: function() {
+    renderOverlay: function () {
 
       // if each walkthrough has onLoad: true, log warning message
       if (_counter > 1) {
@@ -111,7 +111,7 @@
         showStep();
         showButton('jpwClose', 'body');
 
-        setTimeout(function() {
+        setTimeout(function () {
           //call onAfterShow callback
           if (isFirstStep() && _firstTimeLoad) {
             if (!onAfterShow()) {
@@ -124,7 +124,7 @@
       }
     },
 
-    restart: function(e) {
+    restart: function (e) {
       if (isFirstStep()) {
         return;
       }
@@ -137,7 +137,7 @@
       showStep();
     },
 
-    close: function() {
+    close: function () {
       var options = _activeWalkthrough;
 
       onLeave(true);
@@ -155,21 +155,21 @@
       setCookie('_walkthrough-' + _activeId, 0, 365);
       _isCookieLoad = getCookie('_walkthrough-' + _activeId);
 
-      $jpwOverlay.fadeOut('slow', function() {
+      $jpwOverlay.fadeOut('slow', function () {
         $(this).remove();
       });
 
-      $jpWalkthrough.fadeOut('slow', function() {
+      $jpWalkthrough.fadeOut('slow', function () {
         $(this).html('').remove();
       });
 
-      $('#jpwClose').fadeOut('slow', function() {
+      $('#jpwClose').fadeOut('slow', function () {
         $(this).remove();
       });
 
     },
 
-    show: function(name, e) {
+    show: function (name, e) {
       // If no name, then first argument is event
       e = name == null ? name : e;
 
@@ -196,7 +196,7 @@
       }
     },
 
-    next: function(e) {
+    next: function (e) {
       _firstTimeLoad = false;
       if (isLastStep() || !onLeave(e)) {
         return;
@@ -204,12 +204,12 @@
 
       _index = parseInt(_index, 10) + 1;
       if (!onEnter(e)) {
-          methods.next();
+        methods.next();
       }
       showStep('next');
     },
 
-    prev: function(e) {
+    prev: function (e) {
       if (isFirstStep() || !onLeave(e)) {
         return;
       }
@@ -221,7 +221,7 @@
       showStep('prev');
     },
 
-    getOptions: function(activeWalkthrough) {
+    getOptions: function (activeWalkthrough) {
       var _wtObj;
 
       //get only current active walkthrough
@@ -242,11 +242,11 @@
       return _wtObj;
     },
 
-    refresh: function() {
-        // Stricly speaking, a skipDirection should never
-        // be needed, but I'd rather provide one at this point
-        // than watch it explode...
-        showStep('next');
+    refresh: function () {
+      // Stricly speaking, a skipDirection should never
+      // be needed, but I'd rather provide one at this point
+      // than watch it explode...
+      showStep('next');
     }
   }; //end public method
 
@@ -260,32 +260,32 @@
       scrollTarget = getScrollParent(targetElement),
       maxScroll, scrollTo;
 
-      if (step.popup.type !== 'modal' && !targetElement.length) {
-        if (step.popup.fallback === 'skip' ||
-            typeof step.popup.fallback === 'undefined') {
-          methods[skipDirection]();
-          return;
-        }
-
-        step.popup.type = step.popup.fallback;
+    if (step.popup.type !== 'modal' && !targetElement.length) {
+      if (step.popup.fallback === 'skip' ||
+        typeof step.popup.fallback === 'undefined') {
+        methods[skipDirection]();
+        return;
       }
 
-      // For modals, scroll to the top.  For tooltips, try and center the target
-      // (wrapper) element in the screen
-      maxScroll = scrollTarget[0].scrollHeight - scrollTarget.outerHeight();
+      step.popup.type = step.popup.fallback;
+    }
 
-      if (step.autoScroll !== false) {
-        if (step.popup.type === 'modal') {
-          scrollTo = 0;
-        } else {
-          scrollTo = Math.floor(
-            targetElement.offset().top - ($(window).height() / 2) +
-                scrollTarget.scrollTop()
-          );
-        }
+    // For modals, scroll to the top.  For tooltips, try and center the target
+    // (wrapper) element in the screen
+    maxScroll = scrollTarget[0].scrollHeight - scrollTarget.outerHeight();
+
+    if (step.autoScroll !== false) {
+      if (step.popup.type === 'modal') {
+        scrollTo = 0;
       } else {
-        scrollTo = scrollTarget.scrollTop();
+        scrollTo = Math.floor(
+          targetElement.offset().top - ($(window).height() / 2) +
+          scrollTarget.scrollTop()
+        );
       }
+    } else {
+      scrollTo = scrollTarget.scrollTop();
+    }
 
     // @TODO: simplify this logic
     //
@@ -332,7 +332,7 @@
 
     // Extend step options with defaults
     options.steps[_index] = $.extend(
-        true, {}, $.fn.pagewalkthrough.defaults.steps[0], step
+      true, {}, $.fn.pagewalkthrough.defaults.steps[0], step
     );
 
     targetElement = options._element.find(step.wrapper);
@@ -348,8 +348,8 @@
       if (step.wrapper === '' || typeof step.wrapper === 'undefined') {
         // @TODO should we skip here?
         debug('Your walkthrough position is: "' + step.popup.type +
-            '" but wrapper is empty or undefined. Please check your "' +
-            _activeId + '" wrapper parameter.'
+          '" but wrapper is empty or undefined. Please check your "' +
+          _activeId + '" wrapper parameter.'
         );
         return;
       }
@@ -371,23 +371,23 @@
         .height(Math.min(maxHeight, targetElement.outerHeight()))
         .width(targetElement.outerWidth())
         .css({
-             // Recommended to be at least twice the inset box-shadow spread
-            padding: '20px',
-            position: 'absolute',
-            top: targetElement.offset().top - 20, // top/left minus padding
-            left: targetElement.offset().left - 20,
-            'z-index': 999998,
-            'box-shadow': '0 0 1px 10000px rgba(0, 0, 0, 0.6)'
+          // Recommended to be at least twice the inset box-shadow spread
+          padding: '20px',
+          position: 'absolute',
+          top: targetElement.offset().top - 20, // top/left minus padding
+          left: targetElement.offset().left - 20,
+          'z-index': 999998,
+          'box-shadow': '0 0 1px 10000px rgba(0, 0, 0, 0.6)'
         })
         .append(
-            $('<div>')
-                .css({
-                    position: 'absolute',
-                    top: 0,
-                    bottom: 0,
-                    left: 0,
-                    right: 0
-                })
+          $('<div>')
+            .css({
+              position: 'absolute',
+              top: 0,
+              bottom: 0,
+              left: 0,
+              right: 0
+            })
         )
         .appendTo($jpWalkthrough);
 
@@ -434,7 +434,7 @@
     $jpwTooltip.css({
       'position': 'absolute',
       'left': '50%',
-      'top': 'calc('+$(document).scrollTop()+'px + 25%)',
+      'top': 'calc(' + $(document).scrollTop() + 'px + 25%)',
       'margin-left': -(parseInt(step.popup.width, 10) + 60) / 2 + 'px',
       'z-index': '999999'
     });
@@ -444,10 +444,10 @@
       '<div id="topRight"></div>' +
       '</div>' +
 
-    '<div id="tooltipInner">' +
+      '<div id="tooltipInner">' +
       '</div>' +
 
-    '<div id="tooltipBottom">' +
+      '<div id="tooltipBottom">' +
       '<div id="bottomLeft"></div>' +
       '<div id="bottomRight"></div>' +
       '</div>');
@@ -488,8 +488,8 @@
       arrow = 30;
 
     var textRotation = (typeof step.popup.contentRotation === 'undefined' ||
-        parseInt(step.popup.contentRotation, 10) === 0) ? clearRotation() :
-        setRotation(parseInt(step.popup.contentRotation, 10));
+    parseInt(step.popup.contentRotation, 10) === 0) ? clearRotation() :
+      setRotation(parseInt(step.popup.contentRotation, 10));
 
 
     // Remove overlay background to prevent double-transparency
@@ -502,10 +502,10 @@
       '<div id="topRight"></div>' +
       '</div>' +
 
-    '<div id="tooltipInner">' +
+      '<div id="tooltipInner">' +
       '</div>' +
 
-    '<div id="tooltipBottom">' +
+      '<div id="tooltipBottom">' +
       '<div id="bottomLeft"></div>' +
       '<div id="bottomRight"></div>' +
       '</div>');
@@ -518,8 +518,8 @@
     })
       .append(tooltipSlide)
       .wrapInner($('<div />', {
-          id: 'tooltipWrapper',
-          style: 'width:' + cleanValue(parseInt(step.popup.width, 10) + 30)
+        id: 'tooltipWrapper',
+        style: 'width:' + cleanValue(parseInt(step.popup.width, 10) + 30)
       }))
       .appendTo($jpWalkthrough);
 
@@ -530,32 +530,28 @@
     $('#tooltipInner').append(getContent(step)).show();
 
     $jpwTooltip.append(
-        '<span class="' + step.popup.position + '">&nbsp;</span>'
+      '<span class="' + step.popup.position + '">&nbsp;</span>'
     );
 
     switch (step.popup.position) {
 
       case 'top':
-        top = overlayHoleTop - ($jpwTooltip.height() + (arrow / 2)) +
-            parseInt(step.popup.offsetVertical, 10) - 86;
-        left = (overlayHoleLeft + (overlayHoleWidth / 2)) -
-          ($jpwTooltip.width() / 2) - 5 +
-          parseInt(step.popup.offsetHorizontal, 10);
-        arrowLeft = ($jpwTooltip.width() / 2) - arrow +
-            parseInt(step.popup.offsetArrowHorizontal, 10);
+        top = 411;
+        left = 20;
+        arrowLeft = 90;
         arrowTop = (step.popup.offsetArrowVertical) ?
-            parseInt(step.popup.offsetArrowVertical, 10) :
-            '';
+          parseInt(step.popup.offsetArrowVertical, 10) :
+          '';
         break;
       case 'right':
         top = overlayHoleTop - (arrow / 2) +
-            parseInt(step.popup.offsetVertical, 10);
+          parseInt(step.popup.offsetVertical, 10);
         left = overlayHoleLeft + overlayHoleWidth + (arrow / 2) +
-            parseInt(step.popup.offsetHorizontal, 10) + 105;
+          parseInt(step.popup.offsetHorizontal, 10) + 105;
         arrowTop = arrow + parseInt(step.popup.offsetArrowVertical, 10);
         arrowLeft = (step.popup.offsetArrowHorizontal) ?
-            parseInt(step.popup.offsetArrowHorizontal, 10) :
-            '';
+          parseInt(step.popup.offsetArrowHorizontal, 10) :
+          '';
         break;
       case 'bottom':
         top = overlayHoleTop + overlayHoleHeight +
@@ -564,20 +560,20 @@
           ($jpwTooltip.width() / 2) - 105 +
           parseInt(step.popup.offsetHorizontal, 10);
         arrowLeft = (($jpwTooltip.width() / 2) - arrow) +
-            parseInt(step.popup.offsetArrowHorizontal, 10);
+          parseInt(step.popup.offsetArrowHorizontal, 10);
         arrowTop = (step.popup.offsetArrowVertical) ?
-            parseInt(step.popup.offsetArrowVertical, 10) :
-            '';
+          parseInt(step.popup.offsetArrowVertical, 10) :
+          '';
         break;
       case 'left':
         top = overlayHoleTop - (arrow / 2) +
-            parseInt(step.popup.offsetVertical, 10);
+          parseInt(step.popup.offsetVertical, 10);
         left = overlayHoleLeft - $jpwTooltip.width() - (arrow) +
-            parseInt(step.popup.offsetHorizontal, 10) - 105;
+          parseInt(step.popup.offsetHorizontal, 10) - 105;
         arrowTop = arrow + parseInt(step.popup.offsetArrowVertical, 10);
         arrowLeft = (step.popup.offsetArrowVertical) ?
-            parseInt(step.popup.offsetArrowHorizontal, 10) :
-            '';
+          parseInt(step.popup.offsetArrowHorizontal, 10) :
+          '';
         break;
     }
 
@@ -608,7 +604,7 @@
 
     try {
       content = $('body').find(option).html();
-    } catch(e) {
+    } catch (e) {
     }
 
     return content || option;
@@ -654,8 +650,8 @@
   }
 
   /**
-    /* CALLBACK
-    /*/
+   /* CALLBACK
+   /*/
 
   //callback for onLoadHidden cookie
 
@@ -746,7 +742,6 @@
 
     return true;
   }
-
 
 
   /**
@@ -842,7 +837,7 @@
    *                   otherwise
    */
   function isFirstStep() {
-      return _index === 0;
+    return _index === 0;
   }
 
   /* Get the first scrollable parent of the specified element.
@@ -865,7 +860,7 @@
 
     var position = element.css('position'),
       excludeStaticParent = position === 'absolute',
-      scrollParent = element.parents().filter(function() {
+      scrollParent = element.parents().filter(function () {
         var parent = $(this);
         if (excludeStaticParent && parent.css('position') === 'static') {
           return false;
@@ -890,22 +885,22 @@
 
   /* Next button clicks
    */
-  $(document).on('click', '#jpwNext', function() {
+  $(document).on('click', '#jpwNext', function () {
     $.pagewalkthrough('next');
   });
 
   /* Previous button clicks
    */
-  $(document).on('click', '#jpwPrevious', function() {
+  $(document).on('click', '#jpwPrevious', function () {
     $.pagewalkthrough('prev');
   });
 
   $(document).on(
     'click',
     '#jpwOverlay, #jpwTooltip',
-    function(ev) {
-        ev.stopPropagation();
-        ev.stopImmediatePropagation();
+    function (ev) {
+      ev.stopPropagation();
+      ev.stopImmediatePropagation();
     }
   );
 
@@ -913,7 +908,7 @@
    * WINDOW RESIZE RERENDERER
    */
 
-  $(window).resize(function() {
+  $(window).resize(function () {
     if (_isWalkthroughActive) {
       $.pagewalkthrough('refresh');
     }
@@ -926,7 +921,7 @@
   /**
    * MAIN PLUGIN
    */
-  $.pagewalkthrough = $.fn.pagewalkthrough = function(method) {
+  $.pagewalkthrough = $.fn.pagewalkthrough = function (method) {
 
     if (methods[method]) {
 
@@ -938,7 +933,7 @@
 
       // render the overlay on it has a default walkthrough set to show onload
       if (_hasDefault && _counter < 2) {
-        setTimeout(function() {
+        setTimeout(function () {
           methods.renderOverlay();
         }, 500);
       }
@@ -1040,19 +1035,19 @@
       jpwNext: {
         i18n: '下一步 &rarr;',
         // Function which resolves to a boolean
-        show: function() {
+        show: function () {
           return !isLastStep();
         }
       },
       jpwPrevious: {
         i18n: '&larr; 上一步',
-        show: function() {
+        show: function () {
           return !isFirstStep();
         }
       },
       jpwFinish: {
         i18n: '完成 &#10004;',
-        show: function() {
+        show: function () {
           return isLastStep();
         }
       }
