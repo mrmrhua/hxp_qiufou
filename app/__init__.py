@@ -10,11 +10,7 @@ from .assets import bundle
 import os
 from flask_session import Session
 from flask_cors import CORS,cross_origin
-from sqlalchemy import create_engine
-# from
-# from flask_alembic import Alembic
-# from flask_migrate import Migrate
-
+from flask_migrate import Migrate
 
 db = SQLAlchemy()
 lm = LoginManager()
@@ -24,7 +20,7 @@ assets = Environment()
 sess = Session()
 cors = CORS()
 # alembic = Alembic()
-# migrate = Migrate(db)
+migrate = Migrate()
 
 def create_app():
     app = Flask(__name__,instance_relative_config=True,static_url_path='/static')
@@ -46,7 +42,7 @@ def create_app():
     sess.init_app(app)
     cors.init_app(app,resources={r"/api/*":{"origins":"*"}})
     # alembic.init_app(app)
-    # migrate.init_app(app)
+    migrate.init_app(app,db)
 
     assets.register(bundle)
 

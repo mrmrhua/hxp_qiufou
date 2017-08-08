@@ -10,7 +10,7 @@ from qiniu import Auth,urlsafe_base64_encode
 import requests
 from app.common import send_designer_email,send_admin_email
 
-lm.login_view = '/qrlogin'
+# lm.login_view = '/qrlogin'
 
 
 # @main.route('/login')
@@ -38,67 +38,67 @@ lm.login_view = '/qrlogin'
 #         return  redirect(url_for('.admin'))
 #
 #     return redirect(url_for('.apply'))  #已登录,但是没填完表或审核未通过,去填表
-
-@main.route('/auth')
-def auth():
-    if 'code' not in request.args:
-        # return render_template('tem.html')
-        return "error"
-
-    code = request.args.get('code')
-    # if (request.args.get('state') != session['_csrf_token']):  # csrf
-    #     return 'error'
-    #     # 此处应该禁止操作 ?????????????????????????????????????????????
-
-    result = get_access_token(code)
-
-    if  result is None:   #return 404
-        return "error"
-
-    # 验证身份成功
-
-    userinfo = get_user_info(result.get('access_token'),result.get('openid'))
-
-    nickname = userinfo['nickname']
-    unionid = userinfo['unionid']
-    sex = userinfo['sex']
-    headimg = userinfo['headimgurl']
-
-    # 用户更换头像会导致微信的头像URL失效,因此要先存七牛
-    r = get_wx_head(headimg,unionid)
-    if(r==0):  #抓取不成功
-        return redirect(url_for('main.index'))
-    headimg = 'http://userhead.houxiaopang.com/'+unionid+'.jpg'
-    #存头像结束
-
-
-    session['unionid'] = unionid
-
-    # 根据unionid是否在库,决定是去填表还是去个人中心
-    user = User.query.filter_by(unionid=unionid).first()
-    if user is None:  # 第一次登陆
-        applystatus = APPLYSTATUS['APPLYING']
-        user = User(nickname=nickname, unionid=unionid, sex=sex, headimg=headimg, applystatus=applystatus)
-        db.session.add(user)
-        try:
-            db.session.commit()
-        except:
-            db.session.rollback()()
-
-
-    login_user(user, remember=True)
-    session['applystatus'] = user.applystatus
-    if user.applystatus==APPLYSTATUS['PASS']:  #已审核
-        # 更新一下个人资料
-        return url_for('.admin')   #去个人中心
-
-    if user.applystatus == APPLYSTATUS['NOTPASS']:
-        return redirect(url_for('.reapply'))
-
-    #在提交过程中/或已提交在审核中
-        #留前端处理
-
-    return redirect(url_for('.apply'))
+#
+# @main.route('/auth')
+# def auth():
+#     if 'code' not in request.args:
+#         # return render_template('tem.html')
+#         return "error"
+#
+#     code = request.args.get('code')
+#     # if (request.args.get('state') != session['_csrf_token']):  # csrf
+#     #     return 'error'
+#     #     # 此处应该禁止操作 ?????????????????????????????????????????????
+#
+#     result = get_access_token(code)
+#
+#     if  result is None:   #return 404
+#         return "error"
+#
+#     # 验证身份成功
+#
+#     userinfo = get_user_info(result.get('access_token'),result.get('openid'))
+#
+#     nickname = userinfo['nickname']
+#     unionid = userinfo['unionid']
+#     sex = userinfo['sex']
+#     headimg = userinfo['headimgurl']
+#
+#     # 用户更换头像会导致微信的头像URL失效,因此要先存七牛
+#     r = get_wx_head(headimg,unionid)
+#     if(r==0):  #抓取不成功
+#         return redirect(url_for('main.index'))
+#     headimg = 'http://userhead.houxiaopang.com/'+unionid+'.jpg'
+#     #存头像结束
+#
+#
+#     session['unionid'] = unionid
+#
+#     # 根据unionid是否在库,决定是去填表还是去个人中心
+#     user = User.query.filter_by(unionid=unionid).first()
+#     if user is None:  # 第一次登陆
+#         applystatus = APPLYSTATUS['APPLYING']
+#         user = User(nickname=nickname, unionid=unionid, sex=sex, headimg=headimg, applystatus=applystatus)
+#         db.session.add(user)
+#         try:
+#             db.session.commit()
+#         except:
+#             db.session.rollback()()
+#
+#
+#     login_user(user, remember=True)
+#     session['applystatus'] = user.applystatus
+#     if user.applystatus==APPLYSTATUS['PASS']:  #已审核
+#         # 更新一下个人资料
+#         return url_for('.admin')   #去个人中心
+#
+#     if user.applystatus == APPLYSTATUS['NOTPASS']:
+#         return redirect(url_for('.reapply'))
+#
+#     #在提交过程中/或已提交在审核中
+#         #留前端处理
+#
+#     return redirect(url_for('.apply'))
 
 # 如果在申请状态,跳到applyform,
 # 如果申请通过,跳到个人中心
@@ -148,22 +148,22 @@ def auth():
 # def admin():  #补充:只有审核完成的才能进
 #     return "hello designers"
 
-
-@main.route('/applyfail')
-@login_required
-def reapply():
-    flash('抱歉,您的申请未通过审核.请填写完善信息后重新提交.')
-    # 提示未通过
-    current_user.applystatus = APPLYSTATUS['APPLYING']
-    session['applystatus'] = current_user.applystatus
-    db.session.add(current_user)
-    try:
-        db.session.commit()
-    except:
-        db.session.rollback()()
-    # 状态转为申请中
-    return  redirect(url_for('.apply'))
-    # 自动跳转申请页
+#
+# @main.route('/applyfail')
+# @login_required
+# def reapply():
+#     flash('抱歉,您的申请未通过审核.请填写完善信息后重新提交.')
+#     # 提示未通过
+#     current_user.applystatus = APPLYSTATUS['APPLYING']
+#     session['applystatus'] = current_user.applystatus
+#     db.session.add(current_user)
+#     try:
+#         db.session.commit()
+#     except:
+#         db.session.rollback()()
+#     # 状态转为申请中
+#     return  redirect(url_for('.apply'))
+#     # 自动跳转申请页
 
 
 @main.route('/help/<string:to>')
@@ -184,10 +184,10 @@ def help(to):
 # def gallery():
 #     return  render_template('main/workgallery.html')
 
-
-@main.route('/test')
-def test():
-    return render_template('main/baseform.html')
+#
+# @main.route('/test')
+# def test():
+#     return render_template('main/baseform.html')
 
 # @main.route('/designerlogin')
 # def designerLogin():

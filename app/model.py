@@ -21,7 +21,10 @@ class User(UserMixin,db.Model):
     albums = db.relationship('Album', backref='designer')
     # 可用Applyform.apply来访问
     applyform = db.relationship("Applyform",backref="user")
-
+    # 可用Designer.user来访问
+    info = db.relationship("DesignerInfo",backref="user")
+    # 找类目
+    category = db.relationship('Category_User', backref='user')
 
     def __repr__(self):
         return '<User %r>' % self.nickname
@@ -131,6 +134,8 @@ class Applyform(db.Model):
     ticket = db.Column(db.Integer, nullable=True)
     ticket_num = db.Column(db.Integer,nullable=True)
 
+    # 找类目
+    category = db.relationship('Category', backref='category')
 
     @staticmethod
     def  personal_from_request(request):
@@ -205,6 +210,59 @@ class Category(db.Model):
     def __repr__(self):
         return '<Category of %r>' % self.apply_id
 
+class DesignerInfo(db.Model):
+    __tablename__ = 'designers'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    city = db.Column(db.String(20))
+    tel = db.Column(db.String(11))
+    email = db.Column(db.String(64))
+    qq = db.Column(db.String(16),nullable=True)
+    wx = db.Column(db.String(64),nullable=True)
+    project_text = db.Column(db.Text,nullable=True)
+    blog_url = db.Column(db.String(255),nullable=True)
+    ticket = db.Column(db.Integer,nullable=True)
+    ticket_num = db.Column(db.Integer,nullable=True)
+    
+    # 个人设计师
+    school = db.Column(db.String(64),nullable=True)
+    graduate = db.Column(db.Integer,nullable=True)
+    worktime = db.Column(db.String(16), nullable=True)
+    identity = db.Column(db.Integer,nullable=True)
+
+    # 设计公司/独立工作室
+    company_name = db.Column(db.String(16),nullable=True)
+    company_web = db.Column(db.String(255), nullable=True)
+    company_size = db.Column(db.Integer, nullable=True)
+
+
+    @staticmethod
+    def from_apply(af):
+        return DesignerInfo(user_id = af.user.id,tel=af.tel, city=af.city, email=af.email, qq=af.qq, wx=af.wx, school=af.school,
+                     graduate=af.graduate, project_text=af.project_text, blog_url=af.blog_url,
+                     identity=af.identity, worktime=af.worktime,company_name=af.company_name,company_web=af.company_web,company_size=af.company_size)
+
+    def __repr__(self):
+        return '<Designer %r>' % self.id
+
+class Category_User(db.Model):
+    __tablename__ = 'categories_users'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    category_name =  db.Column(db.String(20))
+
+    def __repr__(self):
+        return '<Category_User % r>' % self.id
+
+    @staticmethod
+    def from_apply(af):
+        cat = af.category
+        cus = []
+        for i in cat:
+            cus.append(Category_User(category_name=i.category_name,user_id=af.user.id))
+
+        return cus
+
 class Designwork(db.Model):
     __tablename__ = 'designworks'
     id = db.Column(db.Integer, primary_key=True)
@@ -242,3 +300,54 @@ class Album(db.Model):
         up_time = datetime.now()
 
         return Album(title=title,cover=cover,description=description,category=category,up_time=up_time,user_id=g.user.id)
+
+class Demand(db.Model):
+    __tablename__ = 'demands'
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(50))
+    description = db.Column(db.Text)
+    desc_img = db.Column(db.String(255), nullable=True)
+    howlong = db.Column(db.String(20), nullable=True)
+    howmuch = db.Column(db.String(20), nullable=True)
+    agent_id  = db.Column(db.Integer,nullable=True)
+    category = db.Column(db.Integer,nullable=True)
+    up_time = db.Column(db.DateTime,nullable=True)
+
+    def __repr__(self):
+        return '<Demand % r>' % self.title
+
+    @staticmethod
+    def from_request(request):
+        title = request.values.get("title")
+        description = request.values.get("description")
+        desc_img = request.values.get("desc_img")
+        howlong = request.values.get("howlong")
+        howmuch = request.values.get("howmuch")
+        agent_id = int(request.values.get("agent_id"))
+        category = int(request.values.get("category"))
+        up_time = datetime.now()
+        return Demand(title=title,description=description,desc_img=desc_img,howlong=howlong,howmuch=howmuch,agent_id=agent_id,category=category,up_time=up_time)
+
+
+class Demand_User(db.Model):
+    __tablename__ = 'demands_users'
+    id = db.Column(db.Integer, primary_key=True)
+    demand_id = db.Column(db.Integer,db.ForeignKey('demands.id'))
+    user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
+    howlong = db.Column(db.String(20), nullable=True)
+    howmuch = db.Column(db.String(20), nullable=True)
+    ideas = db.Column(db.String(255), nullable=True)
+
+    def __repr__(self):
+        return '<Demand_User % r & %r>' % (self.demand_id,self.user_id)
+
+    @staticmethod
+    def from_request(request):
+        demand_id = request.values.get("demand_id")
+        designer_id = g.user.id
+        replyform = json.loads(request.values.get("replyform"))
+        ideas = replyform.get("ideas")
+        howlong = replyform.get("howlong")
+        howmuch = replyform.get("howmuch")
+
+        return Demand_User(demand_id=demand_id,user_id=designer_id,ideas=ideas,howlong=howlong, howmuch=howmuch)

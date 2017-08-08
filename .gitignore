@@ -1,0 +1,26 @@
+# Mac
+.DS_Store
+
+
+#pycharm
+__pycache__
+.idea
+
+#log
+flask.log
+venv/
+#pid
+manage.pid
+
+# Python:
+*.py[cod]
+*.so
+*.egg
+*.egg-info
+dist
+build
+
+app/static/.webaseets-cache
+/flask_session/
+/testing/
+
