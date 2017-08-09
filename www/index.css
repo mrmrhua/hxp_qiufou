@@ -57,25 +57,26 @@ li,a{
 	color: #fff;
 	background: url(http://image.houxiaopang.com/first/logotop.png) no-repeat;
 }
+.nav-li{
+	margin: 0 0;
+	overflow: hidden;
+}
 .navbar-li-wrapper{
-	display: inline-block;
-	margin-left: 60px;
-	float: left;
+	 float: left;
+    padding: 0 10%;
+    line-height: 50px;
+    list-style: none;
 }
 .nav-active{
-	padding-bottom: 1px;
 	border-bottom:2px solid #d01667; 
 }
 .navbar-li-wrapper li{
-	display: inline-block;
-	margin-left: 20px;
-	margin-right: 20px;
-	line-height: 30px;
-	height: 30px;
-	font-size: 20px;
+	float: left;
+    cursor: pointer;
+    margin-right: 25px;
+    font-size: 20px;
 }
 .navbar-li-wrapper li:hover{
-	padding-bottom: 1px;
 	border-bottom:2px solid #d01667; 
 }
 
@@ -383,7 +384,7 @@ li,a{
      display: inline-block;
      float: left;
      width: 10%;
-     text-align: center;
+     text-align: left;
 }
 .footer-middel-right{
 	margin-right: 100px;
@@ -398,7 +399,7 @@ li,a{
 .footer-right{
 	display: inline-block;
 	float: left;
-	text-align: center;
+	text-align: left;
 }
 .footer-right p{
 	color: #7a7a7a;
