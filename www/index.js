@@ -11,8 +11,6 @@ window.onload=function(){
   });
   var categorylist = document.getElementsByClassName('category')[0];
   var list = categorylist.getElementsByTagName('li');
-  var navul = document.getElementsByClassName('nav-li')[0];
-  var navlist = navul.getElementsByTagName('li');
   categorylist.addEventListener("click",function(event){
       var event = event || window.event;
       var target = event.target || event.srcElement;
@@ -31,24 +29,6 @@ window.onload=function(){
         parentNode.setAttribute('class','active');
       }
       	
-  });
-  navul.addEventListener("click",function(event){
-  	// body...
-  	  var event = event || window.event;
-      var target = event.target || event.srcElement;
-      var parentNode = target.parentNode;
-      if(target.nodeName=='UL'){
-      	return;
-      }
-      for(var i=0;i<navlist.length;i++){
-      	navlist[i].setAttribute('class','');
-      }
-       if(target.nodeName=="li"){   	
-         target.setAttribute('class','nav-active');
-      }
-      else{
-        parentNode.setAttribute('class','nav-active');
-      }
   });
 }
 function triggle(el,className){
