@@ -1,10 +1,10 @@
 from  flask import  session,jsonify,request,url_for
 from flask_restful import Resource
 import json
-from app.model import User,db
+from app.models import User,db
 from config import APPLYSTATUS,SEX
 from app.common import auth
-from app.model import Album,Designwork
+from app.models import Album,Designwork
 from datetime import datetime
 
 

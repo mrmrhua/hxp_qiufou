@@ -56,8 +56,8 @@ def create_app():
     from .add_project import add_project as add_project_bp
     app.register_blueprint(add_project_bp)
 
-    from .designers import designers as designers_bp
-    app.register_blueprint(designers_bp)
+    #from .designers import designers as designers_bp
+    #app.register_blueprint(designers_bp)
 
     #个人中心
     from .admindash import api_dash_bp as admindash_bp

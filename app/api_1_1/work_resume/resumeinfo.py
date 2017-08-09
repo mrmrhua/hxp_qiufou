@@ -1,6 +1,6 @@
 from  flask import  session,jsonify,g,request
 from flask_restful import Resource
-from app.model import Album,Designwork,Applyform,User,Category,Applywork
+from app.models import Album,Designwork,Applyform,User,Category,Applywork
 
 
 

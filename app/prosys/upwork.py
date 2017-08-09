@@ -7,7 +7,7 @@ import os
 from  config import qiniu_access_key,qiniu_secret_key
 import  json
 from app import db
-from app.model import Historywork,Milestone
+from app.models import Historywork,Milestone
 from datetime import datetime
 
 class UpWork(Resource):

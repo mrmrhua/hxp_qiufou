@@ -1,6 +1,6 @@
 from  flask import  request,jsonify
 from flask_restful import Resource
-from app.model import Project,Milestone,Historywork
+from app.models import Project,Milestone,Historywork
 from app import db
 from datetime import datetime
 

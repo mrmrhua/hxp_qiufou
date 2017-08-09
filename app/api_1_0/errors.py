@@ -22,5 +22,5 @@ def internalerror():
 @api_bp.errorhandler(Exception)
 def internal_server_error(e):
         current_app.logger.exception('error 500: %s', e)
-        send_admin_email('mrmrhua@126.com', '应用内部错误', '')
+        send_admin_email('mrmrhua@126.com', '应用内部错误', e)
         return internalerror()

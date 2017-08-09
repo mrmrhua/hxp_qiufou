@@ -4,7 +4,7 @@ from flask_restful import Resource
 from flask_login import current_user
 from app.common import auth
 import json
-from app.model import User,db,Demand_User
+from app.models import User,db,Demand_User
 from config import APPLYSTATUS,SEX
 
 class ReplyDemand(Resource):

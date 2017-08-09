@@ -4,7 +4,7 @@ from flask_restful import Resource
 from flask_login import current_user
 from app.common import  support_jsonp,get_access_token,get_user_info,get_wx_head
 import json
-from app.model import User,db,Demand
+from app.models import User,db,Demand
 from config import APPLYSTATUS,SEX
 
 class DemandDeatil(Resource):

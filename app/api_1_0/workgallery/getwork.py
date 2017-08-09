@@ -1,7 +1,6 @@
 from  flask import  request,jsonify,current_app
 from flask_restful import Resource
-from app.model import Designwork,User
-from app import db
+from app.models import Designwork
 
 class GetGalleryWork(Resource):
     def get(self):

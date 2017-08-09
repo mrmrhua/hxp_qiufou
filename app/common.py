@@ -12,7 +12,7 @@ from datetime import timedelta
 from flask import make_response, request, current_app,g
 from functools import update_wrapper
 from flask.ext.httpauth import HTTPTokenAuth
-from app.model import User
+from app.models import User
 
 
 def get_access_token(code):

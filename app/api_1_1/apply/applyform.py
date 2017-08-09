@@ -1,7 +1,7 @@
 
 from  flask import  request,jsonify,current_app,session,g
 from flask_restful import Resource
-from app.model import Applyform,Category,Applywork
+from app.models import Applyform,Category,Applywork
 from app import db,mail
 from app.common import send_admin_email,send_designer_email,send_apply_email_to_admin
 import json
