@@ -1,5 +1,7 @@
 from app import db
 from sqlalchemy.dialects.mysql import INTEGER
+import datetime
+
 class DesignerInfo(db.Model):
     __tablename__ = 'designers'
     id = db.Column(INTEGER(unsigned=True), primary_key=True)
@@ -35,23 +37,57 @@ class DesignerInfo(db.Model):
     def __repr__(self):
         return '<Designer %r>' % self.id
 
-class Category_User(db.Model):
-    __tablename__ = 'categories_users'
+Category_User = db.Table('categories_users',
+                    db.Column('user_id', INTEGER(unsigned=True), db.ForeignKey('users.id')),
+                    db.Column('cat_id', INTEGER(unsigned=True), db.ForeignKey('categories.id'))
+                    )
+
+
+#     @staticmethod
+#     def from_apply(af):
+#         cat = af.category
+#         cus = []
+#         for i in cat:
+#             cus.append(Category_User(category_name=i.category_name,user_id=af.user.id))
+#
+#         return cus
+
+class Category(db.Model):
+    __tablename__ = 'categories'
     id = db.Column(INTEGER(unsigned=True), primary_key=True)
-    user_id = db.Column(INTEGER(unsigned=True), db.ForeignKey('users.id'))
-    category_name =  db.Column(db.String(20))
+    category_name = db.Column(db.String(64))
+    # apply_id = db.Column(INTEGER(unsigned=True), db.ForeignKey('applyforms.id'))
+    users = db.relationship('User',
+                            secondary=Category_User,
+                            backref=db.backref('categories', lazy='dynamic'),
+                            lazy='dynamic')  # lazy = 'dynamic' :关系两侧返回的查询都可接受额外的过滤器
 
     def __repr__(self):
-        return '<Category_User % r>' % self.id
+        return '<Category of %r>' % self.apply_id
 
-    @staticmethod
-    def from_apply(af):
-        cat = af.category
-        cus = []
-        for i in cat:
-            cus.append(Category_User(category_name=i.category_name,user_id=af.user.id))
 
-        return cus
+
+#
+# class Category_User(db.Model):
+#     __tablename__ = 'categories_users'
+#     id = db.Column(INTEGER(unsigned=True), primary_key=True)
+#     user_id = db.Column(INTEGER(unsigned=True), db.ForeignKey('users.id'))
+#     category_name =  db.Column(db.String(20))
+#
+#     def __repr__(self):
+#         return '<Category_User % r>' % self.id
+#
+#     @staticmethod
+#     def from_apply(af):
+#         cat = af.category
+#         cus = []
+#         for i in cat:
+#             cus.append(Category_User(category_name=i.category_name,user_id=af.user.id))
+#
+#         return cus
+
+
+
 
 class Designwork(db.Model):
     __tablename__ = 'designworks'
@@ -75,7 +111,7 @@ class Album(db.Model):
     up_time = db.Column(db.DateTime)
     cover = db.Column(db.String(255))
     # 可用Designwork.album来访问
-    designworks = db.relationship('Designwork',backref='album')
+    designworks = db.relationship('Designwork',backref='album',lazy='dynamic')
     user_id = db.Column(INTEGER(unsigned=True), db.ForeignKey('users.id'))
 
     def __repr__(self):
@@ -90,3 +126,59 @@ class Album(db.Model):
         up_time = datetime.now()
 
         return Album(title=title,cover=cover,description=description,category=category,up_time=up_time,user_id=g.user.id)
+
+
+
+# TAG 系统-多对多
+tag_user = db.Table('tags_users',
+                    db.Column('user_id', INTEGER(unsigned=True), db.ForeignKey('users.id')),
+                    db.Column('tag_id', INTEGER(unsigned=True), db.ForeignKey('tags.id'))
+                    )
+
+
+class Tag(db.Model):
+    __tablename__ = 'tags'
+    id = db.Column(INTEGER(unsigned=True), primary_key=True)
+    tag_name =  db.Column(db.String(20),unique=True)
+    # 多对多关系: 把secondary参数设为关联表
+    users = db.relationship('User',
+                           secondary=tag_user,
+                           backref=db.backref('tags',lazy='dynamic'),
+                            lazy = 'dynamic')  # lazy = 'dynamic' :关系两侧返回的查询都可接受额外的过滤器
+
+    #  多对多关系
+    #  新建关系
+    #  tag.users.append(xxx)
+    #  db.session.add(tag)
+
+    # 列出tag的所有user:  tag.users.all()
+    # 列出user的所有tgas: user.tags.all()
+    # 删除关系 tag.users.remove(user)
+
+    def __repr__(self):
+        return '<Tag: %r>' % (self.tag_name)
+
+
+exp_user = db.Table('exp_user',
+                    db.Column('user_id', INTEGER(unsigned=True), db.ForeignKey('users.id')),
+                    db.Column('exp_id', INTEGER(unsigned=True), db.ForeignKey('experiences.id'))
+                    )
+
+
+class Exp(db.Model):
+    __tablename__ = 'experiences'
+    id = db.Column(INTEGER(unsigned=True), primary_key=True)
+    title =  db.Column(db.String(20))
+    content = db.Column(db.Text)
+    # 多对多关系: 把secondary参数设为关联表
+    users = db.relationship('User',
+                           secondary=exp_user,
+                           backref=db.backref('experiences',lazy='dynamic'),
+                            lazy = 'dynamic')  # lazy = 'dynamic' :关系两侧返回的查询都可接受额外的过滤器
+
+    def __repr__(self):
+        return '<Experience: %r>' % (self.title)
+
+
+
+

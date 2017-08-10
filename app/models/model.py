@@ -23,7 +23,7 @@ class User(UserMixin,db.Model):
     # 可用Designer.user来访问
     info = db.relationship("DesignerInfo",backref="user")
     # 找类目
-    category = db.relationship('Category_User', backref='user')
+    # category = db.relationship('Category_User', backref='user')
 
     def __repr__(self):
         return '<User %r>' % self.nickname

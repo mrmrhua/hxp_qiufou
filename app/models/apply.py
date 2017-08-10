@@ -1,6 +1,14 @@
 from app import db
 from sqlalchemy.dialects.mysql import INTEGER
 from flask import g
+from . import Category_User,Category
+import json
+
+Apply_Category = db.Table('applies_categories',
+                          db.Column('apply_id', INTEGER(unsigned=True), db.ForeignKey('applyforms.id')),
+                          db.Column('cat_id', INTEGER(unsigned=True), db.ForeignKey('categories.id'))
+                          )
+
 class Applyform(db.Model):
     __tablename__ = 'applyforms'
     id = db.Column(INTEGER(unsigned=True), primary_key=True)
@@ -33,7 +41,11 @@ class Applyform(db.Model):
     ticket_num = db.Column(db.Integer,nullable=True)
 
     # 找类目
-    category = db.relationship('Category', backref='category')
+    # category = db.relationship('Category', backref='category')
+    categories = db.relationship('Category',
+                            secondary=Category_User,
+                            backref=db.backref('applys', lazy='dynamic'),
+                            lazy='dynamic')  # lazy = 'dynamic' :关系两侧返回的查询都可接受额外的过滤器
 
     @staticmethod
     def  personal_from_request(request):
@@ -88,6 +100,11 @@ class Applyform(db.Model):
     def __repr__(self):
         return '<Applyform %r>' % self.name
 
+    def add_categories(self,cats):
+        for i in cats:
+            c = Category(i)
+            self.categories.append(c)
+
 
 
 class Applywork(db.Model):
@@ -99,11 +116,14 @@ class Applywork(db.Model):
     def __repr__(self):
         return '<Applywork %r>' % self.work_url
 
-class Category(db.Model):
-    __tablename__ = 'categories'
-    id = db.Column(INTEGER(unsigned=True), primary_key=True)
-    category_name = db.Column(db.String(64))
-    apply_id = db.Column(INTEGER(unsigned=True), db.ForeignKey('applyforms.id'))
 
-    def __repr__(self):
-        return '<Category of %r>' % self.apply_id
+
+
+# class Category(db.Model):
+#     __tablename__ = 'categories'
+#     id = db.Column(INTEGER(unsigned=True), primary_key=True)
+#     category_name = db.Column(db.String(64))
+#     apply_id = db.Column(INTEGER(unsigned=True), db.ForeignKey('applyforms.id'))
+#
+#     def __repr__(self):
+#         return '<Category of %r>' % self.apply_id

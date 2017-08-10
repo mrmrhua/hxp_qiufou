@@ -29,11 +29,20 @@ class PostApply(Resource):
             db.session.rollback()
             return jsonify({'code': -1})
 
-        c = json.loads(request.form.get('category'))
+        # 插入品类
+        cats = json.loads(request.form.get('category'))
+        af.add_categories(cats)
+        db.session.add(af)
+        db.session.commit()
+
+
+
         imgurl = json.loads(request.form.get('img_url'))
-        for t in c:
-            c = Category(category_name=t,apply_id=af.id)
-            db.session.add(c)
+
+
+        # for t in c:
+            # c = Category(category_name=t,apply_id=af.id)
+            # db.session.add(c)
         for w in imgurl:
             aw = Applywork(work_url=w,apply_id=af.id)
             db.session.add(aw)

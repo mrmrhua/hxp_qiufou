@@ -4,7 +4,7 @@ from flask_restful import Resource
 from flask_login import current_user,login_user
 from app.common import  support_jsonp,get_access_token,get_user_info,get_wx_head
 import json
-from app.models import User,db,Applyform,DesignerInfo,Category_User
+from app.models import User,db,Applyform,DesignerInfo,Category_User,Category
 from config import APPLYSTATUS,SEX
 from app.common import auth
 
@@ -24,6 +24,15 @@ class AgreeApply(Resource):
         u = af.user
         u.applystatus = APPLYSTATUS['PASS']
         di = DesignerInfo.from_apply(af)
+        #
+        # /*********************************/
+        #
+        # 从AF取CATEGORY
+        #
+        # c = Category()
+        # u.categories.append(c)
+        # / ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** * /
+
         cus = Category_User.from_apply(af)
         db.session.add(u)
         db.session.add(di)
