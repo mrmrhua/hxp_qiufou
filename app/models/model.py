@@ -4,7 +4,7 @@ from app import lm,db
 from flask import request,json,current_app
 from config import APPLYSTATUS
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer,BadSignature,SignatureExpired
-
+from . import Category
 class User(UserMixin,db.Model):
     __tablename__ = 'users'
     id = db.Column(INTEGER(unsigned=True),primary_key=True)
@@ -20,13 +20,42 @@ class User(UserMixin,db.Model):
     albums = db.relationship('Album', backref='designer')
     # 可用Applyform.apply来访问
     applyform = db.relationship("Applyform",backref="user")
-    # 可用Designer.user来访问
-    info = db.relationship("DesignerInfo",backref="user")
+    # 可用Designer.user来访问  // 一对一关系
+    info = db.relationship("DesignerInfo",uselist=False,backref="user")
     # 找类目
     # category = db.relationship('Category_User', backref='user')
-
+    experiences = db.relationship("Exp",backref="user",cascade="delete,delete-orphan")
     def __repr__(self):
         return '<User %r>' % self.nickname
+
+    def from_admin(self,basic_obj):
+        self.nickname = basic_obj.get("nickname")
+        self.headimg =basic_obj.get("headimg")
+        self.sex = basic_obj.get("sex")
+        # return self
+
+
+    def get_categories_str(self):
+        cats = self.categories.all()
+        strs = []
+        for i in cats:
+            strs.append(i.category_name)
+        return strs
+
+    def get_tags_str(self):
+        tags = self.tags.all()
+        strs = []
+        for i in tags:
+            strs.append(i.tag_name)
+        return strs
+
+    def get_exps_str(self):
+        exps = self.experiences.all()
+        strs = []
+        for i in exps:
+            strs.append({'title':i.title,'desc':i.content})
+        return strs
+
 
     # def set_applied(self):
 

@@ -1,7 +1,8 @@
 from app import db
 from sqlalchemy.dialects.mysql import INTEGER
 import datetime
-
+from flask import g
+import json
 class DesignerInfo(db.Model):
     __tablename__ = 'designers'
     id = db.Column(INTEGER(unsigned=True), primary_key=True)
@@ -13,12 +14,11 @@ class DesignerInfo(db.Model):
     wx = db.Column(db.String(64),nullable=True)
     project_text = db.Column(db.Text,nullable=True)
     blog_url = db.Column(db.String(255),nullable=True)
-    ticket = db.Column(db.Integer,nullable=True)
-    ticket_num = db.Column(db.Integer,nullable=True)
+    startyear = db.Column(db.Integer,nullable=True)
 
     # 个人设计师
     school = db.Column(db.String(64),nullable=True)
-    graduate = db.Column(db.Integer,nullable=True)
+    # graduate = db.Column(db.Integer,nullable=True)
     worktime = db.Column(db.String(16), nullable=True)
     identity = db.Column(db.Integer,nullable=True)
 
@@ -27,12 +27,37 @@ class DesignerInfo(db.Model):
     company_web = db.Column(db.String(255), nullable=True)
     company_size = db.Column(db.Integer, nullable=True)
 
+    #是否只允许甲方查看
+    privacy = db.Column(db.Integer, nullable=True)
+    # 开票情况
+    ticket = db.Column(db.Integer, nullable=True)
+    ticket_num = db.Column(db.Integer, nullable=True)
 
     @staticmethod
     def from_apply(af):
         return DesignerInfo(user_id = af.user.id,tel=af.tel, city=af.city, email=af.email, qq=af.qq, wx=af.wx, school=af.school,
-                     graduate=af.graduate, project_text=af.project_text, blog_url=af.blog_url,
+                     startyear=af.graduate, project_text=af.project_text, blog_url=af.blog_url,
                      identity=af.identity, worktime=af.worktime,company_name=af.company_name,company_web=af.company_web,company_size=af.company_size)
+
+    def from_admin(self,basic_obj,worksetting_obj):
+        if basic_obj:
+            #TODO(DING):需要同时更新  USER表/DESIGNER表/TAG表/EXP表/category表,此处只需更新DESIGNER
+            self.school= basic_obj.get("school")
+            self.city = basic_obj.get("city")
+            self.tel = basic_obj.get("tel")
+            self.email = basic_obj.get("email")
+            self.startyear = basic_obj.get("startyear")
+        if worksetting_obj:
+            self.worktime = str(worksetting_obj.get("worktime"))
+            self.privacy = worksetting_obj.get("privacy")
+            self.ticket = worksetting_obj.get("ticket")
+
+        # return self
+
+
+
+
+
 
     def __repr__(self):
         return '<Designer %r>' % self.id
@@ -61,10 +86,11 @@ class Category(db.Model):
                             secondary=Category_User,
                             backref=db.backref('categories', lazy='dynamic'),
                             lazy='dynamic')  # lazy = 'dynamic' :关系两侧返回的查询都可接受额外的过滤器
+    # def __init__(self,cat):
+    #     self.category_name = cat
 
     def __repr__(self):
-        return '<Category of %r>' % self.apply_id
-
+        return '<Category of %r>' % self.id
 
 
 #
@@ -158,11 +184,11 @@ class Tag(db.Model):
     def __repr__(self):
         return '<Tag: %r>' % (self.tag_name)
 
-
-exp_user = db.Table('exp_user',
-                    db.Column('user_id', INTEGER(unsigned=True), db.ForeignKey('users.id')),
-                    db.Column('exp_id', INTEGER(unsigned=True), db.ForeignKey('experiences.id'))
-                    )
+#
+# exp_user = db.Table('exp_user',
+#                     db.Column('user_id', INTEGER(unsigned=True), db.ForeignKey('users.id')),
+#                     db.Column('exp_id', INTEGER(unsigned=True), db.ForeignKey('experiences.id'))
+#                     )
 
 
 class Exp(db.Model):
@@ -171,10 +197,11 @@ class Exp(db.Model):
     title =  db.Column(db.String(20))
     content = db.Column(db.Text)
     # 多对多关系: 把secondary参数设为关联表
-    users = db.relationship('User',
-                           secondary=exp_user,
-                           backref=db.backref('experiences',lazy='dynamic'),
-                            lazy = 'dynamic')  # lazy = 'dynamic' :关系两侧返回的查询都可接受额外的过滤器
+    #  users = db.relationship('User',
+    #                        secondary=exp_user,
+    #                        backref=db.backref('experiences',lazy='dynamic'),
+    #                         lazy = 'dynamic')  # lazy = 'dynamic' :关系两侧返回的查询都可接受额外的过滤器
+    user_id = db.Column(INTEGER(unsigned=True), db.ForeignKey('users.id'))
 
     def __repr__(self):
         return '<Experience: %r>' % (self.title)

@@ -22,23 +22,21 @@ class AgreeApply(Resource):
         if UserExist:
             return jsonify({'code': -1,'data':{'msg':"已存在"}})
         u = af.user
+        # 如果是企业用户,还需设置昵称为企业名称
+        u.nickname = af.company_name
         u.applystatus = APPLYSTATUS['PASS']
-        di = DesignerInfo.from_apply(af)
-        #
-        # /*********************************/
-        #
-        # 从AF取CATEGORY
-        #
-        # c = Category()
-        # u.categories.append(c)
-        # / ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** * /
-
-        cus = Category_User.from_apply(af)
         db.session.add(u)
+        db.session.commit()
+
+        di = DesignerInfo.from_apply(af)
         db.session.add(di)
-        for i in cus:
+        # 添加category_user信息
+        cats = af.categories.all()
+        for i in cats:
+            i.users.append(u)
             db.session.add(i)
         db.session.commit()
+
         return jsonify({'code':0})
 
 

@@ -43,7 +43,7 @@ class Applyform(db.Model):
     # 找类目
     # category = db.relationship('Category', backref='category')
     categories = db.relationship('Category',
-                            secondary=Category_User,
+                            secondary=Apply_Category,
                             backref=db.backref('applys', lazy='dynamic'),
                             lazy='dynamic')  # lazy = 'dynamic' :关系两侧返回的查询都可接受额外的过滤器
 
@@ -65,11 +65,10 @@ class Applyform(db.Model):
         # may be none
         project_text = request.form.get('project_text')
         blog_url = request.form.get('blog_url')
-        user_id = g.user_id
-        # if session:
-        #     unionid = session['unionid']
+        user_id = g.user.id
 
-        return  Applyform(name=name,born='2017',tel=int(tel),city=city,email=email,qq=qq,wx=wx,school=school,major=major,graduate=int(graduate),project_text=project_text,blog_url=blog_url,identity=identity,worktime=worktime,user_id=user_id)
+
+        return  Applyform(name=name,tel=tel,city=city,email=email,qq=qq,wx=wx,school=school,major=major,graduate=int(graduate),project_text=project_text,blog_url=blog_url,identity=identity,worktime=worktime,user_id=user_id)
 
     @staticmethod
     def company_from_request(request):
@@ -84,13 +83,10 @@ class Applyform(db.Model):
         company_name = request.form.get('company_name')
         company_web = request.form.get('company_web')
         company_size = request.form.get('company_size')
-        # ticket = request.form.get('ticket')
-        # ticket_num = request.form.get('ticket_num')
 
         # may be none
         project_text = request.form.get('project_text')
         blog_url = request.form.get('blog_url')
-        # unionid = g.user.unionid
         user_id = g.user_id
         return Applyform(name=name, tel=tel, city=city, email=email, qq=qq, wx=wx,
                          project_text=project_text,company_name = company_name, company_web=company_web,
@@ -100,10 +96,9 @@ class Applyform(db.Model):
     def __repr__(self):
         return '<Applyform %r>' % self.name
 
-    def add_categories(self,cats):
-        for i in cats:
-            c = Category(i)
-            self.categories.append(c)
+    def add_categories(self,cat):
+        c = Category.query.filter_by(category_name=cat).first()
+        self.categories.append(c)
 
 
 

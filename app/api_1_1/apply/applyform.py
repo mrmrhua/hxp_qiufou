@@ -1,7 +1,7 @@
 
 from  flask import  request,jsonify,current_app,session,g
 from flask_restful import Resource
-from app.models import Applyform,Category,Applywork
+from app.models import Applyform,Category,Applywork,User
 from app import db,mail
 from app.common import send_admin_email,send_designer_email,send_apply_email_to_admin
 import json
@@ -13,7 +13,6 @@ from flask_login import current_user
 class PostApply(Resource):
     @auth.login_required
     def post(self):
-        #记录申请
         current_app.logger.info('新收到入驻申请:%s' % request)
         af = Applyform.personal_from_request(request)
         db.session.add(af)
@@ -31,18 +30,12 @@ class PostApply(Resource):
 
         # 插入品类
         cats = json.loads(request.form.get('category'))
-        af.add_categories(cats)
-        db.session.add(af)
+        for i in cats:
+            af.add_categories(i)
+            db.session.add(af)
         db.session.commit()
-
-
-
         imgurl = json.loads(request.form.get('img_url'))
 
-
-        # for t in c:
-            # c = Category(category_name=t,apply_id=af.id)
-            # db.session.add(c)
         for w in imgurl:
             aw = Applywork(work_url=w,apply_id=af.id)
             db.session.add(aw)

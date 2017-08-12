@@ -1,16 +1,14 @@
-
 from flask import Flask
+from flask_assets import Environment
+from flask_cors import CORS
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_login import LoginManager
 from flask_mail import Mail
-from flask_sqlalchemy import SQLAlchemy
-from .exceptions import ValidationError
-from flask_assets import Bundle,Environment
-from .assets import bundle
-import os
-from flask_session import Session
-from flask_cors import CORS,cross_origin
 from flask_migrate import Migrate
+from flask_session import Session
+from flask_sqlalchemy import SQLAlchemy
+from .assets import bundle
+from .exceptions import ValidationError
 
 db = SQLAlchemy()
 lm = LoginManager()
@@ -59,9 +57,7 @@ def create_app():
     #from .designers import designers as designers_bp
     #app.register_blueprint(designers_bp)
 
-    #个人中心
-    from .admindash import api_dash_bp as admindash_bp
-    app.register_blueprint(admindash_bp,url_prefix='/api/v1.1')
+
 
     #API_1_1
     from .api_1_1 import api_1_1 as a_1_1

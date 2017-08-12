@@ -6,7 +6,7 @@ api = Api(api_bp)
 
 # Import apis in the package
 from .randomtoken import RandomToken
-from  .qiniu_uptoken import GetUpToken
+# from  .qiniu_uptoken import GetUpToken
 
 from .applyuptoken import GetApplyUptoken
 # from app.api_1_1.applyform import   Applyinfo
@@ -19,7 +19,7 @@ from .mobile.get_designer_recom import GetDesignerRecom
 # add apis to specific uris
 api.add_resource(RandomToken,'/randomtoken')
 # 设计协作系统上传图片用,现已废弃
-api.add_resource(GetUpToken,'/file/uptoken')
+# api.add_resource(GetUpToken,'/file/uptoken')
 
 #客户端上传图片用
 api.add_resource(GetApplyUptoken,'/apply/uptoken')
