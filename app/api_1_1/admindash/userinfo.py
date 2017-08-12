@@ -20,7 +20,6 @@ class Userinfo(Resource):
             'data':{'usertype':u.usertype,
                 'basic':{
                     'nickname':u.nickname,
-
                     'headimg' :u.headimg,
                     'sex':u.sex,
                     'startyear':info.startyear,
@@ -83,31 +82,35 @@ class Userinfo(Resource):
 
 
 def add_tags(tags):
-    list_t = []
-    for i in tags:
-        # if exist
-        t = Tag.query.filter_by(tag_name=i).first()
-        if not t:
-            t = Tag(tag_name=i)  # a new tag
-            db.session.add(t)
-        list_t.append(t)
+    # list_t = []
+    # for i in tags:
+    #     # if exist
+    #     t = Tag.query.filter_by(tag_name=i).first()
+    #     if not t:
+    #         t = Tag(tag_name=i)  # a new tag
+    #         db.session.add(t)
+    #     list_t.append(t)
+    list_t = [  (Tag.query.filter_by(tag_name=i).first() or Tag(tag_name=i)) for i in tags   ]
     g.user.tags=list_t
+    db.session.bulk_save_objects(list_t)
     db.session.commit()
 
+
+
+
+
 def add_categories(cats):
-    list_c = []
-    for i in cats:
-        c = Category.query.filter_by(category_name=i).first()
-        list_c.append(c)
+    list_c = [ (Category.query.filter_by(category_name=i).first())  for i  in cats ]
+    # for i in cats:
+    #     c = Category.query.filter_by(category_name=i).first()
+    #     list_c.append(c)
     g.user.categories = list_c
+    db.session.bulk_save_objects(list_c)
     db.session.commit()
 
 def add_exps(exps):
-    list_e = []
-    for i in exps:  #反正按新的更新即可
-        e = Exp(title=i.get("title"),content=i.get("desc"))
-        db.session.add(e)
-        list_e.append(e)
+    list_e = [ Exp(title=i.get("title"),content=i.get("desc"))  for i in exps ]
     g.user.experiences = list_e
+    db.session.bulk_save_objects(list_e)
     db.session.commit()
 

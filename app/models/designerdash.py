@@ -1,5 +1,6 @@
 from app import db
 from sqlalchemy.dialects.mysql import INTEGER
+from sqlalchemy.ext.orderinglist import ordering_list
 import datetime
 from flask import g
 import json
@@ -123,6 +124,7 @@ class Designwork(db.Model):
     category = db.Column(db.Integer,default=0)
     up_time = db.Column(db.DateTime)
     album_id = db.Column(INTEGER(unsigned=True),db.ForeignKey('albums.id'))
+    position = db.Column(db.Integer)
 
     def __repr__(self):
         return '<Designwork of %r:%r>' % (self.user_id,self.work_url)
@@ -137,7 +139,7 @@ class Album(db.Model):
     up_time = db.Column(db.DateTime)
     cover = db.Column(db.String(255))
     # 可用Designwork.album来访问
-    designworks = db.relationship('Designwork',backref='album',lazy='dynamic')
+    designworks = db.relationship('Designwork',order_by="Designwork.position",collection_class=ordering_list('position'),backref='album',lazy='dynamic')
     user_id = db.Column(INTEGER(unsigned=True), db.ForeignKey('users.id'))
 
     def __repr__(self):
@@ -153,6 +155,12 @@ class Album(db.Model):
 
         return Album(title=title,cover=cover,description=description,category=category,up_time=up_time,user_id=g.user.id)
 
+    def update_from_request(self,request):
+        self.title = request.values.get("title")
+        self.cover = request.values.get("cover")
+        self.description = request.values.get("description")
+        self.category = request.values.get("category")
+        self.up_time = datetime.now()
 
 
 # TAG 系统-多对多

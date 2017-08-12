@@ -1,5 +1,6 @@
 from flask_login import UserMixin
 from sqlalchemy.dialects.mysql import INTEGER
+from sqlalchemy.ext.orderinglist import ordering_list
 from app import lm,db
 from flask import request,json,current_app
 from config import APPLYSTATUS
