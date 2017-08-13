@@ -1,7 +1,7 @@
 from app import db
 from sqlalchemy.dialects.mysql import INTEGER
 from sqlalchemy.ext.orderinglist import ordering_list
-import datetime
+from datetime import datetime
 from flask import g
 import json
 class DesignerInfo(db.Model):
@@ -120,7 +120,7 @@ class Designwork(db.Model):
     __tablename__ = 'designworks'
     id = db.Column(INTEGER(unsigned=True), primary_key=True)
     work_url = db.Column(db.String(255))
-    user_id = db.Column(INTEGER(unsigned=True), db.ForeignKey('users.id'))
+    # user_id = db.Column(INTEGER(unsigned=True), db.ForeignKey('users.id'))
     category = db.Column(db.Integer,default=0)
     up_time = db.Column(db.DateTime)
     album_id = db.Column(INTEGER(unsigned=True),db.ForeignKey('albums.id'))
@@ -139,7 +139,7 @@ class Album(db.Model):
     up_time = db.Column(db.DateTime)
     cover = db.Column(db.String(255))
     # 可用Designwork.album来访问
-    designworks = db.relationship('Designwork',order_by="Designwork.position",collection_class=ordering_list('position'),backref='album',lazy='dynamic')
+    designworks = db.relationship('Designwork',order_by="Designwork.position",collection_class=ordering_list('position'),backref='album',cascade='delete',lazy='dynamic')
     user_id = db.Column(INTEGER(unsigned=True), db.ForeignKey('users.id'))
 
     def __repr__(self):

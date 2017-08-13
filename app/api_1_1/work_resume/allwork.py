@@ -16,10 +16,12 @@ class GetAllWork(Resource):
             pass
 
         # 第几页
+        # TODO(DYH)
         page = request.values.get("page")
-        if page:
+        if page and page!='undefined':
             page = int(page)
-
+        else:
+            page=1
         # 每页数量
         num = request.values.get("num")
         if not num:

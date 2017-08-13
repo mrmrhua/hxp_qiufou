@@ -2,7 +2,7 @@ from app import db
 from sqlalchemy.dialects.mysql import INTEGER
 from flask import g
 import json
-import datetime
+from datetime import datetime
 class Demand(db.Model):
     __tablename__ = 'demands'
     id = db.Column(db.Integer, primary_key=True)

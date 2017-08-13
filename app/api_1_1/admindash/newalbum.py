@@ -25,9 +25,9 @@ class NewAlbum(Resource):
             db.session.add(al)
 
         wl =  json.loads(request.values.get("work_list"))  #插入作品
-        list_dw = [(Designwork(work_url=i,up_time=datetime.now(),user_id=al.user_id,category=al.category)) for i in wl]
+        list_dw = [(Designwork(work_url=i,up_time= datetime.now(),user_id=al.user_id,category=al.category)) for i in wl]
         al.designworks = list_dw
-        db.session.bulk_save_objects(list_dw)
+        # db.session.bulk_save_objects(list_dw)  # 这句需要去掉,否则重复添加
         # for i in wl:
         #     dw = Designwork(work_url=i,up_time=datetime.now(),album_id=al.id,user_id=al.user_id,category=al.category)
         #     db.session.add(dw)

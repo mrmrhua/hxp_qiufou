@@ -47,6 +47,7 @@ class Applyform(db.Model):
                             backref=db.backref('applys', lazy='dynamic'),
                             lazy='dynamic')  # lazy = 'dynamic' :关系两侧返回的查询都可接受额外的过滤器
 
+    applyworks = db.relationship('Applywork', backref='applyform',cascade='delete')
     @staticmethod
     def  personal_from_request(request):
         name = request.form.get('name')

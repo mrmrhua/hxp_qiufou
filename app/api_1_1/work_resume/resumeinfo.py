@@ -11,7 +11,7 @@ class GetResumeInfo(Resource):
         if not designer_id:
             return jsonify({'code':-1})
         user = User.query.filter_by(id=designer_id).first()
-        di = (user.info)[0]
+        di = user.info
 
         if user.usertype==0:
             de_name = user.nickname
@@ -20,9 +20,10 @@ class GetResumeInfo(Resource):
             de_name= di.company_name
             de_worktime = ''
 
-        field = []
-        for i in user.category:
-            field.append(i.category_name)
+        field = [(i.category_name) for i in user.categories ]
+        # for i in user.category:
+        #     field.append(i.category_name)
+
 
         return jsonify({
             'code':0,

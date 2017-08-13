@@ -18,11 +18,11 @@ class User(UserMixin,db.Model):
     # 可用Designwork.designer来访问
     # designworks = db.relationship('Designwork', backref='designer')
     # 可用Album.designer来访问
-    albums = db.relationship('Album', backref='designer')
+    albums = db.relationship('Album', backref='designer',cascade='delete')
     # 可用Applyform.apply来访问
-    applyform = db.relationship("Applyform",backref="user")
+    applyform = db.relationship("Applyform",backref="user",cascade='delete')
     # 可用Designer.user来访问  // 一对一关系
-    info = db.relationship("DesignerInfo",uselist=False,backref="user")
+    info = db.relationship("DesignerInfo",uselist=False,backref="user",cascade='delete')
     # 找类目
     # category = db.relationship('Category_User', backref='user')
     experiences = db.relationship("Exp",backref="user",cascade="delete,delete-orphan")
