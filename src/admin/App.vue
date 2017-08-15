@@ -11,7 +11,7 @@
                                           style="font-size: 18px;color:#545a5f;">&#xe71f;</i><span
           class="noticenum" v-html="noticenum" v-show="noticenum"></span></li>-->
         <router-link class="w1" tag="li" to="/newalbum" title="上传作品集"><i class="iconfontyyy"
-                                                                        style="font-size: 25px;color:#545a5f;">&#xe68a;</i>
+                                                                         style="font-size: 25px;color:#545a5f;">&#xe68a;</i>
         </router-link>
         <li class="option" style="line-height: 59px;"><span
           style="vertical-align: top;font-size: 12px" v-html="nickname"></span><!--<i
@@ -29,13 +29,13 @@
         <div class="left" v-bind:class="{hid:ifhid}">
           <a>菜单</a>
           <ul>
+            <router-link title="个人资料" tag="li" to="/designer"><i class="iconfontyyy" v-bind:class="{iconfontyyycg:ifhid}"
+                          style="color: #8ca1af;">&#xe74d;</i><span>个人资料</span></router-link>
             <li hidden><i class="iconfontyyy" v-bind:class="{iconfontyyycg:ifhid}"
-                          style="color: #4cb6cb;">&#xe626;</i><span>个人资料</span></li>
-            <li hidden><i class="iconfontyyy" v-bind:class="{iconfontyyycg:ifhid}"
-                          style="color: #537f72;">&#xe67b;</i><span>我的简历</span></li>
+                          style="color: #8ca1af;">&#xe67b;</i><span>我的简历</span></li>
             <router-link title="我的作品集" tag="li" to="/project"><i class="iconfontyyy w2"
-                                                                v-bind:class="{iconfontyyycg:ifhid}"
-                                                                style="color: #8ca1af;">&#xe60d;</i><span>我的作品集</span>
+                                                                 v-bind:class="{iconfontyyycg:ifhid}"
+                                                                 style="color: #8ca1af;">&#xe60d;</i><span>我的作品集</span>
             </router-link>
           </ul>
           <ul style="position: absolute;bottom: 20px;">
@@ -59,7 +59,7 @@
   import token from "@/components/token.js"
 
   if (token == "undefined" || token == "" || token == null) {
-    location.href = "http://houxiaopang.com/qrlogin";
+    //location.href = "http://houxiaopang.com/qrlogin";
   }
 
   export default{
@@ -112,18 +112,13 @@
       },
     },
     created() {
-
-      var that = this;
-      setTimeout(function () {
-        that.noticenum = 2;
-      }, 3000);
+      this.getuserinfo();
     },
     mounted: function () {
-      this.getuserinfo();
-      var pagewalk = localStorage.pagewalkthrough;
+      var pagewalk = window.localStorage.pagewalkthrough;
       if (pagewalk != '1') {
         this.yingdao();
-        localStorage.pagewalkthrough = 1;
+        window.localStorage.pagewalkthrough = 1;
       }
     },
     methods: {
@@ -185,7 +180,7 @@
           timeout: 5000,
           error(e){
             if (e.status === 401) {
-              location.href = "http://houxiaopang.com/qrlogin";
+              //location.href = "http://houxiaopang.com/qrlogin";
             } else {
               alert("网络拥挤，请稍后再试···");
             }
@@ -199,16 +194,18 @@
 <style>
   @font-face {
     font-family: 'iconfont';  /* project id 335733 */
-    src: url('//at.alicdn.com/t/font_ymy0pwi1d2sjdcxr.eot');
-    src: url('//at.alicdn.com/t/font_ymy0pwi1d2sjdcxr.eot?#iefix') format('embedded-opentype'),
-    url('//at.alicdn.com/t/font_ymy0pwi1d2sjdcxr.woff') format('woff'),
-    url('//at.alicdn.com/t/font_ymy0pwi1d2sjdcxr.ttf') format('truetype'),
-    url('//at.alicdn.com/t/font_ymy0pwi1d2sjdcxr.svg#iconfont') format('svg');
+    src: url('//at.alicdn.com/t/font_335733_qxyzy855nps6ecdi.eot');
+    src: url('//at.alicdn.com/t/font_335733_qxyzy855nps6ecdi.eot?#iefix') format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_335733_qxyzy855nps6ecdi.woff') format('woff'),
+    url('//at.alicdn.com/t/font_335733_qxyzy855nps6ecdi.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_335733_qxyzy855nps6ecdi.svg#iconfont') format('svg');
   }
 
   * {
     padding: 0 0;
     margin: 0 0;
+    box-sizing: border-box;
+    letter-spacing: 1px;
   }
 
   body {
@@ -275,7 +272,7 @@
     vertical-align: top;
     cursor: pointer;
     text-align: center;
-    margin-left: -4px;
+    margin-left: -5px;
   }
 
   nav > .contr:hover {
@@ -402,7 +399,6 @@
   }
 
   .content_home > .table_display > .right {
-    overflow-y: auto;
     box-sizing: border-box;
     display: table-cell;
     vertical-align: top;
@@ -430,5 +426,33 @@
     border-radius: 50%;
     top: 10px;
     position: relative;
+  }
+
+
+
+
+  .conbody {
+    margin: 0 auto;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .conbody > p {
+    line-height: 60px;
+    height: 60px;
+    background-color: #f7fafa;
+    padding-left: 15px;
+    font-size: 24px;
+  }
+
+  .conbody > .content {
+    background: #fff;
+    position: absolute;
+    top: 60px;
+    width: 100%;
+    bottom: 0;
+    overflow: auto;
   }
 </style>

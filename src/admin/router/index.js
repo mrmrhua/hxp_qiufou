@@ -4,7 +4,7 @@ import Router from 'vue-router'
 const main = resolve => require(['@/components/Main'], resolve);
 const newAlbum = resolve => require(['@/components/Newalbum'], resolve);
 const project = resolve => require(['@/components/Project'], resolve);
-
+const designer = resolve => require(['@/components/designer'], resolve);
 Vue.use(Router)
 
 export default new Router({
@@ -23,6 +23,11 @@ export default new Router({
       path: '/project',
       name: 'project',
       component: project
+    },
+    {
+      path: '/designer',
+      name: 'designer',
+      component: designer
     }
   ],
 })

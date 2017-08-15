@@ -1,1 +1,14 @@
-<!DOCTYPE html><html lang=zh-cmn-Hans><head><meta charset=UTF-8><title>猴小胖设计服务专家——找到更好的设计师</title><meta http-equiv=X-UA-Compatible content="ie=edge"><meta name=viewport content="width=device-width,initial-scale=1"><link rel="shortcut icon" href=http://image.houxiaopang.com/houicon.ico><link rel=stylesheet href=./static/css/cropper.css><link rel=stylesheet href=./static/css/jquery.pagewalkthrough.css><link href=./static/css/app.4caa6e8e4306469fc401455d0196d283.css rel=stylesheet></head><body><div id=app></div><script src=https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js></script><script src=http://image.houxiaopang.com/static/baseform/js/qiniu.js></script><script src=https://cdn.staticfile.org/plupload/2.1.8/plupload.full.min.js></script><script src=./static/js/jquery.pagewalkthrough.js></script><script src=./static/js/upwork.js></script><script src=./static/js/cropper.js></script><script src=./static/js/main.js></script><script type=text/javascript src=./static/js/manifest.0c88bb64835808687bad.js></script><script type=text/javascript src=./static/js/vendor.f0f0624c00b685e1c5b6.js></script><script type=text/javascript src=./static/js/app.2939c92d83ab1562770d.js></script></body></html>
+<!DOCTYPE html><html lang=zh-cmn-Hans><head><meta charset=UTF-8><title>猴小胖设计服务专家——找到更好的设计师</title><meta http-equiv=X-UA-Compatible content="ie=edge"><meta name=viewport content="width=device-width,initial-scale=1"><link rel="shortcut icon" href=http://image.houxiaopang.com/houicon.ico><link rel=stylesheet href=./static/css/cropper.css><link rel=stylesheet href=./static/css/jquery.pagewalkthrough.css><link rel=stylesheet href=./static/css/red.css><link href=./static/css/app.054dbf864b523ad0c685c83e5fcccf4f.css rel=stylesheet></head><body><div id=app></div><script src=https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js></script><script src=http://image.houxiaopang.com/static/baseform/js/qiniu.js></script><script src=https://cdn.staticfile.org/plupload/2.1.8/plupload.full.min.js></script><script src=./static/js/jquery.pagewalkthrough.js></script><script src=./static/js/icheck.min.js></script><script src=./static/js/upwork.js></script><script src=./static/js/cropper.js></script><script src=./static/js/main.js></script><script>function removeLabel(that) {//移除风格标签以及取消预定义标签的选择状态
+    var li = that.parentElement.parentElement;
+    li.parentElement.removeChild(li);
+    let text = li.innerText.substr(0, li.innerText.length - 1);
+    let lis = document.getElementById("label").children;
+    for (let i = 0, size = lis.length; i < size; i++) {
+      if (lis[i].innerText === text) {
+        lis[i].className = "choose";
+      }
+    }
+  }
+  /*String.prototype.trim = function() {
+   return this.replace(/^\s\s*!/, '').replace(/\s\s*$/, '');
+   }*/</script><script type=text/javascript src=./static/js/manifest.98653d9c8ba9522b5c6d.js></script><script type=text/javascript src=./static/js/vendor.c0040b901d3eadfde843.js></script><script type=text/javascript src=./static/js/app.2741814936792e895b16.js></script></body></html>
