@@ -49,7 +49,6 @@ class DesignerInfo(db.Model):
             self.email = basic_obj.get("email")
             self.startyear = basic_obj.get("startyear")
         if worksetting_obj:
-            print( worksetting_obj.get("worktime") )
             self.worktime = json.dumps(worksetting_obj.get("worktime"))
             self.privacy = worksetting_obj.get("privacy")
             self.ticket = worksetting_obj.get("ticket")
@@ -155,7 +154,7 @@ class Album(db.Model):
         category = request.values.get("category")
         up_time = datetime.now()
 
-        return Album(title=title,cover=cover,description=description,category=category,up_time=up_time,user_id=g.user.id)
+        return Album(title=title,cover=cover,description=description,category=category,up_time=up_time,user_id=g.user.id,privacy = g.user.info.privacy)
 
     def update_from_request(self,request):
         self.title = request.values.get("title")
