@@ -23,12 +23,12 @@ if app.config['ENVFLAG']=='dev' or 'testing':
     pass
     # manager.add_command("runserver", Server(use_debugger=True))
 
-
-# @manager.command
-# def test():
-#     import unittest
-#     tests = unittest.TestLoader().discover('test')
-#     unittest.TextTestRunner(verbosity=2).run(tests)
+# run unittest
+@manager.command
+def test():
+    import unittest
+    tests = unittest.TestLoader().discover('test')
+    unittest.TextTestRunner(verbosity=2).run(tests)
 
 
 

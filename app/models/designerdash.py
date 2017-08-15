@@ -20,7 +20,7 @@ class DesignerInfo(db.Model):
     # 个人设计师
     school = db.Column(db.String(64),nullable=True)
     # graduate = db.Column(db.Integer,nullable=True)
-    worktime = db.Column(db.String(16), nullable=True)
+    worktime = db.Column(db.String(30), nullable=True)
     identity = db.Column(db.Integer,nullable=True)
 
     # 设计公司/独立工作室
@@ -49,7 +49,8 @@ class DesignerInfo(db.Model):
             self.email = basic_obj.get("email")
             self.startyear = basic_obj.get("startyear")
         if worksetting_obj:
-            self.worktime = str(worksetting_obj.get("worktime"))
+            print( worksetting_obj.get("worktime") )
+            self.worktime = json.dumps(worksetting_obj.get("worktime"))
             self.privacy = worksetting_obj.get("privacy")
             self.ticket = worksetting_obj.get("ticket")
 
@@ -127,7 +128,7 @@ class Designwork(db.Model):
     position = db.Column(db.Integer)
 
     def __repr__(self):
-        return '<Designwork of %r:%r>' % (self.user_id,self.work_url)
+        return '<Designwork of %r>' % (self.work_url)
 
 
 class Album(db.Model):
@@ -139,8 +140,9 @@ class Album(db.Model):
     up_time = db.Column(db.DateTime)
     cover = db.Column(db.String(255))
     # 可用Designwork.album来访问
-    designworks = db.relationship('Designwork',order_by="Designwork.position",collection_class=ordering_list('position'),backref='album',cascade='delete',lazy='dynamic')
+    designworks = db.relationship('Designwork',order_by="Designwork.position",collection_class=ordering_list('position'),backref='album',cascade='save-update,delete,delete-orphan',lazy='dynamic')
     user_id = db.Column(INTEGER(unsigned=True), db.ForeignKey('users.id'))
+    privacy = db.Column(db.Integer)
 
     def __repr__(self):
         return '<Album: %r at %r>' % (self.title,self.up_time)

@@ -9,7 +9,7 @@ from .login_verify import WxVerify,TokenVerify
 from .applystatus import GetApplyStatus
 from .demand import GetDemandCenter,DemandDeatil,ReplyDemand
 from .work_resume import GetAllWork,GetResumeInfo
-from .admindash import NewAlbum,GetAlbum,GetCollection,GetUserHead,GetAlbumDetail,Userinfo
+from .admindash import NewAlbum,GetAlbum,GetCollection,GetUserHead,GetAlbumDetail,Userinfo,DeleteAlbum,AddExp,DelExp
 
 
 # wx verify info
@@ -42,3 +42,6 @@ api_v1_1.add_resource(GetUserHead,'/designerdash/header')
 api_v1_1.add_resource(GetAlbumDetail,'/albumdetail')
 
 api_v1_1.add_resource(Userinfo,'/designerdash/userinfo')
+api_v1_1.add_resource(DeleteAlbum,'/designerdash/deletealbum')
+# api_v1_1.add_resource(AddExp,'/desigenrdash/userinfo/addexp')
+api_v1_1.add_resource(DelExp,'/designerdash/userinfo/deletexp')

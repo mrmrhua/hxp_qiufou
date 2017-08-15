@@ -36,14 +36,13 @@ class GetAllWork(Resource):
 
         if not designer_id:
             if cat == '-1':  # 全部都要
-                al = Album.query.order_by(Album.up_time.desc()).paginate(page,PER_PAGE,False).items
+                al = Album.query.filter(Album.privacy!=1).order_by(Album.up_time.desc()).paginate(page,PER_PAGE,False).items
             else:
-                al = Album.query.filter_by(category=cat).order_by(Album.up_time.desc()).paginate(page,PER_PAGE,False).items
-        else:
+                al = Album.query.filter(Album.privacy!=1).filter_by(category=cat).order_by(Album.up_time.desc()).paginate(page,PER_PAGE,False).items
             if cat == '-1':  # 全部都要
-                al = Album.query.filter_by(user_id=designer_id).order_by(Album.up_time.desc()).paginate(page,PER_PAGE,False).items
+                al = Album.query.filter(Album.privacy!=1).filter_by(user_id=designer_id).order_by(Album.up_time.desc()).paginate(page,PER_PAGE,False).items
             else:
-                al = Album.query.filter_by(user_id=designer_id,category=cat).order_by(Album.up_time.desc()).paginate(page,PER_PAGE,False).items
+                al = Album.query.filter(Album.privacy!=1).filter_by(user_id=designer_id,category=cat).order_by(Album.up_time.desc()).paginate(page,PER_PAGE,False).items
 
         count = len(al)
         album = []

@@ -29,7 +29,7 @@ class Applyform(db.Model):
     school = db.Column(db.String(64),nullable=True)
     major = db.Column(db.String(64),nullable=True)
     graduate = db.Column(db.Integer,nullable=True)
-    worktime = db.Column(db.String(16), nullable=True)
+    worktime = db.Column(db.String(30), nullable=True)
     identity = db.Column(db.Integer,nullable=True)
 
     # 设计公司/独立工作室
