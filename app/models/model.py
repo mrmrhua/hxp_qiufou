@@ -51,10 +51,11 @@ class User(UserMixin,db.Model):
         return strs
 
     def get_exps_str(self):
-        exps = self.experiences.all()
+        # exps = self.experiences.all()
+        exps = self.experiences
         strs = []
         for i in exps:
-            strs.append({'title':i.title,'desc':i.content})
+            strs.append({'id':i.id,'title':i.title,'desc':i.content})
         return strs
 
 
