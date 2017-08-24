@@ -41,7 +41,10 @@ class GetAlbumDetail(Resource):
             'category': al.category,
             'up_time': datetime.strftime(al.up_time, "%Y-%m-%d"),
             'cover': al.cover,
-            'works': worklist
+            'works': worklist,
+            'belong_id':al.user_id,
+            'belong_head':al.designer.headimg,
+            'belong_nick':al.designer.nickname
         }})
 
 
