@@ -1,8 +1,10 @@
 ﻿<!doctype html>
-<html lang="zh_CN">
+<html lang="zh-cmn-Hans">
 <head>
     <meta charset="UTF-8">
-    <title>入驻页</title>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>猴小胖——设计师的接单神器</title>
+     <link rel="shortcut icon" href="http://image.houxiaopang.com/houicon.ico">
     <link rel="stylesheet" href="qrcommon.css">
     <link rel="stylesheet" href="qrlogin.css">
     <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
@@ -89,6 +91,7 @@
         return null;
     }
     function jump() {
+    	//alert($('#wxqrcode').width());
         $('html,body').animate({scrollTop: $('#warp').offset().top}, 200);
     }
     var code = getQueryString("code");

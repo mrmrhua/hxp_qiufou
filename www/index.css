@@ -1,11 +1,16 @@
-body {
-    padding: 0;
-    margin: 0;
-    font-family: "黑体", serif;
+*{
+    padding: 0 0;
+    margin: 0 0;
+    box-sizing: border-box;
+}
+html,body {
     letter-spacing: 2px;
     font-weight: 200;
+    height: 100%;
+    width: 100%;
+    font-size: 14px;
+    font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei", "Hiragino Sans GB", "HeitiSC", "WenQuanYi Micro Hei", sans-serif;
 }
-
 li, a {
     text-decoration: none;
     list-style: none;
@@ -18,18 +23,13 @@ li, a {
 
 .header {
     position: relative;
-}
-
-#head-title {
-
+    height: 100%;
 }
 
 .background-image {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: url("http://image.houxiaopang.com/first/723/Newbanner.jpg?imageMogr2/interlace/1") no-repeat;
-    background-size: cover;
 }
 
 .navmeng {
@@ -39,14 +39,15 @@ li, a {
     width: 100%;
     height: 100%;
     background: #313131;
-    opacity: 0.6;
-    filter: Alpha(opacity=60);
+    opacity: 0.7;
+    z-index: 1;
 }
 
 .navbar {
     position: relative;
     padding: 20px 30px 0 30px;
     overflow: hidden;
+    z-index: 2;
 }
 
 .logo-wrapper {
@@ -129,6 +130,7 @@ li, a {
     margin-top: -150px;
     margin-left: -500px;
     width: 1000px;
+    z-index: 2;
 }
 
 .header-content .better {
@@ -274,7 +276,7 @@ li, a {
 }
 
 .swiper-container-horizontal > .swiper-pagination-bullets, .swiper-pagination-custom, .swiper-pagination-fraction {
-    bottom: 80px !important;
+    bottom: 40px !important;
 }
 
 .service-process {
@@ -295,27 +297,33 @@ li, a {
 .service-wrapper {
     width: 100%;
     margin-top: 80px;
+    overflow: hidden;
+    padding-left: 8%;
 }
 
 .service-wrapper .service-content {
     position: relative;
-    display: inline-block;
     text-align: center;
     vertical-align: top;
     width: 12%;
+    float: left;
+
 }
 
 .service-wrapper .service-content p {
     color: #6c7279;
-    font-size: 20px;
+    font-size: 18px;
+    margin-top: 10px;
+    line-height: 24px;
 }
 
 .service-wrapper .xian {
     position: relative;
-    display: inline-block;
+    display: block;
     width: 8%;
     text-align: center;
-    top: 12px;
+    margin-top: 30px;
+    float: left;
 }
 
 .service-category {
@@ -325,8 +333,7 @@ li, a {
 }
 
 .category {
-    margin-top: 40px;
-    margin-bottom: 20px;
+    margin: 40px 0;
 }
 
 .category li:hover {
@@ -339,6 +346,7 @@ li, a {
     margin-right: 30px;
     font-size: 20px;
     padding-bottom: 2px;
+    height: 27px;
 }
 
 .category li a {
@@ -354,7 +362,7 @@ li, a {
 }
 
 .image-show {
-    width: 90%;
+    width: 80%;
     margin: 0 auto;
     overflow: hidden;
     text-align: center;
@@ -386,12 +394,13 @@ li, a {
 .caption img {
     width: 100%;
     height: 100%;
+    display: block;
 }
 
 .caption-content {
     position: absolute;
     left: 0;
-    top: 30%;
+    top: 0;
     width: 100%;
     height: 100%;
     text-align: center;
@@ -401,10 +410,13 @@ li, a {
 .caption-content h3 {
     font-size: 32px;
     letter-spacing: 4px;
+    margin-top: 25%;
+    text-align: center;
 }
 
 .caption-content h4 {
     font-size: 20px;
+    text-align: center;
 }
 
 .caption-block:hover {
@@ -442,7 +454,7 @@ li, a {
     margin-right: 50px;
     display: inline-block;
     float: left;
-    width: 10%;
+    width: 12%;
     text-align: left;
 }
 
@@ -480,4 +492,56 @@ li, a {
     .target li {
         width: 400px;
     }
+}
+@media screen and (max-width: 1100px){
+    .service-wrapper .service-content p {
+        color: #6c7279;
+        font-size: 12px;
+        margin-top: 10px;
+        line-height: 20px;
+    }
+}
+.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99999;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    background: none repeat scroll 0 0 #fff;
+}
+.sk-spinner-pulse {
+  width: 60px;
+  height: 60px;
+  background-color: #e44c65;
+  border-radius: 100%;
+  margin: 40px auto;
+  -webkit-animation: sk-pulseScaleOut 1s infinite ease-in-out;
+  animation: sk-pulseScaleOut 1s infinite ease-in-out;
+}
+
+@-webkit-keyframes sk-pulseScaleOut {
+  0% {
+        -webkit-transform: scale(0);
+        transform: scale(0); 
+    }
+  100% {
+        -webkit-transform: scale(1);
+                transform: scale(1);
+        opacity: 0; 
+    }
+}
+
+@keyframes sk-pulseScaleOut {
+  0% {
+    -webkit-transform: scale(0);
+            transform: scale(0); }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    opacity: 0; }
 }
