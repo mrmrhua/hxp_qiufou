@@ -3,280 +3,313 @@
 <head>
     <meta charset="UTF-8">
     <title>猴小胖设计服务专家——找到更好的设计师</title>
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-
-<!-- <link rel="stylesheet" type="text/css" href="../css/reset.css"> -->
-<link rel="shortcut icon" href="http://image.houxiaopang.com/houicon.ico">
-<link rel="stylesheet" type="text/css" href="https://cdn.staticfile.org/Swiper/3.4.2/css/swiper.min.css">
-
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- <link rel="stylesheet" type="text/css" href="../css/reset.css"> -->
+    <link rel="shortcut icon" href="http://image.houxiaopang.com/houicon.ico">
+    <link rel="stylesheet" type="text/css" href="https://cdn.staticfile.org/Swiper/3.4.2/css/swiper.min.css">
     <link rel="stylesheet" href="index.css">
-<link>
+    <link>
 </head>
 <body>
 <div class="header" id="header">
-  <div class="background-image"></div>
-  <div class="navmeng"></div>
-  <div class="navbar">
-    <div class="logo-wrapper">
-        <span class="logo"></span>
+    <div class="background-image"></div>
+    <div class="navmeng"></div>
+    <div class="navbar">
+        <div class="logo-wrapper">
+            <span class="logo"></span>
+        </div>
+        <div class="navbar-li-wrapper">
+            <ul class="nav-li">
+                <li class="nav-active">首页</li>
+                <!--<li onclick="javascript:location.href='http://houxiaopang.com/demand';">发单广场</li>-->
+                <li onclick="javascript:location.href='http://houxiaopang.com/workdetail';">作品精选</li>
+            </ul>
+        </div>
+        <div id="desinger" class="desinger"
+             onclick="javascript:location.href = 'http://houxiaopang.com/qrlogin';">
+            <span>我是设计师</span>
+        </div>
+        <div style="display: none;" id="userInfo" onclick="javascript:location.href='http://houxiaopang.com/admin';">
+            <span style="font-size: 12px;vertical-align: top" v-html="nickname"></span>
+            <img style="width: 40px;height: 40px;border-radius: 50%;" alt="" :src="headimg">
+        </div>
     </div>
-    <div class="navbar-li-wrapper">
-        <ul class="nav-li">
-        <li class="nav-active">首页</li>
-        <li onclick="javascript:location.href='http://houxiaopang.com/demand';">发单广场</li>
-        <li onclick="javascript:location.href='http://houxiaopang.com/workdetail';">作品精选</li>
+    <div class="header-content">
+        <!-- <h1 class="better">在猴小胖，找到更好的设计师</h1> -->
+        <img src="http://image.houxiaopang.com/index/new-head-title.png" id="head-title">
+        <ul class="type">
+            <li>UI</li>
+            <li>平面</li>
+            <li>游戏</li>
+            <li>插画</li>
+            <li>...</li>
         </ul>
+        <a class="publish" target="_blank" href="http://cn.mikecrm.com/smA81u2">发布需求</a>
     </div>
-    <div class="desinger">
-        <a href="/qrlogin" onclick="_czc.push(['_trackEvent', '首页', '我是设计师按钮－点击']);">我是设计师</a>
-    </div>
-</div>
-<div class="header-content">
-  <!-- <h1 class="better">在猴小胖，找到更好的设计师</h1> -->
-  <img src="http://image.houxiaopang.com/index/new-head-title.png" id="head-title">
-  <ul class="type">
-    <li>UI</li>
-    <li>平面</li>
-    <li>游戏</li>
-    <li>插画</li>
-    <li>...</li>
-  </ul>
-  <a class="publish" target="_blank" href="http://cn.mikecrm.com/smA81u2">发布需求</a>
-</div>
 </div>
 <div class="middle">
-  <p>猴小胖,好设计,不费力</p>
-  <ul class="target">
-     <li>
-       <img src="http://image.houxiaopang.com/first/zhuanye.png">
-       <div class="desc">               
-          <span class="desc-top">专业</span>
-          <span class="desc-bottom">严格入驻门槛筛选</span>
-       </div>
-     </li>
-     <li>
-          <img src="http://image.houxiaopang.com/first/723/jingzhun.png">
-       <div class="desc">
-          <span class="desc-top">精准</span>
-          <span class="desc-bottom">多维度智能匹配</span>
-       </div>
-     </li>
-     <li>
-          <img src="http://image.houxiaopang.com/first/723/guifan.png">
-       
-       <div class="desc">
-          <span class="desc-top">规范</span>
-          <span class="desc-bottom">分阶段交稿</span>
-       </div>
-     </li>
-     <li>
-          <img src="http://image.houxiaopang.com/first/anquan.png">
-       
-       <div class="desc">
-          <span class="desc-top">安全</span>
-          <span class="desc-bottom">资金托管,先行赔付</span>
-       </div>
-     </li>
-  </ul>
+    <p>猴小胖,好设计,不费力</p>
+    <ul class="target">
+        <li>
+            <img src="http://image.houxiaopang.com/first/zhuanye.png">
+            <div class="desc">
+                <span class="desc-top">专业</span>
+                <span class="desc-bottom">严格入驻门槛筛选</span>
+            </div>
+        </li>
+        <li>
+            <img src="http://image.houxiaopang.com/first/723/jingzhun.png">
+            <div class="desc">
+                <span class="desc-top">精准</span>
+                <span class="desc-bottom">多维度智能匹配</span>
+            </div>
+        </li>
+        <li>
+            <img src="http://image.houxiaopang.com/first/723/guifan.png">
+
+            <div class="desc">
+                <span class="desc-top">规范</span>
+                <span class="desc-bottom">分阶段交稿</span>
+            </div>
+        </li>
+        <li>
+            <img src="http://image.houxiaopang.com/first/anquan.png">
+
+            <div class="desc">
+                <span class="desc-top">安全</span>
+                <span class="desc-bottom">资金托管,先行赔付</span>
+            </div>
+        </li>
+    </ul>
 </div>
-<div class="swiper-container"> 
-<div class="swiper-wrapper">
-            <!--图片布局开始-->
-            <div class="swiper-slide">
-                  <img src="http://image.houxiaopang.com/first/723/banner2.jpg" class="swiper-background">
-                  <div class="slider-inner">
-                
-                      <p class="slider-desc">
-                      因为猴小胖，初心资本的年会与众不同。猴小胖匹配联合4位设计师及广告行业人才，在一周内提供了3套年会电子邀请函的创意方案与设计方案，并辅助完成了其他平面材料的构思与设计。
-                      </p>
-                      <p class="slider-title">
-                       初心资本年会物料设计
-                      </p>
-                      <div class="clearfix"></div>
-                  </div>
+<div class="swiper-container">
+    <div class="swiper-wrapper">
+        <!--图片布局开始-->
+        <div class="swiper-slide">
+            <img src="http://image.houxiaopang.com/first/723/banner2.jpg" class="swiper-background">
+            <div class="slider-inner">
+
+                <p class="slider-desc">
+                    因为猴小胖，初心资本的年会与众不同。猴小胖匹配联合4位设计师及广告行业人才，在一周内提供了3套年会电子邀请函的创意方案与设计方案，并辅助完成了其他平面材料的构思与设计。
+                </p>
+                <p class="slider-title">
+                    初心资本年会物料设计
+                </p>
+                <div class="clearfix"></div>
             </div>
-             <div class="swiper-slide">
-                 <img src="http://image.houxiaopang.com/first/723/banner2.jpg" class="swiper-background">
-                  <div class="slider-inner">
-                      <p class="slider-desc">
-                      因为猴小胖，Idea Bank的周年庆典充满活力。猴小胖在1小时内匹配了3位优秀设计人才，迅速确立合作双方。从联系猴小胖到庆典材料印刷，猴小胖始终陪伴在客户与设计师身边，尽力满足客户多样的设计需求。
-                      </p>
-                      <p class="slider-title">
-                       Idea Bank创客空间宣传册设计
-                      </p>
-                  </div>
+        </div>
+        <div class="swiper-slide">
+            <img src="http://image.houxiaopang.com/first/723/banner2.jpg" class="swiper-background">
+            <div class="slider-inner">
+                <p class="slider-desc">
+                    因为猴小胖，Idea Bank的周年庆典充满活力。猴小胖在1小时内匹配了3位优秀设计人才，迅速确立合作双方。从联系猴小胖到庆典材料印刷，猴小胖始终陪伴在客户与设计师身边，尽力满足客户多样的设计需求。
+                </p>
+                <p class="slider-title">
+                    Idea Bank创客空间宣传册设计
+                </p>
             </div>
-             <div class="swiper-slide">
-                 <img src="http://image.houxiaopang.com/first/723/banner2.jpg" class="swiper-background">
-                  <div class="slider-inner">
-                     <p class="slider-desc">
-                      因为猴小胖，浙江大学CC98校内论坛焕然一新。猴小胖为客户匹配了4名UI设计师。在猴小胖的经纪服务保障下,设计师迅速根据需求文档完成了原型图梳理与界面设计。
-                     </p>
-                      <p class="slider-title">
-                       浙江大学CC98校内论坛界面设计
-                      </p>
-                  </div>
+        </div>
+        <div class="swiper-slide">
+            <img src="http://image.houxiaopang.com/first/723/banner2.jpg" class="swiper-background">
+            <div class="slider-inner">
+                <p class="slider-desc">
+                    因为猴小胖，浙江大学CC98校内论坛焕然一新。猴小胖为客户匹配了4名UI设计师。在猴小胖的经纪服务保障下,设计师迅速根据需求文档完成了原型图梳理与界面设计。
+                </p>
+                <p class="slider-title">
+                    浙江大学CC98校内论坛界面设计
+                </p>
             </div>
-            <!--图片布局结束-->           
-            <!--按钮布局开始-->
-            <!-- 如果需要分页器 -->        
-</div>
-  <div class="swiper-pagination"></div>
-            <!--按钮布局结束-->
+        </div>
+        <!--图片布局结束-->
+        <!--按钮布局开始-->
+        <!-- 如果需要分页器 -->
+    </div>
+    <div class="swiper-pagination"></div>
+    <!--按钮布局结束-->
 </div>
 <div class="service-process">
-   <div class="service-title">
-      服务流程
-   </div>
-   <div class="service-wrapper">
-       <div class="service-content">
-          <img class="lazy" data-original="http://image.houxiaopang.com/first/xuqiu.png">
-          <p>猴小胖经纪人<br>对接梳理要求</p> 
-       </div>
-       <img src="http://image.houxiaopang.com/first/xian.png" class="xian">
+    <div class="service-title">
+        服务流程
+    </div>
+    <div class="service-wrapper">
+        <div class="service-content">
+            <img class="lazy" data-original="http://image.houxiaopang.com/first/xuqiu.png">
+            <p>猴小胖经纪人<br>对接梳理要求</p>
+        </div>
+        <img src="http://image.houxiaopang.com/first/xian.png" class="xian">
 
-       <div class="service-content">
-          <img src="http://image.houxiaopang.com/first/shejishi.png">
-          <p>智能匹配设计师<br>供您挑选</p>
-       </div>
-          <img src="http://image.houxiaopang.com/first/xian.png" class="xian">
+        <div class="service-content">
+            <img src="http://image.houxiaopang.com/first/shejishi.png">
+            <p>智能匹配设计师<br>供您挑选</p>
+        </div>
+        <img src="http://image.houxiaopang.com/first/xian.png" class="xian">
 
-       <div class="service-content">
-          <img src="http://image.houxiaopang.com/first/anquan.png">
-          <p>确定报价<br>托管资金</p>
-       </div>
-          <img src="http://image.houxiaopang.com/first/xian.png" class="xian">
-          
-       <div class="service-content">
-          <img src="http://image.houxiaopang.com/first/jiaogao.png">
-          <p>分阶段交稿<br>实时查看</p>     
-       </div>
-          <img src="http://image.houxiaopang.com/first/xian.png" class="xian">
+        <div class="service-content">
+            <img src="http://image.houxiaopang.com/first/anquan.png">
+            <p>确定报价<br>托管资金</p>
+        </div>
+        <img src="http://image.houxiaopang.com/first/xian.png" class="xian">
 
-       <div class="service-content">
-          <img src="http://image.houxiaopang.com/first/yanshou.png">
-          <p>项目验收<br>获取源文件</p>
-       </div>
-   </div>
+        <div class="service-content">
+            <img src="http://image.houxiaopang.com/first/jiaogao.png">
+            <p>分阶段交稿<br>实时查看</p>
+        </div>
+        <img src="http://image.houxiaopang.com/first/xian.png" class="xian">
+
+        <div class="service-content">
+            <img src="http://image.houxiaopang.com/first/yanshou.png">
+            <p>项目验收<br>获取源文件</p>
+        </div>
+    </div>
 </div>
 <div class="service-category">
-   <div class="service-title">
-      服务品类
-   </div>
-   <ul class="category">
-      <li class="active"><a>全部</a></li>
-      <li><a>PPT定制</a></li>
-      <li><a>UI设计</a></li>
-      <li><a>企业画册</a></li>
-      <li><a>海报展板</a></li>
-      <li><a>LOGO</a></li>
-      <li><a>企业形象设计VI</a></li>
-   </ul>
-   <div class="image-wrapper">
-   <div class="image-show">
-     <div class="caption">
-     <div class="caption-block">
-     <div class="caption-content"> 
-        <h3>PPT定制</h3>
-        <h4>发布会 / 商业计划书</h4>
-     </div>
-     </div>
-     <img class="lazy" data-original="http://image.houxiaopang.com/first/ppt.png">
-     </div>
-     <div class="caption">
-     <div class="caption-block">
-      <div class="caption-content"> 
-        <h3>UI设计</h3>
-        <h4>网页 / APP / H5 / 游戏</h4>
-     </div>
-     </div>
-     <img class="lazy" data-original="http://image.houxiaopang.com/first/ui.png">
-     </div>
-     <div class="caption">
-     <div class="caption-block">
-     <div class="caption-content"> 
-        <h3>企业画册</h3>
-        <h4>三折页 / 传单 / 图书编排等</h4>
-     </div>
-     </div>
-     <img class="lazy" data-original="http://image.houxiaopang.com/first/huace.png">
-     </div>
-     <div class="caption">
-     <div class="caption-block">
-     <div class="caption-content"> 
-        <h3>海报展板</h3>
-        <h4>易拉宝 / 灯箱 / 户外广告 / 电商海报等</h4>
-     </div>
-     </div>
-     <img class="lazy" data-original="http://image.houxiaopang.com/first/723/haibao.jpg"></div>
-     <div class="caption">
-     <div class="caption-block">
-     <div class="caption-content"> 
-        <h3>LOGO</h3>
-     </div>
-     </div>
-     <img class="lazy" data-original="http://image.houxiaopang.com/first/723/logo.jpg"></div>
-     <div class="caption">
-     <div class="caption-block">
-     <div class="caption-content"> 
-        <h3>企业形象设计 VI</h3>
-        <h4>名片 / 纪念品 / 包装设计等</h4>
-     </div>
-     </div>
-     <img class="lazy" data-original="http://image.houxiaopang.com/first/723/vi.jpg"></div>
-   </div>
-   </div>
+    <div class="service-title">
+        服务品类
+    </div>
+    <ul class="category">
+        <li class="active"><a>全部</a></li>
+        <li><a>PPT定制</a></li>
+        <li><a>UI设计</a></li>
+        <li><a>企业画册</a></li>
+        <li><a>海报展板</a></li>
+        <li><a>LOGO</a></li>
+        <li><a>企业形象设计VI</a></li>
+    </ul>
+    <div class="image-wrapper">
+        <div class="image-show">
+            <div class="caption">
+                <div class="caption-block">
+                    <div class="caption-content">
+                        <h3>PPT定制</h3>
+                        <h4>发布会 / 商业计划书</h4>
+                    </div>
+                </div>
+                <img class="lazy" data-original="http://image.houxiaopang.com/first/ppt.png">
+            </div>
+            <div class="caption">
+                <div class="caption-block">
+                    <div class="caption-content">
+                        <h3>UI设计</h3>
+                        <h4>网页 / APP / H5 / 游戏</h4>
+                    </div>
+                </div>
+                <img class="lazy" data-original="http://image.houxiaopang.com/first/ui.png">
+            </div>
+            <div class="caption">
+                <div class="caption-block">
+                    <div class="caption-content">
+                        <h3>企业画册</h3>
+                        <h4>三折页 / 传单 / 图书编排等</h4>
+                    </div>
+                </div>
+                <img class="lazy" data-original="http://image.houxiaopang.com/first/huace.png">
+            </div>
+            <div class="caption">
+                <div class="caption-block">
+                    <div class="caption-content">
+                        <h3>海报展板</h3>
+                        <h4>易拉宝 / 灯箱 / 户外广告 / 电商海报等</h4>
+                    </div>
+                </div>
+                <img class="lazy" data-original="http://image.houxiaopang.com/first/723/haibao.jpg"></div>
+            <div class="caption">
+                <div class="caption-block">
+                    <div class="caption-content">
+                        <h3>LOGO</h3>
+                    </div>
+                </div>
+                <img class="lazy" data-original="http://image.houxiaopang.com/first/723/logo.jpg"></div>
+            <div class="caption">
+                <div class="caption-block">
+                    <div class="caption-content">
+                        <h3>企业形象设计 VI</h3>
+                        <h4>名片 / 纪念品 / 包装设计等</h4>
+                    </div>
+                </div>
+                <img class="lazy" data-original="http://image.houxiaopang.com/first/723/vi.jpg"></div>
+        </div>
+    </div>
 </div>
 <div class="footer">
-   <div class="footer-logo">
-     <img src="http://image.houxiaopang.com/first/logodown.png">
-     <p style="letter-spacing: 1px">杭州求否科技有限公司旗下平台</p>
-   </div>
-      <ul class="footer-middel-left">
-        <li><a  href="/help/customer">客户指南</a></li>
+    <div class="footer-logo">
+        <img src="http://image.houxiaopang.com/first/logodown.png">
+        <p style="letter-spacing: 1px">杭州求否科技有限公司旗下平台</p>
+    </div>
+    <ul class="footer-middel-left">
+        <li><a href="/help/customer">客户指南</a></li>
         <li><a href="/help/designer">设计师指南</a></li>
         <li><a href="/help/faq">常见问题</a></li>
-      </ul>
-       <ul class="footer-middel-right">
-         <li><a href="/help/aboutus">关于猴小胖</a></li>
-         <li><a href="/help/contact">联系我们</a></li>
-         <li><a href="/help/contact">意见反馈</a></li>
-      </ul>
-   <div class="footer-right">
-     <p>@2017杭州求否科技有限公司</p>
-     <p>浙ICP备17006185号</p>
-   </div>
+    </ul>
+    <ul class="footer-middel-right">
+        <li><a href="/help/aboutus">关于猴小胖</a></li>
+        <li><a href="/help/contact">联系我们</a></li>
+        <li><a href="/help/contact">意见反馈</a></li>
+    </ul>
+    <div class="footer-right">
+        <p>@2017杭州求否科技有限公司</p>
+        <p>浙ICP备17006185号</p>
+    </div>
 </div>
 
 <script src="index.js"></script>
 
 
-
- <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1261952519'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1261952519' type='text/javascript'%3E%3C/script%3E"));</script>
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cspan id='cnzz_stat_icon_1261952519'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1261952519' type='text/javascript'%3E%3C/script%3E"));</script>
 
 
 <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://qiyukf.com/script/225bba1c2b7fabfacb840be96e495033.js" defer async></script>
-  <script type="text/javascript" src="https://cdn.staticfile.org/Swiper/3.4.2/js/swiper.min.js"></script>
+<script src="https://qiyukf.com/script/225bba1c2b7fabfacb840be96e495033.js" defer async></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/Swiper/3.4.2/js/swiper.min.js"></script>
 <script src="https://cdn.staticfile.org/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
 <script type="text/javascript">
-autodivheight();
-function autodivheight(){ //函数：获取尺寸
-    //获取浏览器窗口高度
-    var winHeight=0;
-    if (window.innerHeight)
-        winHeight = window.innerHeight;
-    else if ((document.body) && (document.body.clientHeight))
-        winHeight = document.body.clientHeight;
-    //通过深入Document内部对body进行检测，获取浏览器窗口高度
-    if (document.documentElement && document.documentElement.clientHeight)
-        winHeight = document.documentElement.clientHeight;
-    //DIV高度为浏览器窗口的高度
-    document.getElementById("header").style.height= winHeight +"px";
-}
-window.onresize=autodivheight; //浏览器窗口发生变化时同时变化DIV高度
+    autodivheight();
+    function autodivheight() { //函数：获取尺寸
+        //获取浏览器窗口高度
+        var winHeight = 0;
+        if (window.innerHeight)
+            winHeight = window.innerHeight;
+        else if ((document.body) && (document.body.clientHeight))
+            winHeight = document.body.clientHeight;
+        //通过深入Document内部对body进行检测，获取浏览器窗口高度
+        if (document.documentElement && document.documentElement.clientHeight)
+            winHeight = document.documentElement.clientHeight;
+        //DIV高度为浏览器窗口的高度
+        document.getElementById("header").style.height = winHeight + "px";
+    }
+    window.onresize = autodivheight; //浏览器窗口发生变化时同时变化DIV高度
     $("img.lazy").lazyload({
-        threshold:1000
+        threshold: 1000
     });
+    var token = window.localStorage.token;
+    if (token) {
+        $.ajax({//验证是否登录
+            type: "get",
+            url: "http://houxiaopang.com/api/v1.1/token/authenticated",
+            headers: {"Authorization": "Token " + token},
+            success(data){
+                if (data.code === 0) {
+                    window.localStorage.applystatus = data.data.applystatus;
+                    $.ajax({//获取用户信息
+                        url: 'http://houxiaopang.com/api/v1.1/designerdash/header',
+                        type: "GET",
+                        headers: {"Authorization": "Token " + token},
+                        success(data) {
+                            if (data.code === 0) {
+                                var user = document.getElementById("userInfo");
+                                user.children[0].innerHTML = data.data.nickname;
+                                user.children[1].src = data.data.headimg;
+                                window.localStorage.userid = data.data.userid;
+                                document.getElementById("designer").style.display = "none";
+                                user.style.display = "block";
+                            }
+                        },
+                    });
+                }
+            },
+        });
+    }
+
+
 </script>
 </body>
