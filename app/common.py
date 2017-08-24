@@ -161,7 +161,7 @@ auth = HTTPTokenAuth(scheme='Token')
 
 @auth.verify_token
 def verify_token(token):
-    #todo
+    #todo:backdoor
     if  token=='robin':
         user = User.query.filter_by(id=25).first()
         g.user = user

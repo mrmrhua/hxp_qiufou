@@ -58,6 +58,7 @@ class GetAllWork(Resource):
              'username':i.designer.nickname,
              'headimg' :  i.designer.headimg,
              'user_id' : i.designer.id,
+            'desc':i.description
             }
             album.append(each_album)
 

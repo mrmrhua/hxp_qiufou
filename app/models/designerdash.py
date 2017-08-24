@@ -218,3 +218,30 @@ class Exp(db.Model):
 
 
 
+
+class Subscribtion(db.Model):
+    __tablename__ = 'subscribtion'
+    notice_id = db.Column(INTEGER(unsigned=True),db.ForeignKey('notices.id'),primary_key=True)
+    user_id = db.Column(INTEGER(unsigned=True), db.ForeignKey('users.id'), primary_key=True)
+    isread = db.Column(db.Integer)  #0: no-read;    1:yes-read
+
+
+
+class Notice(db.Model):
+    __tablename__ = 'notices'
+    id = db.Column(INTEGER(unsigned=True), primary_key=True)
+    content = db.Column(db.Text)
+    up_time = db.Column(db.DateTime, nullable=True)
+    receiver = db.relationship('Subscribtion',foreign_keys=[Subscribtion.notice_id],backref=db.backref('notice',lazy='joined'),
+                               lazy='dynamic',
+                               cascade='all,delete-orphan')
+
+    def __repr__(self):
+        return '<Notice: %r>' % (self.content)
+
+    @staticmethod
+    def NewNotice(m):
+        return Notice(content=m,up_time=datetime.now())
+
+
+
