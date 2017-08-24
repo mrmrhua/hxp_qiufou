@@ -28,16 +28,17 @@ class GetResumeInfo(Resource):
         # for i in user.category:
         #     field.append(i.category_name)
 
-
+        t=  [{'title':i.title,'desc':i.content} for i in user.experiences]
+        # print(di.startyear)
         return jsonify({
             'code':0,
             'data':{
                 'nickname':de_name,
                 'headimg':user.headimg,
                 'city': di.city,
-                'exp':'',
+                'exp':di.startyear,
                 'filed':field,
                 'worktime':de_worktime,
-                'project_text':di.project_text
+                'project_text':t
             }
         })

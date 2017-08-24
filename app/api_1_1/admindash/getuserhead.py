@@ -15,5 +15,6 @@ class GetUserHead(Resource):
         return jsonify({
           'code':0,
             'data': {'headimg': g.user.headimg
-                          ,'nickname':g.user.nickname}
+                          ,'nickname':g.user.nickname,
+                     'userid':g.user.id}
         })

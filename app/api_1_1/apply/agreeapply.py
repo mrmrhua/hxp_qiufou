@@ -23,7 +23,8 @@ class AgreeApply(Resource):
             return jsonify({'code': -1,'data':{'msg':"已存在"}})
         u = af.user
         # 如果是企业用户,还需设置昵称为企业名称
-        u.nickname = af.company_name
+        if u.usertype==1:
+            u.nickname = af.company_name
         u.applystatus = APPLYSTATUS['PASS']
         db.session.add(u)
         db.session.commit()

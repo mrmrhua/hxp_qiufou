@@ -5,7 +5,7 @@ from app import lm,db
 from flask import request,json,current_app
 from config import APPLYSTATUS
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer,BadSignature,SignatureExpired
-from . import Category
+from . import Category,Subscribtion
 class User(UserMixin,db.Model):
     __tablename__ = 'users'
     id = db.Column(INTEGER(unsigned=True),primary_key=True)
@@ -26,6 +26,13 @@ class User(UserMixin,db.Model):
     # 找类目
     # category = db.relationship('Category_User', backref='user')
     experiences = db.relationship("Exp",backref="user",cascade="delete,delete-orphan")
+
+    notice = db.relationship('Subscribtion',foreign_keys=[Subscribtion.user_id],backref=db.backref('receiver',lazy='joined'),
+                               lazy='dynamic',
+                               cascade='all,delete-orphan')
+
+
+
     def __repr__(self):
         return '<User %r>' % self.nickname
 
