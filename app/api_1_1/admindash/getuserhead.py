@@ -16,5 +16,6 @@ class GetUserHead(Resource):
           'code':0,
             'data': {'headimg': g.user.headimg
                           ,'nickname':g.user.nickname,
-                     'userid':g.user.id}
+                     'userid':g.user.id,
+                     'city':g.user.info.city}
         })

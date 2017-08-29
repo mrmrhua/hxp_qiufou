@@ -167,6 +167,7 @@ def verify_token(token):
         g.user = user
         return True
     user = User.verify_auth_token(token)
+    # print(user)
     if not user:
         return False
     g.user = user
