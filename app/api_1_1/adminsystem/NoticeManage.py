@@ -32,3 +32,7 @@ class SendNotice(Resource):
                 db.session.commit()
             return jsonify({'code': 0})
         return jsonify({'code': -1})
+
+
+class ListNews(Resource):
+    pass
