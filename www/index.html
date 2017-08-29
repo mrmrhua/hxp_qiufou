@@ -281,14 +281,14 @@ document.write(unescape("%3Cspan id='cnzz_stat_icon_1261952519'%3E%3C/span%3E%3C
             type: "get",
             url: "http://houxiaopang.com/api/v1.1/token/authenticated",
             headers: {"Authorization": "Token " + token},
-            success(data){
+            success:function(data){
                 if (data.code === 0) {
                     window.localStorage.applystatus = data.data.applystatus;
                     $.ajax({//获取用户信息
                         url: 'http://houxiaopang.com/api/v1.1/designerdash/header',
                         type: "GET",
                         headers: {"Authorization": "Token " + token},
-                        success(data) {
+                        success:function(data) {
                             if (data.code === 0) {
                                 var user = document.getElementById("userInfo");
                                 user.children[0].innerHTML = data.data.nickname;
