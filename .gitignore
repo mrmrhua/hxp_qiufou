@@ -23,4 +23,3 @@ build
 app/static/.webaseets-cache
 /flask_session/
 /testing/
-
