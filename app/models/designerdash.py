@@ -230,9 +230,11 @@ class Subscribtion(db.Model):
 class Notice(db.Model):
     __tablename__ = 'notices'
     id = db.Column(INTEGER(unsigned=True), primary_key=True)
+    title = db.Column(db.String(20))
     content = db.Column(db.Text)
     up_time = db.Column(db.DateTime, nullable=True)
-    receiver = db.relationship('Subscribtion',foreign_keys=[Subscribtion.notice_id],backref=db.backref('notice',lazy='joined'),
+    # Notice.receiver  //  Subscrbtion.notice 互相访问
+    receiver = db.relationship('Subscribtion',foreign_keys=[Subscribtion.notice_id],backref=db.backref('notice',lazy='joined',order_by='desc(Notice.up_time)'),
                                lazy='dynamic',
                                cascade='all,delete-orphan')
 
@@ -240,8 +242,8 @@ class Notice(db.Model):
         return '<Notice: %r>' % (self.content)
 
     @staticmethod
-    def NewNotice(m):
-        return Notice(content=m,up_time=datetime.now())
+    def NewNotice(title,content):
+        return Notice(title=title,content=content,up_time=datetime.now())
 
 
 

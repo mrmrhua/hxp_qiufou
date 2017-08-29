@@ -4,60 +4,59 @@ from flask_restful import Resource
 import json
 from app.models import User,db,Tag,Category,Exp,Notice,Subscribtion
 from app.common import auth
+from datetime import datetime
 
 class UnreadNum(Resource):
     @auth.login_required
     def get(self):
-
-        return jsonify({'code':0,'data':{'num':5}})
+        count = Subscribtion.query.filter_by(user_id = g.user.id,isread=0).count()
+        return jsonify({'code':0,'data':{'num':count}})
 
 
 class NoticeRecent(Resource):
     @auth.login_required
     def get(self):
-        return jsonify({'code':0,'data':{'notice':[
-            {'content':'hello','up_time':'2017-08-01 18:20:00','status':0},
-            {'content': 'hello', 'up_time': '2017-08-01 18:20:00', 'status': 0}
-        ] }})
+        count = Subscribtion.query.filter_by(user_id=g.user.id, isread=0).count()
+        if count>0:
+            res = Subscribtion.query.filter_by(user_id=g.user.id, isread=0).all()
+            notice = [{'content':i.notice.content,'title':i.notice.title,'up_time':datetime.strftime(i.notice.up_time, "%Y-%m-%d")} for i in res]
+        else:
+            notice = []
+        return jsonify({'code':0,'data':{'notice': notice }})
 
 
 # 清空所有未读消息
 class ClearAll(Resource):
     @auth.login_required
     def post(self):
+        res = Subscribtion.query.filter_by(user_id=g.user.id, isread=0).all()
+        for i in res:
+            i.isread=1
+            db.session.add(i)
+        db.session.commit()
         return jsonify({'code':0})
 
 
-class SendNotice(Resource):
-    def post(self):
-        # 密码正确
-        if request.values.get("pw") == 'houxiaopang666':
-            content = request.values.get("content")
-            n = Notice.NewNotice(content)
-            db.session.add(n)
-            db.session.flush()
-            r_id = request.values.get("receiver_id")
-            if r_id: #指定发送
-                sub = Subscribtion(user_id=r_id, notice_id=n.id,status=0)
-            else: #群发
-                sub = [ (Subscribtion(user_id = i.id , notice_id=n.id) for i in User.query.filter_by(applystatus=2).all()) ]
-
-
-            # TODO ...
-            return jsonify({'code': 0})
-        return jsonify({'code': -1})
-
+# 获取所有消息
 class AllNotice(Resource):
+    @auth.login_required
     def get(self):
-        return jsonify({'code': 0, 'data': {'notice': [
-            {'content': '最近，深圳多个小区内的商品房业主与公租房租户发生冲突。有业主怒怼租户，要求物业禁止租户进入小区花园、禁止使用停车位、商品房与公租房进行隔离……在全国不少地方，只要是采取商品房配建保障房政策的小区，这种矛盾一直存在，至今没有靠谱的解决方法。', 'up_time': '2017-08-01 18:20:00', 'status': 0},
-            {'content': '商品房和保障房人为隔断，是因为有一条“住房鄙视链”，住豪宅的很多人看不上住保障房的。', 'up_time': '2017-08-01 18:20:00', 'status': 0},
-            {'content': '最近，深圳多个小区内的商品房业主与公租房租户发生冲突。有业主怒怼租户，要求物业禁止租户进入小区花园、禁止使用停车位、商品房与公租房进行隔离……在全国不少地方，只要是采取商品房配建保障房政策的小区，这种矛盾一直存在，至今没有靠谱的解决方法。', 'up_time': '2017-08-01 18:20:00', 'status': 0},
-            {'content': 'hello', 'up_time': '2017-08-01 18:20:00', 'status': 0},
-            {'content': '保障房建设应该推动不同收入群体混合居住，为了避免矛盾发生，收入差异最好不要太过于悬殊。', 'up_time': '2017-08-01 18:20:00', 'status': 0},
-            {'content': '最近，深圳多个小区内的商品房业主与公租房租户发生冲突。有业主怒怼租户，要求物业禁止租户进入小区花园、禁止使用停车位、商品房与公租房进行隔离……在全国不少地方，只要是采取商品房配建保障房政策的小区，这种矛盾一直存在，至今没有靠谱的解决方法。', 'up_time': '2017-08-01 18:20:00', 'status': 0},
-            {'content': 'hello', 'up_time': '2017-08-01 18:20:00', 'status': 0},
-            {'content': 'hello', 'up_time': '2017-08-01 18:20:00', 'status': 0},
-            {'content': '保障房建设应该推动不同收入群体混合居住，为了避免矛盾发生，收入差异最好不要太过于悬殊。', 'up_time': '2017-08-01 18:20:00', 'status': 0},
-            {'content': '混居社区不该分隔管理，非要分隔的，公共设施也要分别建设，防止保障房“被平均”。', 'up_time': '2017-08-01 18:20:00', 'status': 0}
-        ]}})
+        res = g.user.notice.all()
+        notice = [{'content': i.notice.content,'title':i.notice.title, 'up_time':datetime.strftime(i.notice.up_time, "%Y-%m-%d")} for i in res]
+        return jsonify({'code': 0, 'data': {'notice': notice}})
+
+# 获取所有消息
+# 删除所有该用户ID的消息
+class RemoveAll(Resource):
+    @auth.login_required
+    def post(self):
+        ns = g.user.notice.all()
+        for i in ns:
+            g.user.notice.remove(i)
+        db.session.add(g.user)
+        try:
+            db.session.commit()
+            return jsonify({'code': 0})
+        except:
+            db.session.rollback()
+            return jsonify({'code': -1})

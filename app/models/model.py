@@ -2,10 +2,12 @@ from flask_login import UserMixin
 from sqlalchemy.dialects.mysql import INTEGER
 from sqlalchemy.ext.orderinglist import ordering_list
 from app import lm,db
-from flask import request,json,current_app
+from flask import request,json,current_app,session
 from config import APPLYSTATUS
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer,BadSignature,SignatureExpired
 from . import Category,Subscribtion
+import random
+
 class User(UserMixin,db.Model):
     __tablename__ = 'users'
     id = db.Column(INTEGER(unsigned=True),primary_key=True)
@@ -26,7 +28,7 @@ class User(UserMixin,db.Model):
     # 找类目
     # category = db.relationship('Category_User', backref='user')
     experiences = db.relationship("Exp",backref="user",cascade="delete,delete-orphan")
-
+    # User.notice  //  Subscrbtion.receiver 互相访问
     notice = db.relationship('Subscribtion',foreign_keys=[Subscribtion.user_id],backref=db.backref('receiver',lazy='joined'),
                                lazy='dynamic',
                                cascade='all,delete-orphan')
@@ -72,7 +74,10 @@ class User(UserMixin,db.Model):
     def generate_auth_token(self, expiration=12000):
         s = Serializer(current_app.config['SECRET_KEY'],
                        expires_in=expiration)
-        t = s.dumps({'id': self.id})
+        # 生成一个随机数,存进token里. session里也存一个
+        nonce = random.randint(1,100)
+        session['lognonce'] = nonce
+        t = s.dumps({'id': self.id,'nonce':nonce})
         return t
 
     #验证token
@@ -84,6 +89,11 @@ class User(UserMixin,db.Model):
         except SignatureExpired:
             return None  # valid token, but expired
         except BadSignature:
+            return None  # invalid token
+
+        # 验证随机数是否过期
+        nonce = data['nonce']
+        if 'lognonce'  not in session or nonce != session['lognonce']:
             return None  # invalid token
         return User.query.get(data['id'])
 
