@@ -5,7 +5,6 @@
     <title>猴小胖设计服务专家——37分钟帮你找到好设计师</title>
     <meta name="keywords" content="logo在线制作,海报设计,vi设计,ppt制作,公司logo设计,商业计划书,二维码名片">
     <meta name="description" content="还在发愁网上找的设计师水平差？猴小胖平台帮你一键找到好设计师,提供PPT定制、UI设计、企业画册、海报展览、LOGO设计、企业形象设计、VI等服务">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="http://image.houxiaopang.com/houicon.ico">
     <link rel="stylesheet" type="text/css" href="https://cdn.staticfile.org/Swiper/3.4.2/css/swiper.min.css">
     <link rel="stylesheet" href="index.css">
@@ -16,7 +15,8 @@
 </div>
 <div class="header" id="header">
     <div class="background-image">
-        <img id="bgload" src="http://image.houxiaopang.com/first/723/Newbanner.jpg?imageMogr2/interlace/1" width="100%" height="100%" style="display: block;">
+        <img id="bgload" src="http://image.houxiaopang.com/first/723/Newbanner.jpg?imageMogr2/interlace/1" width="100%"
+             height="100%" style="display: block;">
     </div>
     <div class="navmeng"></div>
     <div class="navbar">
@@ -34,10 +34,20 @@
              onclick="javascript:location.href = 'http://houxiaopang.com/qrlogin';">
             <span>我是设计师</span>
         </div>
-        <div style="display: none;" id="userInfo" onclick="javascript:location.href='http://houxiaopang.com/admin';">
-            <span style="font-size: 12px;vertical-align: top;line-height: 40px;color: #fff;" v-html="nickname"></span>
-            <img style="width: 40px;height: 40px;border-radius: 50%;" alt="" :src="headimg">
-        </div>
+        <ul id="userInfo" class="userInfo">
+            <li onclick="javascript:location.href = 'http://houxiaopang.com/admin/#/newalbum';">
+                <i class="iconfontyyy" style="font-size: 25px;color:#bbb;">&#xe68a;</i>
+            </li>
+            <li id="showoption">
+                <img style="width: 40px;height: 40px;border-radius: 50%;display: block" alt="">
+                <ul class="useroption" style="display: none" id="useroption">
+                    <li onclick="javascript:location.href = 'http://houxiaopang.com/admin';">我的作品</li>
+                    <li onclick="javascript:location.href = 'http://houxiaopang.com/admin/#/designer';">我的资料</li>
+                    <li onclick="jump()">我的简历</li>
+                    <li onclick="exit()">退出</li>
+                </ul>
+            </li>
+        </ul>
     </div>
     <div class="header-content">
         <!-- <h1 class="better">在猴小胖，找到更好的设计师</h1> -->
@@ -71,7 +81,6 @@
         </li>
         <li>
             <img src="http://image.houxiaopang.com/first/723/guifan.png">
-
             <div class="desc">
                 <span class="desc-top">规范</span>
                 <span class="desc-bottom">分阶段交稿</span>
@@ -188,7 +197,7 @@
                         <h4>发布会 / 商业计划书</h4>
                     </div>
                 </div>
-                <img  src="http://image.houxiaopang.com/first/ppt.png">
+                <img src="http://image.houxiaopang.com/first/ppt.png">
             </div>
             <div class="caption">
                 <div class="caption-block">
@@ -197,7 +206,7 @@
                         <h4>网页 / APP / H5 / 游戏</h4>
                     </div>
                 </div>
-                <img  src="http://image.houxiaopang.com/first/ui.png">
+                <img src="http://image.houxiaopang.com/first/ui.png">
             </div>
             <div class="caption">
                 <div class="caption-block">
@@ -206,7 +215,7 @@
                         <h4>三折页 / 传单 / 图书编排等</h4>
                     </div>
                 </div>
-                <img  src="http://image.houxiaopang.com/first/huace.png">
+                <img src="http://image.houxiaopang.com/first/huace.png">
             </div>
             <div class="caption">
                 <div class="caption-block">
@@ -215,14 +224,14 @@
                         <h4>易拉宝 / 灯箱 / 户外广告 / 电商海报等</h4>
                     </div>
                 </div>
-                <img  src="http://image.houxiaopang.com/first/723/haibao.jpg"></div>
+                <img src="http://image.houxiaopang.com/first/723/haibao.jpg"></div>
             <div class="caption">
                 <div class="caption-block">
                     <div class="caption-content">
                         <h3>LOGO</h3>
                     </div>
                 </div>
-                <img  src="http://image.houxiaopang.com/first/723/logo.jpg"></div>
+                <img src="http://image.houxiaopang.com/first/723/logo.jpg"></div>
             <div class="caption">
                 <div class="caption-block">
                     <div class="caption-content">
@@ -230,37 +239,37 @@
                         <h4>名片 / 纪念品 / 包装设计等</h4>
                     </div>
                 </div>
-                <img  src="http://image.houxiaopang.com/first/723/vi.jpg"></div>
+                <img src="http://image.houxiaopang.com/first/723/vi.jpg"></div>
         </div>
     </div>
 </div>
 <div class="footer">
     <div class="footer-logo">
         <img src="http://image.houxiaopang.com/first/logodown.png">
-        <p style="letter-spacing: 1px">杭州求否科技有限公司旗下平台</p>
+        <p style="letter-spacing: 1px;margin-top: 20px;">杭州求否科技有限公司旗下平台</p>
     </div>
     <ul class="footer-middel-left">
-        <li><a href="/help/customer">客户指南</a></li>
-        <li><a href="/help/designer">设计师指南</a></li>
-        <li><a href="/help/faq">常见问题</a></li>
+        <li><a href="/help/#/">客户指南</a></li>
+        <li><a href="/help/#/designer">设计师指南</a></li>
+        <li><a href="/help/#/faq">常见问题</a></li>
     </ul>
     <ul class="footer-middel-right">
-        <li><a href="/help/aboutus">关于猴小胖</a></li>
-        <li><a href="/help/contact">联系我们</a></li>
-        <li><a href="/help/contact">意见反馈</a></li>
+        <li><a href="/help/#/aboutus">关于猴小胖</a></li>
+        <li><a href="/help/#/contact">联系我们</a></li>
+        <li><a href="/help/#/contact">意见反馈</a></li>
     </ul>
     <div class="footer-right">
         <p>@2017杭州求否科技有限公司</p>
-        <p>浙ICP备17006185号</p>
+        <p style="margin-top: 20px;">浙ICP备17006185号</p>
     </div>
 </div>
 <script type="text/javascript">
-    if(document.getElementById("bgload").complete){
+    if (document.getElementById("bgload").complete) {
         document.getElementById("load").style.display = 'none';
-    }else{
+    } else {
         document.getElementById("bgload").onload = function () {
             document.getElementById("load").style.display = 'none';
-        } 
+        }
     }
 </script>
 <script src="index.js"></script>
@@ -271,28 +280,60 @@ document.write(unescape("%3Cspan id='cnzz_stat_icon_1261952519'%3E%3C/span%3E%3C
 <script type="text/javascript" src="https://cdn.staticfile.org/Swiper/3.4.2/js/swiper.min.js"></script>
 <!-- <script src="https://cdn.staticfile.org/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script> -->
 <script type="text/javascript">
-    
+    var option = document.getElementById("useroption");
+    document.getElementById("showoption").onclick = function (e) {
+        e.stopPropagation();
+
+        if (option.style.display === "none") {
+            option.style.display = "block";
+        } else {
+            option.style.display = "none";
+        }
+    };
+    document.onclick = function () {
+        if (option.style.display === "block") {
+            option.style.display = "none";
+        }
+    }
+
+    function exit() {
+        $.ajax({
+            type: "post",
+            headers: {"Authorization": "Token " + token},
+            url: "http://houxiaopang.com/api/v1.1/logout",
+            success(data){
+
+            },
+        });
+        window.localStorage.token = "";
+        window.localStorage.applystatus = "";
+        window.localStorage.houxiaiopanguser = "";
+        location.href = "http://houxiaopang.com";
+    }
+
+    function jump() {
+        open("http://houxiaopang.com/workdetail/#/user/" + window.localStorage.userid);
+    }
     /*$("img.lazy").lazyload({
-        threshold: 1000
-    });*/
+     threshold: 1000
+     });*/
     var token = window.localStorage.token;
     if (token) {
         $.ajax({//验证是否登录
             type: "get",
             url: "http://houxiaopang.com/api/v1.1/token/authenticated",
             headers: {"Authorization": "Token " + token},
-            success:function(data){
+            success: function (data) {
                 if (data.code === 0) {
                     window.localStorage.applystatus = data.data.applystatus;
                     $.ajax({//获取用户信息
                         url: 'http://houxiaopang.com/api/v1.1/designerdash/header',
                         type: "GET",
                         headers: {"Authorization": "Token " + token},
-                        success:function(data) {
+                        success: function (data) {
                             if (data.code === 0) {
                                 var user = document.getElementById("userInfo");
-                                user.children[0].innerHTML = data.data.nickname;
-                                user.children[1].src = data.data.headimg;
+                                user.children[1].children[0].src = data.data.headimg;
                                 window.localStorage.userid = data.data.userid;
                                 document.getElementById("designer").style.display = "none";
                                 user.style.display = "block";
