@@ -1,11 +1,12 @@
 from  flask import  session,jsonify,g,request
 from flask_restful import Resource
 from app.models import Album,Designwork,Applyform,User,Category,Applywork
-
+from app.common import auth
 
 
 #获取简历页的个人信息
 class GetResumeInfo(Resource):
+    # @auth.login_required
     def get(self):
         designer_id = request.values.get("designer_id")
         if not designer_id:

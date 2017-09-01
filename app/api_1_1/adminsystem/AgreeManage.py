@@ -12,6 +12,9 @@ from app.common import auth
 # 最好加密码
 
 
+
+# houxiaopang.com/api/v1.1/adminsystem/agreeapply
+# 管理后台：批准申请
 # 把APPLYSTATUS设为2
 # 复制到表designer
 class AgreeApply(Resource):
@@ -39,6 +42,19 @@ class AgreeApply(Resource):
         db.session.commit()
 
         return jsonify({'code':0})
+
+# 管理后台：拒绝申请
+# houxiaopang.com / api / v1.1 / adminsystem / disagreeapply
+# 把APPLYSTATUS设为-1
+class DisAgreeApply(Resource):
+    def post(self):
+        apply_id = request.values.get("apply_id")
+        af = Applyform.query.filter_by(id=apply_id).first()
+        af.user.applystatus = -1
+        db.session.add(af)
+        db.session.commit()
+        return jsonify({'code': 0})
+
 
 
 

@@ -2,7 +2,8 @@ from  flask import  session,jsonify,g,request
 import  random
 from flask_restful import Resource
 from app.models import User,db,Notice,Subscribtion
-
+import json
+from datetime import datetime
 
 # 管理员发送消息
 class SendNotice(Resource):
@@ -35,4 +36,15 @@ class SendNotice(Resource):
 
 
 class ListNews(Resource):
-    pass
+    def get(self):
+        ns = Notice.query.all()
+        notice = []
+        for i in ns:
+            title = i.title
+            id = i.id
+            content = i.content
+            up_time = datetime.strftime(i.up_time, "%Y/%m/%d %H:%M")
+            receive_num = i.receiver.count()
+            isread = i.receiver.filter_by(isread=1).count()
+            notice.append({'id':id,'title':title,'content':content,'up_time':up_time,'receive_num':receive_num,'isread':isread})
+        return jsonify({'code':0,'data':{'notice':notice}})

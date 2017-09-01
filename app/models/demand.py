@@ -55,3 +55,16 @@ class Demand_User(db.Model):
         howmuch = replyform.get("howmuch")
 
         return Demand_User(demand_id=demand_id,user_id=designer_id,ideas=ideas,howlong=howlong, howmuch=howmuch)
+
+class Demand_Recom(db.Model):
+    __tablename__ = 'demands_recom'
+    id = db.Column(INTEGER(unsigned=True), primary_key=True)
+    demand_id = db.Column(INTEGER(unsigned=True), db.ForeignKey('demands.id'))
+    user_id = db.Column(INTEGER(unsigned=True), db.ForeignKey('users.id'))
+    # howlong = db.Column(db.String(20), nullable=True)
+    howmuch = db.Column(db.String(20), nullable=True)
+    ideas = db.Column(db.String(255), nullable=True)
+    album_ids = db.Column(db.String(20), nullable=True)
+
+    def __repr__(self):
+        return '<Demand_Recom % r  >' % (self.demand_id)
