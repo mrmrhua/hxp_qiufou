@@ -49,13 +49,13 @@
         </div>
         <div class="context">
           <span class="err">*必填</span>
-          <span class="err" style="left: 45px;">*格式错误</span>
+          <span class="err">*格式错误</span>
           <label>手　　机</label><input v-model="basic.tel" style="width: 261px;float: left;" type="text"><span
           class="zhusi">仅自己可见</span>
         </div>
         <div class="context">
           <span class="err">*必填</span>
-          <span class="err" style="left: 45px;">*格式错误</span>
+          <span class="err">*格式错误</span>
           <label>邮　　箱</label><input v-model="basic.email" style="width: 261px;float: left;" type="text"><span
           class="zhusi">仅自己可见</span>
         </div>
@@ -64,7 +64,7 @@
 
       <form class="content_form" v-show="workfrom">
         <div class="context">
-          <span class="err" style="left:65px">*必填</span>
+          <span class="err">*必填</span>
           <label>可工作时间</label>
           <ul style="margin-left: 200px;">
             <li><input type="checkbox" value="1" name="worktime"><span class="checkbox_span">周一至周五白天</span></li>
@@ -121,19 +121,17 @@
 
         <div class="context">
           <label>项目经历</label>
-          <i class="iconfontyyy" @click="addproject"
-             style="float: right;margin-right: 100px;color: #4cb6cb;cursor: pointer;">&#xe600;</i>
+          <!--<i class="iconfontyyy" @click=""
+             style="float: right;margin-right: 100px;color: #4cb6cb;cursor: pointer;">&#xe600;</i>-->
           <div id="project" style="margin-left: 200px;">
             <label @click="addproject">标题</label><input style="display: block;" v-model="project.title" type="text">
             <label>简介</label><textarea v-model="project.desc" rows="4"></textarea>
-
+            <div class="btn_image" style="margin-left: 150px;" @click="addproject">添加</div>
             <!--todo 显示-->
-            <div style="width:80%;margin-top: 20px;position: relative" v-for="(item,index) in worksetting.exp">
-              <div class="deleteproject">
-                <span @click="removeproject(item.id,index)">删除</span>
-              </div>
-              <p>{{item.title}}</p>
-              <p style="line-height: 20px;">{{item.desc}}</p>
+            <div class="new_project" v-for="(item,index) in worksetting.exp">
+              <i @click="removeproject(item.id,index)" class="iconfontyyy">&#xe635;</i>
+              <p style="color: #313131;font-weight: 600;">{{item.title}}</p>
+              <p style="line-height: 20px;color: #727272;" v-html="item.desc"></p>
             </div>
           </div>
         </div>
@@ -182,14 +180,17 @@
         </div>
       </div>
     </div>
+    <prompt prompt="success" :promptshow="promptshow"></prompt>
   </div>
 </template>
 <script>
   import VDistpicker from 'v-distpicker'
-  import token from "@/components/token.js"
+  import prompt from "@/components/Prompt"
   export default{
     data(){
       return {
+        promptshow: false,
+        flag: true,
         project: {
           title: "",
           desc: ""
@@ -220,7 +221,8 @@
       }
     },
     components: {
-      VDistpicker
+      VDistpicker,
+      prompt
     },
     created(){
       let that = this;
@@ -273,11 +275,7 @@
           }
         },
         error(e){
-          if (e.status === 401) {
-            //location.href = "http://houxiaopang.com/qrlogin";
-          } else {
-            alert("网络拥挤，请稍后再试···");
-          }
+          alert("网络拥挤，请稍后再试···");
         }
       });
     },
@@ -287,7 +285,6 @@
         radioClass: 'iradio_square-red',
         increaseArea: '20%' // optional
       });
-
       this.categroyclick();
       this.labelclick();
     },
@@ -307,8 +304,10 @@
           alert("标题或简介不能为空！");
           return;
         }
-
-        this.worksetting.exp.push({"title": this.project.title.trim(), "desc": this.project.desc.trim()});
+        this.worksetting.exp.push({
+          "title": this.project.title.trim(),
+          "desc": this.project.desc.trim().replace(/\n/g, "<br>")
+        });
         this.project = {
           title: "",
           desc: ""
@@ -347,7 +346,7 @@
               }
             }
           }
-        }
+        };
         li.onblur = function () {//按下失去焦点事件
           if (!this.flag) {
             if (this.innerHTML == "") {
@@ -403,22 +402,33 @@
           }
         }
         this.basic.city = province.value + " " + city.value;
-        let that = this;
-        $.ajax({
-          headers: {"Authorization": "Token " + token},
-          type: "post",
-          url: "http://houxiaopang.com/api/v1.1/designerdash/userinfo",
-          data: {
-            'basic': JSON.stringify(that.basic)
-          },
-          success(data){
-            if (data.code === 0) alert("保存成功");
-            else alert("保存失败");
-          },
-          error(){
-            alert("保存失败");
-          }
-        });
+        if (this.flag) {
+          this.flag = false;
+          var that = this;
+          $.ajax({
+            headers: {"Authorization": "Token " + token},
+            type: "post",
+            url: "http://houxiaopang.com/api/v1.1/designerdash/userinfo",
+            data: {
+              'basic': JSON.stringify(that.basic)
+            },
+            success(data){
+              that.flag = true;
+              if (data.code === 0) {
+                that.promptshow = true;
+                setTimeout(function () {
+                  that.promptshow = false;
+                  that.$router.go(0);
+                }, 1000);
+              }
+              else alert("网络拥挤，请稍后再试···");
+            },
+            error(){
+              that.flag = true;
+              alert("网络拥挤，请稍后再试···");
+            }
+          });
+        }
       },
       submitworksetting(){//保存接单设置
         let errs = document.querySelectorAll(".err");
@@ -460,7 +470,10 @@
 
         //项目经历
         if (this.project.title.trim() !== "" && this.project.desc.trim() !== "") {
-          this.worksetting.exp.push({"title": this.project.title.trim(), "desc": this.project.desc.trim()});
+          this.worksetting.exp.push({
+            "title": this.project.title.trim(),
+            "desc": this.project.desc.trim().replace(/\n/, "<br>"),
+          });
           this.project = {
             title: "",
             desc: ""
@@ -471,29 +484,43 @@
         let privacy = $("input[type='checkbox'][name='privacy']:checked");
         if (privacy.length === 1) {
           this.worksetting.privacy = 1;
+        } else {
+          this.worksetting.privacy = 0;
         }
         //发票
         let ticket = $("input[type='checkbox'][name='ticket']:checked");
         if (ticket.length === 1) {
           this.worksetting.ticket = 1;
+        } else {
+          this.worksetting.ticket = 0;
         }
         let that = this;
-        $.ajax({
-          headers: {"Authorization": "Token " + token},
-          type: "post",
-          url: "http://houxiaopang.com/api/v1.1/designerdash/userinfo",
-          data: {
-            'worksetting': JSON.stringify(that.worksetting)
-          },
-          success(data){
-            if (data.code === 0) alert("保存成功");
-            else alert("保存失败");
-          },
-          error(){
-            alert("保存失败");
-          }
-        });
-
+        if (this.flag) {
+          that.flag = false;
+          $.ajax({
+            headers: {"Authorization": "Token " + token},
+            type: "post",
+            url: "http://houxiaopang.com/api/v1.1/designerdash/userinfo",
+            data: {
+              'worksetting': JSON.stringify(that.worksetting)
+            },
+            success(data){
+              that.flag = true;
+              if (data.code === 0) {
+                that.promptshow = true;
+                setTimeout(function () {
+                  that.promptshow = false;
+                  that.$router.go(0);
+                }, 1000);
+              }
+              else alert("网络拥挤，请稍后再试···");
+            },
+            error(){
+              that.flag = true;
+              alert("网络拥挤，请稍后再试···");
+            }
+          });
+        }
       },
       uploadimg(ev){
         this.headimg_upload = window.URL.createObjectURL(ev.target.files[0]);
@@ -548,9 +575,8 @@
         });
       },
       removeproject(id, index){
-        var that = this;
+        var that = this;//发请求删除 exp
         if (id) {
-          //todo 发请求删除 exp
           $.ajax({
             type: "POST",
             headers: {"Authorization": "Token " + token},
@@ -560,6 +586,10 @@
             },
             success(data){
               if (data.code === 0) {
+                that.promptshow = true;
+                setTimeout(function () {
+                  that.promptshow = false;
+                }, 1000);
                 that.worksetting.exp.splice(index, 1);
               } else {
                 alert("网络拥挤，请稍后再试···");
@@ -573,8 +603,6 @@
           //删除项目经历
           this.worksetting.exp.splice(index, 1);
         }
-
-
       }
     }
   }
@@ -589,31 +617,30 @@
   .labelpage > ul {
     width: 100%;
     height: 100%;
-    list-style: none;
-    border-bottom: 1px solid #181f24;
   }
 
   .labelpage > ul > li {
     float: left;
+    padding: 0 3px;
     font-size: 16px;
-    padding: 0 15px;
-    line-height: 40px;
+    line-height: 30px;
     margin-left: 10px;
+    margin-right: 25px;
     margin-top: 9px;
     background: #fff;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
     cursor: pointer;
   }
 
+  .labelpage > ul > li:hover {
+    border-bottom: 2px solid #d01667;
+  }
+
   .labelpage > ul > .labelpage_active {
-    border: 1px solid #181f24;
-    border-bottom: none;
-    cursor: default;
+    border-bottom: 2px solid #d01667;
   }
 
   .content_form {
-    width: 1000px;
+    width: 800px;
     margin: 0 auto;
     padding: 40px 0;
     box-sizing: border-box;
@@ -670,6 +697,7 @@
     border: 1px solid #cbd5dd;
     border-radius: 2px;
     font-size: 14px;
+    resize: none;
     font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei", "Hiragino Sans GB", "HeitiSC", "WenQuanYi Micro Hei", sans-serif;
   }
 
@@ -706,35 +734,6 @@
 
   .context > select:focus {
     border-color: #545ca6;
-  }
-
-  .err {
-    display: none;
-    color: #f00;
-    position: absolute;
-    top: 0;
-    left: 75px;
-  }
-
-  .btn_image {
-    width: 150px;
-    height: 39px;
-    margin: 60px 0 80px 200px;
-    cursor: pointer;
-    border-radius: 25px;
-    text-align: center;
-    line-height: 39px;
-    color: #788188;
-    background-color: #fff;
-    border: 1px solid #dbe2e7;
-    border-bottom-color: #d5dde3;
-    box-shadow: 0 1px 1px rgba(90, 90, 90, 0.1);
-  }
-
-  .btn_image:hover {
-    border: 1px solid #adadad;
-    color: #333;
-    background-color: #ebebeb;
   }
 
   .context > .headimg_up {
@@ -791,8 +790,8 @@
 
   .context > .label > .label_new {
     cursor: pointer;
-    color: #4cb6cb;
-    border: 1px solid #4cb6cb;
+    color: #d01667;
+    border: 1px solid #d01667;
   }
 
   .context > .label > .choose {
@@ -805,7 +804,7 @@
   }
 
   .context > .label > .label_new:hover {
-    box-shadow: 0 0 2px 0 #4cb6cb;
+    box-shadow: 0 0 2px 0 #d01667;
   }
 
   .context > .label > li {
@@ -845,48 +844,29 @@
     color: #fff;
   }
 
-  #project .deleteproject {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    opacity: 0;
+  #project .new_project {
+    width: 80%;
+    padding: 20px 0;
+    position: relative;
+    border-bottom: 1px solid #bbb;
   }
 
-  #project .deleteproject:hover, .deleteproject > span {
-    opacity: 1;
-    display: block !important;
+  #project .new_project:last-child {
+    border: none;
   }
 
-  #project .deleteproject > span {
+  #project .new_project > i {
     display: none;
     float: right;
-    width: 70px;
-    height: 24px;
-    border: 1px solid #bbb;
     cursor: pointer;
     line-height: 24px;
     text-align: center;
+    font-size: 20px;
+    color: #d01667;
   }
 
-  .mymodal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background: rgba(0, 0, 0, 0.6);
-    z-index: 20;
-  }
-
-  .mymodal > .conte {
-    width: 630px;
-    margin: 30px auto;
-    overflow: hidden;
-    background: #FFF;
-    border-radius: 5px;
-    padding: 15px;
+  #project .new_project:hover > i {
+    display: block;
   }
 
   #img-cont {
@@ -899,40 +879,5 @@
     width: 160px;
     height: 120px;
     overflow: hidden;
-  }
-
-  .mymodal > .conte > .div_btns {
-    width: 100%;
-    height: 50px;
-    float: left;
-    line-height: 50px;
-  }
-
-  .mymodal > .conte > .div_btns > button {
-    border-radius: 25px;
-    width: 70px;
-    height: 30px;
-    outline: none;
-    cursor: pointer;
-    text-align: center;
-    color: #788188;
-    background-color: #fff;
-    border: 1px solid #dbe2e7;
-    border-bottom-color: #d5dde3;
-    box-shadow: 0 1px 1px rgba(90, 90, 90, 0.1);
-  }
-
-  .mymodal > .conte > .div_btns > button:hover {
-    border: 1px solid #adadad;
-    color: #333;
-    background-color: #ebebeb;
-  }
-
-  .mymodal > .conte > .div_btns > i {
-    display: inline-block;
-    width: 50px;
-    text-align: center;
-    vertical-align: top;
-    cursor: pointer;
   }
 </style>

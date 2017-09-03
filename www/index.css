@@ -626,3 +626,21 @@ ul.userInfo > li {
 .useroption > li:hover {
     background: #e0e0e0;
 }
+.noticenum {
+    background: #f00;
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    top: 8px;
+    right: -1px;
+    line-height: 16px;
+    font-size: 12px;
+    border-radius: 50%;
+    color: #fff;
+    text-align: center;
+    display: none;
+  }
+
+  .msg {
+    font-size: 14px;
+  }

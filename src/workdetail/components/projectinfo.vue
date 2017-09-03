@@ -1,10 +1,10 @@
 <template>
   <div>
     <div class="top">
-      <!--<div class="head">
-        <span>猴小瘦</span>
-        <i></i>
-      </div>-->
+      <div @click="jump" class="head">
+        <span>{{projectinfo.belong_nick}}</span>
+        <img :src="projectinfo.belong_head">
+      </div>
       <div class="title">{{projectinfo.title}}</div>
       <div class="category">
         <ul>
@@ -61,6 +61,9 @@
     mounted(){
     },
     methods: {
+      jump(){
+        window.open("http://houxiaopang.com/workdetail/#/user/" + this.projectinfo.belong_id);
+      },
       showphoto(src){
         //this.modelshow = true;
         //document.getElementById("showphoto").src = src;
@@ -99,20 +102,24 @@
 
   .top > .head {
     position: absolute;
-    top: 0;
+    top: 33%;
     right: 0;
+    cursor: pointer;
   }
 
-  .top > .head > i {
+  .top > .head > img {
     display: inline-block;
     width: 50px;
     height: 50px;
-    background: url("../assets/touxiang.png");
-    background-size: cover;
+    border-radius: 50%;
   }
 
   .top > .head > span {
-
+    vertical-align: top;
+    line-height: 50px;
+    color: #313131;
+    font-size: 16px;
+    margin-right: 10px;
   }
 
   .title {
@@ -161,15 +168,19 @@
 
   .work {
     width: 100%;
-    background: #f8f9fa;
+    background: #ffffff;
     overflow: hidden;
     margin-top: 120px;
+    border-top: 1px solid #bbb;
     padding: 150px 0;
   }
 
   .worklist {
     width: 1000px;
     margin: 0 auto;
+    text-align: center;
+    background: #fff;
+
   }
 
   /*.worklist > ul {
@@ -186,8 +197,10 @@
     box-shadow: 1px 1px 5px 0 #8e8a8a;
   }*/
   .loadlazy {
-    width: 1000px;
     cursor: pointer;
+    max-width: 1000px;
+    display: block;
+    margin: 10px auto;
   }
 
 </style>

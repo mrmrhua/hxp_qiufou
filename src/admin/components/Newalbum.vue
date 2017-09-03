@@ -1,10 +1,6 @@
 <template id="newablue">
   <div class="conbody">
-    <!-- <div v-show="loading" style="position: fixed;top: 0;left: 0;right: 0;bottom: 0;z-index: 100;background: #fff;">
-       <BounceLoader :loading="loading" :color="color"
-                     style="margin: 200px auto;display: block;width: 60px;"></BounceLoader>
-     </div>-->
-    <p class="head">上传作品集</p>
+    <p style="font-size: 16px;">上传作品集</p>
     <div class="content">
       <form class="content_form">
         <div class="context">
@@ -14,7 +10,7 @@
         </div>
         <div class="context">
           <span class="err" style="left:50px;">*限200字</span>
-          <label>简　　介<span style="position: absolute;left: 143px;top: 30px;color: #999;">(选填)</span></label>
+          <label>简　　介<span style="position: absolute;left: 96px;top: 25px;color: #999;">(选填)</span></label>
           <textarea v-model="desc" rows="4" placeholder="请输入作品说明（限200字）"></textarea>
         </div>
         <div class="context">
@@ -31,10 +27,10 @@
 
         <div class="context">
           <span class="err">*必填</span>
-          <span class="btn_span" v-show="img_url.length > 1" @click="sort">排序</span>
+          <span class="btn_span iconfontyyy" v-show="img_url.length > 1" @click="sort">&#xe629; 排序</span>
           <label>上传作品</label>
-          <div style="float: left;max-width: 70%;">
-            <div class="upfile">
+          <div style="float: left;max-width: 60%;">
+            <div class="upfile" style="padding-top:45px;">
               <div class="upwrapper">
                 <ul>
                   <li>
@@ -46,7 +42,7 @@
                              accept="image/*" multiple/>
                     </section>
                   </li>
-                  <imgthumb @img_url="rm(index)" v-for="(item,index) in img_url" v-bind:index="index"
+                  <imgthumb @img_url="rm" v-for="(item,index) in img_url" v-bind:index="index"
                             v-bind:each_file="item" :key="index">
                   </imgthumb>
                 </ul>
@@ -77,24 +73,24 @@
     </div>
     <!--排序模态框-->
     <div class="mymodal" v-show="sortmodelshow">
-      <div class="conte" style="width: 700px;height: 575px;overflow: hidden;padding: 0;">
-        <div style="width: 100%;height: 40px;padding-left: 15px;padding-right:15px;padding-top: 10px;">
+      <div class="conte" style="width: 700px;height: 585px;overflow: hidden;padding: 0;">
+        <div style="width: 100%;height: 50px;padding-left: 28px;padding-right:15px;padding-top: 15px;">
           <span>排序</span><span
           style="float: right;cursor: pointer"
           @click="sortmodelshow=false"><i class="iconfontyyy">&#xe67c;</i></span>
         </div>
         <div style="height: 495px;overflow-y: auto">
-          <ul id="sort" style="position:relative;margin: 0 auto;width: 645px;">
-
+          <ul id="sort" style="margin: 0 auto;width: 645px;">
           </ul>
         </div>
         <div style="height: 30px;">
-          <span class="btn_span" @click="sortover"
-                style="position:relative;top:0;left:0;float: right;margin-right: 52px;cursor: pointer">确定</span>
+          <span class="btn_image" style="margin: 0 50px 0 0;height: 30px;line-height: 30px;width: 100px;float: right;"
+                @click="sortover">确定</span>
         </div>
 
       </div>
     </div>
+    <prompt prompt="success" :promptshow="promptshow"></prompt>
     <!--上传封面模态框-->
     <div class="mymodal" v-show="modelshow">
       <div class="conte">
@@ -130,10 +126,8 @@
   </div>
 </template>
 <script>
-  import token from "@/components/token.js"
   import imgthumb from "@/components/Imgthumb"
-
-  // import BounceLoader from 'vue-spinner/src/BounceLoader.vue'
+  import prompt from "@/components/Prompt"
   function Pointer(x, y) {
     this.x = x;
     this.y = y;
@@ -145,6 +139,8 @@
   export default{
     data(){
       return {
+        flag: true,
+        promptshow: false,
         title: '',
         desc: '',
         img_url: [],
@@ -170,6 +166,7 @@
     components: {
       'imgthumb': imgthumb,
       // BounceLoader
+      prompt
     },
     methods: {
       initPhoto(){
@@ -178,15 +175,15 @@
             this.box = $(this).parent();
             $(this).attr("index", i).css({
               position: "absolute",
-              left: this.box.get(0).offsetLeft,
-              top: this.box.get(0).offsetTop
+              left: this.box.offset().left,
+              top: this.box.offset().top
             }).appendTo("#sort");
             this.drag();
           },
             this.move = function (callback) {  // 移动
               $(this).stop(true).animate({
-                left: this.box.get(0).offsetLeft,
-                top: this.box.get(0).offsetTop
+                left: this.box.offset().left,
+                top: this.box.offset().top
               }, 500, function () {
                 if (callback) {
                   callback.call(this);
@@ -216,7 +213,6 @@
               });
             },
             this.swap = function (currentItem, direction) { // 交换位置
-              if (this.moveing) return false;
               var directions = {
                 normal: function () {
                   var saveBox = this.box;
@@ -314,14 +310,13 @@
         });
       },
       sort(){
+        window.scrollTo(0, 0);
         this.sortmodelshow = true;
         this.$nextTick(function () {
-          let ul = document.getElementById("sort");
+          var ul = document.getElementById("sort");
           ul.innerHTML = "";
           [].forEach.call(this.img_url, function (url) {
-            let str = ` <li>
-            <div class="item" style="width: 200px;height: 150px;overflow: hidden"><img src="${url}" width="200"></div>
-          </li>`;
+            var str = "<li><div class='item' style='width: 200px;height: 150px;overflow: hidden'><img src='" + url + "' width='200'></div></li>";
             ul.innerHTML += str;
           });
           this.initPhoto();
@@ -358,16 +353,13 @@
             //赋值给alllist数组,
             var url = "http://upload.qiniu.com/putb64/-1";
             var xhr = new XMLHttpRequest();
-            //var xhrget = new XMLHttpRequest();
-            // var obj;
             xhr.onreadystatechange = function () {
               if (xhr.readyState == 4) {
                 var data = eval("(" + xhr.responseText + ")");
                 that.ablumfile = "http://work.houxiaopang.com/" + data.key;
-                /*cropedimg.src = pic;*/
                 cropedimg.nextElementSibling.style.display = "none";
               }
-            }
+            };
             xhr.open("POST", url, true);
             xhr.setRequestHeader("Content-Type", "application/octet-stream");
             xhr.setRequestHeader("Authorization", "UpToken " + data.uptoken);
@@ -398,7 +390,7 @@
         } else {
           $(".err").eq(2).css("display", "none");
         }
-        if (this.ablumfile == '') {
+        if (this.ablumfile == 'http://image.houxiaopang.com/baseform/721/addpic.jpg') {
           $(".err").eq(3).css("display", "block");
         } else {
           $(".err").eq(3).css("display", "none");
@@ -409,39 +401,45 @@
           }
         }
         // this.loading = true;
-        var that = this;
+
         //todo 提交
-        $.ajax({
-          headers: {"Authorization": "Token " + token},
-          url: "http://houxiaopang.com/api/v1.1/newalbum",
-          type: "POST",
-          data: {
-            title: that.title.trim(),
-            work_list: JSON.stringify(that.img_url),
-            cover: that.ablumfile,
-            description: that.desc.trim(),
-            category: that.category,
-            album_id: that.album_id
-          },
-          timeout: 5000,
-          success: function (data) {
-            //setTimeout(function(){
-            //  that.loading = false;
-            // },500);
-            if (data.code == "0") {
-              that.$router.push({path: '/'});
-            } else {
-              alert("网络拥挤，请稍后再试···");
+        if (this.flag) {
+          this.flag = false;
+          var that = this;
+          $.ajax({
+            headers: {"Authorization": "Token " + token},
+            url: "http://houxiaopang.com/api/v1.1/newalbum",
+            type: "POST",
+            data: {
+              title: that.title.trim(),
+              work_list: JSON.stringify(that.img_url),
+              cover: that.ablumfile,
+              description: that.desc.trim(),
+              category: that.category,
+              album_id: that.album_id
+            },
+            success: function (data) {
+              that.flag = true;
+              if (data.code === 0) {
+                that.promptshow = true;
+                setTimeout(function () {
+                  that.promptshow = false;
+                  that.$router.push({path: '/'});
+                }, 1000);
+              } else {
+                alert("网络拥挤，请稍后再试···");
+              }
+            },
+            error: function (e) {
+              that.flag = true;
+              if (e.status === 401) {
+                location.href = "http://houxiaopang.com/qrlogin";
+              } else {
+                alert("网络拥挤，请稍后再试···");
+              }
             }
-          },
-          error: function (e) {
-            if (e.status === 401) {
-              location.href = "http://houxiaopang.com/qrlogin";
-            } else {
-              alert("网络拥挤，请稍后再试···");
-            }
-          }
-        });
+          });
+        }
       },
       appendImg: function () {
         var file_input = document.getElementById("file");
@@ -506,13 +504,12 @@
         this.album_id = null;
       }
     }
-
   }
 </script>
 <style>
 
   .content_form {
-    width: 1000px;
+    width: 800px;
     margin: 0 auto;
     padding: 40px 0;
     box-sizing: border-box;
@@ -561,6 +558,7 @@
     border: 1px solid #cbd5dd;
     border-radius: 2px;
     font-size: 14px;
+    resize: none;
     font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei", "Hiragino Sans GB", "HeitiSC", "WenQuanYi Micro Hei", sans-serif;
   }
 
@@ -620,15 +618,7 @@
     height: 100%;
   }
 
-  .err {
-    display: none;
-    color: #f00;
-    position: absolute;
-    top: 0;
-    left: 75px;
-  }
-
-  .zhezhao {
+  .addbtn > .zhezhao {
     position: absolute;
     top: 0;
     left: 0;
@@ -640,38 +630,18 @@
     display: none;
   }
 
-  .btn_image {
-    width: 150px;
-    height: 39px;
-    margin: 60px 0 80px 200px;
-    cursor: pointer;
-    border-radius: 25px;
-    text-align: center;
-    line-height: 39px;
-    color: #788188;
-    background-color: #fff;
-    border: 1px solid #dbe2e7;
-    border-bottom-color: #d5dde3;
-    box-shadow: 0 1px 1px rgba(90, 90, 90, 0.1);
-  }
-
-  .btn_image:hover {
-    border: 1px solid #adadad;
-    color: #333;
-    background-color: #ebebeb;
-  }
-
   .btn_span {
     position: absolute;
-    top: 30px;
-    left: 149px;
-    color: #313131;
+    top: 10px;
+    left: 553px;
+    color: #bbb;
     display: inline-block;
     cursor: pointer;
+    font-size: 14px;
   }
 
   .btn_span:hover {
-    color: #d01667;
+    color: #d01667 !important;
   }
 
   #sort {
@@ -690,72 +660,6 @@
   #sort > li > .item {
     width: 200px;
     height: 150px;
-  }
-
-  .mymodal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background: rgba(0, 0, 0, 0.6);
-    z-index: 20;
-  }
-
-  .mymodal > .conte {
-    width: 630px;
-    margin: 30px auto;
-    overflow: hidden;
-    background: #FFF;
-    border-radius: 5px;
-    padding: 15px;
-  }
-
-  #img-container {
-    width: 400px;
-    height: 400px;
-    float: left
-  }
-
-  #img-preview {
-    width: 160px;
-    height: 120px;
-    overflow: hidden;
-  }
-
-  .mymodal > .conte > .div_btns {
-    width: 100%;
-    height: 50px;
-    float: left;
-    line-height: 50px;
-  }
-
-  .mymodal > .conte > .div_btns > button {
-    border-radius: 25px;
-    width: 70px;
-    height: 30px;
-    outline: none;
-    cursor: pointer;
-    text-align: center;
-    color: #788188;
-    background-color: #fff;
-    border: 1px solid #dbe2e7;
-    border-bottom-color: #d5dde3;
-    box-shadow: 0 1px 1px rgba(90, 90, 90, 0.1);
-  }
-
-  .mymodal > .conte > .div_btns > button:hover {
-    border: 1px solid #adadad;
-    color: #333;
-    background-color: #ebebeb;
-  }
-
-  .mymodal > .conte > .div_btns > i {
-    display: inline-block;
-    width: 50px;
-    text-align: center;
-    vertical-align: top;
-    cursor: pointer;
   }
 
   .upwrapper > ul {

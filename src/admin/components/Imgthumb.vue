@@ -8,16 +8,8 @@
   </li>
 </template>
 <script>
-
   export default{
     props: ['each_file', 'index'],
-    computed: {},
-    mounted: function () {
-      //console.log(this.each_file);
-      //uploader.addFile(this.each_file);
-      /*$(".up-section").removeClass("loading");
-       $(".up-img").removeClass("up-opcity");*/
-    },
     methods: {
       delconfirm: function () {
         this.$emit('img_url', this.index);

@@ -35,9 +35,14 @@
             <span>我是设计师</span>
         </div>
         <ul id="userInfo" class="userInfo">
+             <li onclick="javascript:location.href = 'http://houxiaopang.com/admin/#/Msg';" class="msg" style="position: relative">
+                <i class="iconfontyyy" style="font-size: 24px;color:#bbb;">&#xe71f;</i>
+                <span class="noticenum"></span>
+            </li>
             <li onclick="javascript:location.href = 'http://houxiaopang.com/admin/#/newalbum';">
                 <i class="iconfontyyy" style="font-size: 25px;color:#bbb;">&#xe68a;</i>
             </li>
+
             <li id="showoption">
                 <img style="width: 40px;height: 40px;border-radius: 50%;display: block" alt="">
                 <ul class="useroption" style="display: none" id="useroption">
@@ -333,7 +338,7 @@ document.write(unescape("%3Cspan id='cnzz_stat_icon_1261952519'%3E%3C/span%3E%3C
                         success: function (data) {
                             if (data.code === 0) {
                                 var user = document.getElementById("userInfo");
-                                user.children[1].children[0].src = data.data.headimg;
+                                user.children[2].children[0].src = data.data.headimg;
                                 window.localStorage.userid = data.data.userid;
                                 document.getElementById("designer").style.display = "none";
                                 user.style.display = "block";

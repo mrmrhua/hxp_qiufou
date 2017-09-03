@@ -6,7 +6,13 @@
     </div>
     <div class="biaodan">
       <div class="content">
-        <router-link to="/" tag="i" class="iconfont back">&#xe7a1;<span> 返回</span></router-link>
+        <div class="broker" @click="chat">
+          <span style="vertical-align: top;line-height: 50px;color: #313131;">阿华&nbsp;</span>
+          <img style="border-radius: 50%;width: 50px;"
+               src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1503390136223&di=27c7a885cafbe74972fdee3ce3ac3bdc&imgtype=0&src=http%3A%2F%2Fv1.qzone.cc%2Favatar%2F201503%2F29%2F21%2F09%2F5517f985afad0692.png%2521200x200.jpg"
+               alt="">
+        </div>
+        <i @click="back" class="iconfont back">&#xe7a1;<span> 返回</span></i>
         <p>猴小胖项目邀约</p>
         <p>{{info.title}}</p>
         <div class="desc" v-html="info.description"></div>
@@ -15,7 +21,6 @@
         <p>发布游戏、查看游戏详情</p>
         <p>三、可参考产品</p>
         <p>支付宝AR红包</p>-->
-
         <p><i class="iconfont" style="font-size: 19px;">&#xe693;</i><span> 工期：</span><span
           style="color:#313131;line-height: 26px;">{{info.howlong}}</span></p>
         <p><i class="iconfont" style="font-size: 19px;">&#xe613;</i><span> 预算：</span><span
@@ -23,15 +28,13 @@
         <ul>
           <li class="li_img" @click="jump(item)" v-for="item in info.desc_img"><img :src="setimg(item)" alt=""></li>
         </ul>
-        <div id="pj" class="img" @click="show()"></div>
+        <div id="pj" class="img" @click="show"></div>
       </div>
       <!--模糊图-->
       <div class="content prompt" v-show="prompt">
         <div class="prompt_help" v-show="status == 1">您的入驻申请尚在审核中，请耐心等待。</div>
         <div class="prompt_help" v-show="status == -1" style="cursor: pointer;">您的入驻申请未通过审核，请重新填写申请。</div>
       </div>
-
-
       <div class="content" style="margin-top: 60px;" v-show="showfrom">
         <div class="input-group">
           <label>项目报价：</label>
@@ -68,14 +71,12 @@
       return {
         showfrom: false,
         info: {},
-        token: window.localStorage.token,
         modalshow: false,
-        login: false,
         howmuch: '',
         howlong: '',
         ideas: '',
         prompt: false,
-        status: 0
+        status: 0,
       }
     },
     created(){
@@ -85,7 +86,7 @@
         type: "GET",
         data: {'demand_id': that.$route.params.id},
         success: function (data) {
-          if (data.code == 0) {
+          if (data.code === 0) {
             that.info = data.data;
           } else {
             alert("网络拥挤，请稍后再试···");
@@ -102,31 +103,45 @@
             type: "GET",
             data: {'code': that.$route.query.code},
             success: function (data) {
-              if (data.code == '0') {
+              if (data.code === '0') {
                 window.localStorage.token = data.data.token;
-                that.token = data.data.token;
-                if (data.data.applystatus == 0) {
+                token = data.data.token;
+                if (data.data.applystatus === 0) {
                   location.href = "http://houxiaopang.com/apply";
                 } else {
                   window.localStorage.applystatus = data.data.applystatus;
-                  location.href = "http://houxiaopang.com/demand/#/xunjia/" + that.$route.params.id;
-                  that.modalshow = false;
+                  location.assign("http://houxiaopang.com/demand/#/xunjia/" + that.$route.params.id);
+                  window.location.reload();
                 }
               } else {
                 alert('微信授权失败');
-                location.href = "http://houxiaopang.com/demand/#/xunjia/" + that.$route.params.id;
+                location.assign("http://houxiaopang.com/demand/#/xunjia/" + that.$route.params.id);
+                window.location.reload();
               }
             },
             error: function () {
               alert("网络拥挤，请稍后再试···");
             }
           });
-        } else {
-
         }
       }
     },
     methods: {
+      chat(){
+        //新窗口打开   咨询经纪人
+        if (login) {//如果真，不需要判断token是否过期
+          //判断用户状态码，
+          //todo 需修改地址
+          open("http://localhost/chat");
+        } else {
+          this.showlogin();
+        }
+      },
+      back(){
+        this.showfrom = false;
+        document.getElementById("pj").className = "img";
+        this.$router.push("/");
+      },
       reply(){//提交表单
         if (this.howmuch == "") {
           alert("请填写项目报价");
@@ -144,13 +159,13 @@
         $.ajax({
           type: "post",
           url: "http://houxiaopang.com/api/v1.1/replydemand",
-          headers: {"Authorization": "Token " + that.token},
+          headers: {"Authorization": "Token " + token},
           data: {
             'demand_id': that.$route.params.id,
             'replyform': JSON.stringify(replyform),
           },
           success(data){
-            if (data.code == 0) {
+            if (data.code === 0) {
               alert("提交成功！");
               that.showform();
               window.scrollTo(0, 0);
@@ -180,36 +195,14 @@
         open(value);
       },
       show(){
-        var that = this;
-        if (this.login) {//如果真，不需要判断token是否过期
+        if (login === true) {//如果真，不需要判断token是否过期
           //判断用户状态码，
           if (this.judgeStatus()) {
             //显示报价表单
             this.showform();
           }
         } else {
-          if (this.token) {//token存在，验证token是否过期
-            $.ajax({
-              type: "get",
-              url: "http://houxiaopang.com/api/v1.1/token/authenticated",
-              headers: {"Authorization": "Token " + that.token},
-              success(data){
-                if (data.code == 0) {
-                  that.login = true;
-                  if (that.judgeStatus()) {
-                    that.showform();
-                  }
-                } else {
-                  that.showlogin();
-                }
-              },
-              error(){
-                that.showlogin();
-              }
-            });
-          } else {//否则，显示登录
-            that.showlogin();
-          }
+          this.showlogin();
         }
       },
       showhelp(){
@@ -253,6 +246,14 @@
     padding: 60px 60px;
     box-sizing: border-box;
     margin: -200px auto 60px;
+    position: relative;
+  }
+
+  .biaodan > .content > .broker {
+    position: absolute;
+    right: 50px;
+    top: 100px;
+    cursor: pointer;
   }
 
   .biaodan > .content > .back {

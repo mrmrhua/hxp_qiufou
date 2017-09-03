@@ -11,7 +11,11 @@ export default new Router({
     {
       path: '/album/:id',
       name: 'project',
-      component: project
+      component: project,
+     /* beforeEnter: (to, from, next) => {
+        window.scrollTo(0, 0);
+        next();
+      }*/
     },
     {
       path: '/',
@@ -21,7 +25,11 @@ export default new Router({
     {
       path: '/user/:id',
       name: 'wechat',
-      component: wechat
+      component: wechat,
+      /* beforeEnter: (to, from, next) => {
+       window.scrollTo(0, 0);
+       next();
+       }*/
     },
     {path: '/user', redirect: '/'},
     {path: '/album', redirect: '/'},

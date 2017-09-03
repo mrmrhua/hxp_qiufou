@@ -1,45 +1,42 @@
 <template id="project">
-  <div class="conbody">
-    <div class="content" style="height: 100%;top:0">
-      <div class="project">
-        <div class="left">
-          <ul id="pinglei_ul">
-            <li class="checkPinglei">全部</li>
-            <li>PPT</li>
-            <li>UI</li>
-            <li>文本画册</li>
-            <li>海报展板</li>
-            <li>LOGO</li>
-            <li>企业形象设计（VI）</li>
+  <div class="project">
+    <div class="category">
+      <div>
+        <div class="cate" @click.stop="showcategoryMethode"><span
+          style="line-height: 27px;color: #d01667;" v-text="category"></span>
+          <i class="iconfontyyy" style="color:#d01667;font-size: 30px;vertical-align: top">&#xe821;</i>
+          <ul v-show="showcategory" class="pinglei_ul">
+            <li class="cateactive"><span>全部品类</span></li>
+            <li><span>PPT</span></li>
+            <li><span>UI</span></li>
+            <li><span>文本画册</span></li>
+            <li><span>海报展板</span></li>
+            <li><span>LOGO</span></li>
+            <li><span>企业形象VI</span></li>
           </ul>
-          <p style="color: #bbb;padding-left: 20px;box-sizing: border-box;">更多品类，敬请期待···</p>
-        </div>
-        <div class="project_list">
-          <div class="scroo">
-            <p>我的作品集</p>
-            <ul>
-              <li v-for="item in projectalbum" @click="jump(item.id)">
-                <img class="img" width="240" :src="item.url"/>
-                <p v-html="item.title"></p>
-                <p v-html="item.type"></p>
-                <div class="option">
-                  <i @click.stop="edit(item.id)" class="iconfontyyy"
-                     style="color:#bbb;font-size: 18px;margin-left: 10px;">&#xe609;</i>
-                  <i @click.stop="rm(item.id,index)" class="iconfontyyy"
-                     style="color:#bbb;font-size: 18px;margin-left: 10px;">&#xe66d;</i>
-                </div>
-              </li>
-            </ul>
-            <div v-show="show" style="text-align: center">
-              <i class="iconfontyyy" style="font-size:200px;color: #bfbfbf;">&#xe617;</i>
-              <p style="font-size: 16px;color: #bfbfbf;font-weight: 900;">你还没有创建过任何作品</p>
-              <router-link to="/newalbum" tag="div" class="btn_image">上传作品</router-link>
-            </div>
-          </div>
         </div>
       </div>
     </div>
-
+    <div class="project_list">
+      <ul>
+        <li v-for="item in projectalbum" @click="jump(item.id)">
+          <img class="img" width="240" :src="item.url"/>
+          <p :title="item.title" v-html="item.title"></p>
+          <p v-html="item.type"></p>
+          <div class="option">
+            <i @click.stop="edit(item.id)" class="iconfontyyy"
+               style="color:#bbb;font-size: 18px;margin-left: 10px;">&#xe609;</i>
+            <i @click.stop="rm(item.id,index)" class="iconfontyyy"
+               style="color:#bbb;font-size: 18px;margin-left: 10px;">&#xe66d;</i>
+          </div>
+        </li>
+      </ul>
+      <div v-show="projectalbum.length == 0" style="text-align: center">
+        <i class="iconfontyyy" style="font-size:200px;color: #bfbfbf;">&#xe617;</i>
+        <p style="font-size: 16px;color: #bfbfbf;font-weight: 900;">你还没有创建过任何作品</p>
+        <router-link to="/newalbum" tag="div" class="btn_image">上传作品</router-link>
+      </div>
+    </div>
     <div class="mymodal" v-show="delmodel">
       <div class="conte">
         <div style="background: #bbb;height: 30px;line-height: 30px;padding: 0 15px;">
@@ -48,7 +45,7 @@
           @click="delmodel=false"><i class="iconfontyyy">&#xe67c;</i></span>
         </div>
         <div style="position: relative">
-          <i class="iconfontyyy" style="display: inline-block;font-size: 90px;">&#xe60e;</i>
+          <i class="iconfontyyy" style="display: inline-block;font-size: 90px;margin-left: 10px;margin-top: 5px;">&#xe691;</i>
           <p style="position: absolute;top: 20px;left: 110px;font-size: 18px;">确定删除此图片作品？</p>
           <div style="height: 30px;line-height: 30px;position: absolute;top: 65px;left: 150px;">
             <span
@@ -59,49 +56,40 @@
         </div>
       </div>
     </div>
-
-
+    <prompt prompt="success" :promptshow="promptshow"></prompt>
   </div>
 </template>
 <script>
-  import token from "@/components/token.js"
-  function addclick(that) {
-    var li = document.getElementById("pinglei_ul").children;
-    for (var i = 0, size = li.length; i < size; i++) {
-      li[i].index = i;
-      li[i].onclick = function () {
-        $("#pinglei_ul").find("li").each(function () {
-          $(this).removeClass("checkPinglei");
-        });
-        $(this).addClass("checkPinglei");
-
-        if (this.index == 0) {
-          this.index = -1;
-        }
-        that.getCollection(this.index);
-      }
-    }
-  }
-
-  //获取我的作品 c : 品类id
-
+  import prompt from "@/components/Prompt"
   export default{
+    props: ['showcategory'],
     data(){
       return {
         projectalbum: [],
-        show: false,
         delmodel: false,
         removeid: -1,
         removeindex: -1,
+        promptshow: false,
+        category: "全部品类",
       }
     },
     mounted(){
-      addclick(this);
+      var that = this;
+      $(".pinglei_ul > li").each(function (i) {
+        $(this).click(function () {
+          i = i === 0 ? -1 : i;
+          that.category = $(this).text();
+          that.getCollection(i);
+        });
+      });
     },
     created(){
       this.getCollection(-1);
     },
     methods: {
+      showcategoryMethode(){
+        this.$emit("showcategory");
+      },
       jump(id){
         open("http://houxiaopang.com/workdetail/#/album/" + id);
       },
@@ -144,11 +132,6 @@
                 };
                 that.projectalbum.push(obj);
               }
-              if (that.projectalbum.length === 0) {
-                that.show = true;
-              } else {
-                that.show = false;
-              }
             } else {
               alert("网络拥挤，请稍后再试···");
             }
@@ -165,10 +148,11 @@
       rm(id, index){
         this.removeid = id;
         this.removeindex = index;
-        this.delmodel = true
+        this.delmodel = true;
       },
       remove(){
-        var that = this
+        var that = this;
+        that.delmodel = false;
         // 删除相册:
         $.ajax({
           type: "post",
@@ -178,9 +162,12 @@
             album_id: that.removeid
           },
           success(data){
-            if (data.code == 0) {
-              that.recentalbum.splice(that.removeindex, 1);
-              that.delmodel = false;
+            if (data.code === 0) {
+              that.projectalbum.splice(that.removeindex, 1);
+              that.promptshow = true;
+              setTimeout(function () {
+                that.promptshow = false;
+              }, 1000);
             } else {
               alert("网络拥挤，请稍候再试···");
             }
@@ -198,6 +185,9 @@
           }
         });
       }
+    },
+    components: {
+      prompt
     }
   }
 </script>
@@ -209,106 +199,98 @@
     border-radius: 25px;
     text-align: center;
     line-height: 39px;
-    color: #788188;
+    color: #d01667;
     background-color: #fff;
-    border: 1px solid #dbe2e7;
-    border-bottom-color: #d5dde3;
-    box-shadow: 0 1px 1px rgba(90, 90, 90, 0.1);
+    border: 1px solid #d01667;
     margin: 30px auto;
   }
 
   .btn_image:hover {
-    border: 1px solid #adadad;
-    color: #333;
-    background-color: #ebebeb;
+    color: #fff;
+    background: linear-gradient(to right, #d01667, #fe6549);
+    border: none;
+  }
+
+  .pinglei_ul {
+    overflow: hidden;
+    position: absolute;
+    top: -15px;
+    left: 100%;
+    width: 200px;
+    border: 1px solid #bbb;
+    background: #fff;
+    padding: 10px 25px;
+    cursor: default;
+    z-index: 1;
+  }
+
+  .cateactive {
+    color: #d01667;
+    padding-left: 0 !important;
+  }
+
+  .pinglei_ul > li {
+    line-height: 35px;
+    padding-left: 35px;
+  }
+
+  .pinglei_ul > li > span {
+    cursor: pointer;
+  }
+
+  .pinglei_ul > li > span:hover {
+    color: #d01667;
   }
 
   .project {
     width: 100%;
-    height: 100%;
-    display: table;
+    min-height: 400px;
   }
 
-  .project > .left {
-    width: 200px;
-    background-color: #E0EAEC;
-    display: table-cell;
-    vertical-align: top;
-  }
-
-  .project > .left > ul {
-    width: 100%;
-    overflow: hidden;
-  }
-
-  .project > .left > ul > li {
-    height: 37px;
-    line-height: 37px;
-    padding-left: 20px;
-    box-sizing: border-box;
+  .category .cate {
+    float: left;
     cursor: pointer;
-    font-size: 14px;
-  }
-
-  .project > .left > ul > li:hover {
-    background: #4DB6CB;
-    color: #FFF;
-    border-bottom: none;
-  }
-
-  .checkPinglei {
-    background: #4DB6CB;
-    color: #FFF;
-    border-bottom: none;
+    padding-left: 5px;
+    font-size: 18px;
+    position: relative;
   }
 
   .project_list {
-    display: table-cell;
-    vertical-align: top;
-    background: #F7FAFA;
-    position: relative;
-    overflow-y: auto;
-  }
-
-  .project_list > .scroo {
-    position: absolute;
     width: 100%;
+    padding-top: 60px;
   }
 
-  .project_list > .scroo > ul {
+  .project_list > ul {
     overflow: hidden;
     box-sizing: border-box;
     list-style: none;
-    padding: 15px 25px;
     width: 800px;
-    margin: 0 auto;
-
   }
 
-  .project_list > .scroo > ul > li {
+  .project_list > ul > li {
     width: 240px;
     float: left;
     box-sizing: border-box;
-    margin-right: 10px;
+    margin-right: 30px;
     margin-bottom: 45px;
     cursor: pointer;
     background: #ffffff;
-    border-radius: 5px;
     padding-bottom: 10px;
     overflow: hidden;
-    box-shadow: 1px 1px 5px 0 #d8d5d5;
+    box-shadow: 1px 1px 5px 1px #d6d6d6;
+    margin-left: 3px;
     position: relative;
   }
 
-  .project_list .iconfontyyy:hover {
+  .project_list .option > .iconfontyyy:hover {
     color: #f2f2f2 !important;
   }
 
-  .project_list > .scroo > ul > li:hover .option {
+  .project_list > ul > li:hover .option {
     display: block;
   }
 
-  .project_list > .scroo > ul > li > .option {
+  .project_list > ul > li > .option {
     width: 100%;
     height: 30px;
     background: rgba(0, 0, 0, 0.6);
@@ -319,20 +301,28 @@
     display: none;
   }
 
-  .project_list > .scroo > ul > li > .img {
+  .project_list > ul > li > .img {
     width: 100%;
     height: 180px;
   }
 
-  .project_list > .scroo > ul > li > p:nth-of-type(1) {
+  .project_list > ul > li:nth-child(3n) {
+    margin-right: 3px;
+  }
+
+  .project_list > ul > li > p:nth-of-type(1) {
     height: 30px;
     line-height: 30px;
     font-size: 20px;
     padding-left: 10px;
     box-sizing: border-box;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
-  .project_list > .scroo > ul > li > p:nth-of-type(2) {
+  .project_list > ul > li > p:nth-of-type(2) {
     height: 20px;
     line-height: 20px;
     font-size: 14px;
@@ -341,7 +331,7 @@
     color: #bbb;
   }
 
-  .project_list > .scroo > p {
+  .project_list > p {
     width: 800px;
     margin: 0 auto 0 auto;
     padding-left: 27px;
@@ -358,7 +348,7 @@
     left: 0;
     bottom: 0;
     right: 0;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.4);
     z-index: 20;
     display: flex;
     align-items: center;
