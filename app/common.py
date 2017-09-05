@@ -14,7 +14,7 @@ from functools import update_wrapper
 from flask.ext.httpauth import HTTPTokenAuth
 from app.models import User,Category,Tag
 from app import db
-from config import ADMIN_KEY
+# from config import ADMIN_KEY
 
 def get_access_token(code):
     url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxbfacdb1b99885182&secret=c4f876b16ddc8d8e4259b9c2388e5493&code='\
@@ -168,8 +168,8 @@ def verify_token(token):
         g.user = user
         return True
     # admin帐户
-    if token == ADMIN_KEY:
-        return True
+    # if token == ADMIN_KEY:
+    #     return True
     user = User.verify_auth_token(token)
     # print(user)
     if not user:
