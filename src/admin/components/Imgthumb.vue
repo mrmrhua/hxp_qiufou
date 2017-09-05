@@ -1,28 +1,18 @@
 <template>
-  <section class="up-section loading">
-    <span class="up-span"></span>
-    <img class='close-upimg' src="http://image.houxiaopang.com/baseform/a7.png" @click="delconfirm">
-    <img class='up-img up-opcity' v-bind:src="getfileurl">
-  </section>
+  <li>
+    <section class="up-section loading">
+      <span class="up-span"></span>
+      <img class='close-upimg' src="http://image.houxiaopang.com/baseform/a7.png" @click="delconfirm">
+      <img class='up-img up-opcity' v-bind:src="each_file">
+    </section>
+  </li>
 </template>
 <script>
-
   export default{
     props: ['each_file', 'index'],
-    computed: {
-      getfileurl: function () {
-        return window.URL.createObjectURL(this.each_file)
-      }
-    },
-    mounted: function () {
-      //todo 文件上传
-      //console.log(this.each_file);
-      uploader.addFile(this.each_file);
-
-    },
     methods: {
       delconfirm: function () {
-        this.$emit('filelist',this.index);
+        this.$emit('img_url', this.index);
       }
     }
   }
@@ -33,11 +23,8 @@
   .up-section {
     width: 200px;
     height: 150px;
-    display: inline-block;
-    margin-right: 15px;
     vertical-align: top;
     position: relative;
-    margin-bottom: 15px;
     overflow: hidden;
     box-shadow: 0 0 1px 0;
   }
@@ -85,6 +72,7 @@
     height: 120px;
     overflow: hidden;
   }
+
   .up-img {
     width: 100%;
   }

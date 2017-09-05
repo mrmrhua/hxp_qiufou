@@ -21,6 +21,7 @@
 }
 .box{
     margin: 20px auto 0 auto;
+    width: 90%;
 }
 .logo {
     width: 150px;
@@ -264,15 +265,18 @@ em {
     height: 50px;
     background: #282828;
 }
-@media (max-width: 1600px){
-    .box{
-        width:1200px;
+
+@media screen  and (max-width: 1200px){
+    .qrcode{
+        display: none;
     }
 }
+
 @media (min-width: 1650px){
     .box{
-        width: 1600px;
+        width: 1600px !important;
     }
+
     .bg{
         height: 900px;
     }

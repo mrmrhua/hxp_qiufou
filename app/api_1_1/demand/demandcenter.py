@@ -1,12 +1,7 @@
 from  flask import  session,jsonify,request,url_for
 import  random
 from flask_restful import Resource
-from flask_login import current_user
-from app.common import  support_jsonp,get_access_token,get_user_info,get_wx_head
-import json
 from app.models import User,db,Demand
-import datetime
-from config import APPLYSTATUS,SEX
 
 class GetDemandCenter(Resource):
     def get(self):

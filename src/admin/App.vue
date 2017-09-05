@@ -1,197 +1,97 @@
 <template>
   <div class="warp" id="box">
-    <nav>
-      <router-link to="/" class="left" v-bind:class="{hid:ifhid}">
-        <i class="iconfontyyy">&#xe66b;</i>
-        <span>个人中心</span>
-      </router-link>
-      <a class="contr" @click="ifhid =!ifhid"><i class="iconfontyyy">&#xe720;</i></a>
-      <ul class="right">
-        <!--<li style="position: relative"><i class="iconfontyyy"
-                                          style="font-size: 18px;color:#545a5f;">&#xe71f;</i><span
-          class="noticenum" v-html="noticenum" v-show="noticenum"></span></li>-->
-        <router-link class="w1" tag="li" to="/newalbum" title="上传作品集"><i class="iconfontyyy"
-                                                                        style="font-size: 25px;color:#545a5f;">&#xe68a;</i>
-        </router-link>
-        <li class="option" style="line-height: 59px;"><span
-          style="vertical-align: top;font-size: 12px" v-html="nickname"></span><!--<i
-          class="iconfontyyy" style="vertical-align: top;">&#xe611;</i>-->
-          <img class="userImg" :src="headimg"/>
-          <ul v-show="show_option">
-            <li>设置</li>
-            <li>退出登录</li>
-          </ul>
-        </li>
-      </ul>
-    </nav>
-    <div class="content_home">
-      <div class="table_display">
-        <div class="left" v-bind:class="{hid:ifhid}">
-          <a>菜单</a>
-          <ul>
-            <li hidden><i class="iconfontyyy" v-bind:class="{iconfontyyycg:ifhid}"
-                          style="color: #4cb6cb;">&#xe626;</i><span>个人资料</span></li>
-            <li hidden><i class="iconfontyyy" v-bind:class="{iconfontyyycg:ifhid}"
-                          style="color: #537f72;">&#xe67b;</i><span>我的简历</span></li>
-            <router-link title="我的作品集" tag="li" to="/project"><i class="iconfontyyy w2"
-                                                                v-bind:class="{iconfontyyycg:ifhid}"
-                                                                style="color: #8ca1af;">&#xe60d;</i><span>我的作品集</span>
-            </router-link>
-          </ul>
-          <ul style="position: absolute;bottom: 20px;">
-            <li onclick="javascript:location.href='http://houxiaopang.com';"><i id="w3" class="iconfontyyy"
-                                                                                style="color: #8ca1af;"
-                                                                                v-bind:class="{iconfontyyycg:ifhid}">&#xe62a;</i><span>回到主页</span>
-            </li>
-          </ul>
+    <myNav @userinfo="userinfo" @shownotice="shownoticeMethod" @showoption="showoptionMethod" :show_option="show_option"
+           :shownotice="shownotice"></myNav>
+    <div class="main">
+      <div class="content_home">
+        <div class="left">
+          <div class="top">
+            <p><img style="width: 70px;border-radius: 50%;"
+                    :src="headimg" alt=""></p>
+            <p style="color:#313131;" v-text="nickname"></p>
+            <p style="color: #828282;" v-text="city"></p>
+          </div>
+          <div class="bottom">
+            <ul>
+              <router-link tag="li" to="/">我的作品</router-link>
+              <router-link tag="li" to="/designer">我的资料</router-link>
+            </ul>
+          </div>
         </div>
-        <div class="right" v-bind:class="{hidRight:ifhid}">
-          <!--路由-->
-          <router-view></router-view>
+        <div class="right">
+          <router-view :showcategory="showcategory" @showcategory="showcategoryMethod"></router-view>
         </div>
       </div>
     </div>
-
+    <foot></foot>
   </div>
 </template>
 
 <script>
-  import token from "@/components/token.js"
-
-  if (token == "undefined" || token == "" || token == null) {
-    location.href = "http://houxiaopang.com/qrlogin";
-  }
-
+  import myNav from "@/components/Nav"
+  import foot from "@/components/Footer"
   export default{
+    components: {
+      myNav,
+      foot
+    },
     data() {
       return {
-        ifhid: true,//侧边栏控制
         nickname: '',//用户名称
         headimg: null,//用户头像
-
-        /* fileList: [],//上传图片列表
-         ablumfile: '',//上传封面成功图片地址
-
-
-         title: '',//上传作品标题
-         desc: '',//上传作品简介
-         img_url: [],//上传图片成功返回地址
-
-         shownewalbum: false,//上传作品显示
-         showrecentalbum: true,//最近上传显示
-
-         recentalbum: [], //最近上传列表，对象数组，包含url封面地址，title，品类，id
-
-         projectalbum: [], // 我的作品，同上
-
-         showproject: false,//我的作品显示*/
-        show_option: false, //用户操作显示
-        noticenum: null,//用户消息数量
+        city: "",
+        show_option: false, //用户操作显示（nav品组件）
+        shownotice: false, //显示通知（nav组件）
+        showcategory: false,
       }
     },
-    watch: {
-      'ifhid'(){
-        var zhei = document.querySelector("nav >.contr >i");
-        var li = document.querySelectorAll(".content_home > .table_display > .left > ul > li");
-        if (this.ifhid) {
-          zhei.innerHTML = "&#xe720;";
-          for (var i = 0, size = li.length; i < size; i++) {
-            li[i].style.padding = "0";
-            li[i].style.textAlign = "center";
-            li[i].children[0].style.display = "inline-block";
-            li[i].children[0].style.width = "100%";
-          }
-        } else {
-          zhei.innerHTML = "&#xe721;";
-          for (var i = 0, size = li.length; i < size; i++) {
-            li[i].style.padding = "0 20px";
-            li[i].style.textAlign = "left";
-            li[i].children[0].style.display = "inline";
-          }
-        }
-      },
-    },
-    created() {
-
+    mounted(){
       var that = this;
-      setTimeout(function () {
-        that.noticenum = 2;
-      }, 3000);
-    },
-    mounted: function () {
-      this.getuserinfo();
-      var pagewalk = localStorage.pagewalkthrough;
-      if (pagewalk != '1') {
-        this.yingdao();
-        localStorage.pagewalkthrough = 1;
+      document.onclick = function () {
+        if (that.shownotice) {
+          that.shownotice = false;
+        }
+        if (that.show_option) {
+          that.show_option = false;
+        }
+        if (that.showcategory) {
+          that.showcategory = false;
+        }
       }
     },
     methods: {
-      yingdao(){
-        $('body').pagewalkthrough({
-          name: 'introduction',
-          steps: [{
-            popup: { //定义弹出提示引导层
-              content: '使用说明',
-              type: 'modal'
-            }
-          },
-            {
-              wrapper: '.w1',
-              //当前引导对应的元素位置
-              popup: {
-                content: '这里可以上传作品集',
-                //关联的内容元素
-                type: 'tooltip',
-                //弹出方式（tooltip和modal以及nohighlight）
-                position: 'bottom' //弹出层位置（top,left, right or bottom）
-              }
-            },
-            {
-              wrapper: '.w2',
-              popup: {
-                content: '这里可以查看作品集',
-                type: 'tooltip',
-                position: 'right'
-              }
-            },
-            {
-              wrapper: '#w3',
-              popup: {
-                content: '这里可以回到首页',
-                type: 'tooltip',
-                position: 'top'
-              }
-            },
-          ]
-        });
-        // 一步一步显示引导页
-        $('body').pagewalkthrough('show');
+      userinfo(data) {
+        this.nickname = data.nickname;
+        this.headimg = data.headimg;
+        this.city = data.city;
       },
-      getuserinfo() {
-        var that = this;
-        $.ajax({
-          url: 'http://houxiaopang.com/api/v1.1/designerdash/header',
-          type: "GET",
-          headers: {"Authorization": "Token " + token},
-          success(data) {
-            if (data.code != 0) {
-              location.href = "http://houxiaopang.com";
-            } else {
-              that.nickname = data.data.nickname;
-              that.headimg = data.data.headimg;
-            }
-          },
-          timeout: 5000,
-          error(e){
-            if (e.status === 401) {
-              location.href = "http://houxiaopang.com/qrlogin";
-            } else {
-              alert("网络拥挤，请稍后再试···");
-            }
-          }
-        });
+      showoptionMethod(){
+        if (this.shownotice) {
+          this.shownotice = false;
+        }
+        if (this.showcategory) {
+          this.showcategory = false;
+        }
+        this.show_option = !this.show_option;
       },
+      shownoticeMethod(){
+        if (this.show_option) {
+          this.show_option = false;
+        }
+        if (this.showcategory) {
+          this.showcategory = false;
+        }
+        this.shownotice = !this.shownotice;
+      },
+      showcategoryMethod(){
+        if (this.show_option) {
+          this.show_option = false;
+        }
+        if (this.shownotice) {
+          this.shownotice = false;
+        }
+        this.showcategory = !this.showcategory;
+      }
     }
   }
 </script>
@@ -199,16 +99,18 @@
 <style>
   @font-face {
     font-family: 'iconfont';  /* project id 335733 */
-    src: url('//at.alicdn.com/t/font_ymy0pwi1d2sjdcxr.eot');
-    src: url('//at.alicdn.com/t/font_ymy0pwi1d2sjdcxr.eot?#iefix') format('embedded-opentype'),
-    url('//at.alicdn.com/t/font_ymy0pwi1d2sjdcxr.woff') format('woff'),
-    url('//at.alicdn.com/t/font_ymy0pwi1d2sjdcxr.ttf') format('truetype'),
-    url('//at.alicdn.com/t/font_ymy0pwi1d2sjdcxr.svg#iconfont') format('svg');
+    src: url('//at.alicdn.com/t/font_335733_tyu5k90l4gh6ko6r.eot');
+    src: url('//at.alicdn.com/t/font_335733_tyu5k90l4gh6ko6r.eot?#iefix') format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_335733_tyu5k90l4gh6ko6r.woff') format('woff'),
+    url('//at.alicdn.com/t/font_335733_tyu5k90l4gh6ko6r.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_335733_tyu5k90l4gh6ko6r.svg#iconfont') format('svg');
   }
 
   * {
     padding: 0 0;
     margin: 0 0;
+    box-sizing: border-box;
+    letter-spacing: 1px;
   }
 
   body {
@@ -222,38 +124,68 @@
     width: 100%;
   }
 
-  a {
-    text-decoration: none;
+  .main {
+    background: #f5f5f5;
+    padding: 30px 0;
+    overflow: hidden;
   }
 
-  a:active, a:hover {
-
+  .main > .content_home {
+    width: 1100px;
+    margin: 0 auto;
   }
 
-  nav {
-    background-color: #fff;
-    height: 60px;
-    box-sizing: border-box;
-    line-height: 60px;
-    z-index: 1;
-  }
-
-  nav > .left {
-    line-height: 60px;
-    float: none;
-    font-size: 20px;
-    font-weight: 700;
-    max-height: 60px;
-    display: inline-block;
-    padding: 0 20px;
-    background-color: #4cb6cb;
-    color: #fff;
+  .main > .content_home > .left {
     width: 200px;
-    box-sizing: border-box;
+    float: left;
+    margin-right: 30px;
   }
 
-  nav > .left > span {
-    padding-left: 10px;
+  .main > .content_home > .left > .top {
+    width: 100%;
+    background: #fff;
+    padding: 25px;
+    text-align: center;
+  }
+
+  .top > p {
+    line-height: 30px;
+    font-size: 16px;
+  }
+
+  .main > .content_home > .left > .bottom {
+    width: 100%;
+    margin-top: 30px;
+    background: #fff;
+  }
+
+  .main > .content_home > .left > .bottom > ul {
+    width: 100%;
+    padding: 10px 0;
+  }
+
+  .main > .content_home > .left > .bottom > ul > li {
+    height: 40px;
+    line-height: 40px;
+    padding-left: 20px;
+    font-size: 16px;
+    border-left: 3px solid #fff;
+    cursor: pointer;
+  }
+
+  .router-link-exact-active {
+    border-left: 3px solid #d01667 !important;
+  }
+
+  .main > .content_home > .left > .bottom > ul > li:hover {
+    border-left: 3px solid #d01667;
+  }
+
+  .main > .content_home > .right {
+    width: 870px;
+    float: left;
+    background: #fff;
+    padding: 30px 35px;
   }
 
   ul {
@@ -268,167 +200,94 @@
     font-size: 24px;
   }
 
-  nav > .contr {
-    width: 54px;
-    height: 100%;
-    display: inline-block;
-    vertical-align: top;
+  .btn_image {
+    width: 150px;
+    height: 39px;
     cursor: pointer;
+    border-radius: 25px;
     text-align: center;
-    margin-left: -4px;
+    line-height: 39px;
+    color: #d01667;
+    background-color: #fff;
+    border: 1px solid #d01667;
+    margin: 30px auto;
   }
 
-  nav > .contr:hover {
-    background-color: #edf2f3;
-  }
-
-  nav > .right {
-    float: right;
-    height: 100%;
-  }
-
-  nav > .right > li {
-    float: left;
-    min-width: 60px;
-    height: 60px;
-    cursor: pointer;
-    text-align: center;
-  }
-
-  nav > .right > li:hover {
-    background-color: #edf2f3;
-  }
-
-  nav > .right > .option {
-    position: relative;
-    padding: 0 20px;
-  }
-
-  nav > .right > .option > ul {
-    width: 160px;
+  .err {
+    display: none;
+    color: #f00;
     position: absolute;
-    top: 60px;
-    right: 0;
-    z-index: 1;
-    box-shadow: 0 0 1px 0;
-    box-sizing: border-box;
-    background: #fff;
-    /*opacity: 0;*/
-    /*transition: all 1s;*/
+    top: 0;
+    left: 10px;
   }
 
-  nav > .right > .option > ul > li {
-    height: 37px;
-    line-height: 37px;
-
-  }
-
-  .hid {
-    width: 70px !important;
-  }
-
-  .content_home {
-    width: 100%;
-    bottom: 0;
-    top: 60px;
-    position: absolute;
-  }
-
-  .content_home > .table_display {
-    width: 100%;
-    height: 100%;
-    display: table;
-  }
-
-  .content_home > .table_display > .left {
-    width: 200px;
-    box-sizing: border-box;
-    background: #181f24;;
-    height: 100%;
-    overflow: hidden;
-    display: table-cell;
-    /*transition: width 1s;*/
-    position: relative;
-  }
-
-  .content_home > .table_display > .left > a {
-    color: #627b8c !important;
-    display: inline-block;
-    width: 100%;
-    height: 42px;
-    line-height: 42px;
-    font-size: 12px;
-    padding-left: 15px;
-    box-sizing: border-box;
-  }
-
-  .content_home > .table_display > .left > ul {
-    width: 100%;
-  }
-
-  .content_home > .table_display > .left > ul > li {
-    width: 100%;
-    height: 37px;
-    line-height: 37px;
-    box-sizing: border-box;
-    cursor: pointer;
-    overflow: hidden;
-    text-align: center;
-  }
-
-  .content_home > .table_display > .left > ul > li > i {
-    font-size: 16px;
-    display: inline-block;
-    width: 100%;
-  }
-
-  .iconfontyyycg {
-    font-size: 24px !important;
-  }
-
-  .content_home > .table_display > .left > ul > li > span {
-    color: #8ca1af;
-    font-size: 14px;
-    padding-left: 20px;
-    font-weight: 700;
-  }
-
-  .content_home > .table_display > .left > ul > li:hover {
-    background-color: #2c3942;
-  }
-
-  .content_home > .table_display > .left > ul > li:hover > span {
-    color: #ffffff;
-  }
-
-  .content_home > .table_display > .right {
-    overflow-y: auto;
-    box-sizing: border-box;
-    display: table-cell;
-    vertical-align: top;
-    height: 100%;
-  }
-
-  .noticenum {
-    display: inline-block;
-    background: #f00;
-    width: 15px;
-    height: 15px;
-    position: absolute;
-    top: 13px;
-    right: 16px;
-    line-height: 15px;
-    font-size: 80%;
-    border-radius: 50%;
+  .btn_image:hover {
     color: #fff;
+    background: linear-gradient(to right, #d01667, #fe6549);
+    border: none;
   }
 
-  .userImg {
-    width: 40px;
-    height: 40px;
+  #img-container {
+    width: 400px;
+    height: 400px;
+    float: left
+  }
+
+  #img-preview {
+    width: 160px;
+    height: 120px;
+    overflow: hidden;
+  }
+
+  .mymodal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 20;
+  }
+
+  .mymodal > .conte {
+    width: 630px;
+    margin: 30px auto;
+    overflow: hidden;
+    background: #FFF;
+    border-radius: 5px;
+    padding: 15px;
+  }
+
+  .mymodal > .conte > .div_btns {
+    width: 100%;
+    height: 50px;
+    float: left;
+    line-height: 50px;
+  }
+
+  .mymodal > .conte > .div_btns > button {
+    border-radius: 25px;
+    width: 70px;
+    height: 30px;
+    outline: none;
+    cursor: pointer;
+    text-align: center;
+    color: #d01667;
+    background-color: #fff;
+    border: 1px solid #d01667;
+  }
+
+  .mymodal > .conte > .div_btns > button:hover {
+    color: #fff;
+    background: linear-gradient(to right, #d01667, #fe6549);
+    border: none;
+  }
+
+  .mymodal > .conte > .div_btns > i {
     display: inline-block;
-    border-radius: 50%;
-    top: 10px;
-    position: relative;
+    width: 50px;
+    text-align: center;
+    vertical-align: top;
+    cursor: pointer;
   }
 </style>

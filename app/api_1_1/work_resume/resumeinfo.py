@@ -1,17 +1,22 @@
 from  flask import  session,jsonify,g,request
 from flask_restful import Resource
 from app.models import Album,Designwork,Applyform,User,Category,Applywork
-
+from app.common import auth
 
 
 #获取简历页的个人信息
 class GetResumeInfo(Resource):
+    # @auth.login_required
     def get(self):
         designer_id = request.values.get("designer_id")
         if not designer_id:
             return jsonify({'code':-1})
         user = User.query.filter_by(id=designer_id).first()
-        di = (user.info)[0]
+        if not user:
+            return jsonify({'code': -1, 'data': {'msg': '该用户不存在'}})
+        if user.info.privacy==1:
+            return jsonify({'code':-2,'data':{'msg':'无权限查看'}})
+        di = user.info
 
         if user.usertype==0:
             de_name = user.nickname
@@ -20,19 +25,21 @@ class GetResumeInfo(Resource):
             de_name= di.company_name
             de_worktime = ''
 
-        field = []
-        for i in user.category:
-            field.append(i.category_name)
+        field = [(i.category_name) for i in user.categories ]
+        # for i in user.category:
+        #     field.append(i.category_name)
 
+        t=  [{'title':i.title,'desc':i.content} for i in user.experiences]
+        # print(di.startyear)
         return jsonify({
             'code':0,
             'data':{
                 'nickname':de_name,
                 'headimg':user.headimg,
                 'city': di.city,
-                'exp':'',
+                'exp':di.startyear,
                 'filed':field,
                 'worktime':de_worktime,
-                'project_text':di.project_text
+                'project_text':t
             }
         })

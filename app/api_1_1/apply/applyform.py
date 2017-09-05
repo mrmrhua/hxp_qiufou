@@ -33,7 +33,11 @@ class PostApply(Resource):
         for i in cats:
             af.add_categories(i)
             db.session.add(af)
-        db.session.commit()
+        try:
+            db.session.commit()
+        except:
+            db.session.rollback()
+            return jsonify({'code': -1})
         imgurl = json.loads(request.form.get('img_url'))
 
         for w in imgurl:

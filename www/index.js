@@ -5,9 +5,9 @@ window.onload=function(){
     // 如果需要分页器
     pagination: '.swiper-pagination',
     paginationClickable :true,
-    autoplay:3000,  //自动轮播
+    autoplay:12000,  //自动轮播
     loop: true,   //循环
-    autoplayDisableOnInteraction : false  //用户操作后不停止    
+    autoplayDisableOnInteraction : true  //用户操作后不停止    
   });
   var categorylist = document.getElementsByClassName('category')[0];
   var list = categorylist.getElementsByTagName('li');

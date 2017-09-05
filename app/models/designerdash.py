@@ -1,6 +1,7 @@
 from app import db
 from sqlalchemy.dialects.mysql import INTEGER
-import datetime
+from sqlalchemy.ext.orderinglist import ordering_list
+from datetime import datetime
 from flask import g
 import json
 class DesignerInfo(db.Model):
@@ -19,7 +20,7 @@ class DesignerInfo(db.Model):
     # 个人设计师
     school = db.Column(db.String(64),nullable=True)
     # graduate = db.Column(db.Integer,nullable=True)
-    worktime = db.Column(db.String(16), nullable=True)
+    worktime = db.Column(db.String(30), nullable=True)
     identity = db.Column(db.Integer,nullable=True)
 
     # 设计公司/独立工作室
@@ -48,7 +49,7 @@ class DesignerInfo(db.Model):
             self.email = basic_obj.get("email")
             self.startyear = basic_obj.get("startyear")
         if worksetting_obj:
-            self.worktime = str(worksetting_obj.get("worktime"))
+            self.worktime = json.dumps(worksetting_obj.get("worktime"))
             self.privacy = worksetting_obj.get("privacy")
             self.ticket = worksetting_obj.get("ticket")
 
@@ -119,13 +120,14 @@ class Designwork(db.Model):
     __tablename__ = 'designworks'
     id = db.Column(INTEGER(unsigned=True), primary_key=True)
     work_url = db.Column(db.String(255))
-    user_id = db.Column(INTEGER(unsigned=True), db.ForeignKey('users.id'))
+    # user_id = db.Column(INTEGER(unsigned=True), db.ForeignKey('users.id'))
     category = db.Column(db.Integer,default=0)
     up_time = db.Column(db.DateTime)
     album_id = db.Column(INTEGER(unsigned=True),db.ForeignKey('albums.id'))
+    position = db.Column(db.Integer)
 
     def __repr__(self):
-        return '<Designwork of %r:%r>' % (self.user_id,self.work_url)
+        return '<Designwork of %r>' % (self.work_url)
 
 
 class Album(db.Model):
@@ -137,8 +139,9 @@ class Album(db.Model):
     up_time = db.Column(db.DateTime)
     cover = db.Column(db.String(255))
     # 可用Designwork.album来访问
-    designworks = db.relationship('Designwork',backref='album',lazy='dynamic')
+    designworks = db.relationship('Designwork',order_by="Designwork.position",collection_class=ordering_list('position'),backref='album',cascade='save-update,delete,delete-orphan',lazy='dynamic')
     user_id = db.Column(INTEGER(unsigned=True), db.ForeignKey('users.id'))
+    privacy = db.Column(db.Integer)
 
     def __repr__(self):
         return '<Album: %r at %r>' % (self.title,self.up_time)
@@ -151,8 +154,14 @@ class Album(db.Model):
         category = request.values.get("category")
         up_time = datetime.now()
 
-        return Album(title=title,cover=cover,description=description,category=category,up_time=up_time,user_id=g.user.id)
+        return Album(title=title,cover=cover,description=description,category=category,up_time=up_time,user_id=g.user.id,privacy = g.user.info.privacy)
 
+    def update_from_request(self,request):
+        self.title = request.values.get("title")
+        self.cover = request.values.get("cover")
+        self.description = request.values.get("description")
+        self.category = request.values.get("category")
+        self.up_time = datetime.now()
 
 
 # TAG 系统-多对多
@@ -206,6 +215,35 @@ class Exp(db.Model):
     def __repr__(self):
         return '<Experience: %r>' % (self.title)
 
+
+
+
+
+class Subscribtion(db.Model):
+    __tablename__ = 'subscribtion'
+    notice_id = db.Column(INTEGER(unsigned=True),db.ForeignKey('notices.id'),primary_key=True)
+    user_id = db.Column(INTEGER(unsigned=True), db.ForeignKey('users.id'), primary_key=True)
+    isread = db.Column(db.Integer)  #0: no-read;    1:yes-read
+
+
+
+class Notice(db.Model):
+    __tablename__ = 'notices'
+    id = db.Column(INTEGER(unsigned=True), primary_key=True)
+    title = db.Column(db.String(20))
+    content = db.Column(db.Text)
+    up_time = db.Column(db.DateTime, nullable=True)
+    # Notice.receiver  //  Subscrbtion.notice 互相访问
+    receiver = db.relationship('Subscribtion',foreign_keys=[Subscribtion.notice_id],backref=db.backref('notice',lazy='joined',order_by='desc(Notice.up_time)'),
+                               lazy='dynamic',
+                               cascade='all,delete-orphan')
+
+    def __repr__(self):
+        return '<Notice: %r>' % (self.content)
+
+    @staticmethod
+    def NewNotice(title,content):
+        return Notice(title=title,content=content,up_time=datetime.now())
 
 
 

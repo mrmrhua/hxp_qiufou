@@ -16,17 +16,23 @@
         <!--显示的品类-->
         <ul id="albumsList" style="overflow: hidden">
           <li v-for="itme in albums">
-            <router-link tag="img" :to="{name:'project',params:{'id':itme.work_id}}" class="img"
-                         :src="itme.cover"></router-link>
+            <!--todo 此处路由均改成在新窗口打开-->
+            <!--<router-link tag="img" :to="{name:'project',params:{'id':itme.work_id}}" class="img"
+                         :src="itme.cover"></router-link>-->
+            <img :src="itme.cover" @click="jump({'name':'project','id':itme.work_id})" class="img">
             <p>
-              <router-link tag="span" style="padding-left: 0;cursor: pointer"
-                           :to="{name:'project',params:{'id':itme.work_id}}" v-html="itme.title"></router-link>
+              <!--<router-link tag="span" style="padding-left: 0;cursor: pointer"
+                           :to="{name:'project',params:{'id':itme.work_id}}" v-html="itme.title"></router-link>-->
+              <span style="padding-left: 0px;cursor: pointer;white-space: nowrap;display: inline-block; width: 100%;overflow: hidden;text-overflow: ellipsis;" :title="itme.title" v-html="itme.title"
+                    @click="jump({'name':'project','id':itme.work_id})"></span>
             </p>
             <p v-html="itme.category"></p>
             <p>
-              <router-link tag="img" :to="{name:'wechat',params:{'id':itme.user_id}}" :src="itme.headimg"></router-link>
-              <router-link tag="span" :to="{name:'wechat',params:{'id':itme.user_id}}"
-                           v-html="itme.username"></router-link>
+              <!--<router-link tag="img" :to="{name:'wechat',params:{'id':itme.user_id}}" :src="itme.headimg">--></router-link>
+              <img :src="itme.headimg" @click="jump({'name':'wechat','id':itme.user_id})">
+              <span v-html="itme.username" @click="jump({'name':'wechat','id':itme.user_id})"></span>
+              <!--<router-link tag="span" :to="{name:'wechat',params:{'id':itme.user_id}}"
+                           v-html="itme.username"></router-link>-->
               <span
                 style='font-size: 14px;float: right;margin-right: 10px;'
                 v-html="myfilter(itme.up_time)"></span></p>
@@ -94,6 +100,15 @@
       pagination
     },
     methods: {
+      jump(data){
+        var id = data.id;
+        if (data.name === "project") {
+          window.open("http://houxiaopang.com/workdetail/#/album/" + id);
+        } else if (data.name === "wechat") {
+          window.open("http://houxiaopang.com/workdetail/#/user/" + id);
+        }
+
+      },
       pagechange: function (current) {     // 页码改变传入新的页码，此处做回调
         this.getdata(this.categroy, current);
       },
@@ -122,32 +137,43 @@
       },
       getdata(c, page){
         var that = this;
-        this.albums = [];
-        $.get("http://houxiaopang.com/api/v1.1/allwork?category=" + c + "&page=" + page, function (data) {
-          if (data.code == 0) {
-            that.pageinfo.total = data.data.total;
-            var json = data.data.album;
-            for (var i = 0, size = json.length; i < size; i++) {
-              var type = json[i].category;
-              if (type == 1) {
-                type = "PPT";
-              } else if (type == 2) {
-                type = "UI";
-              } else if (type == 3) {
-                type = "文本画册";
-              } else if (type == 4) {
-                type = "海报展板";
-              } else if (type == 5) {
-                type = "LOGO";
-              } else if (type == 6) {
-                type = "企业形象设计（VI）";
-              } else if (type == 0) {
-                type = "测试品类";
+        this.albums = [];// todo 此处改成 loading
+        $.ajax({
+          type: "get",
+          url: "http://houxiaopang.com/api/v1.1/allwork",
+          data: {
+            'category': c,
+            'page': page
+          },
+          success(data){
+            if (data.code === 0) {
+              that.pageinfo.total = data.data.total;
+              var json = data.data.album;
+              for (var i = 0, size = json.length; i < size; i++) {
+                var type = json[i].category;
+                if (type == 1) {
+                  type = "PPT";
+                } else if (type == 2) {
+                  type = "UI";
+                } else if (type == 3) {
+                  type = "文本画册";
+                } else if (type == 4) {
+                  type = "海报展板";
+                } else if (type == 5) {
+                  type = "LOGO";
+                } else if (type == 6) {
+                  type = "企业形象设计（VI）";
+                } else if (type == 0) {
+                  type = "测试品类";
+                }
+                json[i].category = type;
+                that.albums.push(json[i]);
               }
-              json[i].category = type;
-              that.albums.push(json[i]);
+            } else {
+              alert("网络拥挤，请稍后再试···");
             }
-          } else {
+          },
+          error(){
             alert("网络拥挤，请稍后再试···");
           }
         });
@@ -193,6 +219,10 @@
     border-radius: 5px;
     box-shadow: 1px 1px 5px 0 #d8d5d5;
     background: #fff;
+  }
+
+  .content > ul > li:hover {
+    box-shadow: 3px 3px 5px 0 #d8d5d5;
   }
 
   .content > ul > li .img {

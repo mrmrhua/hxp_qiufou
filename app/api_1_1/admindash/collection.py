@@ -11,7 +11,6 @@ from app.models import Album,Designwork
 from datetime import datetime
 
 
-#获取最近的album
 class GetCollection(Resource):
     @auth.login_required
     def get(self):

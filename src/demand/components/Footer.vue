@@ -66,8 +66,8 @@
     padding-left: 50px;
     width: 150px;
     box-sizing: border-box;
-    height: 50px;
-    line-height: 50px;
+    height: 30px;
+    line-height: 30px;
 
   }
 
@@ -87,7 +87,7 @@
 
   .right > p {
     text-align: center;
-    height: 50px;
-    line-height: 50px;
+    height: 30px;
+    line-height: 30px;
   }
 </style>
