@@ -1,11 +1,10 @@
 from  flask import  session,jsonify,request,url_for
 import  random
 from flask_restful import Resource
-from flask_login import current_user,login_user
-from app.common import  support_jsonp,get_access_token,get_user_info,get_wx_head
+from app.common import  send_mail_in_html
 import json
 from app.models import User,db,Applyform,DesignerInfo,Category_User,Category
-from config import APPLYSTATUS,SEX
+from config import APPLYSTATUS,SEX,AGREE_EMAIL_HTML
 from app.common import auth
 
 # 这个接口需要做好安全防范
@@ -40,6 +39,9 @@ class AgreeApply(Resource):
             i.users.append(u)
             db.session.add(i)
         db.session.commit()
+        # 发送通过的邮件
+        send_mail_in_html(di.email,'恭喜您通过了猴小胖的入驻审核',AGREE_EMAIL_HTML)
+
 
         return jsonify({'code':0})
 
