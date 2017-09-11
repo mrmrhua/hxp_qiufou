@@ -1,0 +1,247 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+    .active{
+        background: none !important;
+        cursor: not-allowed !important;
+    }
+    .pageactive{
+        background: none !important;
+        cursor: default !important;
+    }
+    #category > li{
+        padding-left: 10px;
+        margin-bottom: 5px;
+    }
+    .paginItem{
+        display: block;
+        min-width: 30px;
+        min-height: 30px;
+        line-height: 30px;
+        text-align: center;
+        cursor: pointer;
+        border-left: 1px solid #ddd;
+    }
+    .paginItem:first-child{
+        padding: 0 10px;
+        border-left: none;
+    }
+    .paginItem:last-child{
+        padding: 0 10px;
+    }
+</style>
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery.js"></script>
+<script language="javascript">
+var categorys = ["-1"];
+var page = 1;
+getdesigner();
+$(function(){	
+	//导航切换
+	$(".imglist li").click(function(){
+		$(".imglist li.selected").removeClass("selected")
+		$(this).addClass("selected");
+	});
+    $("#category li").click(function(){
+        if($(this).hasClass("active")){
+            return;
+        }
+        if($(this).attr("index") === "-1"){
+            $("#category li").removeClass("active");
+            $(this).addClass("active");
+            categorys = ["-1"];
+            getdesigner();
+        }else{
+            $("#category li").eq(0).removeClass("active");
+            $(this).addClass("active");
+            if(categorys[0] === "-1"){
+                categorys = [];
+            }
+            categorys.push($(this).attr("index"));
+            getdesigner();
+        }
+    });
+})
+//获取设计师
+function getdesigner(){
+    $.ajax({
+        type:"get",
+        url:"http://houxiaopang.com/api/v1.1/adminsystem/alldesigner",
+        headers: {"Authorization": "Token " + window.localStorage.token},
+        data:{
+            'category':JSON.stringify(categorys),
+            'page':page
+        },
+        success(data){
+            if(data.code === 0){
+                var ul =  document.getElementById("designers");
+                ul.innerHTML = "";
+                var designers =  data.data.designer;
+                designers.forEach(function(item, index) {
+                    var str = `<li>
+                                <span><img width="80" src="${item.headimg}" /></span>
+                                <div style= "width:95px;" class="lright">
+                                <h2>${item.nickname}</h2>
+                                <p>${item.expyear}</p>
+                                <a class="enter" href="http://houxiaopang.com/workdetail/#/user/${item.id}" target="_blank">查看简历</a>
+                                </div>
+                                </li>`;
+                    ul.innerHTML += str;
+                });
+                document.getElementById("designersnum").innerHTML = data.data.count;
+                document.getElementById("pagecurrent").innerHTML = page;
+                initPage({
+                    el : "page",
+                    total : Math.ceil(data.data.count/20),
+                    active : "current",
+                    pageNow : page,
+                    callback: callbackpage,
+                });
+            }else{
+                alert("获取数据失败！");
+            }
+        },
+        error(){
+            alert("获取数据失败！");
+        }
+    });
+}
+
+function callbackpage(currentpage){
+    page = parseInt(currentpage);
+    getdesigner();
+}
+
+//设置页码
+function initPage(option) {
+    //option ->  el,total,pageNow,active,callback
+    var el = option.el;
+    var total = option.total;
+    if(total <= 1) return;
+    var pageNow = option.pageNow;
+    var active = option.active;
+    var callback = option.callback;
+    console.log(total);
+    var ul = document.getElementById(el);
+    ul.innerHTML="<li>上一页</li>";
+    if(total<=10){
+        for(var i =0 ;i < total ; i++){
+            ul.innerHTML+="<li>"+(i+1)+"</li>";
+        }
+    }else{
+        if(pageNow> 5 && pageNow < total-4){
+            for(var i =1 ; i < 3;i++){
+                ul.innerHTML+="<li>"+i+"</li>";
+            }
+            ul.innerHTML+="<li>···</li>";
+            for(var i = pageNow-1; i< pageNow+2; i++){
+                ul.innerHTML+="<li>"+i+"</li>";
+            }
+            ul.innerHTML+="<li>···</li>";
+            for(var i =total-2 ;i < total ; i++){
+                ul.innerHTML+="<li>"+(i+1)+"</li>";
+            }
+        }else if(pageNow > total-6){
+            for(var i =1 ; i < 3;i++){
+                ul.innerHTML+="<li>"+i+"</li>";
+            }
+            ul.innerHTML+="<li>···</li>";
+            for(var i = total-6;i<total;i++){
+                ul.innerHTML+="<li>"+(i+1)+"</li>";
+            }
+        }else{
+            for(var i =0 ;i < 6 ; i++){
+                ul.innerHTML+="<li>"+(i+1)+"</li>";
+            }
+            ul.innerHTML+="<li>···</li>";
+            for(var i =total-2 ;i < total ; i++){
+                ul.innerHTML+="<li>"+(i+1)+"</li>";
+            }
+        }
+        
+    }
+    ul.innerHTML+="<li>下一页</li>";
+    var lis=ul.getElementsByTagName("li");
+
+    var size = lis.length;
+    for (var i = 0; i < size; i++) {
+        lis[i].className = "paginItem";
+        if(lis[i].innerHTML ==="···"){
+            lis[i].className += " pageactive";
+        }
+        if (lis[i].innerHTML == pageNow) {
+            lis[i].className += " "+active;
+        }
+        if(i!==0 && i!==size -1&& lis[i].innerHTML != pageNow && lis[i].innerHTML!=="···"){
+            lis[i].onclick=function(){
+                callback(this.innerHTML);
+            }
+        }
+    }
+    if (pageNow == 1) {
+        lis[0].style.cssText = "display:none;";
+        lis[1].style.cssText = "border :none;";
+    }else{
+        lis[0].onclick=function (){
+            callback(pageNow - 1);
+        }
+    }
+    if (pageNow == total) {
+        lis[size - 1].style.cssText = "display:none;";
+    }else{
+        lis[size - 1].onclick=function (){
+            callback(pageNow + 1);
+        }
+    }
+} 
+
+</script>
+</head>
+<body>
+	<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+    <li><a href="#">首页</a></li>
+    <li><a href="#">模块设计</a></li>
+    <li><a href="#">查看设计师</a></li>
+    </ul>
+    </div>
+    <div class="rightinfo">
+    <div class="tools">
+    	<ul id="category" class="toolbar">
+            <li class="active" index="-1">全部</li>
+            <li index="2">PPT美化</li>
+            <li index="3">表情包</li>
+            <li index="5">LOGO设计</li>
+            <li index="6">宣传画册</li>
+            <li index="7">海报三折页</li>
+            <li index="9">吉祥物设计</li>
+            <li index="10">VI系统</li>
+            <li index="11">网页UI</li>
+            <li index="12">APP UI</li>
+            <li index="13">网店美化</li>
+            <li index="14">H5设计</li>
+            <li index="15">图标设计</li>
+            <li index="16">书报刊插画</li>
+            <li index="17">手绘</li>
+            <li index="18">墙绘</li>
+            <li index="19">卡通形象</li>
+        </ul>
+    </div>
+    <ul id="designers" class="classlist">
+        
+    
+    </ul>
+    <div class="clear"></div>
+    <div class="pagin">
+    	<div class="message">共<i class="blue" id="designersnum"></i>条记录，当前显示第<i class="blue" id="pagecurrent"></i>页</div>
+        <ul id="page" class="paginList" style="border:1px solid #ddd;border-radius: 5px;overflow: hidden;">
+            
+        </ul>
+    </div>  
+    </div>
+</body>
+</html>

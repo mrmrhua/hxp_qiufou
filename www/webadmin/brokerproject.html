@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>经纪人添加项目</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./css/simditor.css">
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+	<style type="text/css">
+		.container{
+			padding-top: 25px;
+		}
+		.imgbox{
+			min-height: 200px;width: 100%;    
+			box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 10px;
+		}
+		.upfile {
+            border: 2px dashed #e0e4e8;
+            padding: 30px 60px 30px 30px;
+            float: left;
+        }
+
+        .addbtn {
+            opacity: 0.4;
+            width: 240px;
+            height: 180px;
+            display: inline-block;
+            margin-left: 30px;
+            position: relative;
+        }
+
+        .addbtn:hover {
+            opacity: 0.8;
+        }
+
+        .addbtn .file {
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            cursor: pointer;
+        }
+
+        .addbtn .add-img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .preview {
+            width: 240px;
+            height: 180px;
+            display: inline-block;
+            margin-left: 30px;
+            vertical-align: top;
+            position: relative;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .preview .up-span {
+            display: block;
+            width: 100%;
+            height: 100%;
+            visibility: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            background: rgba(0, 0, 0, .5);
+        }
+
+        .preview:hover .up-span {
+            visibility: visible;
+        }
+
+        .preview .close-upimg {
+            position: absolute;
+            top: 6px;
+            right: 8px;
+            display: none;
+            z-index: 10;
+            cursor: pointer;
+        }
+
+        .preview:hover .close-upimg {
+            display: block;
+        }
+
+        .preview .up-img {
+            width: 240px;
+        }
+        .mymodal{
+        	position: fixed;
+        	z-index: 1000;
+        	top: 0;
+        	left: 0;
+        	right: 0;
+        	bottom: 0;
+        	background: rgba(0,0,0,.7);
+        	display: none;
+        }
+        .mymodal > .text{
+        	font-size: 24px;
+        	margin-top: 15%;
+        	color: #fff;
+        	text-align: center;
+        }
+	</style>
+</head>
+<body>
+<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+    <li><a href="#">首页</a></li>
+    <li><a href="#">模块设计</a></li>
+    <li><a href="#">经纪人添加项目</a></li>
+    </ul>
+    </div>
+<div class="container">
+
+	<form class="form-horizontal" role="form">
+	<div class="form-group">
+			<label for="firstname" class="col-sm-2 control-label">编号</label>
+			<div class="col-sm-10">
+				<input type="text" class="form-control" id="agent_id" 
+				placeholder="请输入客户ID">
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="firstname" class="col-sm-2 control-label">标题</label>
+			<div class="col-sm-10">
+				<input type="text" class="form-control" id="title" 
+				placeholder="请输入标题">
+			</div>
+		</div>
+        <div class="form-group">
+            <label for="name" class="col-sm-2 control-label">品类</label>
+            <div class="col-sm-10">
+                <select id="category" class="form-control">
+                    <option value="1">PPT定制</option>
+                    <option value="2">UI设计</option>
+                    <option value="3">企业画册</option>
+                    <option value="4">海报展板</option>
+                    <option value="5">LOGO</option>
+                    <option value="6">企业形象设计VI</option>
+                </select>
+            </div>
+        </div>
+		<div class="form-group">
+			<label for="firstname" class="col-sm-2 control-label">工期</label>
+			<div class="col-sm-10">
+				<input type="text" class="form-control" id="howlong" 
+				placeholder="请输入工期">
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="firstname" class="col-sm-2 control-label">预算</label>
+			<div class="col-sm-10">
+				<input type="text" class="form-control" id="howmuch" 
+				placeholder="请输入预算">
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="name" class="col-sm-2 control-label">需求</label>
+			<div class="col-sm-10">
+				<textarea placeholder="请输入需求" autofocus class="form-control" rows="5" id="description"></textarea>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label" for="inputfile">示例</label>
+			<div class="col-sm-10">
+				 <div class="upfile">
+                        <div class="upwrapper" id="img_content">
+                            <section class="addbtn">
+                                <img src="http://image.houxiaopang.com/baseform/721/addpic.jpg"
+                                     class="add-img">
+                                <input type="file" name="file"
+                                       value="" class="file" id="file" onchange="appendImg(this)"
+                                       accept="image/jpg,image/jpeg,image/png,image/bmp" multiple/>
+                            </section>
+                            <div id="tt" style="display: none;"></div>
+                        </div>
+                    </div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-10">
+	   			<div onclick="submit()"  class="btn btn-primary btn-block">提交</div>
+			</div>
+		</div>
+	</form>
+</div>
+<div class="mymodal">
+ 	<p class="text">提交中···</p>
+</div>
+<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+<script src="./js/module.min.js"></script>
+<script src="./js/uploader.min.js"></script>
+<script src="./js/hotkeys.min.js"></script>
+<script src="./js/simditor.min.js"></script>
+<script src="./js/qiniu.js"></script>
+<script src="https://cdn.staticfile.org/plupload/2.1.8/plupload.full.min.js"></script>
+<script type="text/javascript">
+    var editor = new Simditor({
+      textarea: $('#description')
+      //optional options
+    });
+	var filelist = [];
+    var imagelist =[];
+	var modal =	document.getElementsByClassName("mymodal")[0];
+	var uploader;
+	registerup();
+	var img_content = document.getElementById("img_content");
+	function file_src(f) {
+		return window.URL.createObjectURL(f)
+	}
+
+	function appendImg (that) {
+	  	for (var i = 0, size = that.files.length; i < size; i++) {
+	       var html = `<section class="preview">
+		<span class="up-span"></span>
+		<img src="http://image.houxiaopang.com/baseform/a7.png"
+			class="close-upimg" onclick="removeFile(this)">
+		<img src="${file_src(that.files[i])}" class="up-img">
+	</section>`;
+			img_content.innerHTML += html;
+			filelist.push(that.files[i]);
+	 	}
+	 	setIndex();
+	 	
+	}
+
+	function setIndex(){
+		var section = document.querySelectorAll("section.preview");
+	 	for(var i = 0, size = section.length; i<size; i++){
+	 		section[i].setAttribute("index", i);
+	 	}
+	}
+
+	function removeFile(that){
+		var a = that.parentElement;
+		img_content.removeChild(a);
+		filelist.splice(a.getAttribute("index"),1);
+		setIndex();
+	}
+
+	function submit(){
+		modal.style.display = 'block';
+		for(var i = 0 ,size = filelist.length; i < size; i++){
+			uploader.addFile(filelist[i]);
+		}
+	}
+	function registerup() {
+		// 上传文件相关
+    uploader = Qiniu.uploader({
+        runtimes: 'html5,flash,html4',
+        browse_button: 'tt',
+        flash_swf_url: 'https://cdn.staticfile.org/plupload/2.1.1/Moxie.swf',  //引入flash，相对路径
+        chunk_size: '4mb',
+
+        uptoken_url: 'http://houxiaopang.com/api/v1.0/apply/uptoken',
+        multi_selection: !(mOxie.Env.OS.toLowerCase() === "ios"),
+        filters: {
+            max_file_size: '10mb',
+            prevent_duplicates: false,
+            //Specify what files to browse for
+            mime_types: [
+                {title: "Image files", extensions: "jpg,gif,png,jpeg"}
+            ]
+        },
+        domain: 'work.houxiaopang.com',
+        get_new_uptoken: true,
+        // downtoken_url: '/downtoken',
+        unique_names: true,
+        // save_key: true,
+        auto_start: true,
+        log_level: 5,
+        init: {
+            'FilesAdded': function (up, files) {
+            },
+            'BeforeUpload': function (up, file) {
+
+            },
+            'UploadProgress': function (up, file) {
+            },
+            'UploadComplete': function () {
+                $.ajax({
+                    type:"post",
+                    url:"http://houxiaopang.com/api/v1.1/demanddetail",
+                    data:{
+                        "description": editor.getValue(),
+                        "title": document.getElementById("title").value,
+                        "agent_id": document.getElementById("agent_id").value,
+                        "howlong": document.getElementById("howlong").value,
+                        "howmuch": document.getElementById("howmuch").value,
+                        "desc_img":JSON.stringify(imagelist),
+                        "category":document.getElementById("category").value,
+                    },
+                    success(data){
+                        if(data.code == 0){
+                            alert("提交成功！");
+                        }else{
+                            alert("提交失败···");
+                        }
+                        modal.style.display = 'none';
+                    },
+                    error(){
+                        alert("提交失败···");
+                        modal.style.display = 'none';
+                    }
+                });
+            },
+            'FileUploaded': function (up, file, info) {
+                if (info['status'] == '200') {
+                    var tmp = JSON.parse(info['response']);
+                    console.log(tmp);
+                    imagelist.push('http://work.houxiaopang.com/' + tmp.key);
+                }
+            },
+            'Error': function (up, err, errTip) {
+                alert('上传错误:' + errTip);
+            }
+        }
+    });
+}
+
+
+</script>
+</body>
+</html>
