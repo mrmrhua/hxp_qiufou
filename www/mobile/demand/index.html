@@ -1,0 +1,62 @@
+<!DOCTYPE html><html><html lang=zh-cmn-Hans><head><meta charset=UTF-8><title>猴小胖设计</title><meta http-equiv=X-UA-Compatible content="ie=edge"><meta name=viewport content="width=device-width,initial-scale=1"><link rel="shortcut icon" href=http://image.houxiaopang.com/houicon.ico><link href=./static/css/app.c062b0424b684e5731ac82dd855cd5ba.css rel=stylesheet></head><body><div id=app></div><script type=text/javascript>function ajax(options) {
+    if (options.type === "get") {
+      options.url += "?";
+      for (var i in options.data) {
+        options.url += i + "=" + options.data[i] + "&";
+      }
+      options.url = options.url.substring(0, options.url.length - 1);
+    }
+    var ajax = new XMLHttpRequest();
+    ajax.onreadystatechange = function () {
+      if (ajax.readyState === 4 && ajax.status === 200) {
+        options.success(eval("(" + ajax.responseText + ")"));
+      } else if (ajax.readyState === 4 && ajax.status !== 200) {
+        options.error(ajax);
+      }
+    };
+    ajax.open(options.type, options.url, true);
+    ajax.setRequestHeader("Content-type", "application/json");
+    if (options.type === "get") {
+      ajax.send();
+    } else {
+      ajax.send(options.data);
+    }
+  }
+
+  function formatCategory(type, status) {
+    if (status === 1) {
+      if (type === 1) {
+        type = "PPT";
+      } else if (type === 2) {
+        type = "UI";
+      } else if (type === 3) {
+        type = "文本画册";
+      } else if (type === 4) {
+        type = "海报展板";
+      } else if (type === 5) {
+        type = "LOGO";
+      } else if (type === 6) {
+        type = "企业形象设计（VI）";
+      }
+    } else {
+      if (type === "全部") {
+        type = -1;
+      } else if (type === "PPT定制") {
+        type = 1;
+      } else if (type === "UI设计") {
+        type = 2;
+      } else if (type === "企业画册") {
+        type = 3;
+      } else if (type === "海报展板") {
+        type = 4;
+      } else if (type === "LOGO") {
+        type = 5;
+      } else if (type === "企业形象设计VI") {
+        type = 6;
+      }
+    }
+    return type;
+  }
+
+
+  var pptType = "";</script><script type=text/javascript src=./static/js/manifest.0744e3e30328c57898a6.js></script><script type=text/javascript src=./static/js/vendor.37be52231461cf843ace.js></script><script type=text/javascript src=./static/js/app.bae35ef11181311836d9.js></script></body></html></html>
