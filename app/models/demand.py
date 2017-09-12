@@ -8,7 +8,7 @@ class Demand(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50))
     description = db.Column(db.Text)
-    desc_img = db.Column(db.String(255), nullable=True)
+    desc_img = db.Column(db.Text, nullable=True)
     howlong = db.Column(db.String(20), nullable=True)
     howmuch = db.Column(db.String(20), nullable=True)
     agent_id  = db.Column(INTEGER(unsigned=True),nullable=True)
