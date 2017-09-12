@@ -7,7 +7,7 @@ api_v1_1 = Api(api_1_1)
 from .apply import PostApply,CompanyPostApply
 from .login_verify import WxVerify,TokenVerify,LogOut
 from .applystatus import GetApplyStatus
-from .demand import GetDemandCenter,DemandDeatil,ReplyDemand
+from .demand import GetDemandCenter,DemandDeatil,ReplyDemand,TMPReplyDemand
 from .work_resume import GetAllWork,GetResumeInfo
 from .admindash import NewAlbum,GetAlbum,GetCollection,GetUserHead,GetAlbumDetail,\
     Userinfo,DeleteAlbum,AddExp,DelExp,NoticeRecent,UnreadNum,AllNotice,\
@@ -32,6 +32,8 @@ api_v1_1.add_resource(GetResumeInfo,'/resumeinfo')
 
 api_v1_1.add_resource(DemandDeatil,'/demanddetail')
 api_v1_1.add_resource(ReplyDemand,'/replydemand')
+#临时用
+api_v1_1.add_resource(TMPReplyDemand,'/replydemand_tmp')
 api_v1_1.add_resource(TokenVerify,'/token/authenticated')
 
 

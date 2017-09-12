@@ -18,3 +18,17 @@ class ReplyDemand(Resource):
             db.session.rollback()
             return jsonify({'code': -1, 'data': {'msg': '保存失败'}})
         return jsonify({'code': 0})
+
+
+
+# 临时用
+class TMPReplyDemand(Resource):
+    def post(self):
+        du = Demand_User.from_request_tmp(request)
+        db.session.add(du)
+        try:
+            db.session.commit()
+        except:
+            db.session.rollback()
+            return jsonify({'code': -1, 'data': {'msg': '保存失败'}})
+        return jsonify({'code': 0})

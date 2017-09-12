@@ -40,7 +40,9 @@ class Demand_User(db.Model):
     user_id = db.Column(INTEGER(unsigned=True),db.ForeignKey('users.id'))
     howlong = db.Column(db.String(20), nullable=True)
     howmuch = db.Column(db.String(20), nullable=True)
-    ideas = db.Column(db.String(255), nullable=True)
+    ideas = db.Column(db.Text, nullable=True)
+    tel = db.Column(db.String(11), nullable=True)
+    worklist = db.Column(db.Text, nullable=True)
 
     def __repr__(self):
         return '<Demand_User % r & %r>' % (self.demand_id,self.user_id)
@@ -55,6 +57,23 @@ class Demand_User(db.Model):
         howmuch = replyform.get("howmuch")
 
         return Demand_User(demand_id=demand_id,user_id=designer_id,ideas=ideas,howlong=howlong, howmuch=howmuch)
+
+    @staticmethod
+    def from_request_tmp(request):
+        demand_id = request.values.get("demand_id")
+        replyform = json.loads(request.values.get("replyform"))
+        ideas = replyform.get("ideas")
+        howlong = replyform.get("howlong")
+        howmuch = replyform.get("howmuch")
+        tel = replyform.get("tel")
+        worklist = replyform.get("worklist")
+        user_id = replyform.get("user_id")
+        if not user_id:
+            return Demand_User(demand_id=demand_id,ideas=ideas, howlong=howlong, howmuch=howmuch,
+                               worklist=worklist, tel=tel)
+        else:
+            return Demand_User(demand_id=demand_id, user_id=user_id, ideas=ideas, howlong=howlong, howmuch=howmuch,worklist=worklist,tel=tel)
+
 
 class Demand_Recom(db.Model):
     __tablename__ = 'demands_recom'
