@@ -8,6 +8,25 @@
     <link rel="shortcut icon" href="http://image.houxiaopang.com/houicon.ico">
     <link rel="stylesheet" type="text/css" href="https://cdn.staticfile.org/Swiper/3.4.2/css/swiper.min.css">
     <link rel="stylesheet" href="index.css">
+<<<<<<< HEAD
+	<!-- Piwik -->
+=======
+   <!-- Piwik -->
+>>>>>>> 69961bc5c34a217f6342966f89739e930e7e0a4e
+<script type="text/javascript">
+  var _paq = _paq || [];
+  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="//analysis.houxiaopang.com/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<!-- End Piwik Code -->
 </head>
 <body style="overflow: auto;">
 <div id="load" class="preloader">
@@ -284,21 +303,6 @@ document.write(unescape("%3Cspan id='cnzz_stat_icon_1261952519'%3E%3C/span%3E%3C
 <script src="https://qiyukf.com/script/225bba1c2b7fabfacb840be96e495033.js" defer async></script>
 <script type="text/javascript" src="https://cdn.staticfile.org/Swiper/3.4.2/js/swiper.min.js"></script>
 <!-- <script src="https://cdn.staticfile.org/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script> -->
-<!-- Piwik -->
-<script type="text/javascript">
-  var _paq = _paq || [];
-  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-  _paq.push(['trackPageView']);
-  _paq.push(['enableLinkTracking']);
-  (function() {
-    var u="//tmp.houxiaopang.com/";
-    _paq.push(['setTrackerUrl', u+'piwik.php']);
-    _paq.push(['setSiteId', '1']);
-    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
-  })();
-</script>
-<!-- End Piwik Code -->
 <script type="text/javascript">
     var option = document.getElementById("useroption");
     document.getElementById("showoption").onclick = function (e) {
@@ -320,7 +324,7 @@ document.write(unescape("%3Cspan id='cnzz_stat_icon_1261952519'%3E%3C/span%3E%3C
         $.ajax({
             type: "post",
             headers: {"Authorization": "Token " + token},
-            url: "http://houxiaopang.com/api/v1.1/logout",
+            url: "http://www.houxiaopang.com/api/v1.1/logout",
             success(data){
 
             },
@@ -341,13 +345,13 @@ document.write(unescape("%3Cspan id='cnzz_stat_icon_1261952519'%3E%3C/span%3E%3C
     if (token) {
         $.ajax({//验证是否登录
             type: "get",
-            url: "http://houxiaopang.com/api/v1.1/token/authenticated",
+            url: "http://www.houxiaopang.com/api/v1.1/token/authenticated",
             headers: {"Authorization": "Token " + token},
             success: function (data) {
                 if (data.code === 0) {
                     window.localStorage.applystatus = data.data.applystatus;
                     $.ajax({//获取用户信息
-                        url: 'http://houxiaopang.com/api/v1.1/designerdash/header',
+                        url: 'http://www.houxiaopang.com/api/v1.1/designerdash/header',
                         type: "GET",
                         headers: {"Authorization": "Token " + token},
                         success: function (data) {
