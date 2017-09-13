@@ -1,17 +1,70 @@
 from  flask import  session,jsonify,g,request
 import  random
 from flask_restful import Resource
-from app.models import User,db,Notice,Subscribtion,DesignerInfo,Category,Demand_Recom
+from app.models import User,db,Demand_User,Demand_Recom,Demand
 import json
-# houxiaopang.com/api/v1.1/adminsystem/recommend
+# houxiaopang.com/api/v1.1/adminsystem/recommend_tmp
 # 后台：管理员：项目推荐设计师
 class DesignerRecom(Resource):
     def post(self):
         demand_id = request.values.get("demand_id")
         designers = json.loads(request.values.get("designer"))
         for i in designers:
-            # TODO 格式
-            dr = Demand_Recom(demand_id=demand_id,user_id=i.get("designer_id"),howmuch=i.get("howmuch"),ideas=i.get("ideas"),album_ids=i.get("album_ids"))
+            if  Demand_Recom.query.filter_by(deapply_id = i.get("apply_id")).first():
+                return jsonify({'code': -1})
+            dr = Demand_Recom(deapply_id = i.get("apply_id"), \
+                howmuch = i.get("howmuch"), ideas = i.get("ideas"), \
+                howlong = i.get("howlong"),worklist=i.get("worklist"),\
+                nickname = i.get("nickname"),demand_id=demand_id)
             db.session.add(dr)
         db.session.commit()
         return jsonify({'code':0})
+
+
+# houxiaopang.com/api/v1.1/adminsystem/demand/all
+#GET
+#后台：查看所有需求
+class AllDemand(Resource):
+    def get(self):
+        ds = Demand.query.all()
+        demand = [{
+                'title':i.title,
+                'description': i.description,
+                'demand_id':i.id,
+                'howlong':i.howlong,
+                'howmuch':i.howmuch,
+                'category':i.category,
+                'up_time':i.up_time
+            }for i in ds]
+        return jsonify({'code':0,'data':demand})
+
+
+
+#GET
+#后台：查看某需求所有报价的设计师
+class DemandApply(Resource):
+    def get(self):
+        demand_id= request.values.get("demand_id")
+        dus = Demand_User.query.filter_by(demand_id=demand_id).all()
+        designer = [{ 'howmuch':i.howmuch,'howlong':i.howlong,'tel':i.tel,
+                      'worklist': json.loads(i.worklist),
+                     'ideas':i.ideas,'nickname':i.nickname,
+                      'id':i.id} for i in dus]
+        return jsonify({'code': 0, 'data': designer})
+
+
+# GET
+# 后台：获取报价信息,进行修改
+class GetDemandApplyInfo(Resource):
+    def get(self):
+        apply_id=request.values.get("apply_id")
+        du = Demand_User.query.filter_by(id=apply_id).first()
+        if not du:
+            return jsonify({'code':-1})
+        return jsonify({'code':0,'data':{
+            'howmuch':du.howmuch,
+            'howlong':du.howlong,
+            'ideas':du.ideas,
+            'worklist':json.loads(du.worklist),
+            'nickname':du.nickname
+        }})

@@ -9,11 +9,8 @@ import json
 class DesignerRecom(Resource):
     def get(self):
         demand_id = request.values.get("demand_id")
-        # dr = Demand_Recom.query.filter_by(demand_id=demand_id).first()
-        #
-        #
-        #
-        #
+        drs = Demand_Recom.query.filter_by(demand_id=demand_id).all()
+
         # [ {'id':i.user_id,'headimg':i.headimg,'expyear':i.info.startyear,'ideas':dr} for i in dr.candidates ]
         #
         #

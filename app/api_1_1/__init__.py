@@ -13,7 +13,7 @@ from .admindash import NewAlbum,GetAlbum,GetCollection,GetUserHead,GetAlbumDetai
     Userinfo,DeleteAlbum,AddExp,DelExp,NoticeRecent,UnreadNum,AllNotice,\
     ClearAll,RemoveAll
 from .adminsystem import SendNotice,AllDesignerManage,DesignerRecom,AgreeApply,DisAgreeApply, \
-    AdminLogin,GetApplyinfo,ListNews
+    AdminLogin,GetApplyinfo,ListNews,AllDemand,DemandApply,GetDemandApplyInfo
 
 
 # wx verify info
@@ -68,7 +68,7 @@ api_v1_1.add_resource(RemoveAll,'/designerdash/notice/removeall')
 # 管理后台
 api_v1_1.add_resource(AllDesignerManage,'/adminsystem/alldesigner')
 
-api_v1_1.add_resource(DesignerRecom,'/adminsystem/recommend')
+api_v1_1.add_resource(DesignerRecom,'/adminsystem/recommend_tmp')
 
 api_v1_1.add_resource(GetApplyinfo,'/adminsystem/applyinfo')
 
@@ -82,3 +82,9 @@ api_v1_1.add_resource(AdminLogin,'/adminsystem/login')
 
 api_v1_1.add_resource(SendNotice,'/adminsystem/notice/sendnotice')
 api_v1_1.add_resource(ListNews,'/adminsystem/notice/allnotice')
+
+api_v1_1.add_resource(AllDemand,'/adminsystem/demand/all')
+
+api_v1_1.add_resource(DemandApply,'/adminsystem/demand/apply_tmp')
+
+api_v1_1.add_resource(GetDemandApplyInfo,'/adminsystem/demand/getapplyinfo')
