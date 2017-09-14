@@ -116,7 +116,6 @@ function removeActive(left) {
     }
 }
 
-
 //推荐设计师
 function broker(id) {
     removeActive(left);
@@ -142,6 +141,9 @@ function brokerapply(id) {
 function getDemand() {
     $.ajax({
         type: "get",
+        beforeSend: function (request) {
+            request.setRequestHeader("Authorization", "Token " + window.localStorage.token);
+        },
         url: "http://houxiaopang.com/api/v1.1/adminsystem/demand/all",
         success(data){
             if (data.code === 0) {
@@ -162,7 +164,9 @@ function getDemand() {
                     checktfoot.innerHTML += strchecktfoot;
                     var stroperate = `
         			<tr><td><div><span onclick="javascript:window.top.open('http://houxiaopang.com/demand/#/detail/${item.demand_id}');" class="colorSpan">详情</span>　<span class="colorSpan"
-                    onclick="broker(${item.demand_id})">推荐设计师</span>　<span onclick="replydesigner(${item.demand_id})" class="colorSpan">查看已报价设计师</span>　<span onclick="brokerapply(${item.demand_id})" class="colorSpan">查看已推荐设计师</span></div></td></tr>`;
+                    onclick="broker(${item.demand_id})">推荐设计师</span>　<span onclick="replydesigner(${item.demand_id})" class="colorSpan">查看已报价设计师</span>
+                    　<span onclick="brokerapply(${item.demand_id})" class="colorSpan">查看已推荐设计师</span>
+                    　<span onclick="javascript:window.top.open('http://m.houxiaopang.com/demand/#/project/${item.demand_id}');" class="colorSpan">报价单</span></div></td></tr>`;
                     operate.innerHTML += stroperate;
                     var strcontent = `
         					<tr>

@@ -96,6 +96,7 @@ function reomvebrokerdesi() {
     $.ajax({
         url: 'http://www.houxiaopang.com/api/v1.1/adminsystem/pricelist/remove',
         type: 'post',
+        headers: {"Authorization": "Token " + window.localStorage.token},
         data: {
             'recom_id': removedesi_id,
         },

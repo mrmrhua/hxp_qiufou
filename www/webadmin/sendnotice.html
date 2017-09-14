@@ -189,7 +189,8 @@
 		modal.style.display = 'block';
 		$.ajax({
 			'type':"post",
-			data:{
+            headers: {"Authorization": "Token " + window.localStorage.token},
+            data:{
 				'pw' : pwd,
 				'receiver_id': agent_id,
 				'title' : title,

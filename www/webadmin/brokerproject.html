@@ -295,6 +295,7 @@
             'UploadComplete': function () {
                 $.ajax({
                     type:"post",
+                    headers: {"Authorization": "Token " + window.localStorage.token},
                     url:"http://houxiaopang.com/api/v1.1/demanddetail",
                     data:{
                         "description": editor.getValue(),

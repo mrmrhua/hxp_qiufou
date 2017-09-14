@@ -122,7 +122,9 @@
         $.ajax({
             type: "get",
             url: "http://houxiaopang.com/api/v1.1/adminsystem/alldesigner",
-            headers: {"Authorization": "Token " + window.localStorage.token},
+            beforeSend: function (request) {
+                request.setRequestHeader("Authorization", "Token " + window.localStorage.token);
+            },
             data: {
                 'category': JSON.stringify(categorys),
                 'page': page
