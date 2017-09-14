@@ -49,6 +49,9 @@ def create_app():
 
     from  .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
+    #
+    # from .admin import admin as admin_bp
+    # app.register_blueprint(admin_bp)
 
     #项目管理系统-经纪人添加项目
     from .add_project import add_project as add_project_bp

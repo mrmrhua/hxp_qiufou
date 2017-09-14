@@ -245,5 +245,12 @@ def verify_token(token):
     g.user = user
     return True
 
+adminauth = HTTPTokenAuth(scheme='Token')
 
+@adminauth.verify_token
+def verify_token(token):
+    if  token=='robin':
+        return True
+    else:
+        return False
 

@@ -4,9 +4,11 @@ from flask_restful import Resource
 from app.models import User,db,Notice,Subscribtion
 import json
 from datetime import datetime
+from app.common import adminauth
 
 # 管理员发送消息
 class SendNotice(Resource):
+    @adminauth.login_required
     def post(self):
         # 密码正确
         if request.values.get("pw") == 'houxiaopang666':
@@ -36,6 +38,7 @@ class SendNotice(Resource):
 
 
 class ListNews(Resource):
+    @adminauth.login_required
     def get(self):
         ns = Notice.query.all()
         notice = []

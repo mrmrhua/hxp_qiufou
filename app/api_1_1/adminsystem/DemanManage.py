@@ -3,9 +3,11 @@ import  random
 from flask_restful import Resource
 from app.models import User,db,Demand_User,Demand_Recom,Demand
 import json
+from app.common import adminauth
 # houxiaopang.com/api/v1.1/adminsystem/recommend_tmp
 # 后台：管理员：项目推荐设计师
 class DesignerRecom(Resource):
+    @adminauth.login_required
     def post(self):
         demand_id = request.values.get("demand_id")
         designers = json.loads(request.values.get("designer"))
@@ -26,6 +28,7 @@ class DesignerRecom(Resource):
 #GET
 #后台：查看所有需求
 class AllDemand(Resource):
+    @adminauth.login_required
     def get(self):
         ds = Demand.query.all()
         demand = [{
@@ -44,6 +47,7 @@ class AllDemand(Resource):
 #GET
 #后台：查看某需求所有报价的设计师
 class DemandApply(Resource):
+    @adminauth.login_required
     def get(self):
         demand_id= request.values.get("demand_id")
         dus = Demand_User.query.filter_by(demand_id=demand_id).all()
@@ -57,6 +61,7 @@ class DemandApply(Resource):
 # GET
 # 后台：获取报价信息,进行修改
 class GetDemandApplyInfo(Resource):
+    @adminauth.login_required
     def get(self):
         apply_id=request.values.get("apply_id")
         du = Demand_User.query.filter_by(id=apply_id).first()
@@ -86,6 +91,7 @@ class RecomList(Resource):
     # POST
     # （临时）后台：经纪人删除推荐设计师
 class DelRecom(Resource):
+    @adminauth.login_required
     def post(self):
         recom_id=request.values.get("recom_id")
         dr = Demand_Recom.query.filter_by(id=recom_id).first()

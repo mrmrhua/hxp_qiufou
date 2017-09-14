@@ -3,8 +3,10 @@ import  random
 from flask_restful import Resource
 from app.models import User,db,Notice,Subscribtion,DesignerInfo,Category
 import json
+from app.common import adminauth
 
 class AllDesignerManage(Resource):
+    @adminauth.login_required
     def get(self):
         cats = json.loads(request.values.get("category"))
         page = int(request.values.get("page"))

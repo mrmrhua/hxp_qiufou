@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>经纪人推荐设计师</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+    <link href="css/style.css" rel="stylesheet" type="text/css"/>
+    <style type="text/css">
+        .container {
+            padding-top: 25px;
+        }
+
+        .imgbox {
+            min-height: 200px;
+            width: 100%;
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+            -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+            -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+            transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+
+        .upfile {
+            border: 2px dashed #e0e4e8;
+            padding: 30px 60px 30px 30px;
+            float: left;
+        }
+
+        .addbtn {
+            opacity: 0.4;
+            width: 240px;
+            height: 180px;
+            display: inline-block;
+            margin-left: 30px;
+            position: relative;
+        }
+
+        .addbtn:hover {
+            opacity: 0.8;
+        }
+
+        .addbtn .file {
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            cursor: pointer;
+        }
+
+        .addbtn .add-img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .preview {
+            width: 240px;
+            height: 180px;
+            display: inline-block;
+            margin-left: 30px;
+            vertical-align: top;
+            position: relative;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .preview .up-span {
+            display: block;
+            width: 100%;
+            height: 100%;
+            visibility: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            background: rgba(0, 0, 0, .5);
+        }
+
+        .preview:hover .up-span {
+            visibility: visible;
+        }
+
+        .preview .close-upimg {
+            position: absolute;
+            top: 6px;
+            right: 8px;
+            display: none;
+            z-index: 10;
+            cursor: pointer;
+        }
+
+        .preview:hover .close-upimg {
+            display: block;
+        }
+
+        .preview .up-img {
+            width: 240px;
+        }
+
+        .mymodal {
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, .7);
+            display: none;
+        }
+
+        .mymodal > .text {
+            font-size: 24px;
+            margin-top: 15%;
+            color: #fff;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+        <li><a href="#">首页</a></li>
+        <li><a href="#">模块设计</a></li>
+        <li><a href="#">推荐设计师</a></li>
+    </ul>
+</div>
+<div class="container">
+    <form class="form-horizontal" role="form">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">编号</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="demand_id"
+                       placeholder="请输入需求号（demand-id）">
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">推荐设计师</label>
+            <div class="col-sm-10">
+                <div onclick="addDesigner()" class="btn btn-primary">添加推荐设计师</div>
+                <div onclick="insert()" style="float: right;margin-left: 10px;" class="btn btn-primary">导入该设计师</div>
+                <input id="desi_id" style="width: 200px;float: right" type="text" class="form-control"
+                       placeholder="请输入报价申请id">
+            </div>
+        </div>
+        <div class="form-group" id="designer">
+            <div class="col-sm-offset-2 col-sm-10">
+                <label class="col-sm-2 control-label">昵称</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control"
+                           placeholder="请输入设计师昵称">
+                </div>
+                <label class="col-sm-2 control-label" style="margin-top: 20px;">作品一</label>
+                <div class="col-sm-10" style="margin-top: 20px;">
+                    <input type="text" class="form-control"
+                           placeholder="请输入作品一地址">
+                </div>
+                <label class="col-sm-2 control-label" style="margin-top: 20px;">作品二</label>
+                <div class="col-sm-10" style="margin-top: 20px;">
+                    <input type="text" class="form-control"
+                           placeholder="请输入作品二地址">
+                </div>
+                <label class="col-sm-2 control-label" style="margin-top: 20px;">作品三</label>
+                <div class="col-sm-10" style="margin-top: 20px;">
+                    <input type="text" class="form-control"
+                           placeholder="请输入作品三地址">
+                </div>
+
+                <label class="col-sm-2 control-label" style="margin-top: 20px;">构想</label>
+                <div class="col-sm-10" style="margin-top: 20px;">
+                    <input type="text" class="form-control"
+                           placeholder="请输入设计构想(限16个字)">
+                </div>
+                <label class="col-sm-2 control-label" style="margin-top: 20px;">工期</label>
+                <div class="col-sm-10" style="margin-top: 20px;">
+                    <input type="text" class="form-control"
+                           placeholder="请输入工期">
+                </div>
+                <label class="col-sm-2 control-label" style="margin-top: 20px;">报价</label>
+                <div class="col-sm-10" style="margin-top: 20px;">
+                    <input type="text" class="form-control"
+                           placeholder="请输入设计师报价">
+                </div>
+            </div>
+        </div>
+        <div id="addcontent" class="form-group"></div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <div onclick="submit()" class="btn btn-primary btn-block">提交</div>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+    //解析地址参数
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
+
+    var id = getQueryString("id");
+    if (id) {
+        document.getElementById("demand_id").value = id;
+    }
+    var desi_id = getQueryString("desi_id");
+    if (desi_id) {
+        document.getElementById("desi_id").value = desi_id;
+        insertDesigner(desi_id);
+    }
+
+    var fromdata = {
+        worklist: [],
+    }; //表单对象
+    var fromdatas = [];//表单数组
+    var flag = false; //表单验证flag
+    function checkform() {
+        flag = false;
+        fromdata = {
+            worklist: [],
+        };
+        var applyid = document.getElementById("desi_id").value;
+        if (applyid.trim() === "") {
+            alert("请输入报价申请ID");
+            return;
+        }
+        fromdata.apply_id = applyid;
+        $("#designer input").each(function (i) {
+            if ($(this).val().trim() === "") {
+                if (i === 2 || i === 3) {
+
+                } else {
+                    alert("请检查表单");
+                    return false
+                }
+            } else {
+                if (i === 0) {
+                    fromdata.nickname = $(this).val().trim();
+                } else if (i === 1) {
+                    fromdata.worklist.push($(this).val().trim());
+                } else if (i === 2) {
+                    fromdata.worklist.push($(this).val().trim());
+                } else if (i === 3) {
+                    fromdata.worklist.push($(this).val().trim());
+                } else if (i === 4) {
+                    if ($(this).val().length > 16) {
+                        alert("构想字数超限");
+                        return false;
+                    } else {
+                        fromdata.ideas = $(this).val().trim();
+                    }
+                } else if (i === 5) {
+                    fromdata.howlong = $(this).val().trim();
+                } else if (i === 6) {
+                    fromdata.howmuch = $(this).val().trim();
+                    flag = true;
+                }
+            }
+        });
+    }
+
+
+    function insert() {
+        var zheid = document.getElementById("desi_id").value;
+        if (zheid.trim() == "") {
+            alert("请输入报价申请ID");
+            return;
+        }
+        insertDesigner(zheid);
+    }
+
+
+    //根据报价单号，获取该匿名设计师
+    function insertDesigner(id) {
+        $.ajax({
+            type: "get",
+            url: "http://houxiaopang.com/api/v1.1/adminsystem/demand/getapplyinfo",
+            data: {
+                'apply_id': id,
+            },
+            success(data){
+                if (data.code === 0) {
+                    var info = data.data;
+                    $("#designer input").eq(0).val(info.nickname);
+                    for (var i = 0, size = info.worklist.length; i < size; i++) {
+                        $("#designer input").eq(i + 1).val(info.worklist[i]);
+                    }
+                    $("#designer input").eq(4).val(info.ideas);
+                    $("#designer input").eq(5).val(info.howlong);
+                    $("#designer input").eq(6).val(info.howmuch);
+                } else {
+                    alert("获取设计师失败");
+                }
+            },
+            error(){
+                alert("获取设计师失败");
+            }
+        });
+    }
+
+
+    function addDesigner() {
+        checkform();
+        if (flag) {
+            fromdatas.push(fromdata);
+            $("#designer input").each(function (i) {
+                $(this).val("");
+            });
+            var str = `<div class="form-group" style="margin-top: 50px;">
+						  <div class="col-sm-offset-2 col-sm-10">
+							<label class="col-sm-2 control-label">
+							推荐设计师${fromdatas.length}
+							</label>
+							<div class="col-sm-10" style = "margin-top:8px;">
+							    <p>编号：${fromdata.apply_id}</p>
+								<p>昵称：${fromdata.nickname}</p>
+								<p>样册一：${fromdata.worklist[0]}</p>
+								<p>样册二：${fromdata.worklist[1] || '空'}</p>
+								<p>样册三：${fromdata.worklist[2] || '空'}</p>
+								<p>构想：${fromdata.ideas}</p>
+								<p>报价：${fromdata.howmuch}</p>
+							</div>
+						  </div>
+					   </div>`
+            document.getElementById("addcontent").innerHTML += str;
+            fromdata = {
+                worklist: [],
+            };
+        }
+    }
+
+    function submit() {
+        $("#designer input").each(function (i) {
+            if ($(this).val().trim() !== "") {
+                checkform();
+                return false;
+            }
+        });
+        var demandid = document.getElementById("demand_id").value.trim();
+        if (demandid == "") {
+            alert("请填写需求号！");
+            return;
+        }
+        if (flag) {
+            if (fromdata.howmuch) {
+                fromdatas.push(fromdata);
+            }
+            if (fromdatas.length > 0) {
+                $.ajax({
+                    type: "post",
+                    url: "http://houxiaopang.com/api/v1.1/adminsystem/recommend_tmp",
+                    data: {
+                        'demand_id': demandid,
+                        'designer': JSON.stringify(fromdatas),
+                    },
+                    success(data){
+                        if (data.code === 0) {
+                            alert("成功！");
+                            location.reload();
+                        } else {
+                            fromdatas = [];
+                            alert("失败！");
+                        }
+                    },
+                    error(){
+                        fromdatas = [];
+                        alert("失败！");
+                    }
+                });
+            } else {
+                alert("请检查表单");
+            }
+        }
+    }
+</script>
+</body>
+</html>
