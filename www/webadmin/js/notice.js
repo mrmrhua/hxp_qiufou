@@ -109,7 +109,7 @@ function tableMove() {
 }
 
 
-//获取设计师审核数据
+//获取通知
 function getNotice() {
 	$.ajax({
 		type:"get",
