@@ -12,9 +12,10 @@ class DesignerRecom(Resource):
         for i in designers:
             if  Demand_Recom.query.filter_by(deapply_id = i.get("apply_id")).first():
                 return jsonify({'code': -1})
+            worklist = json.dumps(i.get("worklist"))
             dr = Demand_Recom(deapply_id = i.get("apply_id"), \
                 howmuch = i.get("howmuch"), ideas = i.get("ideas"), \
-                howlong = i.get("howlong"),worklist=i.get("worklist"),\
+                howlong = i.get("howlong"),worklist=worklist,\
                 nickname = i.get("nickname"),demand_id=demand_id)
             db.session.add(dr)
         db.session.commit()
@@ -68,3 +69,28 @@ class GetDemandApplyInfo(Resource):
             'worklist':json.loads(du.worklist),
             'nickname':du.nickname
         }})
+
+
+# http://houxiaopang.com/api/v1.1/adminsystem/pricelist_tmp
+# 经纪人查看已推荐设计师
+class RecomList(Resource):
+    def get(self):
+        demand_id = request.values.get("demand_id")
+        drs = Demand_Recom.query.filter_by(demand_id=demand_id).all()
+        designer = [ {'recom_id':i.id,'ideas':i.ideas,'nickname':i.nickname,'howmuch':i.howmuch,'howlong':i.howlong,'worklist':json.loads(i.worklist),'tel':i.apply.tel} for i in drs ]
+        return jsonify({'code':0,'data':designer})
+
+
+
+    # http: // houxiaopang.com / api / v1.1 / adminsystem / pricelist / remove
+    # POST
+    # （临时）后台：经纪人删除推荐设计师
+class DelRecom(Resource):
+    def post(self):
+        recom_id=request.values.get("recom_id")
+        dr = Demand_Recom.query.filter_by(id=recom_id).first()
+        if not dr:
+            return jsonify({'code': -1})
+        db.session.delete(dr)
+        db.session.commit()
+        return jsonify({'code':0})
