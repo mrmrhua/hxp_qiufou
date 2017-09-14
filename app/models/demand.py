@@ -44,7 +44,7 @@ class Demand_User(db.Model):
     tel = db.Column(db.String(11), nullable=True)
     worklist = db.Column(db.Text, nullable=True)
     nickname = db.Column(db.String(20), nullable=True)
-
+    recom = db.relationship('Demand_Recom',backref='apply')
     def __repr__(self):
         return '<Demand_User % r & %r>' % (self.demand_id,self.user_id)
 
@@ -83,7 +83,7 @@ class Demand_Recom(db.Model):
     id = db.Column(INTEGER(unsigned=True), primary_key=True)
     demand_id = db.Column(INTEGER(unsigned=True), db.ForeignKey('demands.id'))
     user_id = db.Column(INTEGER(unsigned=True), db.ForeignKey('users.id'),nullable=True)
-    deapply_id = db.Column(INTEGER(unsigned=True),nullable=True)
+    deapply_id = db.Column(INTEGER(unsigned=True),db.ForeignKey('demands_users.id'),nullable=True)
     howlong = db.Column(db.String(20), nullable=True)
     howmuch = db.Column(db.String(20), nullable=True)
     ideas = db.Column(db.String(255), nullable=True)

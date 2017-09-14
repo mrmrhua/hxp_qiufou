@@ -13,7 +13,8 @@ from .admindash import NewAlbum,GetAlbum,GetCollection,GetUserHead,GetAlbumDetai
     Userinfo,DeleteAlbum,AddExp,DelExp,NoticeRecent,UnreadNum,AllNotice,\
     ClearAll,RemoveAll
 from .adminsystem import SendNotice,AllDesignerManage,DesignerRecom,AgreeApply,DisAgreeApply, \
-    AdminLogin,GetApplyinfo,ListNews,AllDemand,DemandApply,GetDemandApplyInfo
+    AdminLogin,GetApplyinfo,ListNews,AllDemand,DemandApply,GetDemandApplyInfo,RecomList, \
+    DelRecom
 
 
 # wx verify info
@@ -88,3 +89,8 @@ api_v1_1.add_resource(AllDemand,'/adminsystem/demand/all')
 api_v1_1.add_resource(DemandApply,'/adminsystem/demand/apply_tmp')
 
 api_v1_1.add_resource(GetDemandApplyInfo,'/adminsystem/demand/getapplyinfo')
+
+
+api_v1_1.add_resource(RecomList,'/adminsystem/pricelist_tmp')
+
+api_v1_1.add_resource(DelRecom,'/adminsystem/pricelist/remove')
