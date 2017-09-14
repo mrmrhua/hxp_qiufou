@@ -283,6 +283,9 @@
         $.ajax({
             type: "get",
             url: "http://houxiaopang.com/api/v1.1/adminsystem/demand/getapplyinfo",
+            beforeSend: function (request) {
+                request.setRequestHeader("Authorization", "Token " + window.localStorage.token);
+            },
             data: {
                 'apply_id': id,
             },
@@ -356,6 +359,7 @@
             if (fromdatas.length > 0) {
                 $.ajax({
                     type: "post",
+                    headers: {"Authorization": "Token " + window.localStorage.token},
                     url: "http://houxiaopang.com/api/v1.1/adminsystem/recommend_tmp",
                     data: {
                         'demand_id': demandid,

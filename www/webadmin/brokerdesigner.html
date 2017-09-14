@@ -281,7 +281,8 @@
 				$.ajax({
 					type:"post",
 					url:"http://houxiaopang.com/api/v1.1/adminsystem/recommend",
-					data:{
+                    headers: {"Authorization": "Token " + window.localStorage.token},
+                    data:{
 						'demand_id' : demand_id,
 						'designer' : JSON.stringify(fromdatas),
 					},
