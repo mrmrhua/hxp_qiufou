@@ -46,3 +46,4 @@ AGREE_EMAIL_HTML= """\
 <html>
 """
 
+ADMIN_EMAIL = 'mrmrhua@126.com'
