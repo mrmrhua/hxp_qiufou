@@ -38,15 +38,21 @@
 			display: table-cell;
 			vertical-align: middle;
 		}
+
+		@media screen and (min-width: 1600px) and (max-width: 2000px) {
+		    .thisdiv{
+		        transform: scale(1.4);
+		    }
+		}
 	</style>
 </head>
 <body>
 	<div style="height: 100%;background:#f5f5f5;display: table;width: 100%;">
 		<div class="back">
-			<div style="height:561px;width: 950px;margin: 0 auto;position: relative;">
+			<div class="thisdiv" style="height:561px;width: 950px;margin: 0 auto;position: relative;">
 				<img src="http://image.houxiaopang.com/qrlogin/v1.1/back.png" style="width:100%;display: block;">
 				<div style="position: absolute;height:100%;width: 50%;left: 0;top: 0;">
-					<img style="margin: 3% 10% 3%;" src="http://image.houxiaopang.com/first/logodown.png">
+					<a href="http://www.houxiaopang.com"><img style="margin: 3% 10% 3%;" src="http://image.houxiaopang.com/first/logodown.png"></a>
 					<div style="height: 433px;width: 350px;margin: 0 auto;background: url('http://image.houxiaopang.com/qrlogin/v1.1/loginback.png') no-repeat;background-size: 100%;">
 						<div id="wxqrcode" style="text-align: center;"></div>
 					</div>
