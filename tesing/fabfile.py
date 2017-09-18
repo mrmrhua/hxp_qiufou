@@ -13,7 +13,7 @@ def go():
     run('systemctl start hxp')
 
 def stop():
-    run('systemctl stop')
+    run('systemctl stop hxp')
 
 def status():
     run('systemctl status hxp')

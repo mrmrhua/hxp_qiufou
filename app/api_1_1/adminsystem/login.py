@@ -10,7 +10,8 @@ class AdminLogin(Resource):
         # 密码houxiaopang666
         if pw == 'f19bc2c2408bab706d37707cf183b414':
             session['authed']=True
-            return jsonify({'code':0,'data':{'token':'boosprivelidge'}})
+            # token =
+            return jsonify({'code':0,'data':{'token':token}})
         else:
             return jsonify({'code': -1})
 
