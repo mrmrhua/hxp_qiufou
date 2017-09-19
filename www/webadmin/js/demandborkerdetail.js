@@ -121,7 +121,7 @@ function reomvebrokerdesi() {
 function getbrokerdesigner(demand_id) {
     $.ajax({
         type: "get",
-        url: "http://houxiaopang.com/api/v1.1/adminsystem/pricelist_tmp",
+        url: "http://www.houxiaopang.com/api/v1.1/adminsystem/pricelist_tmp",
         data: {
             'demand_id': demand_id,
         },

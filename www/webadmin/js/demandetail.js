@@ -125,7 +125,7 @@ function brokerthis(demand_id, id) {
 function getreplydesigner(demand_id) {
     $.ajax({
         type: "get",
-        url: "http://houxiaopang.com/api/v1.1/adminsystem/demand/apply_tmp",
+        url: "http://www.houxiaopang.com/api/v1.1/adminsystem/demand/apply_tmp",
         beforeSend: function (request) {
             request.setRequestHeader("Authorization", "Token " + window.localStorage.token);
         },

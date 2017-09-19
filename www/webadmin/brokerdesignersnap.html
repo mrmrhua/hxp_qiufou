@@ -282,7 +282,7 @@
     function insertDesigner(id) {
         $.ajax({
             type: "get",
-            url: "http://houxiaopang.com/api/v1.1/adminsystem/demand/getapplyinfo",
+            url: "http://www.houxiaopang.com/api/v1.1/adminsystem/demand/getapplyinfo",
             beforeSend: function (request) {
                 request.setRequestHeader("Authorization", "Token " + window.localStorage.token);
             },
@@ -360,7 +360,7 @@
                 $.ajax({
                     type: "post",
                     headers: {"Authorization": "Token " + window.localStorage.token},
-                    url: "http://houxiaopang.com/api/v1.1/adminsystem/recommend_tmp",
+                    url: "http://www.houxiaopang.com/api/v1.1/adminsystem/recommend_tmp",
                     data: {
                         'demand_id': demandid,
                         'designer': JSON.stringify(fromdatas),

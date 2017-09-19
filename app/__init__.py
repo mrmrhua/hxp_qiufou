@@ -38,6 +38,7 @@ def create_app():
 
     assets.init_app(app)
     sess.init_app(app)
+    # todo()
     cors.init_app(app,resources={r"/api/*":{"origins":"*"}})
     # alembic.init_app(app)
     migrate.init_app(app,db)

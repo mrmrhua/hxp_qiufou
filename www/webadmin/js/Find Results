@@ -1,0 +1,958 @@
+Searching 0 files for "ajax"
+
+0 matches
+
+Searching 65 files for "ajax"
+
+/Users/ding/dev/hxp/www/webadmin/brokerdesigner.html:
+  279  			if(fromdatas.length > 0){
+  280  				var demand_id = document.getElementById("demand_id").value.trim();
+  281: 				$.ajax({
+  282  					type:"post",
+  283  					url:"http://www.houxiaopang.com/api/v1.1/adminsystem/recommend",
+
+/Users/ding/dev/hxp/www/webadmin/brokerdesignersnap.html:
+  281      //根据报价单号，获取该匿名设计师
+  282      function insertDesigner(id) {
+  283:         $.ajax({
+  284              type: "get",
+  285              url: "http://www.houxiaopang.com/api/v1.1/adminsystem/demand/getapplyinfo",
+  ...
+  358              }
+  359              if (fromdatas.length > 0) {
+  360:                 $.ajax({
+  361                      type: "post",
+  362                      headers: {"Authorization": "Token " + window.localStorage.token},
+
+/Users/ding/dev/hxp/www/webadmin/brokerproject.html:
+  274  
+  275      function commit() {
+  276:         $.ajax({
+  277              type: "post",
+  278              headers: {"Authorization": "Token " + window.localStorage.token},
+
+/Users/ding/dev/hxp/www/webadmin/imglist1.html:
+  120      //获取设计师
+  121      function getdesigner() {
+  122:         $.ajax({
+  123              type: "get",
+  124              url: "http://www.houxiaopang.com/api/v1.1/adminsystem/alldesigner",
+
+/Users/ding/dev/hxp/www/webadmin/index.html:
+   46              logining = true;
+   47              var pwd = md5(document.getElementById("password").value);
+   48:             $.ajax({
+   49                  type:"post",
+   50                  url:"http://www.houxiaopang.com/api/v1.1/adminsystem/login",
+
+/Users/ding/dev/hxp/www/webadmin/sendnotice.html:
+  188  		agent_id = agent_id==="-1" ? "" : agent_id;
+  189  		modal.style.display = 'block';
+  190: 		$.ajax({
+  191  			'type':"post",
+  192              headers: {"Authorization": "Token " + window.localStorage.token},
+
+/Users/ding/dev/hxp/www/webadmin/js/demand.js:
+  140  //获取需求
+  141  function getDemand() {
+  142:     $.ajax({
+  143          type: "get",
+  144          beforeSend: function (request) {
+
+/Users/ding/dev/hxp/www/webadmin/js/demandborkerdetail.js:
+   94  //取消推荐设计师
+   95  function reomvebrokerdesi() {
+   96:     $.ajax({
+   97          url: 'http://www.houxiaopang.com/api/v1.1/adminsystem/pricelist/remove',
+   98          type: 'post',
+   ..
+  120  //获取已推荐设计师
+  121  function getbrokerdesigner(demand_id) {
+  122:     $.ajax({
+  123          type: "get",
+  124          url: "http://www.houxiaopang.com/api/v1.1/adminsystem/pricelist_tmp",
+
+/Users/ding/dev/hxp/www/webadmin/js/demandetail.js:
+  124  //获取已报价设计师
+  125  function getreplydesigner(demand_id) {
+  126:     $.ajax({
+  127          type: "get",
+  128          url: "http://www.houxiaopang.com/api/v1.1/adminsystem/demand/apply_tmp",
+
+/Users/ding/dev/hxp/www/webadmin/js/format+zh_CN,default,corechart.I.js:
+    4  Ea=")",Fa="+",Ga=",",L="-",M=".",Ha='.png" height="12" width="',Ia="/static/modules/gviz/",Ja="/util/bar_",Ka="/util/format.css",N="0",La="0000000000000000",Ma="1",Na="1.0",Oa=":",Pa=";",Qa="</span>\u00a0",Ra='<img style="padding: 0" src="',Sa='<span style="padding: 0; float: left; white-space: nowrap;">',Ta="E",Ua="Etc/GMT",Va="G",Wa="GMT",Xa="H",Ya="K",Za="L",$a="LINK",bb="M",cb="Q",db="S",eb="Too many percent/permill",fb="UTC",gb="Z",hb="[object Array]",ib="[object Function]",jb="[object Window]",
+    5  kb="\\",lb="_bar_format_old_value",mb="a",nb="addGradientRange",ob="array",pb="b",qb="background-color:",rb="body",sb="boolean",tb="c",ub="call",vb="className",wb="color:",xb="d",yb="date",zb="datetime",Ab="decimalSymbol",Bb="false",O="format",Cb="formatType",Db="fractionDigits",Eb="full",Fb="function",Gb="g",Hb="google-visualization-formatters-arrow-dr",Ib="google-visualization-formatters-arrow-empty",Jb="google-visualization-formatters-arrow-ug",Kb="google.loader.GoogleApisBase",Lb="google.visualization.Version",
+    6: Mb="groupingSymbol",Nb="h",Ob="head",Pb="hex",Qb="html",Rb="http://ajax.googleapis.com/ajax",Sb="k",Tb="link",Ub="long",Vb="m",Wb="medium",Xb="named",Yb="native code",Zb="negativeColor",$b="negativeParens",ac="none",bc="null",P="number",cc="object",dc="pattern",ec="prefix",gc="r",hc="rgb",ic="s",jc="scaleFactor",kc="short",lc="solid",mc="splice",nc="string",oc="style",pc="stylesheet",qc="suffix",rc="text/css",sc="time",tc="timeZone",uc="timeofday",vc="transparent",wc="true",xc="v",yc="valueType",
+    7  zc="w",Ac="y",Bc="z",Cc="\u00a0",Dc="\u00a4",Ec="\u2030",R,Fc=this;function Gc(a,b){for(var c=a.split(M),d=b||Fc,e;e=c.shift();)if(S(d[e]))d=d[e];else return h;return d}
+    8  function Hc(a){var b=typeof a;if(b==cc)if(a){if(a instanceof r)return ob;if(a instanceof Object)return b;var c=Object[G][E][H](a);if(c==jb)return cc;if(c==hb||typeof a[F]==P&&"undefined"!=typeof a.splice&&"undefined"!=typeof a[na]&&!a[na](mc))return ob;if(c==ib||"undefined"!=typeof a[H]&&"undefined"!=typeof a[na]&&!a[na](ub))return Fb}else return bc;else if(b==Fb&&"undefined"==typeof a[H])return cc;return b}function S(a){return a!=h}
+    .
+   72  "function",Ni="g",Oi="gadgets.io.makeRequest",Pi="gadgets.io.makeRequest failed",Qi="getColumnIndex",Ri="getColumnLabel",Si="getColumnPattern",Ti="getColumnProperties",Ui="getColumnProperty",Vi="getColumnRange",Wi="getContainerId",Xi="getDataSourceUrl",Yi="getDataTable",Zi="getDistinctValues",$i="getFilteredRows",aj="getFormattedValue",bj="getNumberOfColumns",cj="getNumberOfRows",dj="getPackages",ej="getQuery",fj="getRefreshInterval",gj="getRowProperties",hj="getRowProperty",ij="getSnapshot",jj="getTableProperties",
+   73  kj="getTableProperty",lj="goog-button",mj="goog-container",nj="goog-control",oj="goog-custom-button",pj="goog-inline-block ",qj="goog-menu",rj="goog-menu-button",sj="goog-menuheader",tj="goog-menuitem",uj="goog-menuitem-accel",vj="goog-menuitem-mnemonic-separator",wj="goog-menuseparator",xj="goog-modalpopup",yj="goog-option",zj="goog-option-selected",Aj="google-visualization-toolbar-big-dialog",Bj="google-visualization-toolbar-export-data",Cj="google-visualization-toolbar-export-igoogle",Dj="google-visualization-toolbar-html-code",
+   74: Ej="google-visualization-toolbar-html-code-explanation",Fj="google-visualization-toolbar-small-dialog",Gj="google-visualization-toolbar-triangle",Hj="google.loader.GoogleApisBase",Ij="google.visualization.",Jj="google.visualization.Version",Kj="hasLabelsColumn",Lj="haspopup",Mj="head",Nj="hex",Oj="hidden",Pj="hide",Qj="highlight",Rj="horizontal",Sj="html",Tj="htmlcode",Uj="http",Vj="http%",Wj="http://ajax.googleapis.com/ajax",Xj="http://dummy.com",Yj="http://www.google.com/ig/adde?moduleurl=",Zj=
+   75  "https",$j="https%",ak="identity",bk="iframe",ck="igoogle",dk="img",ek="inline",fk="innerText",gk="input",hk="invalid_query",ik='javascript:""',jk="jscode",kk="json",lk="key",mk="keydown",ok="keypress",pk="keyup",qk="labelledby",rk="leave",sk="left",tk="link",uk="listbox",vk="losecapture",wk="makeRequest",xk="make_request_failed",yk="maxValue",zk="medium",Ak="menu",Bk="menuitem",Ck="message",Dk="minValue",Ek="modal-dialog",Fk="modifier",Gk="mousedown",Hk="mousemove",Ik="mouseout",Jk="mouseover",Kk=
+   76  "mouseup",Lk="ms, aborting",Mk="named",Nk="native code",Ok="new ",Pk="nodeType",Qk="none",Rk="not_modified",Sk="null",K="number",Tk="o",Uk="object",Vk="on",Wk="opacity",Xk="open",Yk="option",Zk="options",$k="out:csv;",al="out:html;",bl="outerHTML",cl="overflow",dl="package",el="padding: 2px",fl="paddingBottom",gl="paddingLeft",hl="paddingRight",il="paddingTop",jl="pixelLeft",kl="position",ll="position:fixed;width:0;height:0;left:0;top:0;",ml="pre",nl="pressed",ol="pub",pl="px",ql="r",rl="range",sl=
+   ..
+  361  yi="default",zi="defs",Ai="direction",Bi="display",Ci="displayTinySlicesInLenged",Di="div",Ei="dive",Fi="domain",Gi="domainAxis",Hi="draw",Ii="e",Ji="easing",Ki="ellipse",Li="emptyString",Mi="enableInteractivity",Ni="end",Oi="error",Pi="explicit",Qi="false",Ri="fill",Si="fill-opacity",Ti="fillOpacity",Ui="firstVisibleText",Vi="fixed",Wi="floor",Xi="focus",Yi="focusTarget",Zi="font-family",$i="font-size",aj="font-style",bj="font-weight",cj="fontName",dj="fontSize",ej="for",fj="format",gj="formatOptions",
+  362  hj="formatOptions.scaleFactor",ij="formatter.numDecimals",jj="formatter.numSignificantDigits",kj="formatter.unit",lj="formatter.useMagnitudes",T="function",mj="function CHART_loaded() {",nj="g",oj="get",pj="getSelection",qj="google.loader.GoogleApisBase",rj="google.visualization.Version",sj="gradient",tj="gradientUnits",uj="gridline",vj="gridlineColor",wj="gridlines.color",xj="gridlines.count",yj="hAxes.",zj="hAxis",Aj="hAxis#",Bj="height",Cj="hex",Dj="hidden",Ej="hide",Fj="high",Gj="horizontal",
+  363: Hj="hover",Ij="hovercard",Jj="http://ajax.googleapis.com/ajax",Kj="http://www.w3.org/1999/xhtml",Lj="http://www.w3.org/2000/svg",Mj="id",Nj="iframe",Oj="image/svg+xml",Pj="in",Qj="inAndOut",Rj="inTextPosition",Sj="infobackground",Tj="inline",Uj="inside",Vj="interactivityModel",Wj="interpolateNulls",Xj="interval",Yj="interval.",Zj="intervals.",$j="is3D",ak="isStacked",bk="italic",ck="keydown",dk="keypress",ek="label",fk="labelInLegend",gk="labeled",hk="left",ik="legend",jk="legend#entry#",kk="legend.labeledValueText",
+  364  lk="legend.maxLines",mk="legend.pagingTextStyle",nk="legend.position",ok="legend.scrollArrows.activeColor",pk="legend.scrollArrows.inactiveColor",qk="legend.scrollArrows.orientation",rk="legend.showPageIndex",sk="legend.textStyle",tk="legendEntryClick",uk="legendEntryHoverIn",vk="legendEntryHoverOut",wk="legendFontSize",xk="legendScrollButtonClick",yk="legendTextColor",zk="legendTextStyle",Ak="line",Bk="lineSize",Ck="lineWidth",Dk="linear",Ek="linearGradient",Fk="log",Gk="logScale",Hk="logScaleX",
+  365  Ik="low",Jk="majorAxisTextColor",Kk="max",Lk="maxAlternation",Mk="maxValue",Nk="maximized",Ok="middle",Pk="min",Qk="minRangeSize",Rk="minValue",Sk="minorAxisTextColor",Tk="mirrorLog",Uk="mousedown",Vk="mousemove",Wk="mouseout",Xk="mouseover",Yk="mouseup",Zk="move",$k="move_offscreen",al="named",bl="native code",cl="new ",dl="no",U="none",el="nowrap",fl="null",gl="number",hl="o",il="object",jl="offset",kl="on",ll="onmouseout",ml="onmouseover",nl="orientation",ol="out",pl="outTextPosition",ql="outside",
+
+/Users/ding/dev/hxp/www/webadmin/js/jquery-phone.js:
+  130  //获取设计师审核数据
+  131  function getDesigner() {
+  132: 	$.ajax({
+  133  		type:"get",
+  134          url:"http://www.houxiaopang.com/api/v1.1/adminsystem/applyinfo",
+  ...
+  209  //通过审核
+  210  function pass(id,index){
+  211: 	$.ajax({
+  212  		url:"http://www.houxiaopang.com/api/v1.1/adminsystem/agreeapply",
+  213  		type:"post",
+  ...
+  229  //不通过审核
+  230  function fail (id,index) {
+  231: 	$.ajax({
+  232  		url:"http://www.houxiaopang.com/api/v1.1/adminsystem/disagreeapply",
+  233  		type:"post",
+
+/Users/ding/dev/hxp/www/webadmin/js/jquery.js:
+   14   * Date: Mon Jan 25 19:43:33 2010 -0500
+   15   */
+   16: (function(z,v){function la(){if(!c.isReady){try{r.documentElement.doScroll("left")}catch(a){setTimeout(la,1);return}c.ready()}}function Ma(a,b){b.src?c.ajax({url:b.src,async:false,dataType:"script"}):c.globalEval(b.text||b.textContent||b.innerHTML||"");b.parentNode&&b.parentNode.removeChild(b)}function X(a,b,d,f,e,i){var j=a.length;if(typeof b==="object"){for(var n in b)X(a,n,b[n],f,e,d);return a}if(d!==v){f=!i&&f&&c.isFunction(d);for(n=0;n<j;n++)e(a[n],b,f?d.call(a[n],n,e(a[n],b)):d,i);return a}return j?
+   17  e(a[0],b):null}function J(){return(new Date).getTime()}function Y(){return false}function Z(){return true}function ma(a,b,d){d[0].type=a;return c.event.handle.apply(b,d)}function na(a){var b,d=[],f=[],e=arguments,i,j,n,o,m,s,x=c.extend({},c.data(this,"events").live);if(!(a.button&&a.type==="click")){for(o in x){j=x[o];if(j.live===a.type||j.altLive&&c.inArray(a.type,j.altLive)>-1){i=j.data;i.beforeFilter&&i.beforeFilter[a.type]&&!i.beforeFilter[a.type](a)||f.push(j.selector)}else delete x[o]}i=c(a.target).closest(f,
+   18  a.currentTarget);m=0;for(s=i.length;m<s;m++)for(o in x){j=x[o];n=i[m].elem;f=null;if(i[m].selector===j.selector){if(j.live==="mouseenter"||j.live==="mouseleave")f=c(a.relatedTarget).closest(j.selector)[0];if(!f||f!==n)d.push({elem:n,fn:j})}}m=0;for(s=d.length;m<s;m++){i=d[m];a.currentTarget=i.elem;a.data=i.fn.data;if(i.fn.apply(i.elem,e)===false){b=false;break}}return b}}function oa(a,b){return"live."+(a?a+".":"")+b.replace(/\./g,"`").replace(/ /g,"&")}function pa(a){return!a||!a.parentNode||a.parentNode.nodeType===
+   ..
+  116  a.currentStyle.left;e.left=d==="fontSize"?"1em":f||0;f=e.pixelLeft+"px";e.left=b;a.runtimeStyle.left=i}}return f},swap:function(a,b,d){var f={};for(var e in b){f[e]=a.style[e];a.style[e]=b[e]}d.call(a);for(e in b)a.style[e]=f[e]}});if(c.expr&&c.expr.filters){c.expr.filters.hidden=function(a){var b=a.offsetWidth,d=a.offsetHeight,f=a.nodeName.toLowerCase()==="tr";return b===0&&d===0&&!f?true:b>0&&d>0&&!f?false:c.curCSS(a,"display")==="none"};c.expr.filters.visible=function(a){return!c.expr.filters.hidden(a)}}var pb=
+  117  J(),qb=/<script(.|\s)*?\/script>/gi,rb=/select|textarea/i,sb=/color|date|datetime|email|hidden|month|number|password|range|search|tel|text|time|url|week/i,N=/=\?(&|$)/,ja=/\?/,tb=/(\?|&)_=.*?(&|$)/,ub=/^(\w+:)?\/\/([^\/?#]+)/,vb=/%20/g;c.fn.extend({_load:c.fn.load,load:function(a,b,d){if(typeof a!=="string")return this._load(a);else if(!this.length)return this;var f=a.indexOf(" ");if(f>=0){var e=a.slice(f,a.length);a=a.slice(0,f)}f="GET";if(b)if(c.isFunction(b)){d=b;b=null}else if(typeof b==="object"){b=
+  118: c.param(b,c.ajaxSettings.traditional);f="POST"}var i=this;c.ajax({url:a,type:f,dataType:"html",data:b,complete:function(j,n){if(n==="success"||n==="notmodified")i.html(e?c("<div />").append(j.responseText.replace(qb,"")).find(e):j.responseText);d&&i.each(d,[j.responseText,n,j])}});return this},serialize:function(){return c.param(this.serializeArray())},serializeArray:function(){return this.map(function(){return this.elements?c.makeArray(this.elements):this}).filter(function(){return this.name&&!this.disabled&&
+  119: (this.checked||rb.test(this.nodeName)||sb.test(this.type))}).map(function(a,b){a=c(this).val();return a==null?null:c.isArray(a)?c.map(a,function(d){return{name:b.name,value:d}}):{name:b.name,value:a}}).get()}});c.each("ajaxStart ajaxStop ajaxComplete ajaxError ajaxSuccess ajaxSend".split(" "),function(a,b){c.fn[b]=function(d){return this.bind(b,d)}});c.extend({get:function(a,b,d,f){if(c.isFunction(b)){f=f||d;d=b;b=null}return c.ajax({type:"GET",url:a,data:b,success:d,dataType:f})},getScript:function(a,
+  120: b){return c.get(a,null,b,"script")},getJSON:function(a,b,d){return c.get(a,b,d,"json")},post:function(a,b,d,f){if(c.isFunction(b)){f=f||d;d=b;b={}}return c.ajax({type:"POST",url:a,data:b,success:d,dataType:f})},ajaxSetup:function(a){c.extend(c.ajaxSettings,a)},ajaxSettings:{url:location.href,global:true,type:"GET",contentType:"application/x-www-form-urlencoded",processData:true,async:true,xhr:z.XMLHttpRequest&&(z.location.protocol!=="file:"||!z.ActiveXObject)?function(){return new z.XMLHttpRequest}:
+  121: function(){try{return new z.ActiveXObject("Microsoft.XMLHTTP")}catch(a){}},accepts:{xml:"application/xml, text/xml",html:"text/html",script:"text/javascript, application/javascript",json:"application/json, text/javascript",text:"text/plain",_default:"*/*"}},lastModified:{},etag:{},ajax:function(a){function b(){e.success&&e.success.call(o,n,j,w);e.global&&f("ajaxSuccess",[w,e])}function d(){e.complete&&e.complete.call(o,w,j);e.global&&f("ajaxComplete",[w,e]);e.global&&!--c.active&&c.event.trigger("ajaxStop")}
+  122: function f(q,p){(e.context?c(e.context):c.event).trigger(q,p)}var e=c.extend(true,{},c.ajaxSettings,a),i,j,n,o=a&&a.context||e,m=e.type.toUpperCase();if(e.data&&e.processData&&typeof e.data!=="string")e.data=c.param(e.data,e.traditional);if(e.dataType==="jsonp"){if(m==="GET")N.test(e.url)||(e.url+=(ja.test(e.url)?"&":"?")+(e.jsonp||"callback")+"=?");else if(!e.data||!N.test(e.data))e.data=(e.data?e.data+"&":"")+(e.jsonp||"callback")+"=?";e.dataType="json"}if(e.dataType==="json"&&(e.data&&N.test(e.data)||
+  123  N.test(e.url))){i=e.jsonpCallback||"jsonp"+pb++;if(e.data)e.data=(e.data+"").replace(N,"="+i+"$1");e.url=e.url.replace(N,"="+i+"$1");e.dataType="script";z[i]=z[i]||function(q){n=q;b();d();z[i]=v;try{delete z[i]}catch(p){}A&&A.removeChild(B)}}if(e.dataType==="script"&&e.cache===null)e.cache=false;if(e.cache===false&&m==="GET"){var s=J(),x=e.url.replace(tb,"$1_="+s+"$2");e.url=x+(x===e.url?(ja.test(e.url)?"&":"?")+"_="+s:"")}if(e.data&&m==="GET")e.url+=(ja.test(e.url)?"&":"?")+e.data;e.global&&!c.active++&&
+  124: c.event.trigger("ajaxStart");s=(s=ub.exec(e.url))&&(s[1]&&s[1]!==location.protocol||s[2]!==location.host);if(e.dataType==="script"&&m==="GET"&&s){var A=r.getElementsByTagName("head")[0]||r.documentElement,B=r.createElement("script");B.src=e.url;if(e.scriptCharset)B.charset=e.scriptCharset;if(!i){var C=false;B.onload=B.onreadystatechange=function(){if(!C&&(!this.readyState||this.readyState==="loaded"||this.readyState==="complete")){C=true;b();d();B.onload=B.onreadystatechange=null;A&&B.parentNode&&
+  125  A.removeChild(B)}}}A.insertBefore(B,A.firstChild);return v}var E=false,w=e.xhr();if(w){e.username?w.open(m,e.url,e.async,e.username,e.password):w.open(m,e.url,e.async);try{if(e.data||a&&a.contentType)w.setRequestHeader("Content-Type",e.contentType);if(e.ifModified){c.lastModified[e.url]&&w.setRequestHeader("If-Modified-Since",c.lastModified[e.url]);c.etag[e.url]&&w.setRequestHeader("If-None-Match",c.etag[e.url])}s||w.setRequestHeader("X-Requested-With","XMLHttpRequest");w.setRequestHeader("Accept",
+  126: e.dataType&&e.accepts[e.dataType]?e.accepts[e.dataType]+", */*":e.accepts._default)}catch(fa){}if(e.beforeSend&&e.beforeSend.call(o,w,e)===false){e.global&&!--c.active&&c.event.trigger("ajaxStop");w.abort();return false}e.global&&f("ajaxSend",[w,e]);var g=w.onreadystatechange=function(q){if(!w||w.readyState===0||q==="abort"){E||d();E=true;if(w)w.onreadystatechange=c.noop}else if(!E&&w&&(w.readyState===4||q==="timeout")){E=true;w.onreadystatechange=c.noop;j=q==="timeout"?"timeout":!c.httpSuccess(w)?
+  127  "error":e.ifModified&&c.httpNotModified(w,e.url)?"notmodified":"success";var p;if(j==="success")try{n=c.httpData(w,e.dataType,e)}catch(u){j="parsererror";p=u}if(j==="success"||j==="notmodified")i||b();else c.handleError(e,w,j,p);d();q==="timeout"&&w.abort();if(e.async)w=null}};try{var h=w.abort;w.abort=function(){w&&h.call(w);g("abort")}}catch(k){}e.async&&e.timeout>0&&setTimeout(function(){w&&!E&&g("timeout")},e.timeout);try{w.send(m==="POST"||m==="PUT"||m==="DELETE"?e.data:null)}catch(l){c.handleError(e,
+  128: w,null,l);d()}e.async||g();return w}},handleError:function(a,b,d,f){if(a.error)a.error.call(a.context||a,b,d,f);if(a.global)(a.context?c(a.context):c.event).trigger("ajaxError",[b,a,f])},active:0,httpSuccess:function(a){try{return!a.status&&location.protocol==="file:"||a.status>=200&&a.status<300||a.status===304||a.status===1223||a.status===0}catch(b){}return false},httpNotModified:function(a,b){var d=a.getResponseHeader("Last-Modified"),f=a.getResponseHeader("Etag");if(d)c.lastModified[b]=d;if(f)c.etag[b]=
+  129  f;return a.status===304||a.status===0},httpData:function(a,b,d){var f=a.getResponseHeader("content-type")||"",e=b==="xml"||!b&&f.indexOf("xml")>=0;a=e?a.responseXML:a.responseText;e&&a.documentElement.nodeName==="parsererror"&&c.error("parsererror");if(d&&d.dataFilter)a=d.dataFilter(a,b);if(typeof a==="string")if(b==="json"||!b&&f.indexOf("json")>=0)a=c.parseJSON(a);else if(b==="script"||!b&&f.indexOf("javascript")>=0)c.globalEval(a);return a},param:function(a,b){function d(j,n){if(c.isArray(n))c.each(n,
+  130: function(o,m){b?f(j,m):d(j+"["+(typeof m==="object"||c.isArray(m)?o:"")+"]",m)});else!b&&n!=null&&typeof n==="object"?c.each(n,function(o,m){d(j+"["+o+"]",m)}):f(j,n)}function f(j,n){n=c.isFunction(n)?n():n;e[e.length]=encodeURIComponent(j)+"="+encodeURIComponent(n)}var e=[];if(b===v)b=c.ajaxSettings.traditional;if(c.isArray(a)||a.jquery)c.each(a,function(){f(this.name,this.value)});else for(var i in a)d(i,a[i]);return e.join("&").replace(vb,"+")}});var ka={},wb=/toggle|show|hide/,xb=/^([+-]=)?([\d+-.]+)(.*)$/,
+  131  W,ta=[["height","marginTop","marginBottom","paddingTop","paddingBottom"],["width","marginLeft","marginRight","paddingLeft","paddingRight"],["opacity"]];c.fn.extend({show:function(a,b){if(a||a===0)return this.animate(K("show",3),a,b);else{a=0;for(b=this.length;a<b;a++){var d=c.data(this[a],"olddisplay");this[a].style.display=d||"";if(c.css(this[a],"display")==="none"){d=this[a].nodeName;var f;if(ka[d])f=ka[d];else{var e=c("<"+d+" />").appendTo("body");f=e.css("display");if(f==="none")f="block";e.remove();
+  132  ka[d]=f}c.data(this[a],"olddisplay",f)}}a=0;for(b=this.length;a<b;a++)this[a].style.display=c.data(this[a],"olddisplay")||"";return this}},hide:function(a,b){if(a||a===0)return this.animate(K("hide",3),a,b);else{a=0;for(b=this.length;a<b;a++){var d=c.data(this[a],"olddisplay");!d&&d!=="none"&&c.data(this[a],"olddisplay",c.css(this[a],"display"))}a=0;for(b=this.length;a<b;a++)this[a].style.display="none";return this}},_toggle:c.fn.toggle,toggle:function(a,b){var d=typeof a==="boolean";if(c.isFunction(a)&&
+
+/Users/ding/dev/hxp/www/webadmin/js/jsapi.js:
+    5  window['google']['loader'] = {};
+    6  google.loader.ServiceBase = 'http://www.google.com/uds';
+    7: google.loader.GoogleApisBase = 'http://ajax.googleapis.com/ajax';
+    8  google.loader.ApiKey = 'notsupplied';
+    9  google.loader.KeyVerified = true;
+
+/Users/ding/dev/hxp/www/webadmin/js/notice.js:
+  112  //获取通知
+  113  function getNotice() {
+  114:     $.ajax({
+  115          type: "get",
+  116          url: "http://www.houxiaopang.com/api/v1.1/adminsystem/notice/allnotice",
+
+/Users/ding/dev/hxp/www/webadmin/js/qiniu.js:
+  430      // TODO: use mOxie
+  431      /**
+  432:      * craete object used to AJAX
+  433       * @return {Object}
+  434       */
+  435:     this.createAjax = function(argument) {
+  436          var xmlhttp = {};
+  437          if (window.XMLHttpRequest) {
+  ...
+  629              logger.debug("get uphosts from: ", uphosts_url);
+  630              var ie = that.detectIEVersion();
+  631:             var ajax;
+  632              if (ie && ie <= 9) {
+  633:                 ajax = new moxie.xhr.XMLHttpRequest();
+  634                  moxie.core.utils.Env.swf_url = op.flash_swf_url;
+  635              }else{
+  636:                 ajax = that.createAjax();
+  637              }
+  638:             ajax.open('GET', uphosts_url, false);
+  639              var onreadystatechange = function(){
+  640:                 logger.debug("ajax.readyState: ", ajax.readyState);
+  641:                 if (ajax.readyState === 4) {
+  642:                     logger.debug("ajax.status: ", ajax.status);
+  643:                     if (ajax.status < 400) {
+  644:                         var res = that.parseJSON(ajax.responseText);
+  645                          qiniuUpHosts.http = getHosts(res.http.up);
+  646                          qiniuUpHosts.https = getHosts(res.https.up);
+  ...
+  648                          that.resetUploadUrl();
+  649                      } else {
+  650:                         logger.error("get uphosts error: ", ajax.responseText);
+  651                      }
+  652                  }
+  653              };
+  654              if (ie && ie <= 9) {
+  655:                 ajax.bind('readystatechange', onreadystatechange);
+  656              }else{
+  657:                 ajax.onreadystatechange = onreadystatechange;
+  658              }
+  659:             ajax.send();
+  660:             // ajax.send();
+  661:             // if (ajax.status < 400) {
+  662:             //     var res = that.parseJSON(ajax.responseText);
+  663              //     qiniuUpHosts.http = getHosts(res.http.up);
+  664              //     qiniuUpHosts.https = getHosts(res.https.up);
+  ...
+  666              //     that.resetUploadUrl();
+  667              // } else {
+  668:             //     logger.error("get uphosts error: ", ajax.responseText);
+  669              // }
+  670              return;
+  ...
+  690                  logger.debug("get uptoken from: ", that.uptoken_url);
+  691                  // TODO: use mOxie
+  692:                 var ajax = that.createAjax();
+  693:                 ajax.open('GET', that.uptoken_url + '?' + (+ new Date()), false);
+  694:                 // ajax.setRequestHeader("If-Modified-Since", "0");
+  695:                 // ajax.onreadystatechange = function() {
+  696:                 //     if (ajax.readyState === 4 && ajax.status === 200) {
+  697:                 //         var res = that.parseJSON(ajax.responseText);
+  698                  //         that.token = res.uptoken;
+  699                  //     }
+  700                  // };
+  701:                 ajax.send();
+  702:                 if (ajax.status === 200) {
+  703:                     var res = that.parseJSON(ajax.responseText);
+  704                      that.token = res.uptoken;
+  705                      var segments = that.token.split(":");
+  ...
+  711                          return Math.ceil(time.getTime()/1000);
+  712                      };
+  713:                     var serverTime = getTimestamp(new Date(ajax.getResponseHeader("date")));
+  714                      var clientTime = getTimestamp(new Date());
+  715                      that.tokenInfo = {
+  ...
+  724                      logger.debug("get token info: ", that.tokenInfo);
+  725                  } else {
+  726:                     logger.error("get uptoken error: ", ajax.responseText);
+  727                  }
+  728              } else if (op.uptoken_func) {
+  ...
+ 1252                          // if op.dowontoken_url is not empty
+ 1253                          // need get downtoken before invoke the _FileUploaded_Handler
+ 1254:                         var ajax_downtoken = that.createAjax();
+ 1255:                         ajax_downtoken.open('POST', op.downtoken_url, true);
+ 1256:                         ajax_downtoken.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+ 1257:                         ajax_downtoken.onreadystatechange = function() {
+ 1258:                             if (ajax_downtoken.readyState === 4) {
+ 1259:                                 if (ajax_downtoken.status === 200) {
+ 1260                                      var res_downtoken;
+ 1261                                      try {
+ 1262:                                         res_downtoken = that.parseJSON(ajax_downtoken.responseText);
+ 1263                                      } catch (e) {
+ 1264                                          throw ('invalid json format');
+ ....
+ 1271                                  } else {
+ 1272                                      uploader.trigger('Error', {
+ 1273:                                         status: ajax_downtoken.status,
+ 1274:                                         response: ajax_downtoken.responseText,
+ 1275                                          file: file,
+ 1276                                          code: plupload.HTTP_ERROR
+ ....
+ 1279                              }
+ 1280                          };
+ 1281:                         ajax_downtoken.send('key=' + that.parseJSON(info.response).key + '&domain=' + op.domain);
+ 1282                      } else if (_FileUploaded_Handler) {
+ 1283                          _FileUploaded_Handler(up, file, info);
+ ....
+ 1324  
+ 1325                      var ie = that.detectIEVersion();
+ 1326:                     var ajax;
+ 1327                      if (ie && ie <= 9) {
+ 1328:                         ajax = new moxie.xhr.XMLHttpRequest();
+ 1329                          moxie.core.utils.Env.swf_url = op.flash_swf_url;
+ 1330                      }else{
+ 1331:                         ajax = that.createAjax();
+ 1332                      }
+ 1333:                     ajax.open('POST', url, true);
+ 1334:                     ajax.setRequestHeader('Content-Type', 'text/plain;charset=UTF-8');
+ 1335:                     ajax.setRequestHeader('Authorization', 'UpToken ' + that.token);
+ 1336                      var onreadystatechange = function(){
+ 1337:                         logger.debug("ajax.readyState: ", ajax.readyState);
+ 1338:                         if (ajax.readyState === 4) {
+ 1339                              localStorage.removeItem(file.name);
+ 1340:                             var ajaxInfo;
+ 1341:                             if (ajax.status === 200) {
+ 1342:                                 ajaxInfo = {
+ 1343:                                     status: ajax.status,
+ 1344:                                     response: ajax.responseText,
+ 1345:                                     responseHeaders: ajax.getAllResponseHeaders(),
+ 1346                                  };
+ 1347:                                 logger.debug("mkfile is success: ", ajaxInfo);
+ 1348:                                 last_step(up, file, ajaxInfo);
+ 1349                              } else {
+ 1350:                                 ajaxInfo = {
+ 1351:                                     status: ajax.status,
+ 1352:                                     response: ajax.responseText,
+ 1353                                      file: file,
+ 1354                                      code: -200,
+ 1355:                                     responseHeaders: ajax.getAllResponseHeaders()
+ 1356                                  };
+ 1357:                                 logger.debug("mkfile is error: ", ajaxInfo);
+ 1358:                                 uploader.trigger('Error', ajaxInfo);
+ 1359                              }
+ 1360                          }
+ 1361                      };
+ 1362                      if (ie && ie <= 9) {
+ 1363:                         ajax.bind('readystatechange', onreadystatechange);
+ 1364                      }else{
+ 1365:                         ajax.onreadystatechange = onreadystatechange;
+ 1366                      }
+ 1367:                     ajax.send(ctx);
+ 1368                      logger.debug("mkfile: ", url);
+ 1369                  } else {
+ ....
+ 1534          }
+ 1535          var url = this.getUrl(key) + '?imageInfo';
+ 1536:         var xhr = this.createAjax();
+ 1537          var info;
+ 1538          var that = this;
+ ....
+ 1557          }
+ 1558          var url = this.getUrl(key) + '?exif';
+ 1559:         var xhr = this.createAjax();
+ 1560          var info;
+ 1561          var that = this;
+
+/Users/ding/dev/hxp/www/webadmin/js/uploader.min.js:
+    5  // only CommonJS-like environments that support module.exports,
+    6  // like Node.
+    7: module.exports=b(require("jquery"),require("simple-module")):(a.simple=a.simple||{},a.simple.uploader=b(jQuery,SimpleModule))}(this,function(a,b){var c,d,e=function(a,b){function c(){this.constructor=a}for(var d in b)f.call(b,d)&&(a[d]=b[d]);return c.prototype=b.prototype,a.prototype=new c,a.__super__=b.prototype,a},f={}.hasOwnProperty;return c=function(b){function c(){return c.__super__.constructor.apply(this,arguments)}return e(c,b),c.count=0,c.prototype.opts={url:"",params:null,fileKey:"upload_file",connectionCount:3},c.prototype._init=function(){return this.files=[],this.queue=[],this.id=++c.count,this.on("uploadcomplete",function(b){return function(c,d){return b.files.splice(a.inArray(d,b.files),1),b.queue.length>0&&b.files.length<b.opts.connectionCount?b.upload(b.queue.shift()):b.uploading=!1}}(this)),a(window).on("beforeunload.uploader-"+this.id,function(a){return function(b){return a.uploading?(b.originalEvent.returnValue=a._t("leaveConfirm"),a._t("leaveConfirm")):void 0}}(this))},c.prototype.generateId=function(){var a;return a=0,function(){return a+=1}}(),c.prototype.upload=function(b,c){var d,e,f,g;if(null==c&&(c={}),null!=b){if(a.isArray(b)||b instanceof FileList)for(e=0,g=b.length;g>e;e++)d=b[e],this.upload(d,c);else a(b).is("input:file")?(f=a(b).attr("name"),f&&(c.fileKey=f),this.upload(a.makeArray(a(b)[0].files),c)):b.id&&b.obj||(b=this.getFile(b));if(b&&b.obj){if(a.extend(b,c),this.files.length>=this.opts.connectionCount)return void this.queue.push(b);if(this.triggerHandler("beforeupload",[b])!==!1)return this.files.push(b),this._xhrUpload(b),this.uploading=!0}}},c.prototype.getFile=function(a){var b,c,d;return a instanceof window.File||a instanceof window.Blob?(b=null!=(c=a.fileName)?c:a.name,{id:this.generateId(),url:this.opts.url,params:this.opts.params,fileKey:this.opts.fileKey,name:b,size:null!=(d=a.fileSize)?d:a.size,ext:b?b.split(".").pop().toLowerCase():"",obj:a}):null},c.prototype._xhrUpload=function(b){var c,d,e,f;if(c=new FormData,c.append(b.fileKey,b.obj),c.append("original_filename",b.name),b.params){e=b.params;for(d in e)f=e[d],c.append(d,f)}return b.xhr=a.ajax({url:b.url,data:c,processData:!1,contentType:!1,type:"POST",headers:{"X-File-Name":encodeURIComponent(b.name)},xhr:function(){var b;return b=a.ajaxSettings.xhr(),b&&(b.upload.onprogress=function(a){return function(b){return a.progress(b)}}(this)),b},progress:function(a){return function(c){return c.lengthComputable?a.trigger("uploadprogress",[b,c.loaded,c.total]):void 0}}(this),error:function(a){return function(c,d,e){return a.trigger("uploaderror",[b,c,d])}}(this),success:function(c){return function(d){return c.trigger("uploadprogress",[b,b.size,b.size]),c.trigger("uploadsuccess",[b,d]),a(document).trigger("uploadsuccess",[b,d,c])}}(this),complete:function(a){return function(c,d){return a.trigger("uploadcomplete",[b,c.responseText])}}(this)})},c.prototype.cancel=function(a){var b,c,d,e;if(!a.id)for(e=this.files,c=0,d=e.length;d>c;c++)if(b=e[c],b.id===1*a){a=b;break}return this.trigger("uploadcancel",[a]),a.xhr&&a.xhr.abort(),a.xhr=null},c.prototype.readImageFile=function(b,c){var d,e;if(a.isFunction(c))return e=new Image,e.onload=function(){return c(e)},e.onerror=function(){return c()},window.FileReader&&FileReader.prototype.readAsDataURL&&/^image/.test(b.type)?(d=new FileReader,d.onload=function(a){return e.src=a.target.result},d.readAsDataURL(b)):c()},c.prototype.destroy=function(){var b,c,d,e;for(this.queue.length=0,e=this.files,c=0,d=e.length;d>c;c++)b=e[c],this.cancel(b);return a(window).off(".uploader-"+this.id),a(document).off(".uploader-"+this.id)},c.i18n={"zh-CN":{leaveConfirm:"正在上传文件，如果离开上传会自动取消"}},c.locale="zh-CN",c}(b),d=function(a){return new c(a)}});
+
+124 matches across 16 files
+
+
+Searching 65 files for "houxiaopang.com/api"
+
+/Users/ding/dev/hxp/www/webadmin/brokerdesigner.html:
+  281  				$.ajax({
+  282  					type:"post",
+  283: 					url:"http://www.houxiaopang.com/api/v1.1/adminsystem/recommend",
+  284                      headers: {"Authorization": "Token " + window.localStorage.token},
+  285                      data:{
+
+/Users/ding/dev/hxp/www/webadmin/brokerdesignersnap.html:
+  283          $.ajax({
+  284              type: "get",
+  285:             url: "http://www.houxiaopang.com/api/v1.1/adminsystem/demand/getapplyinfo",
+  286              beforeSend: function (request) {
+  287                  request.setRequestHeader("Authorization", "Token " + window.localStorage.token);
+  ...
+  361                      type: "post",
+  362                      headers: {"Authorization": "Token " + window.localStorage.token},
+  363:                     url: "http://www.houxiaopang.com/api/v1.1/adminsystem/recommend_tmp",
+  364                      data: {
+  365                          'demand_id': demandid,
+
+/Users/ding/dev/hxp/www/webadmin/brokerproject.html:
+  277              type: "post",
+  278              headers: {"Authorization": "Token " + window.localStorage.token},
+  279:             url: "http://www.houxiaopang.com/api/v1.1/demanddetail",
+  280              data: {
+  281                  "description": editor.getValue(),
+  ...
+  312              chunk_size: '4mb',
+  313  
+  314:             uptoken_url: 'http://www.houxiaopang.com/api/v1.0/apply/uptoken',
+  315              multi_selection: !(mOxie.Env.OS.toLowerCase() === "ios"),
+  316              filters: {
+
+/Users/ding/dev/hxp/www/webadmin/imglist1.html:
+  122          $.ajax({
+  123              type: "get",
+  124:             url: "http://www.houxiaopang.com/api/v1.1/adminsystem/alldesigner",
+  125              beforeSend: function (request) {
+  126                  request.setRequestHeader("Authorization", "Token " + window.localStorage.token);
+
+/Users/ding/dev/hxp/www/webadmin/index.html:
+   48              $.ajax({
+   49                  type:"post",
+   50:                 url:"http://www.houxiaopang.com/api/v1.1/adminsystem/login",
+   51                  data:{
+   52                      'pw':pwd,
+
+/Users/ding/dev/hxp/www/webadmin/sendnotice.html:
+  197  				'content':description,
+  198  			},
+  199: 			url:"http://www.houxiaopang.com/api/v1.1/adminsystem/notice/sendnotice",
+  200  			success(data){
+  201  				if(data.code === 0 ){
+
+/Users/ding/dev/hxp/www/webadmin/js/demand.js:
+  145              request.setRequestHeader("Authorization", "Token " + window.localStorage.token);
+  146          },
+  147:         url: "http://www.houxiaopang.com/api/v1.1/adminsystem/demand/all",
+  148          success(data){
+  149              if (data.code === 0) {
+
+/Users/ding/dev/hxp/www/webadmin/js/demandborkerdetail.js:
+   95  function reomvebrokerdesi() {
+   96      $.ajax({
+   97:         url: 'http://www.www.houxiaopang.com/api/v1.1/adminsystem/pricelist/remove',
+   98          type: 'post',
+   99          headers: {"Authorization": "Token " + window.localStorage.token},
+  ...
+  122      $.ajax({
+  123          type: "get",
+  124:         url: "http://www.houxiaopang.com/api/v1.1/adminsystem/pricelist_tmp",
+  125          data: {
+  126              'demand_id': demand_id,
+
+/Users/ding/dev/hxp/www/webadmin/js/demandetail.js:
+  126      $.ajax({
+  127          type: "get",
+  128:         url: "http://www.houxiaopang.com/api/v1.1/adminsystem/demand/apply_tmp",
+  129          beforeSend: function (request) {
+  130              request.setRequestHeader("Authorization", "Token " + window.localStorage.token);
+
+/Users/ding/dev/hxp/www/webadmin/js/jquery-phone.js:
+  132  	$.ajax({
+  133  		type:"get",
+  134:         url:"http://www.houxiaopang.com/api/v1.1/adminsystem/applyinfo",
+  135          beforeSend: function (request) {
+  136              request.setRequestHeader("Authorization", "Token " + window.localStorage.token);
+  ...
+  210  function pass(id,index){
+  211  	$.ajax({
+  212: 		url:"http://www.houxiaopang.com/api/v1.1/adminsystem/agreeapply",
+  213  		type:"post",
+  214          headers: {"Authorization": "Token " + window.localStorage.token},
+  ...
+  230  function fail (id,index) {
+  231  	$.ajax({
+  232: 		url:"http://www.houxiaopang.com/api/v1.1/adminsystem/disagreeapply",
+  233  		type:"post",
+  234          headers: {"Authorization": "Token " + window.localStorage.token},
+
+/Users/ding/dev/hxp/www/webadmin/js/notice.js:
+  114      $.ajax({
+  115          type: "get",
+  116:         url: "http://www.houxiaopang.com/api/v1.1/adminsystem/notice/allnotice",
+  117          beforeSend: function (request) {
+  118              request.setRequestHeader("Authorization", "Token " + window.localStorage.token);
+
+16 matches across 11 files
+
+
+Searching 65 files for "//houxiaopang.com/api"
+
+0 matches
+
+Searching 65 files for "\/\/houxiaopang.com\/api"
+
+0 matches
+
+Searching 65 files for "houxiaopang.com"
+
+/Users/ding/dev/hxp/www/webadmin/brokerdesigner.html:
+  281  				$.ajax({
+  282  					type:"post",
+  283: 					url:"http://www.houxiaopang.com/api/v1.1/adminsystem/recommend",
+  284                      headers: {"Authorization": "Token " + window.localStorage.token},
+  285                      data:{
+
+/Users/ding/dev/hxp/www/webadmin/brokerdesignersnap.html:
+  283          $.ajax({
+  284              type: "get",
+  285:             url: "http://www.houxiaopang.com/api/v1.1/adminsystem/demand/getapplyinfo",
+  286              beforeSend: function (request) {
+  287                  request.setRequestHeader("Authorization", "Token " + window.localStorage.token);
+  ...
+  361                      type: "post",
+  362                      headers: {"Authorization": "Token " + window.localStorage.token},
+  363:                     url: "http://www.houxiaopang.com/api/v1.1/adminsystem/recommend_tmp",
+  364                      data: {
+  365                          'demand_id': demandid,
+
+/Users/ding/dev/hxp/www/webadmin/brokerproject.html:
+  187                      <div class="upwrapper" id="img_content">
+  188                          <section class="addbtn">
+  189:                             <img src="http://image.houxiaopang.com/baseform/721/addpic.jpg"
+  190                                   class="add-img">
+  191                              <input type="file" name="file"
+  ...
+  214  <script src="./js/hotkeys.min.js"></script>
+  215  <script src="./js/simditor.min.js"></script>
+  216: <script src="http://image.houxiaopang.com/static/baseform/js/qiniu.js"></script>
+  217  <script src="https://cdn.staticfile.org/plupload/2.1.8/plupload.full.min.js"></script>
+  218  <script type="text/javascript">
+  ...
+  235              var html = `<section class="preview">
+  236  		<span class="up-span"></span>
+  237: 		<img src="http://image.houxiaopang.com/baseform/a7.png"
+  238  			class="close-upimg" onclick="removeFile(this)">
+  239  		<img src="${file_src(that.files[i])}" class="up-img">
+  ...
+  277              type: "post",
+  278              headers: {"Authorization": "Token " + window.localStorage.token},
+  279:             url: "http://www.houxiaopang.com/api/v1.1/demanddetail",
+  280              data: {
+  281                  "description": editor.getValue(),
+  ...
+  312              chunk_size: '4mb',
+  313  
+  314:             uptoken_url: 'http://www.houxiaopang.com/api/v1.0/apply/uptoken',
+  315              multi_selection: !(mOxie.Env.OS.toLowerCase() === "ios"),
+  316              filters: {
+  ...
+  322                  ]
+  323              },
+  324:             domain: 'work.houxiaopang.com',
+  325              get_new_uptoken: true,
+  326              // downtoken_url: '/downtoken',
+  ...
+  343                      if (info['status'] == '200') {
+  344                          var tmp = JSON.parse(info['response']);
+  345:                         imagelist.push('http://work.houxiaopang.com/' + tmp.key);
+  346                      }
+  347                  },
+
+/Users/ding/dev/hxp/www/webadmin/imglist1.html:
+  122          $.ajax({
+  123              type: "get",
+  124:             url: "http://www.houxiaopang.com/api/v1.1/adminsystem/alldesigner",
+  125              beforeSend: function (request) {
+  126                  request.setRequestHeader("Authorization", "Token " + window.localStorage.token);
+  ...
+  142                                      <h2>${item.nickname}</h2>
+  143                                      <p>${item.expyear}</p>
+  144:                                     <a class="enter" href="http://houxiaopang.com/workdetail/#/user/${item.id}" target="_blank">查看简历</a>
+  145                                     </div>
+  146                                  </li>
+
+/Users/ding/dev/hxp/www/webadmin/index.html:
+   48              $.ajax({
+   49                  type:"post",
+   50:                 url:"http://www.houxiaopang.com/api/v1.1/adminsystem/login",
+   51                  data:{
+   52                      'pw':pwd,
+
+/Users/ding/dev/hxp/www/webadmin/sendnotice.html:
+  197  				'content':description,
+  198  			},
+  199: 			url:"http://www.houxiaopang.com/api/v1.1/adminsystem/notice/sendnotice",
+  200  			success(data){
+  201  				if(data.code === 0 ){
+
+/Users/ding/dev/hxp/www/webadmin/js/demand.js:
+  145              request.setRequestHeader("Authorization", "Token " + window.localStorage.token);
+  146          },
+  147:         url: "http://www.houxiaopang.com/api/v1.1/adminsystem/demand/all",
+  148          success(data){
+  149              if (data.code === 0) {
+  ...
+  164                      checktfoot.innerHTML += strchecktfoot;
+  165                      var stroperate = `
+  166:         			<tr><td><div><span onclick="javascript:window.top.open('http://houxiaopang.com/demand/#/detail/${item.demand_id}');" class="colorSpan">详情</span>　<span class="colorSpan"
+  167                      onclick="broker(${item.demand_id})">推荐设计师</span>　<span onclick="replydesigner(${item.demand_id})" class="colorSpan">查看已报价设计师</span>
+  168                      　<span onclick="brokerapply(${item.demand_id})" class="colorSpan">查看已推荐设计师</span>
+  169:                     　<span onclick="javascript:window.top.open('http://m.houxiaopang.com/demand/#/project/${item.demand_id}');" class="colorSpan">报价单</span></div></td></tr>`;
+  170                      operate.innerHTML += stroperate;
+  171                      var strcontent = `
+
+/Users/ding/dev/hxp/www/webadmin/js/demandborkerdetail.js:
+   95  function reomvebrokerdesi() {
+   96      $.ajax({
+   97:         url: 'http://www.www.houxiaopang.com/api/v1.1/adminsystem/pricelist/remove',
+   98          type: 'post',
+   99          headers: {"Authorization": "Token " + window.localStorage.token},
+  ...
+  122      $.ajax({
+  123          type: "get",
+  124:         url: "http://www.houxiaopang.com/api/v1.1/adminsystem/pricelist_tmp",
+  125          data: {
+  126              'demand_id': demand_id,
+
+/Users/ding/dev/hxp/www/webadmin/js/demandetail.js:
+  126      $.ajax({
+  127          type: "get",
+  128:         url: "http://www.houxiaopang.com/api/v1.1/adminsystem/demand/apply_tmp",
+  129          beforeSend: function (request) {
+  130              request.setRequestHeader("Authorization", "Token " + window.localStorage.token);
+
+/Users/ding/dev/hxp/www/webadmin/js/jquery-phone.js:
+  132  	$.ajax({
+  133  		type:"get",
+  134:         url:"http://www.houxiaopang.com/api/v1.1/adminsystem/applyinfo",
+  135          beforeSend: function (request) {
+  136              request.setRequestHeader("Authorization", "Token " + window.localStorage.token);
+  ...
+  210  function pass(id,index){
+  211  	$.ajax({
+  212: 		url:"http://www.houxiaopang.com/api/v1.1/adminsystem/agreeapply",
+  213  		type:"post",
+  214          headers: {"Authorization": "Token " + window.localStorage.token},
+  ...
+  230  function fail (id,index) {
+  231  	$.ajax({
+  232: 		url:"http://www.houxiaopang.com/api/v1.1/adminsystem/disagreeapply",
+  233  		type:"post",
+  234          headers: {"Authorization": "Token " + window.localStorage.token},
+
+/Users/ding/dev/hxp/www/webadmin/js/notice.js:
+  114      $.ajax({
+  115          type: "get",
+  116:         url: "http://www.houxiaopang.com/api/v1.1/adminsystem/notice/allnotice",
+  117          beforeSend: function (request) {
+  118              request.setRequestHeader("Authorization", "Token " + window.localStorage.token);
+
+24 matches across 11 files
+
+
+Searching 65 files for "ajax"
+
+/Users/ding/dev/hxp/www/webadmin/brokerdesigner.html:
+  279  			if(fromdatas.length > 0){
+  280  				var demand_id = document.getElementById("demand_id").value.trim();
+  281: 				$.ajax({
+  282  					type:"post",
+  283  					url:"http://www.houxiaopang.com/api/v1.1/adminsystem/recommend",
+
+/Users/ding/dev/hxp/www/webadmin/brokerdesignersnap.html:
+  281      //根据报价单号，获取该匿名设计师
+  282      function insertDesigner(id) {
+  283:         $.ajax({
+  284              type: "get",
+  285              url: "http://www.houxiaopang.com/api/v1.1/adminsystem/demand/getapplyinfo",
+  ...
+  358              }
+  359              if (fromdatas.length > 0) {
+  360:                 $.ajax({
+  361                      type: "post",
+  362                      headers: {"Authorization": "Token " + window.localStorage.token},
+
+/Users/ding/dev/hxp/www/webadmin/brokerproject.html:
+  274  
+  275      function commit() {
+  276:         $.ajax({
+  277              type: "post",
+  278              headers: {"Authorization": "Token " + window.localStorage.token},
+
+/Users/ding/dev/hxp/www/webadmin/imglist1.html:
+  120      //获取设计师
+  121      function getdesigner() {
+  122:         $.ajax({
+  123              type: "get",
+  124              url: "http://www.houxiaopang.com/api/v1.1/adminsystem/alldesigner",
+
+/Users/ding/dev/hxp/www/webadmin/index.html:
+   46              logining = true;
+   47              var pwd = md5(document.getElementById("password").value);
+   48:             $.ajax({
+   49                  type:"post",
+   50                  url:"http://www.houxiaopang.com/api/v1.1/adminsystem/login",
+
+/Users/ding/dev/hxp/www/webadmin/sendnotice.html:
+  188  		agent_id = agent_id==="-1" ? "" : agent_id;
+  189  		modal.style.display = 'block';
+  190: 		$.ajax({
+  191  			'type':"post",
+  192              headers: {"Authorization": "Token " + window.localStorage.token},
+
+/Users/ding/dev/hxp/www/webadmin/js/demand.js:
+  140  //获取需求
+  141  function getDemand() {
+  142:     $.ajax({
+  143          type: "get",
+  144          beforeSend: function (request) {
+
+/Users/ding/dev/hxp/www/webadmin/js/demandborkerdetail.js:
+   94  //取消推荐设计师
+   95  function reomvebrokerdesi() {
+   96:     $.ajax({
+   97          url: 'http://www.www.houxiaopang.com/api/v1.1/adminsystem/pricelist/remove',
+   98          type: 'post',
+   ..
+  120  //获取已推荐设计师
+  121  function getbrokerdesigner(demand_id) {
+  122:     $.ajax({
+  123          type: "get",
+  124          url: "http://www.houxiaopang.com/api/v1.1/adminsystem/pricelist_tmp",
+
+/Users/ding/dev/hxp/www/webadmin/js/demandetail.js:
+  124  //获取已报价设计师
+  125  function getreplydesigner(demand_id) {
+  126:     $.ajax({
+  127          type: "get",
+  128          url: "http://www.houxiaopang.com/api/v1.1/adminsystem/demand/apply_tmp",
+
+/Users/ding/dev/hxp/www/webadmin/js/format+zh_CN,default,corechart.I.js:
+    4  Ea=")",Fa="+",Ga=",",L="-",M=".",Ha='.png" height="12" width="',Ia="/static/modules/gviz/",Ja="/util/bar_",Ka="/util/format.css",N="0",La="0000000000000000",Ma="1",Na="1.0",Oa=":",Pa=";",Qa="</span>\u00a0",Ra='<img style="padding: 0" src="',Sa='<span style="padding: 0; float: left; white-space: nowrap;">',Ta="E",Ua="Etc/GMT",Va="G",Wa="GMT",Xa="H",Ya="K",Za="L",$a="LINK",bb="M",cb="Q",db="S",eb="Too many percent/permill",fb="UTC",gb="Z",hb="[object Array]",ib="[object Function]",jb="[object Window]",
+    5  kb="\\",lb="_bar_format_old_value",mb="a",nb="addGradientRange",ob="array",pb="b",qb="background-color:",rb="body",sb="boolean",tb="c",ub="call",vb="className",wb="color:",xb="d",yb="date",zb="datetime",Ab="decimalSymbol",Bb="false",O="format",Cb="formatType",Db="fractionDigits",Eb="full",Fb="function",Gb="g",Hb="google-visualization-formatters-arrow-dr",Ib="google-visualization-formatters-arrow-empty",Jb="google-visualization-formatters-arrow-ug",Kb="google.loader.GoogleApisBase",Lb="google.visualization.Version",
+    6: Mb="groupingSymbol",Nb="h",Ob="head",Pb="hex",Qb="html",Rb="http://ajax.googleapis.com/ajax",Sb="k",Tb="link",Ub="long",Vb="m",Wb="medium",Xb="named",Yb="native code",Zb="negativeColor",$b="negativeParens",ac="none",bc="null",P="number",cc="object",dc="pattern",ec="prefix",gc="r",hc="rgb",ic="s",jc="scaleFactor",kc="short",lc="solid",mc="splice",nc="string",oc="style",pc="stylesheet",qc="suffix",rc="text/css",sc="time",tc="timeZone",uc="timeofday",vc="transparent",wc="true",xc="v",yc="valueType",
+    7  zc="w",Ac="y",Bc="z",Cc="\u00a0",Dc="\u00a4",Ec="\u2030",R,Fc=this;function Gc(a,b){for(var c=a.split(M),d=b||Fc,e;e=c.shift();)if(S(d[e]))d=d[e];else return h;return d}
+    8  function Hc(a){var b=typeof a;if(b==cc)if(a){if(a instanceof r)return ob;if(a instanceof Object)return b;var c=Object[G][E][H](a);if(c==jb)return cc;if(c==hb||typeof a[F]==P&&"undefined"!=typeof a.splice&&"undefined"!=typeof a[na]&&!a[na](mc))return ob;if(c==ib||"undefined"!=typeof a[H]&&"undefined"!=typeof a[na]&&!a[na](ub))return Fb}else return bc;else if(b==Fb&&"undefined"==typeof a[H])return cc;return b}function S(a){return a!=h}
+    .
+   72  "function",Ni="g",Oi="gadgets.io.makeRequest",Pi="gadgets.io.makeRequest failed",Qi="getColumnIndex",Ri="getColumnLabel",Si="getColumnPattern",Ti="getColumnProperties",Ui="getColumnProperty",Vi="getColumnRange",Wi="getContainerId",Xi="getDataSourceUrl",Yi="getDataTable",Zi="getDistinctValues",$i="getFilteredRows",aj="getFormattedValue",bj="getNumberOfColumns",cj="getNumberOfRows",dj="getPackages",ej="getQuery",fj="getRefreshInterval",gj="getRowProperties",hj="getRowProperty",ij="getSnapshot",jj="getTableProperties",
+   73  kj="getTableProperty",lj="goog-button",mj="goog-container",nj="goog-control",oj="goog-custom-button",pj="goog-inline-block ",qj="goog-menu",rj="goog-menu-button",sj="goog-menuheader",tj="goog-menuitem",uj="goog-menuitem-accel",vj="goog-menuitem-mnemonic-separator",wj="goog-menuseparator",xj="goog-modalpopup",yj="goog-option",zj="goog-option-selected",Aj="google-visualization-toolbar-big-dialog",Bj="google-visualization-toolbar-export-data",Cj="google-visualization-toolbar-export-igoogle",Dj="google-visualization-toolbar-html-code",
+   74: Ej="google-visualization-toolbar-html-code-explanation",Fj="google-visualization-toolbar-small-dialog",Gj="google-visualization-toolbar-triangle",Hj="google.loader.GoogleApisBase",Ij="google.visualization.",Jj="google.visualization.Version",Kj="hasLabelsColumn",Lj="haspopup",Mj="head",Nj="hex",Oj="hidden",Pj="hide",Qj="highlight",Rj="horizontal",Sj="html",Tj="htmlcode",Uj="http",Vj="http%",Wj="http://ajax.googleapis.com/ajax",Xj="http://dummy.com",Yj="http://www.google.com/ig/adde?moduleurl=",Zj=
+   75  "https",$j="https%",ak="identity",bk="iframe",ck="igoogle",dk="img",ek="inline",fk="innerText",gk="input",hk="invalid_query",ik='javascript:""',jk="jscode",kk="json",lk="key",mk="keydown",ok="keypress",pk="keyup",qk="labelledby",rk="leave",sk="left",tk="link",uk="listbox",vk="losecapture",wk="makeRequest",xk="make_request_failed",yk="maxValue",zk="medium",Ak="menu",Bk="menuitem",Ck="message",Dk="minValue",Ek="modal-dialog",Fk="modifier",Gk="mousedown",Hk="mousemove",Ik="mouseout",Jk="mouseover",Kk=
+   76  "mouseup",Lk="ms, aborting",Mk="named",Nk="native code",Ok="new ",Pk="nodeType",Qk="none",Rk="not_modified",Sk="null",K="number",Tk="o",Uk="object",Vk="on",Wk="opacity",Xk="open",Yk="option",Zk="options",$k="out:csv;",al="out:html;",bl="outerHTML",cl="overflow",dl="package",el="padding: 2px",fl="paddingBottom",gl="paddingLeft",hl="paddingRight",il="paddingTop",jl="pixelLeft",kl="position",ll="position:fixed;width:0;height:0;left:0;top:0;",ml="pre",nl="pressed",ol="pub",pl="px",ql="r",rl="range",sl=
+   ..
+  361  yi="default",zi="defs",Ai="direction",Bi="display",Ci="displayTinySlicesInLenged",Di="div",Ei="dive",Fi="domain",Gi="domainAxis",Hi="draw",Ii="e",Ji="easing",Ki="ellipse",Li="emptyString",Mi="enableInteractivity",Ni="end",Oi="error",Pi="explicit",Qi="false",Ri="fill",Si="fill-opacity",Ti="fillOpacity",Ui="firstVisibleText",Vi="fixed",Wi="floor",Xi="focus",Yi="focusTarget",Zi="font-family",$i="font-size",aj="font-style",bj="font-weight",cj="fontName",dj="fontSize",ej="for",fj="format",gj="formatOptions",
+  362  hj="formatOptions.scaleFactor",ij="formatter.numDecimals",jj="formatter.numSignificantDigits",kj="formatter.unit",lj="formatter.useMagnitudes",T="function",mj="function CHART_loaded() {",nj="g",oj="get",pj="getSelection",qj="google.loader.GoogleApisBase",rj="google.visualization.Version",sj="gradient",tj="gradientUnits",uj="gridline",vj="gridlineColor",wj="gridlines.color",xj="gridlines.count",yj="hAxes.",zj="hAxis",Aj="hAxis#",Bj="height",Cj="hex",Dj="hidden",Ej="hide",Fj="high",Gj="horizontal",
+  363: Hj="hover",Ij="hovercard",Jj="http://ajax.googleapis.com/ajax",Kj="http://www.w3.org/1999/xhtml",Lj="http://www.w3.org/2000/svg",Mj="id",Nj="iframe",Oj="image/svg+xml",Pj="in",Qj="inAndOut",Rj="inTextPosition",Sj="infobackground",Tj="inline",Uj="inside",Vj="interactivityModel",Wj="interpolateNulls",Xj="interval",Yj="interval.",Zj="intervals.",$j="is3D",ak="isStacked",bk="italic",ck="keydown",dk="keypress",ek="label",fk="labelInLegend",gk="labeled",hk="left",ik="legend",jk="legend#entry#",kk="legend.labeledValueText",
+  364  lk="legend.maxLines",mk="legend.pagingTextStyle",nk="legend.position",ok="legend.scrollArrows.activeColor",pk="legend.scrollArrows.inactiveColor",qk="legend.scrollArrows.orientation",rk="legend.showPageIndex",sk="legend.textStyle",tk="legendEntryClick",uk="legendEntryHoverIn",vk="legendEntryHoverOut",wk="legendFontSize",xk="legendScrollButtonClick",yk="legendTextColor",zk="legendTextStyle",Ak="line",Bk="lineSize",Ck="lineWidth",Dk="linear",Ek="linearGradient",Fk="log",Gk="logScale",Hk="logScaleX",
+  365  Ik="low",Jk="majorAxisTextColor",Kk="max",Lk="maxAlternation",Mk="maxValue",Nk="maximized",Ok="middle",Pk="min",Qk="minRangeSize",Rk="minValue",Sk="minorAxisTextColor",Tk="mirrorLog",Uk="mousedown",Vk="mousemove",Wk="mouseout",Xk="mouseover",Yk="mouseup",Zk="move",$k="move_offscreen",al="named",bl="native code",cl="new ",dl="no",U="none",el="nowrap",fl="null",gl="number",hl="o",il="object",jl="offset",kl="on",ll="onmouseout",ml="onmouseover",nl="orientation",ol="out",pl="outTextPosition",ql="outside",
+
+/Users/ding/dev/hxp/www/webadmin/js/jquery-phone.js:
+  130  //获取设计师审核数据
+  131  function getDesigner() {
+  132: 	$.ajax({
+  133  		type:"get",
+  134          url:"http://www.houxiaopang.com/api/v1.1/adminsystem/applyinfo",
+  ...
+  209  //通过审核
+  210  function pass(id,index){
+  211: 	$.ajax({
+  212  		url:"http://www.houxiaopang.com/api/v1.1/adminsystem/agreeapply",
+  213  		type:"post",
+  ...
+  229  //不通过审核
+  230  function fail (id,index) {
+  231: 	$.ajax({
+  232  		url:"http://www.houxiaopang.com/api/v1.1/adminsystem/disagreeapply",
+  233  		type:"post",
+
+/Users/ding/dev/hxp/www/webadmin/js/jquery.js:
+   14   * Date: Mon Jan 25 19:43:33 2010 -0500
+   15   */
+   16: (function(z,v){function la(){if(!c.isReady){try{r.documentElement.doScroll("left")}catch(a){setTimeout(la,1);return}c.ready()}}function Ma(a,b){b.src?c.ajax({url:b.src,async:false,dataType:"script"}):c.globalEval(b.text||b.textContent||b.innerHTML||"");b.parentNode&&b.parentNode.removeChild(b)}function X(a,b,d,f,e,i){var j=a.length;if(typeof b==="object"){for(var n in b)X(a,n,b[n],f,e,d);return a}if(d!==v){f=!i&&f&&c.isFunction(d);for(n=0;n<j;n++)e(a[n],b,f?d.call(a[n],n,e(a[n],b)):d,i);return a}return j?
+   17  e(a[0],b):null}function J(){return(new Date).getTime()}function Y(){return false}function Z(){return true}function ma(a,b,d){d[0].type=a;return c.event.handle.apply(b,d)}function na(a){var b,d=[],f=[],e=arguments,i,j,n,o,m,s,x=c.extend({},c.data(this,"events").live);if(!(a.button&&a.type==="click")){for(o in x){j=x[o];if(j.live===a.type||j.altLive&&c.inArray(a.type,j.altLive)>-1){i=j.data;i.beforeFilter&&i.beforeFilter[a.type]&&!i.beforeFilter[a.type](a)||f.push(j.selector)}else delete x[o]}i=c(a.target).closest(f,
+   18  a.currentTarget);m=0;for(s=i.length;m<s;m++)for(o in x){j=x[o];n=i[m].elem;f=null;if(i[m].selector===j.selector){if(j.live==="mouseenter"||j.live==="mouseleave")f=c(a.relatedTarget).closest(j.selector)[0];if(!f||f!==n)d.push({elem:n,fn:j})}}m=0;for(s=d.length;m<s;m++){i=d[m];a.currentTarget=i.elem;a.data=i.fn.data;if(i.fn.apply(i.elem,e)===false){b=false;break}}return b}}function oa(a,b){return"live."+(a?a+".":"")+b.replace(/\./g,"`").replace(/ /g,"&")}function pa(a){return!a||!a.parentNode||a.parentNode.nodeType===
+   ..
+  116  a.currentStyle.left;e.left=d==="fontSize"?"1em":f||0;f=e.pixelLeft+"px";e.left=b;a.runtimeStyle.left=i}}return f},swap:function(a,b,d){var f={};for(var e in b){f[e]=a.style[e];a.style[e]=b[e]}d.call(a);for(e in b)a.style[e]=f[e]}});if(c.expr&&c.expr.filters){c.expr.filters.hidden=function(a){var b=a.offsetWidth,d=a.offsetHeight,f=a.nodeName.toLowerCase()==="tr";return b===0&&d===0&&!f?true:b>0&&d>0&&!f?false:c.curCSS(a,"display")==="none"};c.expr.filters.visible=function(a){return!c.expr.filters.hidden(a)}}var pb=
+  117  J(),qb=/<script(.|\s)*?\/script>/gi,rb=/select|textarea/i,sb=/color|date|datetime|email|hidden|month|number|password|range|search|tel|text|time|url|week/i,N=/=\?(&|$)/,ja=/\?/,tb=/(\?|&)_=.*?(&|$)/,ub=/^(\w+:)?\/\/([^\/?#]+)/,vb=/%20/g;c.fn.extend({_load:c.fn.load,load:function(a,b,d){if(typeof a!=="string")return this._load(a);else if(!this.length)return this;var f=a.indexOf(" ");if(f>=0){var e=a.slice(f,a.length);a=a.slice(0,f)}f="GET";if(b)if(c.isFunction(b)){d=b;b=null}else if(typeof b==="object"){b=
+  118: c.param(b,c.ajaxSettings.traditional);f="POST"}var i=this;c.ajax({url:a,type:f,dataType:"html",data:b,complete:function(j,n){if(n==="success"||n==="notmodified")i.html(e?c("<div />").append(j.responseText.replace(qb,"")).find(e):j.responseText);d&&i.each(d,[j.responseText,n,j])}});return this},serialize:function(){return c.param(this.serializeArray())},serializeArray:function(){return this.map(function(){return this.elements?c.makeArray(this.elements):this}).filter(function(){return this.name&&!this.disabled&&
+  119: (this.checked||rb.test(this.nodeName)||sb.test(this.type))}).map(function(a,b){a=c(this).val();return a==null?null:c.isArray(a)?c.map(a,function(d){return{name:b.name,value:d}}):{name:b.name,value:a}}).get()}});c.each("ajaxStart ajaxStop ajaxComplete ajaxError ajaxSuccess ajaxSend".split(" "),function(a,b){c.fn[b]=function(d){return this.bind(b,d)}});c.extend({get:function(a,b,d,f){if(c.isFunction(b)){f=f||d;d=b;b=null}return c.ajax({type:"GET",url:a,data:b,success:d,dataType:f})},getScript:function(a,
+  120: b){return c.get(a,null,b,"script")},getJSON:function(a,b,d){return c.get(a,b,d,"json")},post:function(a,b,d,f){if(c.isFunction(b)){f=f||d;d=b;b={}}return c.ajax({type:"POST",url:a,data:b,success:d,dataType:f})},ajaxSetup:function(a){c.extend(c.ajaxSettings,a)},ajaxSettings:{url:location.href,global:true,type:"GET",contentType:"application/x-www-form-urlencoded",processData:true,async:true,xhr:z.XMLHttpRequest&&(z.location.protocol!=="file:"||!z.ActiveXObject)?function(){return new z.XMLHttpRequest}:
+  121: function(){try{return new z.ActiveXObject("Microsoft.XMLHTTP")}catch(a){}},accepts:{xml:"application/xml, text/xml",html:"text/html",script:"text/javascript, application/javascript",json:"application/json, text/javascript",text:"text/plain",_default:"*/*"}},lastModified:{},etag:{},ajax:function(a){function b(){e.success&&e.success.call(o,n,j,w);e.global&&f("ajaxSuccess",[w,e])}function d(){e.complete&&e.complete.call(o,w,j);e.global&&f("ajaxComplete",[w,e]);e.global&&!--c.active&&c.event.trigger("ajaxStop")}
+  122: function f(q,p){(e.context?c(e.context):c.event).trigger(q,p)}var e=c.extend(true,{},c.ajaxSettings,a),i,j,n,o=a&&a.context||e,m=e.type.toUpperCase();if(e.data&&e.processData&&typeof e.data!=="string")e.data=c.param(e.data,e.traditional);if(e.dataType==="jsonp"){if(m==="GET")N.test(e.url)||(e.url+=(ja.test(e.url)?"&":"?")+(e.jsonp||"callback")+"=?");else if(!e.data||!N.test(e.data))e.data=(e.data?e.data+"&":"")+(e.jsonp||"callback")+"=?";e.dataType="json"}if(e.dataType==="json"&&(e.data&&N.test(e.data)||
+  123  N.test(e.url))){i=e.jsonpCallback||"jsonp"+pb++;if(e.data)e.data=(e.data+"").replace(N,"="+i+"$1");e.url=e.url.replace(N,"="+i+"$1");e.dataType="script";z[i]=z[i]||function(q){n=q;b();d();z[i]=v;try{delete z[i]}catch(p){}A&&A.removeChild(B)}}if(e.dataType==="script"&&e.cache===null)e.cache=false;if(e.cache===false&&m==="GET"){var s=J(),x=e.url.replace(tb,"$1_="+s+"$2");e.url=x+(x===e.url?(ja.test(e.url)?"&":"?")+"_="+s:"")}if(e.data&&m==="GET")e.url+=(ja.test(e.url)?"&":"?")+e.data;e.global&&!c.active++&&
+  124: c.event.trigger("ajaxStart");s=(s=ub.exec(e.url))&&(s[1]&&s[1]!==location.protocol||s[2]!==location.host);if(e.dataType==="script"&&m==="GET"&&s){var A=r.getElementsByTagName("head")[0]||r.documentElement,B=r.createElement("script");B.src=e.url;if(e.scriptCharset)B.charset=e.scriptCharset;if(!i){var C=false;B.onload=B.onreadystatechange=function(){if(!C&&(!this.readyState||this.readyState==="loaded"||this.readyState==="complete")){C=true;b();d();B.onload=B.onreadystatechange=null;A&&B.parentNode&&
+  125  A.removeChild(B)}}}A.insertBefore(B,A.firstChild);return v}var E=false,w=e.xhr();if(w){e.username?w.open(m,e.url,e.async,e.username,e.password):w.open(m,e.url,e.async);try{if(e.data||a&&a.contentType)w.setRequestHeader("Content-Type",e.contentType);if(e.ifModified){c.lastModified[e.url]&&w.setRequestHeader("If-Modified-Since",c.lastModified[e.url]);c.etag[e.url]&&w.setRequestHeader("If-None-Match",c.etag[e.url])}s||w.setRequestHeader("X-Requested-With","XMLHttpRequest");w.setRequestHeader("Accept",
+  126: e.dataType&&e.accepts[e.dataType]?e.accepts[e.dataType]+", */*":e.accepts._default)}catch(fa){}if(e.beforeSend&&e.beforeSend.call(o,w,e)===false){e.global&&!--c.active&&c.event.trigger("ajaxStop");w.abort();return false}e.global&&f("ajaxSend",[w,e]);var g=w.onreadystatechange=function(q){if(!w||w.readyState===0||q==="abort"){E||d();E=true;if(w)w.onreadystatechange=c.noop}else if(!E&&w&&(w.readyState===4||q==="timeout")){E=true;w.onreadystatechange=c.noop;j=q==="timeout"?"timeout":!c.httpSuccess(w)?
+  127  "error":e.ifModified&&c.httpNotModified(w,e.url)?"notmodified":"success";var p;if(j==="success")try{n=c.httpData(w,e.dataType,e)}catch(u){j="parsererror";p=u}if(j==="success"||j==="notmodified")i||b();else c.handleError(e,w,j,p);d();q==="timeout"&&w.abort();if(e.async)w=null}};try{var h=w.abort;w.abort=function(){w&&h.call(w);g("abort")}}catch(k){}e.async&&e.timeout>0&&setTimeout(function(){w&&!E&&g("timeout")},e.timeout);try{w.send(m==="POST"||m==="PUT"||m==="DELETE"?e.data:null)}catch(l){c.handleError(e,
+  128: w,null,l);d()}e.async||g();return w}},handleError:function(a,b,d,f){if(a.error)a.error.call(a.context||a,b,d,f);if(a.global)(a.context?c(a.context):c.event).trigger("ajaxError",[b,a,f])},active:0,httpSuccess:function(a){try{return!a.status&&location.protocol==="file:"||a.status>=200&&a.status<300||a.status===304||a.status===1223||a.status===0}catch(b){}return false},httpNotModified:function(a,b){var d=a.getResponseHeader("Last-Modified"),f=a.getResponseHeader("Etag");if(d)c.lastModified[b]=d;if(f)c.etag[b]=
+  129  f;return a.status===304||a.status===0},httpData:function(a,b,d){var f=a.getResponseHeader("content-type")||"",e=b==="xml"||!b&&f.indexOf("xml")>=0;a=e?a.responseXML:a.responseText;e&&a.documentElement.nodeName==="parsererror"&&c.error("parsererror");if(d&&d.dataFilter)a=d.dataFilter(a,b);if(typeof a==="string")if(b==="json"||!b&&f.indexOf("json")>=0)a=c.parseJSON(a);else if(b==="script"||!b&&f.indexOf("javascript")>=0)c.globalEval(a);return a},param:function(a,b){function d(j,n){if(c.isArray(n))c.each(n,
+  130: function(o,m){b?f(j,m):d(j+"["+(typeof m==="object"||c.isArray(m)?o:"")+"]",m)});else!b&&n!=null&&typeof n==="object"?c.each(n,function(o,m){d(j+"["+o+"]",m)}):f(j,n)}function f(j,n){n=c.isFunction(n)?n():n;e[e.length]=encodeURIComponent(j)+"="+encodeURIComponent(n)}var e=[];if(b===v)b=c.ajaxSettings.traditional;if(c.isArray(a)||a.jquery)c.each(a,function(){f(this.name,this.value)});else for(var i in a)d(i,a[i]);return e.join("&").replace(vb,"+")}});var ka={},wb=/toggle|show|hide/,xb=/^([+-]=)?([\d+-.]+)(.*)$/,
+  131  W,ta=[["height","marginTop","marginBottom","paddingTop","paddingBottom"],["width","marginLeft","marginRight","paddingLeft","paddingRight"],["opacity"]];c.fn.extend({show:function(a,b){if(a||a===0)return this.animate(K("show",3),a,b);else{a=0;for(b=this.length;a<b;a++){var d=c.data(this[a],"olddisplay");this[a].style.display=d||"";if(c.css(this[a],"display")==="none"){d=this[a].nodeName;var f;if(ka[d])f=ka[d];else{var e=c("<"+d+" />").appendTo("body");f=e.css("display");if(f==="none")f="block";e.remove();
+  132  ka[d]=f}c.data(this[a],"olddisplay",f)}}a=0;for(b=this.length;a<b;a++)this[a].style.display=c.data(this[a],"olddisplay")||"";return this}},hide:function(a,b){if(a||a===0)return this.animate(K("hide",3),a,b);else{a=0;for(b=this.length;a<b;a++){var d=c.data(this[a],"olddisplay");!d&&d!=="none"&&c.data(this[a],"olddisplay",c.css(this[a],"display"))}a=0;for(b=this.length;a<b;a++)this[a].style.display="none";return this}},_toggle:c.fn.toggle,toggle:function(a,b){var d=typeof a==="boolean";if(c.isFunction(a)&&
+
+/Users/ding/dev/hxp/www/webadmin/js/jsapi.js:
+    5  window['google']['loader'] = {};
+    6  google.loader.ServiceBase = 'http://www.google.com/uds';
+    7: google.loader.GoogleApisBase = 'http://ajax.googleapis.com/ajax';
+    8  google.loader.ApiKey = 'notsupplied';
+    9  google.loader.KeyVerified = true;
+
+/Users/ding/dev/hxp/www/webadmin/js/notice.js:
+  112  //获取通知
+  113  function getNotice() {
+  114:     $.ajax({
+  115          type: "get",
+  116          url: "http://www.houxiaopang.com/api/v1.1/adminsystem/notice/allnotice",
+
+/Users/ding/dev/hxp/www/webadmin/js/qiniu.js:
+  430      // TODO: use mOxie
+  431      /**
+  432:      * craete object used to AJAX
+  433       * @return {Object}
+  434       */
+  435:     this.createAjax = function(argument) {
+  436          var xmlhttp = {};
+  437          if (window.XMLHttpRequest) {
+  ...
+  629              logger.debug("get uphosts from: ", uphosts_url);
+  630              var ie = that.detectIEVersion();
+  631:             var ajax;
+  632              if (ie && ie <= 9) {
+  633:                 ajax = new moxie.xhr.XMLHttpRequest();
+  634                  moxie.core.utils.Env.swf_url = op.flash_swf_url;
+  635              }else{
+  636:                 ajax = that.createAjax();
+  637              }
+  638:             ajax.open('GET', uphosts_url, false);
+  639              var onreadystatechange = function(){
+  640:                 logger.debug("ajax.readyState: ", ajax.readyState);
+  641:                 if (ajax.readyState === 4) {
+  642:                     logger.debug("ajax.status: ", ajax.status);
+  643:                     if (ajax.status < 400) {
+  644:                         var res = that.parseJSON(ajax.responseText);
+  645                          qiniuUpHosts.http = getHosts(res.http.up);
+  646                          qiniuUpHosts.https = getHosts(res.https.up);
+  ...
+  648                          that.resetUploadUrl();
+  649                      } else {
+  650:                         logger.error("get uphosts error: ", ajax.responseText);
+  651                      }
+  652                  }
+  653              };
+  654              if (ie && ie <= 9) {
+  655:                 ajax.bind('readystatechange', onreadystatechange);
+  656              }else{
+  657:                 ajax.onreadystatechange = onreadystatechange;
+  658              }
+  659:             ajax.send();
+  660:             // ajax.send();
+  661:             // if (ajax.status < 400) {
+  662:             //     var res = that.parseJSON(ajax.responseText);
+  663              //     qiniuUpHosts.http = getHosts(res.http.up);
+  664              //     qiniuUpHosts.https = getHosts(res.https.up);
+  ...
+  666              //     that.resetUploadUrl();
+  667              // } else {
+  668:             //     logger.error("get uphosts error: ", ajax.responseText);
+  669              // }
+  670              return;
+  ...
+  690                  logger.debug("get uptoken from: ", that.uptoken_url);
+  691                  // TODO: use mOxie
+  692:                 var ajax = that.createAjax();
+  693:                 ajax.open('GET', that.uptoken_url + '?' + (+ new Date()), false);
+  694:                 // ajax.setRequestHeader("If-Modified-Since", "0");
+  695:                 // ajax.onreadystatechange = function() {
+  696:                 //     if (ajax.readyState === 4 && ajax.status === 200) {
+  697:                 //         var res = that.parseJSON(ajax.responseText);
+  698                  //         that.token = res.uptoken;
+  699                  //     }
+  700                  // };
+  701:                 ajax.send();
+  702:                 if (ajax.status === 200) {
+  703:                     var res = that.parseJSON(ajax.responseText);
+  704                      that.token = res.uptoken;
+  705                      var segments = that.token.split(":");
+  ...
+  711                          return Math.ceil(time.getTime()/1000);
+  712                      };
+  713:                     var serverTime = getTimestamp(new Date(ajax.getResponseHeader("date")));
+  714                      var clientTime = getTimestamp(new Date());
+  715                      that.tokenInfo = {
+  ...
+  724                      logger.debug("get token info: ", that.tokenInfo);
+  725                  } else {
+  726:                     logger.error("get uptoken error: ", ajax.responseText);
+  727                  }
+  728              } else if (op.uptoken_func) {
+  ...
+ 1252                          // if op.dowontoken_url is not empty
+ 1253                          // need get downtoken before invoke the _FileUploaded_Handler
+ 1254:                         var ajax_downtoken = that.createAjax();
+ 1255:                         ajax_downtoken.open('POST', op.downtoken_url, true);
+ 1256:                         ajax_downtoken.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+ 1257:                         ajax_downtoken.onreadystatechange = function() {
+ 1258:                             if (ajax_downtoken.readyState === 4) {
+ 1259:                                 if (ajax_downtoken.status === 200) {
+ 1260                                      var res_downtoken;
+ 1261                                      try {
+ 1262:                                         res_downtoken = that.parseJSON(ajax_downtoken.responseText);
+ 1263                                      } catch (e) {
+ 1264                                          throw ('invalid json format');
+ ....
+ 1271                                  } else {
+ 1272                                      uploader.trigger('Error', {
+ 1273:                                         status: ajax_downtoken.status,
+ 1274:                                         response: ajax_downtoken.responseText,
+ 1275                                          file: file,
+ 1276                                          code: plupload.HTTP_ERROR
+ ....
+ 1279                              }
+ 1280                          };
+ 1281:                         ajax_downtoken.send('key=' + that.parseJSON(info.response).key + '&domain=' + op.domain);
+ 1282                      } else if (_FileUploaded_Handler) {
+ 1283                          _FileUploaded_Handler(up, file, info);
+ ....
+ 1324  
+ 1325                      var ie = that.detectIEVersion();
+ 1326:                     var ajax;
+ 1327                      if (ie && ie <= 9) {
+ 1328:                         ajax = new moxie.xhr.XMLHttpRequest();
+ 1329                          moxie.core.utils.Env.swf_url = op.flash_swf_url;
+ 1330                      }else{
+ 1331:                         ajax = that.createAjax();
+ 1332                      }
+ 1333:                     ajax.open('POST', url, true);
+ 1334:                     ajax.setRequestHeader('Content-Type', 'text/plain;charset=UTF-8');
+ 1335:                     ajax.setRequestHeader('Authorization', 'UpToken ' + that.token);
+ 1336                      var onreadystatechange = function(){
+ 1337:                         logger.debug("ajax.readyState: ", ajax.readyState);
+ 1338:                         if (ajax.readyState === 4) {
+ 1339                              localStorage.removeItem(file.name);
+ 1340:                             var ajaxInfo;
+ 1341:                             if (ajax.status === 200) {
+ 1342:                                 ajaxInfo = {
+ 1343:                                     status: ajax.status,
+ 1344:                                     response: ajax.responseText,
+ 1345:                                     responseHeaders: ajax.getAllResponseHeaders(),
+ 1346                                  };
+ 1347:                                 logger.debug("mkfile is success: ", ajaxInfo);
+ 1348:                                 last_step(up, file, ajaxInfo);
+ 1349                              } else {
+ 1350:                                 ajaxInfo = {
+ 1351:                                     status: ajax.status,
+ 1352:                                     response: ajax.responseText,
+ 1353                                      file: file,
+ 1354                                      code: -200,
+ 1355:                                     responseHeaders: ajax.getAllResponseHeaders()
+ 1356                                  };
+ 1357:                                 logger.debug("mkfile is error: ", ajaxInfo);
+ 1358:                                 uploader.trigger('Error', ajaxInfo);
+ 1359                              }
+ 1360                          }
+ 1361                      };
+ 1362                      if (ie && ie <= 9) {
+ 1363:                         ajax.bind('readystatechange', onreadystatechange);
+ 1364                      }else{
+ 1365:                         ajax.onreadystatechange = onreadystatechange;
+ 1366                      }
+ 1367:                     ajax.send(ctx);
+ 1368                      logger.debug("mkfile: ", url);
+ 1369                  } else {
+ ....
+ 1534          }
+ 1535          var url = this.getUrl(key) + '?imageInfo';
+ 1536:         var xhr = this.createAjax();
+ 1537          var info;
+ 1538          var that = this;
+ ....
+ 1557          }
+ 1558          var url = this.getUrl(key) + '?exif';
+ 1559:         var xhr = this.createAjax();
+ 1560          var info;
+ 1561          var that = this;
+
+/Users/ding/dev/hxp/www/webadmin/js/uploader.min.js:
+    5  // only CommonJS-like environments that support module.exports,
+    6  // like Node.
+    7: module.exports=b(require("jquery"),require("simple-module")):(a.simple=a.simple||{},a.simple.uploader=b(jQuery,SimpleModule))}(this,function(a,b){var c,d,e=function(a,b){function c(){this.constructor=a}for(var d in b)f.call(b,d)&&(a[d]=b[d]);return c.prototype=b.prototype,a.prototype=new c,a.__super__=b.prototype,a},f={}.hasOwnProperty;return c=function(b){function c(){return c.__super__.constructor.apply(this,arguments)}return e(c,b),c.count=0,c.prototype.opts={url:"",params:null,fileKey:"upload_file",connectionCount:3},c.prototype._init=function(){return this.files=[],this.queue=[],this.id=++c.count,this.on("uploadcomplete",function(b){return function(c,d){return b.files.splice(a.inArray(d,b.files),1),b.queue.length>0&&b.files.length<b.opts.connectionCount?b.upload(b.queue.shift()):b.uploading=!1}}(this)),a(window).on("beforeunload.uploader-"+this.id,function(a){return function(b){return a.uploading?(b.originalEvent.returnValue=a._t("leaveConfirm"),a._t("leaveConfirm")):void 0}}(this))},c.prototype.generateId=function(){var a;return a=0,function(){return a+=1}}(),c.prototype.upload=function(b,c){var d,e,f,g;if(null==c&&(c={}),null!=b){if(a.isArray(b)||b instanceof FileList)for(e=0,g=b.length;g>e;e++)d=b[e],this.upload(d,c);else a(b).is("input:file")?(f=a(b).attr("name"),f&&(c.fileKey=f),this.upload(a.makeArray(a(b)[0].files),c)):b.id&&b.obj||(b=this.getFile(b));if(b&&b.obj){if(a.extend(b,c),this.files.length>=this.opts.connectionCount)return void this.queue.push(b);if(this.triggerHandler("beforeupload",[b])!==!1)return this.files.push(b),this._xhrUpload(b),this.uploading=!0}}},c.prototype.getFile=function(a){var b,c,d;return a instanceof window.File||a instanceof window.Blob?(b=null!=(c=a.fileName)?c:a.name,{id:this.generateId(),url:this.opts.url,params:this.opts.params,fileKey:this.opts.fileKey,name:b,size:null!=(d=a.fileSize)?d:a.size,ext:b?b.split(".").pop().toLowerCase():"",obj:a}):null},c.prototype._xhrUpload=function(b){var c,d,e,f;if(c=new FormData,c.append(b.fileKey,b.obj),c.append("original_filename",b.name),b.params){e=b.params;for(d in e)f=e[d],c.append(d,f)}return b.xhr=a.ajax({url:b.url,data:c,processData:!1,contentType:!1,type:"POST",headers:{"X-File-Name":encodeURIComponent(b.name)},xhr:function(){var b;return b=a.ajaxSettings.xhr(),b&&(b.upload.onprogress=function(a){return function(b){return a.progress(b)}}(this)),b},progress:function(a){return function(c){return c.lengthComputable?a.trigger("uploadprogress",[b,c.loaded,c.total]):void 0}}(this),error:function(a){return function(c,d,e){return a.trigger("uploaderror",[b,c,d])}}(this),success:function(c){return function(d){return c.trigger("uploadprogress",[b,b.size,b.size]),c.trigger("uploadsuccess",[b,d]),a(document).trigger("uploadsuccess",[b,d,c])}}(this),complete:function(a){return function(c,d){return a.trigger("uploadcomplete",[b,c.responseText])}}(this)})},c.prototype.cancel=function(a){var b,c,d,e;if(!a.id)for(e=this.files,c=0,d=e.length;d>c;c++)if(b=e[c],b.id===1*a){a=b;break}return this.trigger("uploadcancel",[a]),a.xhr&&a.xhr.abort(),a.xhr=null},c.prototype.readImageFile=function(b,c){var d,e;if(a.isFunction(c))return e=new Image,e.onload=function(){return c(e)},e.onerror=function(){return c()},window.FileReader&&FileReader.prototype.readAsDataURL&&/^image/.test(b.type)?(d=new FileReader,d.onload=function(a){return e.src=a.target.result},d.readAsDataURL(b)):c()},c.prototype.destroy=function(){var b,c,d,e;for(this.queue.length=0,e=this.files,c=0,d=e.length;d>c;c++)b=e[c],this.cancel(b);return a(window).off(".uploader-"+this.id),a(document).off(".uploader-"+this.id)},c.i18n={"zh-CN":{leaveConfirm:"正在上传文件，如果离开上传会自动取消"}},c.locale="zh-CN",c}(b),d=function(a){return new c(a)}});
+
+124 matches across 16 files
+
+
+Searching 65 files for "http://houxiaopang"
+
+/Users/ding/dev/hxp/www/webadmin/imglist1.html:
+  142                                      <h2>${item.nickname}</h2>
+  143                                      <p>${item.expyear}</p>
+  144:                                     <a class="enter" href="http://houxiaopang.com/workdetail/#/user/${item.id}" target="_blank">查看简历</a>
+  145                                     </div>
+  146                                  </li>
+
+/Users/ding/dev/hxp/www/webadmin/js/demand.js:
+  164                      checktfoot.innerHTML += strchecktfoot;
+  165                      var stroperate = `
+  166:         			<tr><td><div><span onclick="javascript:window.top.open('http://houxiaopang.com/demand/#/detail/${item.demand_id}');" class="colorSpan">详情</span>　<span class="colorSpan"
+  167                      onclick="broker(${item.demand_id})">推荐设计师</span>　<span onclick="replydesigner(${item.demand_id})" class="colorSpan">查看已报价设计师</span>
+  168                      　<span onclick="brokerapply(${item.demand_id})" class="colorSpan">查看已推荐设计师</span>
+
+2 matches across 2 files

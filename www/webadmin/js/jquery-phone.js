@@ -131,7 +131,7 @@ function tableMove() {
 function getDesigner() {
 	$.ajax({
 		type:"get",
-        url:"http://houxiaopang.com/api/v1.1/adminsystem/applyinfo",
+        url:"http://www.houxiaopang.com/api/v1.1/adminsystem/applyinfo",
         beforeSend: function (request) {
             request.setRequestHeader("Authorization", "Token " + window.localStorage.token);
         },
@@ -208,11 +208,13 @@ function getDesigner() {
 
 //通过审核
 function pass(id,index){
+	//TODO
+	console.log(window.localStorage.token);
 	$.ajax({
-		url:"http://houxiaopang.com/api/v1.1/adminsystem/agreeapply",
-		type:"post",
-        headers: {"Authorization": "Token " + window.localStorage.token},
-        data:{'apply_id':id},
+		url:"http://www.houxiaopang.com/api/v1.1/adminsystem/agreeapply",
+		type: "post",
+		headers: {"Authorization": "Token " + window.localStorage.token},
+		data:{'apply_id':id},
 		success(data){
 			if(data.code === 0){
 				var tbody = document.getElementsByTagName("tbody")[0];
@@ -229,7 +231,7 @@ function pass(id,index){
 //不通过审核
 function fail (id,index) {
 	$.ajax({
-		url:"http://houxiaopang.com/api/v1.1/adminsystem/disagreeapply",
+		url:"http://www.houxiaopang.com/api/v1.1/adminsystem/disagreeapply",
 		type:"post",
         headers: {"Authorization": "Token " + window.localStorage.token},
         data:{'apply_id':id},
