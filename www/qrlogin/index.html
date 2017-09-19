@@ -6,6 +6,29 @@
     <meta name="keywords" content="包装设计,名片制作,形象设计,传单设计,户外广告,ui设计师,商业计划书模板">
     <meta name="description" content="免费入驻猴小胖平台,我们收到客户需求后,将智能匹配推送给您,由您自己根据需求报价。">
     <link rel="shortcut icon" href="http://image.houxiaopang.com/houicon.ico">
+	<script>
+	function myBrowser(){
+		var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
+		var isOpera = userAgent.indexOf("Opera") > -1;
+		if (isOpera) {
+			return "Opera"
+		}else if (userAgent.indexOf("Firefox") > -1) {
+			return "FF";
+		}else if (userAgent.indexOf("Chrome") > -1){
+			return "Chrome";
+		}else if (userAgent.indexOf("Safari") > -1) {
+			return "Safari";
+		}else{
+			return "IE";
+		}; //判断是否IE浏览器
+	}
+	//以下是调用上面的函数
+	var mb = myBrowser();
+	if ("IE" == mb) {
+		location.href="http://houxiaopang.com/browsernotsupport";
+	}
+	</script>
+	
 	<!-- Piwik -->
 <script type="text/javascript">
   var _paq = _paq || [];
