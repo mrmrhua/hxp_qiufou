@@ -9,14 +9,14 @@ Searching 65 files for "ajax"
   280  				var demand_id = document.getElementById("demand_id").value.trim();
   281: 				$.ajax({
   282  					type:"post",
-  283  					url:"http://www.houxiaopang.com/api/v1.1/adminsystem/recommend",
+  283  					url:"http://houxiaopang.com/api/v1.1/adminsystem/recommend",
 
 /Users/ding/dev/hxp/www/webadmin/brokerdesignersnap.html:
   281      //根据报价单号，获取该匿名设计师
   282      function insertDesigner(id) {
   283:         $.ajax({
   284              type: "get",
-  285              url: "http://www.houxiaopang.com/api/v1.1/adminsystem/demand/getapplyinfo",
+  285              url: "http://houxiaopang.com/api/v1.1/adminsystem/demand/getapplyinfo",
   ...
   358              }
   359              if (fromdatas.length > 0) {
@@ -36,14 +36,14 @@ Searching 65 files for "ajax"
   121      function getdesigner() {
   122:         $.ajax({
   123              type: "get",
-  124              url: "http://www.houxiaopang.com/api/v1.1/adminsystem/alldesigner",
+  124              url: "http://houxiaopang.com/api/v1.1/adminsystem/alldesigner",
 
 /Users/ding/dev/hxp/www/webadmin/index.html:
    46              logining = true;
    47              var pwd = md5(document.getElementById("password").value);
    48:             $.ajax({
    49                  type:"post",
-   50                  url:"http://www.houxiaopang.com/api/v1.1/adminsystem/login",
+   50                  url:"http://houxiaopang.com/api/v1.1/adminsystem/login",
 
 /Users/ding/dev/hxp/www/webadmin/sendnotice.html:
   188  		agent_id = agent_id==="-1" ? "" : agent_id;
@@ -63,21 +63,21 @@ Searching 65 files for "ajax"
    94  //取消推荐设计师
    95  function reomvebrokerdesi() {
    96:     $.ajax({
-   97          url: 'http://www.houxiaopang.com/api/v1.1/adminsystem/pricelist/remove',
+   97          url: 'http://houxiaopang.com/api/v1.1/adminsystem/pricelist/remove',
    98          type: 'post',
    ..
   120  //获取已推荐设计师
   121  function getbrokerdesigner(demand_id) {
   122:     $.ajax({
   123          type: "get",
-  124          url: "http://www.houxiaopang.com/api/v1.1/adminsystem/pricelist_tmp",
+  124          url: "http://houxiaopang.com/api/v1.1/adminsystem/pricelist_tmp",
 
 /Users/ding/dev/hxp/www/webadmin/js/demandetail.js:
   124  //获取已报价设计师
   125  function getreplydesigner(demand_id) {
   126:     $.ajax({
   127          type: "get",
-  128          url: "http://www.houxiaopang.com/api/v1.1/adminsystem/demand/apply_tmp",
+  128          url: "http://houxiaopang.com/api/v1.1/adminsystem/demand/apply_tmp",
 
 /Users/ding/dev/hxp/www/webadmin/js/format+zh_CN,default,corechart.I.js:
     4  Ea=")",Fa="+",Ga=",",L="-",M=".",Ha='.png" height="12" width="',Ia="/static/modules/gviz/",Ja="/util/bar_",Ka="/util/format.css",N="0",La="0000000000000000",Ma="1",Na="1.0",Oa=":",Pa=";",Qa="</span>\u00a0",Ra='<img style="padding: 0" src="',Sa='<span style="padding: 0; float: left; white-space: nowrap;">',Ta="E",Ua="Etc/GMT",Va="G",Wa="GMT",Xa="H",Ya="K",Za="L",$a="LINK",bb="M",cb="Q",db="S",eb="Too many percent/permill",fb="UTC",gb="Z",hb="[object Array]",ib="[object Function]",jb="[object Window]",
@@ -103,18 +103,18 @@ Searching 65 files for "ajax"
   131  function getDesigner() {
   132: 	$.ajax({
   133  		type:"get",
-  134          url:"http://www.houxiaopang.com/api/v1.1/adminsystem/applyinfo",
+  134          url:"http://houxiaopang.com/api/v1.1/adminsystem/applyinfo",
   ...
   209  //通过审核
   210  function pass(id,index){
   211: 	$.ajax({
-  212  		url:"http://www.houxiaopang.com/api/v1.1/adminsystem/agreeapply",
+  212  		url:"http://houxiaopang.com/api/v1.1/adminsystem/agreeapply",
   213  		type:"post",
   ...
   229  //不通过审核
   230  function fail (id,index) {
   231: 	$.ajax({
-  232  		url:"http://www.houxiaopang.com/api/v1.1/adminsystem/disagreeapply",
+  232  		url:"http://houxiaopang.com/api/v1.1/adminsystem/disagreeapply",
   233  		type:"post",
 
 /Users/ding/dev/hxp/www/webadmin/js/jquery.js:
@@ -154,7 +154,7 @@ Searching 65 files for "ajax"
   113  function getNotice() {
   114:     $.ajax({
   115          type: "get",
-  116          url: "http://www.houxiaopang.com/api/v1.1/adminsystem/notice/allnotice",
+  116          url: "http://houxiaopang.com/api/v1.1/adminsystem/notice/allnotice",
 
 /Users/ding/dev/hxp/www/webadmin/js/qiniu.js:
   430      // TODO: use mOxie
@@ -337,107 +337,107 @@ Searching 65 files for "houxiaopang.com/api"
 /Users/ding/dev/hxp/www/webadmin/brokerdesigner.html:
   281  				$.ajax({
   282  					type:"post",
-  283: 					url:"http://www.houxiaopang.com/api/v1.1/adminsystem/recommend",
+  283: 					url:"http://houxiaopang.com/api/v1.1/adminsystem/recommend",
   284                      headers: {"Authorization": "Token " + window.localStorage.token},
   285                      data:{
 
 /Users/ding/dev/hxp/www/webadmin/brokerdesignersnap.html:
   283          $.ajax({
   284              type: "get",
-  285:             url: "http://www.houxiaopang.com/api/v1.1/adminsystem/demand/getapplyinfo",
+  285:             url: "http://houxiaopang.com/api/v1.1/adminsystem/demand/getapplyinfo",
   286              beforeSend: function (request) {
   287                  request.setRequestHeader("Authorization", "Token " + window.localStorage.token);
   ...
   361                      type: "post",
   362                      headers: {"Authorization": "Token " + window.localStorage.token},
-  363:                     url: "http://www.houxiaopang.com/api/v1.1/adminsystem/recommend_tmp",
+  363:                     url: "http://houxiaopang.com/api/v1.1/adminsystem/recommend_tmp",
   364                      data: {
   365                          'demand_id': demandid,
 
 /Users/ding/dev/hxp/www/webadmin/brokerproject.html:
   277              type: "post",
   278              headers: {"Authorization": "Token " + window.localStorage.token},
-  279:             url: "http://www.houxiaopang.com/api/v1.1/demanddetail",
+  279:             url: "http://houxiaopang.com/api/v1.1/demanddetail",
   280              data: {
   281                  "description": editor.getValue(),
   ...
   312              chunk_size: '4mb',
   313  
-  314:             uptoken_url: 'http://www.houxiaopang.com/api/v1.0/apply/uptoken',
+  314:             uptoken_url: 'http://houxiaopang.com/api/v1.0/apply/uptoken',
   315              multi_selection: !(mOxie.Env.OS.toLowerCase() === "ios"),
   316              filters: {
 
 /Users/ding/dev/hxp/www/webadmin/imglist1.html:
   122          $.ajax({
   123              type: "get",
-  124:             url: "http://www.houxiaopang.com/api/v1.1/adminsystem/alldesigner",
+  124:             url: "http://houxiaopang.com/api/v1.1/adminsystem/alldesigner",
   125              beforeSend: function (request) {
   126                  request.setRequestHeader("Authorization", "Token " + window.localStorage.token);
 
 /Users/ding/dev/hxp/www/webadmin/index.html:
    48              $.ajax({
    49                  type:"post",
-   50:                 url:"http://www.houxiaopang.com/api/v1.1/adminsystem/login",
+   50:                 url:"http://houxiaopang.com/api/v1.1/adminsystem/login",
    51                  data:{
    52                      'pw':pwd,
 
 /Users/ding/dev/hxp/www/webadmin/sendnotice.html:
   197  				'content':description,
   198  			},
-  199: 			url:"http://www.houxiaopang.com/api/v1.1/adminsystem/notice/sendnotice",
+  199: 			url:"http://houxiaopang.com/api/v1.1/adminsystem/notice/sendnotice",
   200  			success(data){
   201  				if(data.code === 0 ){
 
 /Users/ding/dev/hxp/www/webadmin/js/demand.js:
   145              request.setRequestHeader("Authorization", "Token " + window.localStorage.token);
   146          },
-  147:         url: "http://www.houxiaopang.com/api/v1.1/adminsystem/demand/all",
+  147:         url: "http://houxiaopang.com/api/v1.1/adminsystem/demand/all",
   148          success(data){
   149              if (data.code === 0) {
 
 /Users/ding/dev/hxp/www/webadmin/js/demandborkerdetail.js:
    95  function reomvebrokerdesi() {
    96      $.ajax({
-   97:         url: 'http://www.www.houxiaopang.com/api/v1.1/adminsystem/pricelist/remove',
+   97:         url: 'http://www.houxiaopang.com/api/v1.1/adminsystem/pricelist/remove',
    98          type: 'post',
    99          headers: {"Authorization": "Token " + window.localStorage.token},
   ...
   122      $.ajax({
   123          type: "get",
-  124:         url: "http://www.houxiaopang.com/api/v1.1/adminsystem/pricelist_tmp",
+  124:         url: "http://houxiaopang.com/api/v1.1/adminsystem/pricelist_tmp",
   125          data: {
   126              'demand_id': demand_id,
 
 /Users/ding/dev/hxp/www/webadmin/js/demandetail.js:
   126      $.ajax({
   127          type: "get",
-  128:         url: "http://www.houxiaopang.com/api/v1.1/adminsystem/demand/apply_tmp",
+  128:         url: "http://houxiaopang.com/api/v1.1/adminsystem/demand/apply_tmp",
   129          beforeSend: function (request) {
   130              request.setRequestHeader("Authorization", "Token " + window.localStorage.token);
 
 /Users/ding/dev/hxp/www/webadmin/js/jquery-phone.js:
   132  	$.ajax({
   133  		type:"get",
-  134:         url:"http://www.houxiaopang.com/api/v1.1/adminsystem/applyinfo",
+  134:         url:"http://houxiaopang.com/api/v1.1/adminsystem/applyinfo",
   135          beforeSend: function (request) {
   136              request.setRequestHeader("Authorization", "Token " + window.localStorage.token);
   ...
   210  function pass(id,index){
   211  	$.ajax({
-  212: 		url:"http://www.houxiaopang.com/api/v1.1/adminsystem/agreeapply",
+  212: 		url:"http://houxiaopang.com/api/v1.1/adminsystem/agreeapply",
   213  		type:"post",
   214          headers: {"Authorization": "Token " + window.localStorage.token},
   ...
   230  function fail (id,index) {
   231  	$.ajax({
-  232: 		url:"http://www.houxiaopang.com/api/v1.1/adminsystem/disagreeapply",
+  232: 		url:"http://houxiaopang.com/api/v1.1/adminsystem/disagreeapply",
   233  		type:"post",
   234          headers: {"Authorization": "Token " + window.localStorage.token},
 
 /Users/ding/dev/hxp/www/webadmin/js/notice.js:
   114      $.ajax({
   115          type: "get",
-  116:         url: "http://www.houxiaopang.com/api/v1.1/adminsystem/notice/allnotice",
+  116:         url: "http://houxiaopang.com/api/v1.1/adminsystem/notice/allnotice",
   117          beforeSend: function (request) {
   118              request.setRequestHeader("Authorization", "Token " + window.localStorage.token);
 
@@ -457,20 +457,20 @@ Searching 65 files for "houxiaopang.com"
 /Users/ding/dev/hxp/www/webadmin/brokerdesigner.html:
   281  				$.ajax({
   282  					type:"post",
-  283: 					url:"http://www.houxiaopang.com/api/v1.1/adminsystem/recommend",
+  283: 					url:"http://houxiaopang.com/api/v1.1/adminsystem/recommend",
   284                      headers: {"Authorization": "Token " + window.localStorage.token},
   285                      data:{
 
 /Users/ding/dev/hxp/www/webadmin/brokerdesignersnap.html:
   283          $.ajax({
   284              type: "get",
-  285:             url: "http://www.houxiaopang.com/api/v1.1/adminsystem/demand/getapplyinfo",
+  285:             url: "http://houxiaopang.com/api/v1.1/adminsystem/demand/getapplyinfo",
   286              beforeSend: function (request) {
   287                  request.setRequestHeader("Authorization", "Token " + window.localStorage.token);
   ...
   361                      type: "post",
   362                      headers: {"Authorization": "Token " + window.localStorage.token},
-  363:                     url: "http://www.houxiaopang.com/api/v1.1/adminsystem/recommend_tmp",
+  363:                     url: "http://houxiaopang.com/api/v1.1/adminsystem/recommend_tmp",
   364                      data: {
   365                          'demand_id': demandid,
 
@@ -495,13 +495,13 @@ Searching 65 files for "houxiaopang.com"
   ...
   277              type: "post",
   278              headers: {"Authorization": "Token " + window.localStorage.token},
-  279:             url: "http://www.houxiaopang.com/api/v1.1/demanddetail",
+  279:             url: "http://houxiaopang.com/api/v1.1/demanddetail",
   280              data: {
   281                  "description": editor.getValue(),
   ...
   312              chunk_size: '4mb',
   313  
-  314:             uptoken_url: 'http://www.houxiaopang.com/api/v1.0/apply/uptoken',
+  314:             uptoken_url: 'http://houxiaopang.com/api/v1.0/apply/uptoken',
   315              multi_selection: !(mOxie.Env.OS.toLowerCase() === "ios"),
   316              filters: {
   ...
@@ -520,7 +520,7 @@ Searching 65 files for "houxiaopang.com"
 /Users/ding/dev/hxp/www/webadmin/imglist1.html:
   122          $.ajax({
   123              type: "get",
-  124:             url: "http://www.houxiaopang.com/api/v1.1/adminsystem/alldesigner",
+  124:             url: "http://houxiaopang.com/api/v1.1/adminsystem/alldesigner",
   125              beforeSend: function (request) {
   126                  request.setRequestHeader("Authorization", "Token " + window.localStorage.token);
   ...
@@ -533,21 +533,21 @@ Searching 65 files for "houxiaopang.com"
 /Users/ding/dev/hxp/www/webadmin/index.html:
    48              $.ajax({
    49                  type:"post",
-   50:                 url:"http://www.houxiaopang.com/api/v1.1/adminsystem/login",
+   50:                 url:"http://houxiaopang.com/api/v1.1/adminsystem/login",
    51                  data:{
    52                      'pw':pwd,
 
 /Users/ding/dev/hxp/www/webadmin/sendnotice.html:
   197  				'content':description,
   198  			},
-  199: 			url:"http://www.houxiaopang.com/api/v1.1/adminsystem/notice/sendnotice",
+  199: 			url:"http://houxiaopang.com/api/v1.1/adminsystem/notice/sendnotice",
   200  			success(data){
   201  				if(data.code === 0 ){
 
 /Users/ding/dev/hxp/www/webadmin/js/demand.js:
   145              request.setRequestHeader("Authorization", "Token " + window.localStorage.token);
   146          },
-  147:         url: "http://www.houxiaopang.com/api/v1.1/adminsystem/demand/all",
+  147:         url: "http://houxiaopang.com/api/v1.1/adminsystem/demand/all",
   148          success(data){
   149              if (data.code === 0) {
   ...
@@ -563,46 +563,46 @@ Searching 65 files for "houxiaopang.com"
 /Users/ding/dev/hxp/www/webadmin/js/demandborkerdetail.js:
    95  function reomvebrokerdesi() {
    96      $.ajax({
-   97:         url: 'http://www.www.houxiaopang.com/api/v1.1/adminsystem/pricelist/remove',
+   97:         url: 'http://www.houxiaopang.com/api/v1.1/adminsystem/pricelist/remove',
    98          type: 'post',
    99          headers: {"Authorization": "Token " + window.localStorage.token},
   ...
   122      $.ajax({
   123          type: "get",
-  124:         url: "http://www.houxiaopang.com/api/v1.1/adminsystem/pricelist_tmp",
+  124:         url: "http://houxiaopang.com/api/v1.1/adminsystem/pricelist_tmp",
   125          data: {
   126              'demand_id': demand_id,
 
 /Users/ding/dev/hxp/www/webadmin/js/demandetail.js:
   126      $.ajax({
   127          type: "get",
-  128:         url: "http://www.houxiaopang.com/api/v1.1/adminsystem/demand/apply_tmp",
+  128:         url: "http://houxiaopang.com/api/v1.1/adminsystem/demand/apply_tmp",
   129          beforeSend: function (request) {
   130              request.setRequestHeader("Authorization", "Token " + window.localStorage.token);
 
 /Users/ding/dev/hxp/www/webadmin/js/jquery-phone.js:
   132  	$.ajax({
   133  		type:"get",
-  134:         url:"http://www.houxiaopang.com/api/v1.1/adminsystem/applyinfo",
+  134:         url:"http://houxiaopang.com/api/v1.1/adminsystem/applyinfo",
   135          beforeSend: function (request) {
   136              request.setRequestHeader("Authorization", "Token " + window.localStorage.token);
   ...
   210  function pass(id,index){
   211  	$.ajax({
-  212: 		url:"http://www.houxiaopang.com/api/v1.1/adminsystem/agreeapply",
+  212: 		url:"http://houxiaopang.com/api/v1.1/adminsystem/agreeapply",
   213  		type:"post",
   214          headers: {"Authorization": "Token " + window.localStorage.token},
   ...
   230  function fail (id,index) {
   231  	$.ajax({
-  232: 		url:"http://www.houxiaopang.com/api/v1.1/adminsystem/disagreeapply",
+  232: 		url:"http://houxiaopang.com/api/v1.1/adminsystem/disagreeapply",
   233  		type:"post",
   234          headers: {"Authorization": "Token " + window.localStorage.token},
 
 /Users/ding/dev/hxp/www/webadmin/js/notice.js:
   114      $.ajax({
   115          type: "get",
-  116:         url: "http://www.houxiaopang.com/api/v1.1/adminsystem/notice/allnotice",
+  116:         url: "http://houxiaopang.com/api/v1.1/adminsystem/notice/allnotice",
   117          beforeSend: function (request) {
   118              request.setRequestHeader("Authorization", "Token " + window.localStorage.token);
 
@@ -616,14 +616,14 @@ Searching 65 files for "ajax"
   280  				var demand_id = document.getElementById("demand_id").value.trim();
   281: 				$.ajax({
   282  					type:"post",
-  283  					url:"http://www.houxiaopang.com/api/v1.1/adminsystem/recommend",
+  283  					url:"http://houxiaopang.com/api/v1.1/adminsystem/recommend",
 
 /Users/ding/dev/hxp/www/webadmin/brokerdesignersnap.html:
   281      //根据报价单号，获取该匿名设计师
   282      function insertDesigner(id) {
   283:         $.ajax({
   284              type: "get",
-  285              url: "http://www.houxiaopang.com/api/v1.1/adminsystem/demand/getapplyinfo",
+  285              url: "http://houxiaopang.com/api/v1.1/adminsystem/demand/getapplyinfo",
   ...
   358              }
   359              if (fromdatas.length > 0) {
@@ -643,14 +643,14 @@ Searching 65 files for "ajax"
   121      function getdesigner() {
   122:         $.ajax({
   123              type: "get",
-  124              url: "http://www.houxiaopang.com/api/v1.1/adminsystem/alldesigner",
+  124              url: "http://houxiaopang.com/api/v1.1/adminsystem/alldesigner",
 
 /Users/ding/dev/hxp/www/webadmin/index.html:
    46              logining = true;
    47              var pwd = md5(document.getElementById("password").value);
    48:             $.ajax({
    49                  type:"post",
-   50                  url:"http://www.houxiaopang.com/api/v1.1/adminsystem/login",
+   50                  url:"http://houxiaopang.com/api/v1.1/adminsystem/login",
 
 /Users/ding/dev/hxp/www/webadmin/sendnotice.html:
   188  		agent_id = agent_id==="-1" ? "" : agent_id;
@@ -670,21 +670,21 @@ Searching 65 files for "ajax"
    94  //取消推荐设计师
    95  function reomvebrokerdesi() {
    96:     $.ajax({
-   97          url: 'http://www.www.houxiaopang.com/api/v1.1/adminsystem/pricelist/remove',
+   97          url: 'http://www.houxiaopang.com/api/v1.1/adminsystem/pricelist/remove',
    98          type: 'post',
    ..
   120  //获取已推荐设计师
   121  function getbrokerdesigner(demand_id) {
   122:     $.ajax({
   123          type: "get",
-  124          url: "http://www.houxiaopang.com/api/v1.1/adminsystem/pricelist_tmp",
+  124          url: "http://houxiaopang.com/api/v1.1/adminsystem/pricelist_tmp",
 
 /Users/ding/dev/hxp/www/webadmin/js/demandetail.js:
   124  //获取已报价设计师
   125  function getreplydesigner(demand_id) {
   126:     $.ajax({
   127          type: "get",
-  128          url: "http://www.houxiaopang.com/api/v1.1/adminsystem/demand/apply_tmp",
+  128          url: "http://houxiaopang.com/api/v1.1/adminsystem/demand/apply_tmp",
 
 /Users/ding/dev/hxp/www/webadmin/js/format+zh_CN,default,corechart.I.js:
     4  Ea=")",Fa="+",Ga=",",L="-",M=".",Ha='.png" height="12" width="',Ia="/static/modules/gviz/",Ja="/util/bar_",Ka="/util/format.css",N="0",La="0000000000000000",Ma="1",Na="1.0",Oa=":",Pa=";",Qa="</span>\u00a0",Ra='<img style="padding: 0" src="',Sa='<span style="padding: 0; float: left; white-space: nowrap;">',Ta="E",Ua="Etc/GMT",Va="G",Wa="GMT",Xa="H",Ya="K",Za="L",$a="LINK",bb="M",cb="Q",db="S",eb="Too many percent/permill",fb="UTC",gb="Z",hb="[object Array]",ib="[object Function]",jb="[object Window]",
@@ -710,18 +710,18 @@ Searching 65 files for "ajax"
   131  function getDesigner() {
   132: 	$.ajax({
   133  		type:"get",
-  134          url:"http://www.houxiaopang.com/api/v1.1/adminsystem/applyinfo",
+  134          url:"http://houxiaopang.com/api/v1.1/adminsystem/applyinfo",
   ...
   209  //通过审核
   210  function pass(id,index){
   211: 	$.ajax({
-  212  		url:"http://www.houxiaopang.com/api/v1.1/adminsystem/agreeapply",
+  212  		url:"http://houxiaopang.com/api/v1.1/adminsystem/agreeapply",
   213  		type:"post",
   ...
   229  //不通过审核
   230  function fail (id,index) {
   231: 	$.ajax({
-  232  		url:"http://www.houxiaopang.com/api/v1.1/adminsystem/disagreeapply",
+  232  		url:"http://houxiaopang.com/api/v1.1/adminsystem/disagreeapply",
   233  		type:"post",
 
 /Users/ding/dev/hxp/www/webadmin/js/jquery.js:
@@ -761,7 +761,7 @@ Searching 65 files for "ajax"
   113  function getNotice() {
   114:     $.ajax({
   115          type: "get",
-  116          url: "http://www.houxiaopang.com/api/v1.1/adminsystem/notice/allnotice",
+  116          url: "http://houxiaopang.com/api/v1.1/adminsystem/notice/allnotice",
 
 /Users/ding/dev/hxp/www/webadmin/js/qiniu.js:
   430      // TODO: use mOxie

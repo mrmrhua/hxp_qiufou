@@ -302,7 +302,7 @@ document.write(unescape("%3Cspan id='cnzz_stat_icon_1261952519'%3E%3C/span%3E%3C
         $.ajax({
             type: "post",
             headers: {"Authorization": "Token " + token},
-            url: "http://www.houxiaopang.com/api/v1.1/logout",
+            url: "http://houxiaopang.com/api/v1.1/logout",
             success(data){
 
             },
@@ -323,13 +323,13 @@ document.write(unescape("%3Cspan id='cnzz_stat_icon_1261952519'%3E%3C/span%3E%3C
     if (token) {
         $.ajax({//验证是否登录
             type: "get",
-            url: "http://www.houxiaopang.com/api/v1.1/token/authenticated",
+            url: "http://houxiaopang.com/api/v1.1/token/authenticated",
             headers: {"Authorization": "Token " + token},
             success: function (data) {
                 if (data.code === 0) {
                     window.localStorage.applystatus = data.data.applystatus;
                     $.ajax({//获取用户信息
-                        url: 'http://www.houxiaopang.com/api/v1.1/designerdash/header',
+                        url: 'http://houxiaopang.com/api/v1.1/designerdash/header',
                         type: "GET",
                         headers: {"Authorization": "Token " + token},
                         success: function (data) {

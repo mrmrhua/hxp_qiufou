@@ -94,7 +94,7 @@ function removebroker(id) {
 //取消推荐设计师
 function reomvebrokerdesi() {
     $.ajax({
-        url: 'http://www.houxiaopang.com/api/v1.1/adminsystem/pricelist/remove',
+        url: 'http://houxiaopang.com/api/v1.1/adminsystem/pricelist/remove',
         type: 'post',
         data: {
             'recom_id': removedesi_id,

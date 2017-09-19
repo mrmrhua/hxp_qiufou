@@ -94,7 +94,7 @@ function removebroker(id) {
 //取消推荐设计师
 function reomvebrokerdesi() {
     $.ajax({
-        url: 'http://www.houxiaopang.com/api/v1.1/adminsystem/pricelist/remove',
+        url: 'http://houxiaopang.com/api/v1.1/adminsystem/pricelist/remove',
         type: 'post',
         headers: {"Authorization": "Token " + window.localStorage.token},
         data: {
@@ -121,7 +121,7 @@ function reomvebrokerdesi() {
 function getbrokerdesigner(demand_id) {
     $.ajax({
         type: "get",
-        url: "http://www.houxiaopang.com/api/v1.1/adminsystem/pricelist_tmp",
+        url: "http://houxiaopang.com/api/v1.1/adminsystem/pricelist_tmp",
         data: {
             'demand_id': demand_id,
         },

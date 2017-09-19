@@ -144,7 +144,7 @@ function getDemand() {
         beforeSend: function (request) {
             request.setRequestHeader("Authorization", "Token " + window.localStorage.token);
         },
-        url: "http://www.houxiaopang.com/api/v1.1/adminsystem/demand/all",
+        url: "http://houxiaopang.com/api/v1.1/adminsystem/demand/all",
         success(data){
             if (data.code === 0) {
                 var applyer = data.data;
