@@ -141,9 +141,7 @@ function brokerapply(id) {
 function getDemand() {
     $.ajax({
         type: "get",
-        beforeSend: function (request) {
-            request.setRequestHeader("Authorization", "Token " + window.localStorage.token);
-        },
+        headers: {"Authorization": "Token " + window.localStorage.token},
         url: "http://houxiaopang.com/api/v1.1/adminsystem/demand/all",
         success(data){
             if (data.code === 0) {

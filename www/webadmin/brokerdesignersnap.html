@@ -283,9 +283,7 @@
         $.ajax({
             type: "get",
             url: "http://houxiaopang.com/api/v1.1/adminsystem/demand/getapplyinfo",
-            beforeSend: function (request) {
-                request.setRequestHeader("Authorization", "Token " + window.localStorage.token);
-            },
+            headers: {"Authorization": "Token " + window.localStorage.token},
             data: {
                 'apply_id': id,
             },

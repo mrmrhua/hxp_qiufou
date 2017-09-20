@@ -114,9 +114,7 @@ function getNotice() {
     $.ajax({
         type: "get",
         url: "http://houxiaopang.com/api/v1.1/adminsystem/notice/allnotice",
-        beforeSend: function (request) {
-            request.setRequestHeader("Authorization", "Token " + window.localStorage.token);
-        },
+        headers: {"Authorization": "Token " + window.localStorage.token},
         success(data){
             if (data.code === 0) {
                 var applyer = data.data.notice;
