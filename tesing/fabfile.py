@@ -16,7 +16,13 @@ def stop():
     run('systemctl stop hxp')
 
 def status():
-    run('systemctl status hxp')
+    run('systemctl status hxp -l')
 
 def restart():
     run('systemctl restart hxp')
+
+def updb():
+    with cd("/home/hxp"):
+        with prefix(env.activate):
+            run("python manage.py db migrate -m 'upgrade'")
+            run('python manage.py db upgrade')

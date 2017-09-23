@@ -94,6 +94,21 @@ class Applyform(db.Model):
                          company_size=company_size ,role=role,
                          blog_url=blog_url, user_id=user_id)
 
+    @staticmethod
+    def personal_from_request_new(request):
+        name = request.form.get('name')
+        tel = request.form.get('tel')
+        city = request.form.get('city')
+        email = request.form.get('email')
+        graduate = request.form.get('graduate')
+        # may be none
+        qq = request.form.get('qq')
+        wx = request.form.get('wx')
+        blog_url = request.form.get('blog_url')
+        user_id = g.user.id
+
+        return Applyform(name=name, tel=tel, city=city, email=email, qq=qq, wx=wx,
+                         graduate=int(graduate), blog_url=blog_url, user_id=user_id)
     def __repr__(self):
         return '<Applyform %r>' % self.name
 
