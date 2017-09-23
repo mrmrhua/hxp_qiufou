@@ -116,7 +116,8 @@ class Applyform(db.Model):
         c = Category.query.filter_by(category_name=cat).first()
         self.categories.append(c)
 
-
+    __mapper_args__ = {
+        'confirm_deleted_rows': True}
 
 class Applywork(db.Model):
     __tablename__ = 'applyworks'

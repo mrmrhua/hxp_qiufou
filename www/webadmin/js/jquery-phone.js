@@ -248,5 +248,5 @@ function fail(id, index) {
 
 function jump(that) {
     var url = that.getAttribute("url")
-    open("/webadmin/showimg.html?imgs=" + url);
+    open("/showimg.html?imgs=" + url);
 }

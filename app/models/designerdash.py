@@ -145,6 +145,9 @@ class Album(db.Model):
 
     def __repr__(self):
         return '<Album: %r at %r>' % (self.title,self.up_time)
+    # for delete
+    __mapper_args__ = {
+        'confirm_deleted_rows': True}
 
     @staticmethod
     def from_request(request):
