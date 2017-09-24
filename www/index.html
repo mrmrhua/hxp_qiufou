@@ -355,7 +355,7 @@
     if (token) {
         $.ajax({//验证是否登录
             type: "get",
-            url: "http://houxiaopang.com/api/v1.1/token/authenticated",
+            url: "http://www.houxiaopang.com/api/v1.1/token/authenticated",
             headers: {"Authorization": "Token " + token},
             success: function (data) {
                 if (data.code === 0) {
