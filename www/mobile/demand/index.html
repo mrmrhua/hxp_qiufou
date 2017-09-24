@@ -1,0 +1,76 @@
+<!DOCTYPE html><html><html lang=zh-cmn-Hans><head><meta charset=UTF-8><title>猴小胖报价单</title><meta name=keywords content=包装设计,网页制作,logo设计在线生成><meta name=description content=猴小胖是杭州求否科技旗下的设计师经纪服务平台。通过猴小胖可以高效对接多个专业的设计师,满足PPT定制、UI设计、企业画册、海报展览、LOGO设计、企业形象设计、VI等设计需求。><meta http-equiv=X-UA-Compatible content="ie=edge"><meta name=viewport content="width=device-width,initial-scale=1"><link rel="shortcut icon" href=http://image.houxiaopang.com/houicon.ico><script type=text/javascript>var _paq = _paq || [];
+    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function () {
+      var u = "//analysis.houxiaopang.com/";
+      _paq.push(['setTrackerUrl', u + 'piwik.php']);
+      _paq.push(['setSiteId', '1']);
+      var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
+      g.type = 'text/javascript';
+      g.async = true;
+      g.defer = true;
+      g.src = u + 'piwik.js';
+      s.parentNode.insertBefore(g, s);
+    })();</script><link href=./static/css/app.0a7582a8e57eb367dd651f36bb6fef85.css rel=stylesheet></head><body><div id=app></div><script type=text/javascript>function ajax(options) {
+    if (options.type === "get" || options.type === "GET") {
+      options.url += "?";
+      for (var i in options.data) {
+        options.url += i + "=" + options.data[i] + "&";
+      }
+      options.url = options.url.substring(0, options.url.length - 1);
+    }
+    var ajax = new XMLHttpRequest();
+    ajax.onreadystatechange = function () {
+      if (ajax.readyState === 4 && ajax.status === 200) {
+        options.success(eval("(" + ajax.responseText + ")"));
+      } else if (ajax.readyState === 4 && ajax.status !== 200) {
+        options.error(ajax);
+      }
+    };
+    ajax.open(options.type, options.url, true);
+    ajax.setRequestHeader("Content-type", "application/json");
+    if (options.type === "get") {
+      ajax.send();
+    } else {
+      ajax.send(options.data);
+    }
+  }
+
+  function formatCategory(type, status) {
+    if (status === 1) {
+      if (type === 1) {
+        type = "PPT";
+      } else if (type === 2) {
+        type = "UI";
+      } else if (type === 3) {
+        type = "文本画册";
+      } else if (type === 4) {
+        type = "海报展板";
+      } else if (type === 5) {
+        type = "LOGO";
+      } else if (type === 6) {
+        type = "企业形象设计（VI）";
+      }
+    } else {
+      if (type === "全部") {
+        type = -1;
+      } else if (type === "PPT定制") {
+        type = 1;
+      } else if (type === "UI设计") {
+        type = 2;
+      } else if (type === "企业画册") {
+        type = 3;
+      } else if (type === "海报展板") {
+        type = 4;
+      } else if (type === "LOGO") {
+        type = 5;
+      } else if (type === "企业形象设计VI") {
+        type = 6;
+      }
+    }
+    return type;
+  }
+
+
+  var pptType = "";</script><script type=text/javascript src=./static/js/manifest.87b3f1f9ff95299fa7af.js></script><script type=text/javascript src=./static/js/vendor.18161aa6626cea8b915e.js></script><script type=text/javascript src=./static/js/app.2f2e91f1c01185c698a6.js></script></body></html></html>

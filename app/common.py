@@ -1,20 +1,21 @@
 import urllib
 import  json
-from flask_mail import current_app
-from app import mail
-import requests
 from qiniu import Auth,urlsafe_base64_encode
 import requests
 from config import qiniu_secret_key,qiniu_access_key
 from functools import wraps
-from flask import request
-from datetime import timedelta
-from flask import make_response, request, current_app,g
-from functools import update_wrapper
+from flask import request, current_app,g
 from flask.ext.httpauth import HTTPTokenAuth
-from app.models import User,Category,Tag
-from app import db
-# from config import ADMIN_KEY
+from app.models import User
+import base64
+import hmac
+from hashlib import sha1
+import urllib.parse
+import time
+import uuid
+
+
+
 
 def get_access_token(code):
     url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxbfacdb1b99885182&secret=c4f876b16ddc8d8e4259b9c2388e5493&code='\
@@ -45,75 +46,139 @@ def get_user_info(access_token,openid):
 
     return userinfo
 
+class Aliyuncs(object):
+    def __init__(self):
+        self.access_id = 'LTAIyz5K3aJnB5Hy'
+        self.access_secret = 'mGYxH1YQLB3ZYpk2rsc7lwdtDGecNs'
+        self.url = 'http://dm.aliyuncs.com'
+
+    def sign(self, accessKeySecret, parameter):
+        sortedParameters = sorted(parameter.items(),
+                                  key=lambda parameter: parameter[0])
+        canonicalizedQueryString = ''
+
+        for (k, v) in sortedParameters:
+            canonicalizedQueryString += '&' + self.percent_encode(k) + \
+                                        '=' + self.percent_encode(v)
+
+        stringToSign = 'GET&%2F&' + self.percent_encode(
+            canonicalizedQueryString[1:])
+
+        h = hmac.new(bytes((accessKeySecret + "&").encode("utf-8")),
+                     stringToSign.encode('utf-8'), sha1)
+        signature = base64.encodestring(h.digest()).strip()
+        return signature
+
+    def percent_encode(self, encodeStr):
+        encodeStr = str(encodeStr)
+        res = urllib.parse.quote(encodeStr.encode('utf-8'), '')
+        res = res.replace('+', '%20')
+        res = res.replace('*', '%2A')
+        res = res.replace('%7E', '~')
+        return res
+
+    def make_url(self, params):
+        timestamp = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+        parameters = {
+            'Format': 'JSON',
+            'Version': '2015-11-23',
+            'AccessKeyId': self.access_id,
+            'SignatureVersion': '1.0',
+            'SignatureMethod': 'HMAC-SHA1',
+            'SignatureNonce': str(uuid.uuid1()),
+            'Timestamp': timestamp,
+        }
+        for key in params.keys():
+            parameters[key] = params[key]
+        signature = self.sign(self.access_secret, parameters)
+        parameters['Signature'] = signature
+        url = self.url + "/?" + urllib.parse.urlencode(parameters)
+        return url
+
+
+def send_mail_in_text(to,Subject,TextBody):
+    aliyun = Aliyuncs()
+    data = {
+        'Action': 'SingleSendMail',
+        'AccountName': 'notice@devmail.houxiaopang.com',
+        'ReplyToAddress': True,
+        'AddressType': 1,
+        'ToAddress': to,
+        'FromAlias': '猴小胖设计服务专家',
+        'Subject':Subject,
+        'TextBody': TextBody
+    }
+    url = aliyun.make_url(data)
+    response = requests.get(url)
+    return response
+
+def send_mail_in_html(to,Subject,HtmlBody):
+    aliyun = Aliyuncs()
+    data = {
+        'Action': 'SingleSendMail',
+        'AccountName': 'notice@devmail.houxiaopang.com',
+        'ReplyToAddress': True,
+        'AddressType': 1,
+        'ToAddress': to,
+        'FromAlias': '猴小胖设计服务专家',
+        'Subject':Subject,
+        'HtmlBody': HtmlBody
+    }
+    url = aliyun.make_url(data)
+    response = requests.get(url)
+    return response
+
 
 def send_admin_email(to,subject,body):
-    # msg = Message(subject='猴小胖网站通知:'+subject,sender='houxiaopangdeisgn@163.com',recipients=[to])
-    # msg.body = body
-    # mail.send(msg)
-
-    url = "http://api.sendcloud.net/apiv2/mail/send"
-
-    # 您需要登录SendCloud创建API_USER，使用API_USER和API_KEY才可以进行邮件的发送。
-    params = {"apiUser": "hxp_devmail", \
-              "apiKey": "6CEiNLCT8Q8UfSug", \
-              "from": "dev@devmail.houxiaopang.com", \
-              "fromName": "猴小胖邮件云", \
-              "to": to, \
-              "subject": "猴小胖网站通知"+subject, \
-              "html": body, \
-              }
-
-    r = requests.post(url, files={}, data=params)
-    # print(r)
-
+    send_mail_in_text(to,'猴小胖网站通知:' + subject, body)
 
 def send_apply_email_to_admin(name):
-    url = "http://api.sendcloud.net/apiv2/mail/send"
+    response = send_mail_in_text('mrmrhua@126.com','新的入驻申请',"申请人:"+name)
+    statusCode = response.status_code
+    current_app.logger.info('发送入驻邮件给管理员 :%s (状态:%s-statusCode:%s)  ' % (name,response,statusCode))
 
 
 
-    # 您需要登录SendCloud创建API_USER，使用API_USER和API_KEY才可以进行邮件的发送。
-    params = {"apiUser": "hxp_devmail", \
-              "apiKey": "6CEiNLCT8Q8UfSug", \
-              "from": "help@devmail.houxiaopang.com", \
-              "fromName": "猴小胖", \
-              "subject": '新的入驻申请', \
-              "to":'mrmrhua@126.com',\
-              "html":"申请人:"+name,\
-              "templateInvokeName": "designer_apply", \
-              "replyTo": 'dyh@houxiaopang.com', \
-              }
-
-    r = requests.post(url, files={}, data=params)
-    res =  r.json().get("result")
-    statusCode = r.json().get("statusCode")
-    current_app.logger.info('发送入驻邮件给管理员 :%s (状态:%s-statusCode:%s)  ' % (name,res,statusCode))
-    # print(r)
-
-
+# 给申请入驻的设计师发送邮件
 def send_designer_email(to,subject):
-    url = "http://api.sendcloud.net/apiv2/mail/sendtemplate"
-
-    xsmtpapi = {
-        'to':[to]
-    }
-        # 您需要登录SendCloud创建API_USER，使用API_USER和API_KEY才可以进行邮件的发送。
-    params = {"apiUser": "hxp_devmail", \
-              "apiKey": "6CEiNLCT8Q8UfSug", \
-              "from": "help@devmail.houxiaopang.com", \
-              "fromName": "猴小胖", \
-              "subject": subject, \
-              "xsmtpapi": json.dumps(xsmtpapi),
-              #"html":"恭喜您",\
-              "templateInvokeName":"designer_apply",\
-              "replyTo":'dyh@houxiaopang.com',\
-              }
-
-    r = requests.post(url, files={}, data=params)
-    res = r.json().get("result")
-    statusCode = r.json().get("statusCode")
-    current_app.logger.info('发送邮件:%s (状态:%s-statusCode:%s)' % (to,res,statusCode ))
-    # print(r)
+    htmlbody= """\
+<html>
+    <head></head>
+    <body>
+    <p>
+        <span>亲爱的设计师</span>
+    </p>
+    <p>
+        <span>&nbsp;</span>
+    </p>
+    <p>
+        <span>您好！</span>
+    </p>
+    <p>
+        <span>您的入驻申请我们已收到，我们会快马加鞭尽快审核，请您耐心等待。</span>
+    </p>
+    <p>
+        <span>感谢您对猴小胖的支持！</span>
+    </p>
+    <p>
+        <span>&nbsp;</span>
+    </p>
+    <p>
+        <span>&nbsp;</span>
+    </p>
+    <p>
+        <span>--------</span>
+    </p>
+    <p>
+        <span>猴小胖设计服务专家</span>
+    </p>
+    <p>
+        <br/>
+    </p>
+    </body>
+<html>
+"""
+    send_mail_in_html(to,subject,htmlbody)
 
 
 
@@ -141,6 +206,9 @@ def get_wx_head(headimg,unionid):
         return 1
 
 
+# def alicloud():
+#     url = "dm.aliyuncs.com",methods:post
+
 
 
 def support_jsonp(func):
@@ -162,11 +230,10 @@ auth = HTTPTokenAuth(scheme='Token')
 
 @auth.verify_token
 def verify_token(token):
-    #todo:backdoor
-    if  token=='robin':
-        user = User.query.filter_by(id=25).first()
-        g.user = user
-        return True
+    # if  token=='robin':
+    #     user = User.query.filter_by(id=25).first()
+    #     g.user = user
+    #     return True
     # admin帐户
     # if token == ADMIN_KEY:
     #     return True
@@ -177,5 +244,12 @@ def verify_token(token):
     g.user = user
     return True
 
+adminauth = HTTPTokenAuth(scheme='Token')
 
+@adminauth.verify_token
+def verify_token(token):
+    if  token=='robin':
+        return True
+    else:
+        return False
 

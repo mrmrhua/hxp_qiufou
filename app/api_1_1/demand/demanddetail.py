@@ -19,8 +19,7 @@ class DemandDeatil(Resource):
             'data':{
                 'title':dm.title,
                 'description':dm.description,
-                'desc_img':json.loads(dm.desc_img)
-                ,
+                'desc_img':json.loads(dm.desc_img),
                 'howlong':dm.howlong,
                 'howmuch':dm.howmuch,
                 'category':dm.category,
@@ -28,6 +27,7 @@ class DemandDeatil(Resource):
             }
         })
 
+    # 经纪人发布需求
     def post(self):
         dm = Demand.from_request(request)
         db.session.add(dm)

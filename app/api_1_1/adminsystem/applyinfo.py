@@ -6,12 +6,13 @@ from app.common import  support_jsonp,get_access_token,get_user_info,get_wx_head
 import json
 from app.models import User,db
 from config import APPLYSTATUS,SEX
-from app.common import auth
+from app.common import auth,adminauth
 from app.models import Album,Designwork,Applyform,User,Category,Applywork
 from datetime import datetime
 
 
 class GetApplyinfo(Resource):
+    @adminauth.login_required
     def get(self):
         us = User.query.filter_by(applystatus=1).all()
         applyer = []

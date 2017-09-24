@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>查看设计师作品</title>
+	<style type="text/css">
+		.contenlist{
+			margin:100px auto;
+			width: 1000px;
+		}
+		.img{
+		    max-width: 1000px;
+		    display: block;
+		    margin: 10px auto;
+		}
+	</style>
+
+</head>
+<body>
+	<div id="list" class="contenlist">
+		
+	</div>
+	<script type="text/javascript">
+		function GetQueryString(name){
+		     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+		     var r = window.location.search.substr(1).match(reg);
+		     if(r!=null)return  unescape(r[2]); return null;
+		}
+		var imgs = GetQueryString("imgs");
+		console.log(imgs);
+		var imgurls = imgs.split(",");
+		var list = document.getElementById("list");
+		imgurls.forEach(function(item,index){
+			list.innerHTML += "<img class='img' src='"+item+"'>";
+		});
+	</script>
+</body>
+</html>

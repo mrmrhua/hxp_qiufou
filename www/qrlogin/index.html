@@ -1,124 +1,136 @@
-﻿<!doctype html>
-<html lang="zh-cmn-Hans">
+<!DOCTYPE html>
+<html>
 <head>
     <meta charset="UTF-8">
     <title>猴小胖——设计师的接单神器</title>
     <meta name="keywords" content="包装设计,名片制作,形象设计,传单设计,户外广告,ui设计师,商业计划书模板">
     <meta name="description" content="免费入驻猴小胖平台,我们收到客户需求后,将智能匹配推送给您,由您自己根据需求报价。">
     <link rel="shortcut icon" href="http://image.houxiaopang.com/houicon.ico">
-    <link rel="stylesheet" href="qrcommon.css">
-    <link rel="stylesheet" href="qrlogin.css">
-    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
-    <script src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
+	<script>
+	function myBrowser(){
+		var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
+		var isOpera = userAgent.indexOf("Opera") > -1;
+		if (isOpera) {
+			return "Opera"
+		}else if (userAgent.indexOf("Firefox") > -1) {
+			return "FF";
+		}else if (userAgent.indexOf("Chrome") > -1){
+			return "Chrome";
+		}else if (userAgent.indexOf("Safari") > -1) {
+			return "Safari";
+		}else{
+			return "IE";
+		}; //判断是否IE浏览器
+	}
+	//以下是调用上面的函数
+	var mb = myBrowser();
+	if ("IE" == mb) {
+		location.href="http://houxiaopang.com/browsernotsupport";
+	}
+	</script>
+	
+	<!-- Piwik -->
+<script type="text/javascript">
+  var _paq = _paq || [];
+  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="//analysis.houxiaopang.com/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<!-- End Piwik Code -->
+	<style type="text/css">
+		*{
+			padding: 0 0;
+			margin: 0 0;
+			letter-spacing:  1px;
+			box-sizing: border-box;
+		}
+		html,body{
+			width: 100%;
+			height: 100%;
+		}
+		.back{
+			width: 100%;
+			margin:0 auto;
+			display: table-cell;
+			vertical-align: middle;
+		}
+
+		@media screen and (min-width: 1600px) and (max-width: 2000px) {
+		    .thisdiv{
+		        transform: scale(1.4);
+		    }
+		}
+	</style>
 </head>
 <body>
-<div id="warp" class="warp">
-    <div class="banner">
-        <div class="banner_fg">
-            <div class="box">
-                <div class="logo" onclick="javascript:location.href='/';" style="cursor: pointer"></div>
-                <div class="context">
-                    <div class="text1">设计师的接单神器</div>
-                    <div class="text2">新设计师扫一扫申请入驻</div>
-                </div>
-                <div class="qrcode">
-                    <div id="wxqrcode" style="text-align: center"></div>
-                </div>                
-            </div>
-        </div>
-    </div>
-    <div class="more"></div>
-    <div class="bg">
-        <p class="p1">入驻猴小胖让全国优质客户找到你</p>
-        <!--<p class="p2">猴小胖70%的外包业务客单价在2000-5000区间</p>-->
-        <p class="p2">更有一线知名品牌合作机会</p>
-        <p class="p3">目前我们已成功为初心资本（北京）、上海嘉里中心等行业知名客户匹配了设计师</p>
-    </div>
-
-    <div class="th">
-        <ul>
-            <li><em></em><span>提交个人材料，完成审核后签约入驻猴小胖平台</span></li>
-            <li><em></em><span>猴小胖在收到客户设计需求时，通过智能匹配算法将客户需求推送给若干名合适的设计师</span></li>
-            <li><em></em><span>设计师根据需求进行报价</span></li>
-            <li><em></em><span>由客户确定最后接单的设计师，托管资金后进入业务设计流程</span></li>
-            <li><em></em><span>在猴小胖设计师经纪人帮助下进行三方沟通，保障设计师权益</span></li>
-        </ul>
-    </div>
-
-    <div class="bg2">
-        <div class="content">
-            <p>流程规范有保障</p>
-            <ul>
-                <li><em></em><span >项目确认开始后预付定金给设计师，结束后先结款再交付源文件</span></li>
-                <li><em></em><span>平台托管资金，不怕客户跑路了</span></li>
-                <li><em></em><span>约定修改次数，拒绝无条件改改改</span></li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="bg3">
-        <div class="content">
-            <p>沟通真麻烦</p>
-            <p>项目协作系统来帮忙？</p>
-            <ul>
-                <li><em></em><span>客户微信小程序直接看稿</span></li>
-                <li><em></em><span>告别压缩文件满天飞</span></li>
-            </ul>
-        </div>
-    </div>
-
-    <!--<div class="six">
-        <p>猴小胖怎么收费？</p>
-        <div class="line"></div>
-        <p>我们将从设计项目费用中收取<span>15%</span>的经纪人服务费</p>
-        <p>现在入驻，前6个月仅收取<span>5%</span>的服务费</p>
-        <div class="btn" onclick="jump()"></div>
-    </div>-->
-    <div class="six">
-        <p>猴小胖怎么收费？</p>
-        <div class="line"></div>
-        <p>我们将从您获得的设计项目费中抽取一定的经纪人服务费</p>
-        <!--<p>具体将由我们的经纪人与您对接</p>-->
-        <div class="btn" onclick="jump()"></div>
-    </div>
-</div>
-<script>
-
-
-    function getQueryString(name) {
-        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-        var r = window.location.search.substr(1).match(reg);
-        if (r != null) return unescape(r[2]);
-        return null;
-    }
-    function jump() {
-    	//alert($('#wxqrcode').width());
-        $('html,body').animate({scrollTop: $('#warp').offset().top}, 200);
-    }
-    var code = getQueryString("code");
+	<div style="height: 100%;background:#f5f5f5;display: table;width: 100%;">
+		<div class="back">
+			<div class="thisdiv" style="height:561px;width: 950px;margin: 0 auto;position: relative;">
+				<img src="http://image.houxiaopang.com/qrlogin/v1.1/back.png" style="width:100%;display: block;">
+				<div style="position: absolute;height:100%;width: 50%;left: 0;top: 0;">
+					<a href="http://www.houxiaopang.com"><img style="margin: 3% 10% 3%;" src="http://image.houxiaopang.com/first/logodown.png"></a>
+					<div style="height: 433px;width: 350px;margin: 0 auto;background: url('http://image.houxiaopang.com/qrlogin/v1.1/loginback.png') no-repeat;background-size: 100%;">
+						<div id="wxqrcode" style="text-align: center;"></div>
+					</div>
+				</div>
+				<div style="position: absolute;height:100%;width: 50%;right: 0;top: 0;">
+				<div style="display: table;width: 100%;height: 100%;">
+				<div style="display: table-cell;width: 100%;vertical-align: middle;background: #F2FDFB;">
+					<img src="http://image.houxiaopang.com/qrlogin/v1.1/Illustration.png" style="display:block;margin: 0 auto">
+				</div>
+				</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
+	<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+	<script type="text/javascript">
+	function getQueryString(name) {
+	    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+	    var r = window.location.search.substr(1).match(reg);
+	    if (r != null) return unescape(r[2]);
+	    return null;
+	}
+	var code = getQueryString("code");
     if (!code) {
         var obj = new WxLogin({
             id: "wxqrcode",
             appid: "wxbfacdb1b99885182",
             scope: "snsapi_login",
             redirect_uri: "http%3a%2f%2fhouxiaopang.com%2fqrlogin",
-           // redirect_uri:"http%3a%2f%2fhouxiaopang.com%3a8000%2fqrlogin",
             state: "",
             style: "",
             href: ""
         });
     } else {
-        $.get('/api/v1.1/wx_verify?code='+code,function (result){
-            if(result.code=='0'){
-            window.localStorage.token = result.data.token;
-            location.href = result.data.url;
-             }else{
-            alert('微信授权失败');
-            location.href= "houxiaopang.com/qrlogin";
-          }
-        });
-
-    }
-</script>
+		$.ajax({
+			url: 'http://houxiaopang.com/api/v1.1/wx_verify',
+			type: "GET",
+			data:{
+				'code':code
+			},
+			success: function(result) {
+				if(result.code=='0'){
+	           		window.localStorage.token = result.data.token;
+	            	location.href = result.data.url;
+	            }else{
+	            	alert('微信授权失败');
+	           		location.href= "houxiaopang.com/qrlogin";
+	            }
+			},
+			error: function() {
+				alert("网络拥挤，请稍后再试。。。");
+			}
+		});
+	}
+	</script>
 </body>
 </html>

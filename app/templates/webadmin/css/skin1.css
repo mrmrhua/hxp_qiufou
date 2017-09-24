@@ -1,0 +1,25 @@
+@CHARSET "UTF-8";
+.colorStyle{
+	background: linear-gradient(to top,#0f8dc7 0,#15AAF0 100%);
+}
+.colorSpan{
+	color: #0f8dc7;
+}
+
+.tree .list :hover{
+	color: #0f8dc7;
+}
+.main .tab li div.active{
+	color:#0f8dc7;
+}
+
+tbody > tr:HOVER {
+	background: #0f8dc7;
+	color: white;
+}
+
+ul > li.active {
+	background: linear-gradient(to top,#0f8dc7 0,#15AAF0 100%);
+	cursor: not-allowed;
+	color:white;
+}

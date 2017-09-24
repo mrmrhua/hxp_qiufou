@@ -22,5 +22,7 @@ class GetApplyUptoken(Resource):
             upToken = q.upload_token(bucket='userhead', key=None)
         else:
             upToken = q.upload_token(bucket='designfile', key=None)
+        print(q)
+        print(upToken)
         return jsonify({ 'uptoken':upToken })
 

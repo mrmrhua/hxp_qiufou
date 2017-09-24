@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <link href="css/style.css" rel="stylesheet" type="text/css"/>
+    <link href="css/common.css" rel="stylesheet" type="text/css"/>
+    <link href="css/phone.css" rel="stylesheet" type="text/css"/>
+    <link href="css/skin1.css" rel="stylesheet" type="text/css"/>
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="js/demandborkerdetail.js"></script>
+    <script type="text/javascript">
+        var removedesi_id = 0;
+        $(document).ready(function () {
+            $(".tiptop a").click(function () {
+                $(".tip").fadeOut(200);
+            });
+            $(".sure").click(function () {
+                $(".tip").fadeOut(100);
+                reomvebrokerdesi();
+            });
+            $(".cancel").click(function () {
+                $(".tip").fadeOut(100);
+            });
+
+        });
+    </script>
+</head>
+<body>
+<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+        <li><a href="#">首页</a></li>
+        <li><a href="#">查看项目需求</a></li>
+        <li><a href="#">查看已推荐设计师</a></li>
+    </ul>
+</div>
+<div class="rightinfo">
+    <div style="width: 100%;height: 50px;">
+        <div style="width: 200px;height: 36px;float: left;padding: 5px;border: 1px solid #bbb;box-sizing: border-box;border-radius: 5px;">
+            <input id="demand_id" type="text" placeholder="请输入需求id"
+                   style="font-size: 16px;width: 100%;height: 100%;border: none;outline: none">
+        </div>
+        <div onclick="select()"
+             style="color: #fff;background: #4097C9;cursor: pointer;line-height: 34px;text-align:center;width: 60px;float: left;height: 36px;border: 1px solid #4097C9;border-radius: 5px;margin-left: 25px;box-sizing: border-box;">
+            查询
+        </div>
+    </div>
+    <div class="table-context">
+        <!-- 表格主体 -->
+        <div class="table-main">
+            <!-- 表头 -->
+            <div class="titleBorder">
+                <!-- 选择框 -->
+                <div class="checkbox">
+                    <input type="checkbox" style="margin-top: 10px;" onclick="checkAll()">
+                </div>
+                <div class="title" style="cursor: default;" id="title">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>
+                                <div>
+                                    <span>推荐编号</span><i></i>
+                                </div>
+                            </th>
+                            <th>
+                                <div>
+                                    <span>昵称</span><i></i>
+                                </div>
+                            </th>
+                            <th>
+                                <div style="width: 380px;">
+                                    <span>构想</span><i></i>
+                                </div>
+                            </th>
+                            <th>
+                                <div>
+                                    <span>报价</span><i></i>
+                                </div>
+                            </th>
+                            <th>
+                                <div>
+                                    <span>工期</span><i></i>
+                                </div>
+                            </th>
+                            <th>
+                                <div>
+                                    <span>联系方式</span><i></i>
+                                </div>
+                            </th>
+                            <th>
+                                <div>
+                                    <span>作品</span><i></i>
+                                </div>
+                            </th>
+                        </thead>
+                    </table>
+                </div>
+                <!-- 操作列 -->
+                <div class="operate">
+                    <span>操作</span>
+                </div>
+            </div>
+            <!-- 表格内容 -->
+            <div class="content">
+                <!-- 选择框 -->
+                <div class="checks">
+                    <table style="width: 100%;">
+                        <!-- 使用tfoot用于区分，便于使用css样式 -->
+                        <tfoot id="checktfoot">
+
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div id="context" class="context">
+                    <table>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+                <!-- 操作列 -->
+                <div class="operate">
+                    <table style="width: 100%;">
+                        <tfoot id="operate">
+
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <div id="content"
+                 style="width: 80%; height: 18px; overflow-x: auto; overflow-y: hidden; margin-left: 40px;">
+                <div id="tableScroll" style="height: 1px;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="tip">
+        <div class="tiptop"><span>提示信息</span><a></a></div>
+        <div class="tipinfo">
+            <span><img src="images/ticon.png"/></span>
+            <div class="tipright">
+                <p>是否确认对信息的修改 ？</p>
+                <cite>如果是请点击确定按钮 ，否则请点取消。</cite>
+            </div>
+        </div>
+        <div class="tipbtn">
+            <input name="" type="button" class="sure" value="确定"/>&nbsp;
+            <input name="" type="button" class="cancel" value="取消"/>
+        </div>
+
+    </div>
+
+
+</div>
+
+<script>
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
+
+    var id = getQueryString("id");
+    if (id) {
+        document.getElementById("demand_id").value = id;
+        getbrokerdesigner(id);
+    }
+    function select() {
+        var demand_id = document.getElementById("demand_id").value;
+        if (demand_id.trim() === "") {
+            alert("请输入需求号");
+            return;
+        }
+        getbrokerdesigner(demand_id);
+    }
+
+</script>
+</body>
+</html>
