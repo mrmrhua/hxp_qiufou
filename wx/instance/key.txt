@@ -1,0 +1,14 @@
+需要配置的环境变量:
+
+APP_CONFIG_FILE=/Users/ding/dev/hxp/wx/config/dev.py
+
+:为环境的配置文件的路径
+    dev:WX_APP_CONFIG_FILE= /Users/ding/dev/hxp/wx/config/dev.py
+
+
+生产 环境下:
+    WX_APP_CONFIG_FILEE=/home/hxp/wx/config/production.py
+
+
+QINIU_access_key='Q3q69gi69DU3nre9CbFNUOdvlV9GhLANur32JF46'
+QINIU_secret_key='0xgKSNS1UKTSi69_GJ2qg5qjZq3wlkQF_OS2o-aS'
