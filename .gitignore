@@ -28,3 +28,4 @@ app/static/.webaseets-cache
 www/group-apply/static/
 wx/static/
 wx/templates/
+/wx/instance/
