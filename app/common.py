@@ -155,7 +155,7 @@ def send_designer_email(to,subject):
         <span>您好！</span>
     </p>
     <p>
-        <span>您的入驻申请我们已收到，我们会快马加鞭尽快审核，请您耐心等待。</span>
+        <span>您的入驻申请我们已收到，我们会尽快审核，请您耐心等待。</span>
     </p>
     <p>
         <span>感谢您对猴小胖的支持！</span>

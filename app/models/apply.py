@@ -88,7 +88,7 @@ class Applyform(db.Model):
         # may be none
         project_text = request.form.get('project_text')
         blog_url = request.form.get('blog_url')
-        user_id = g.user_id
+        user_id = g.user.id
         return Applyform(name=name, tel=tel, city=city, email=email, qq=qq, wx=wx,
                          project_text=project_text,company_name = company_name, company_web=company_web,
                          company_size=company_size ,role=role,
@@ -109,7 +109,7 @@ class Applyform(db.Model):
         company_size = request.form.get('company_size')
 
         blog_url = request.form.get('blog_url')
-        user_id = g.user_id
+        user_id = g.user.id
         return Applyform(name=name, tel=tel, city=city, email=email, qq=qq, wx=wx,
                          company_name=company_name, company_web=company_web,
                          company_size=company_size, role=role,

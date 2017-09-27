@@ -16,6 +16,8 @@ class Category(db.Model):
     __tablename__ = 'categories'
     id = db.Column(INTEGER(unsigned=True), primary_key=True)
     cat_name = db.Column(db.String(6), unique=True)
+    demands = db.relationship('Demand', backref='cat')
+
     def __repr__(self):
         return '<Cat: %r>' % (self.cat_name)
 
@@ -57,7 +59,7 @@ class Demand(db.Model):
     cat_id = db.Column(INTEGER(unsigned=True), db.ForeignKey('categories.id'))
     screen = db.Column(db.String(10))
     imglist = db.Column(db.Text)
-    color = db.Column(db.String(8))
+    color = db.Column(db.String(64))
     page = db.Column(db.String(8))
     desc = db.Column(db.Text)
     scale = db.Column(db.String(8))

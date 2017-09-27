@@ -33,25 +33,16 @@ class WxVerify(Resource):
 
         # 根据unionid是否在库,决定是去填表还是去个人中心
         user = User.query.filter_by(unionid=unionid).first()
-        # TODO
-        print("TEST1")
         if user is None:  # 第一次登陆
             applystatus = APPLYSTATUS['APPLYING']
             #创建该用户实例
             user = User(nickname=nickname, unionid=unionid, sex=sex, headimg=headimg, applystatus=applystatus)
             db.session.add(user)
-            # TODO
-            print("TEST3")
             try:
                 db.session.commit()
-                # TODO
-                print("TEST4")
             except:
-                # TODO
-                print("TEST5")
                 db.session.rollback()()
-        # TODO
-        print("TEST2")
+
         # 该用户登录
         login_user(user)
         session['applystatus'] = user.applystatus
@@ -69,7 +60,6 @@ class WxVerify(Resource):
 
         token = user.generate_auth_token().decode()
         applystatus = user.applystatus
-        # print(token)
         return jsonify({'code': 0, 'data': {'url': url,'token':token,'applystatus':applystatus}})
 
 

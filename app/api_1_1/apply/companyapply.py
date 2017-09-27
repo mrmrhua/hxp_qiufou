@@ -15,7 +15,7 @@ class NewCompanyPostApply(Resource):
     def post(self):
         #记录申请
         current_app.logger.info('新收到入驻申请:%s' % request)
-        af = Applyform.company_from_request(request)
+        af = Applyform.company_from_request_new(request)
         db.session.add(af)
         try:
             db.session.commit()
