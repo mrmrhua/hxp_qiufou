@@ -35,7 +35,7 @@ class GetColor(Resource):
         if '商务' in tags:
             t= Tag.query.filter_by(id=1).first()
         colors = [{'val': i.color_val, 'desc': i.color_desc, 'name': i.color_name} for i in t.colors]
-        all = [{'val': i.color_val, 'desc': i.color_desc, 'name': i.color_name} for i in Color.query.all()]
+        all = [{'val': i.color_val, 'desc': i.color_desc, 'name': i.color_name} for i in Color.query.limit(12)]
 
         return jsonify({'code': 0, 'data': {'colors':colors,'all':all}})
 

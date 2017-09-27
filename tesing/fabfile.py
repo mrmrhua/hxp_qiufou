@@ -26,3 +26,6 @@ def updb():
         with prefix(env.activate):
             run("python manage.py db migrate -m 'upgrade'")
             run('python manage.py db upgrade')
+
+def nginx():
+    run("nginx -s reload")
