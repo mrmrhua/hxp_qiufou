@@ -88,11 +88,33 @@ class Applyform(db.Model):
         # may be none
         project_text = request.form.get('project_text')
         blog_url = request.form.get('blog_url')
-        user_id = g.user_id
+        user_id = g.user.id
         return Applyform(name=name, tel=tel, city=city, email=email, qq=qq, wx=wx,
                          project_text=project_text,company_name = company_name, company_web=company_web,
                          company_size=company_size ,role=role,
                          blog_url=blog_url, user_id=user_id)
+
+    @staticmethod
+    def company_from_request_new(request):
+        name = request.form.get('name')
+        tel = request.form.get('tel')
+        city = request.form.get('city')
+        email = request.form.get('email')
+        # may be none
+        qq = request.form.get('qq')
+        wx = request.form.get('wx')
+        role = request.form.get('role')
+        company_name = request.form.get('company_name')
+        company_web = request.form.get('company_web')
+        company_size = request.form.get('company_size')
+
+        blog_url = request.form.get('blog_url')
+        user_id = g.user.id
+        return Applyform(name=name, tel=tel, city=city, email=email, qq=qq, wx=wx,
+                         company_name=company_name, company_web=company_web,
+                         company_size=company_size, role=role,
+                         blog_url=blog_url, user_id=user_id)
+
 
     @staticmethod
     def personal_from_request_new(request):

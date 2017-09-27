@@ -8,7 +8,7 @@ function registerup(app) {
     flash_swf_url: 'https://cdn.staticfile.org/plupload/2.1.1/Moxie.swf',  //引入flash，相对路径
     chunk_size: '4mb',
 
-    uptoken_url: 'http://houxiaopang.com/api/v1.0/apply/uptoken',
+    uptoken_url: 'http://www.houxiaopang.com/api/v1.0/apply/uptoken',
     multi_selection: !(mOxie.Env.OS.toLowerCase() === "ios"),
     filters: {
       max_file_size: '10mb',

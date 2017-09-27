@@ -10,14 +10,19 @@ from config import APPLYSTATUS
 from app.common import  support_jsonp,auth
 from flask_login import current_user
 
-class CompanyPostApply(Resource):
+class NewCompanyPostApply(Resource):
     @auth.login_required
     def post(self):
         #记录申请
         current_app.logger.info('新收到入驻申请:%s' % request)
-        af = Applyform.company_from_request(request)
-        # print(af)
+        af = Applyform.company_from_request_new(request)
         db.session.add(af)
+        try:
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({'code': -1})
+
         # 修改状态
         session['applystatus'] = APPLYSTATUS['CHECKING']
         g.user.applystatus = APPLYSTATUS['CHECKING']
@@ -29,18 +34,7 @@ class CompanyPostApply(Resource):
         except Exception as e:
             db.session.rollback()
             return jsonify({'code': -1})
-
-        cats = json.loads(request.form.get('category'))
-        for i in cats:
-            af.add_categories(i)
-            db.session.add(af)
-        db.session.commit()
-
-
         imgurl = json.loads(request.form.get('img_url'))
-        # for t in c:
-        #     c = Category(category_name=t,apply_id=af.id)
-        #     db.session.add(c)
         for w in imgurl:
             aw = Applywork(work_url=w,apply_id=af.id)
             db.session.add(aw)
