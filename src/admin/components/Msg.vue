@@ -70,7 +70,7 @@
     created(){
       var that = this;
       $.ajax({
-        url: "http://houxiaopang.com/api/v1.1/designerdash/notice/all",
+        url: "http://www.houxiaopang.com/api/v1.1/designerdash/notice/all",
         type: "GET",
         headers: {"Authorization": "Token " + token},
         success(data) {
@@ -102,7 +102,7 @@
         that.delmodel = false;
         $.ajax({
           type: "post",
-          url: "http://houxiaopang.com/api/v1.1/designerdash/notice/removeall",
+          url: "http://www.houxiaopang.com/api/v1.1/designerdash/notice/removeall",
           headers: {"Authorization": "Token " + token},
           success(data){
             if (data.code === 0) {

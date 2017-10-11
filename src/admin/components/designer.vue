@@ -14,7 +14,7 @@
           <div class="headimg_up">
             <div class="zhezhao" @click="chooseimg"><i class="iconfontyyy">&#xe68a;</i>
               <p>上传</p></div>
-            <input type="file" accept="image/*" id="headimgupload" @change="uploadimg($event)"
+            <input type="file" accept="image/jpg,image/jpeg,image/png" id="headimgupload" @change="uploadimg($event)"
                    style="display: none;">
             <img :src="basic.headimg">
           </div>
@@ -228,7 +228,7 @@
       let that = this;
       $.ajax({
         type: "get",
-        url: "http://houxiaopang.com/api/v1.1/designerdash/userinfo",
+        url: "http://www.houxiaopang.com/api/v1.1/designerdash/userinfo",
         headers: {"Authorization": "Token " + token},
         success(data){
           if (data.code === 0) {
@@ -408,7 +408,7 @@
           $.ajax({
             headers: {"Authorization": "Token " + token},
             type: "post",
-            url: "http://houxiaopang.com/api/v1.1/designerdash/userinfo",
+            url: "http://www.houxiaopang.com/api/v1.1/designerdash/userinfo",
             data: {
               'basic': JSON.stringify(that.basic)
             },
@@ -500,7 +500,7 @@
           $.ajax({
             headers: {"Authorization": "Token " + token},
             type: "post",
-            url: "http://houxiaopang.com/api/v1.1/designerdash/userinfo",
+            url: "http://www.houxiaopang.com/api/v1.1/designerdash/userinfo",
             data: {
               'worksetting': JSON.stringify(that.worksetting)
             },
@@ -554,7 +554,7 @@
         var that = this;
         $.ajax({
           type: 'GET',
-          url: 'http://houxiaopang.com/api/v1.0/apply/uptoken',
+          url: 'http://www.houxiaopang.com/api/v1.0/apply/uptoken',
           data: {
             headimg: "1"
           },
@@ -580,7 +580,7 @@
           $.ajax({
             type: "POST",
             headers: {"Authorization": "Token " + token},
-            url: "http://houxiaopang.com/api/v1.1/designerdash/userinfo/deletexp",
+            url: "http://www.houxiaopang.com/api/v1.1/designerdash/userinfo/deletexp",
             data: {
               "exp_id": id
             },
