@@ -9,6 +9,8 @@ from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 from .assets import bundle
 from .exceptions import ValidationError
+from flask import jsonify
+from .libs  import send_mail_in_text
 
 db = SQLAlchemy()
 lm = LoginManager()
@@ -60,7 +62,6 @@ def create_app():
 
     #from .designers import designers as designers_bp
     #app.register_blueprint(designers_bp)
-
 
 
     #API_1_1

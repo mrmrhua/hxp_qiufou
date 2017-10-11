@@ -41,5 +41,18 @@ def create_app():
     # alembic.init_app(app)
     migrate.init_app(app,db)
 
+
+    import logging
+    from logging.handlers import RotatingFileHandler
+    handler = RotatingFileHandler('wx.log', maxBytes=1024 * 1024 * 100, backupCount=20)
+    # 设置日志记录最低级别为DEBUG，低于DEBUG级别的日志记录会被忽略，不设置setLevel()则默认为NOTSET级别。
+    handler.setLevel(logging.INFO)
+    # 控制日志记录格式
+    logging_format = logging.Formatter(
+        '%(asctime)s - %(levelname)s - %(filename)s - %(funcName)s - %(lineno)s - %(message)s')
+    handler.setFormatter(logging_format)
+    # 将此handler加入到此app中
+    app.logger.addHandler(handler)
+
     return app
 

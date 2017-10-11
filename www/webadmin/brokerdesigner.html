@@ -222,7 +222,7 @@
 				}else if(i===3){
 					fromdata.album_ids.push($(this).val().trim());
 				}else if(i===4){
-					if($(this).val().length > 16){
+					if($(this).val().length > 255){
 					alert("构想字数超限");
 					return false;
 				}else{
@@ -280,7 +280,7 @@
 				var demand_id = document.getElementById("demand_id").value.trim();
 				$.ajax({
 					type:"post",
-					url:"http://houxiaopang.com/api/v1.1/adminsystem/recommend",
+					url:"http://www.houxiaopang.com/api/v1.1/adminsystem/recommend",
                     headers: {"Authorization": "Token " + window.localStorage.token},
                     data:{
 						'demand_id' : demand_id,

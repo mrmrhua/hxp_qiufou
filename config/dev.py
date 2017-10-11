@@ -1,5 +1,6 @@
 ENVFLAG='dev'
-DEBUG = True
+#todo
+DEBUG =False
     #
 SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://dyh:baiduding123@mysql.rdsmbhsvs1vn5cx.rds.gz.baidubce.com/hxp'
 # TODO

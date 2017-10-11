@@ -121,7 +121,7 @@
     function getdesigner() {
         $.ajax({
             type: "get",
-            url: "http://houxiaopang.com/api/v1.1/adminsystem/alldesigner",
+            url: "http://www.houxiaopang.com/api/v1.1/adminsystem/alldesigner",
             headers: {"Authorization": "Token " + window.localStorage.token},
             data: {
                 'category': JSON.stringify(categorys),

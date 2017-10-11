@@ -1,0 +1,74 @@
+from  flask import session, jsonify, request, url_for, g,current_app
+from flask_restful import Resource
+from app.wxmodels import *
+from app import db
+import json
+import urllib.parse
+import random
+class GetUID(Resource):
+    def get(self):
+        code = request.values.get("code")
+        url = 'https://api.weixin.qq.com/sns/jscode2session?appid=wxdfb82dad3e5a5d2f&secret=00aae3c9d4335121e944761b0ab95a57&js_code=' \
+              + code + '&grant_type=authorization_code'
+        # get acess_token
+        result = json.loads(urllib.request.urlopen(url).read().decode('utf-8'))
+        res_unionid = result.get("unionid")
+        # 新建一个用户
+        u = User.query.filter_by(uid=result.get("openid")).first()
+        if not u:
+            u = User(uid=result.get("openid"),unionid=res_unionid)
+            db.session.add(u)
+            db.session.commit()
+        # 有UID了以后更新进数据库
+        elif not u.unionid  and res_unionid:
+            u.unionid = res_unionid
+            db.session.add(u)
+            db.session.commit()
+
+        return jsonify({'code':0,'data':{'uid':result.get("openid")}})
+#
+class GetDemand(Resource):
+    def get(self):
+        uid = request.values.get("uid")
+        u = User.query.filter_by(uid=uid).first()
+        if not u:
+            return jsonify({'code': -1,})
+        if u.demands is None:
+            demands=[]
+        else:
+            demands = [{'demand_id': i.id,'demand_title':i.cat.cat_name,'up_time':datetime.strftime(i.up_time,"%Y-%m-%d %H:%M"),'cat':i.cat_id} for i in u.demands]
+        return jsonify({'code': 0, 'data': {'demands':demands}})
+
+
+class DelDemand(Resource):
+    def post(self):
+        demand_id = request.json.get("demand_id")
+        uid = request.json.get("uid")
+        d = Demand.query.filter_by(id=demand_id).first()
+        if not d:
+            return  jsonify({'code': -1})
+        elif d.user.uid == uid:
+            db.session.delete(d)
+            db.session.commit()
+            return jsonify({'code': 0})
+        else:
+            return jsonify({'code': -1})
+
+
+class GetHot(Resource):
+    def get(self):
+        a = []
+        s ='http://img.zcool.cn/community/0183465744329b0000008eae582b15.jpg@340w_1l_2o_100sh.png'
+        a.append(s)
+        s ='http://img.zcool.cn/community/01b69259a77a94a801211d258b1afd.jpg@340w_1l_2o_100sh.png'
+        a.append(s)
+        s ='http://img.zcool.cn/community/01f7ae5974734ca8012193a3ad0bba.jpg@340w_1l_2o_100sh.png'
+        a.append(s)
+        s ='http://work.houxiaopang.com/ppt/cpfbh/bp/thumb_650_2213_big_2016081204331642418659%5B1%5D.jpg?imageView2/2/w/340'
+        a.append(s)
+        s = 'http://img.hb.aicdn.com/eac1f7a134557cbcc47f77068cd87ed78ca9f7a854bac-SbbhbD_fw658'
+        a.append(s)
+        s= 'http://img.hb.aicdn.com/8a943270d91edf7c7686243c9fe6e6d94e136f13117b33-ajdm0e_fw658'
+        a.append(s)
+        imgs = random.sample(a,4)
+        return jsonify({'code': 0, 'data': {'imglist':imgs}})

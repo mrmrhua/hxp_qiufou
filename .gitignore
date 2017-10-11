@@ -29,3 +29,4 @@ www/group-apply/static/
 wx/static/
 wx/templates/
 /wx/instance/
+/wx/wx.log

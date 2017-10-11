@@ -113,7 +113,7 @@ function tableMove() {
 function getNotice() {
     $.ajax({
         type: "get",
-        url: "http://houxiaopang.com/api/v1.1/adminsystem/notice/allnotice",
+        url: "http://www.houxiaopang.com/api/v1.1/adminsystem/notice/allnotice",
         headers: {"Authorization": "Token " + window.localStorage.token},
         success(data){
             if (data.code === 0) {
