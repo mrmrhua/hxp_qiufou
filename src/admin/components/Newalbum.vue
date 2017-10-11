@@ -39,7 +39,7 @@
                            class="add-img">
                       <input type="file" name="file"
                              value="" class="file" id="file" @change="appendImg"
-                             accept="image/*" multiple/>
+                             accept="image/jpg,image/jpeg,image/png,image/gif" multiple/>
                     </section>
                   </li>
                   <imgthumb @img_url="rm" v-for="(item,index) in img_url" v-bind:index="index"
@@ -114,7 +114,7 @@
           <i class="iconfontyyy" data-method="rotate" data-option="45" type="button"
              title="右旋">&#xe628;</i>
           <button @click="changeImg" style="width: 120px">选择文件
-            <input style="display: none;" id="inputImage" name="file" type="file" accept="image/*">
+            <input style="display: none;" id="inputImage" name="file" type="file" accept="image/jpg,image/jpeg,image/png">
           </button>
           <button style="float: right;width:100px;margin-top: 10px;" data-method="getCroppedCanvas" type="button">
             确定
@@ -290,10 +290,7 @@
                 });
                 currentItem.pointer = currentPointer;
                 // 开始交换位置
-
                 currentItem.collisionCheck();
-
-
               });
               $(document).mouseup(function () {
                 if (!isDrag) return false;
@@ -348,7 +345,7 @@
         var that = this;
         $.ajax({
           type: 'GET',
-          url: 'http://houxiaopang.com/api/v1.0/apply/uptoken',
+          url: 'http://www.houxiaopang.com/api/v1.0/apply/uptoken',
           success(data){
             //赋值给alllist数组,
             var url = "http://upload.qiniu.com/putb64/-1";
@@ -405,10 +402,11 @@
         //todo 提交
         if (this.flag) {
           this.flag = false;
+          _czc.push(["_trackEvent",'上传作品集-提交','点击']);
           var that = this;
           $.ajax({
             headers: {"Authorization": "Token " + token},
-            url: "http://houxiaopang.com/api/v1.1/newalbum",
+            url: "http://www.houxiaopang.com/api/v1.1/newalbum",
             type: "POST",
             data: {
               title: that.title.trim(),
@@ -458,12 +456,13 @@
       },
     },
     created(){
+      _czc.push(["_trackEvent",'上传作品集-进入','点击']);
       this.album_id = this.$route.query.album_id;
       if (this.album_id) {
         var that = this;
         $.ajax({
           type: "get",
-          url: "http://houxiaopang.com/api/v1.1/newalbum",
+          url: "http://www.houxiaopang.com/api/v1.1/newalbum",
           headers: {"Authorization": "Token " + token},
           data: {
             album_id: that.album_id
