@@ -8,11 +8,14 @@ from datetime import datetime
 class GetTags(Resource):
     def get(self):
         screen = request.values.get("screen")
-        if screen: #PPT
+        cat = request.values.get("cat")
+        if not cat:
+            return jsonify({'code': -1})
+        elif screen:
             s = Screen.query.filter_by(Screen_name=screen).first()
-            tags = [ {'id':i.id,'tag':i.tag_name}for i in s.tags]
-        else:  #名片
-            tags = [{'id': i.id, 'tag': i.tag_name} for i in Tag.query.filter_by(cat_id=3).all()]
+            tags = [{'id': i.id, 'tag': i.tag_name} for i in s.tags]
+        else:
+            tags = [{'id': i.id, 'tag': i.tag_name} for i in Tag.query.filter_by(cat_id=cat).all()]
         current_app.logger.info('返回TAG:%r' % tags)
         return jsonify({'code':0,'data':{'tags':tags}})
 
@@ -67,6 +70,8 @@ def demand2dict_ppt(d):
         'tel':d.tel,
         'name':d.name,
         'up_time': datetime.strftime(d.up_time, "%Y-%m-%d %H:%M"),
+        'howmuch':d.howmuch,
+        'howlong':d.howlong
     }
 
 def demand2dict_card(d):
@@ -80,7 +85,9 @@ def demand2dict_card(d):
         'industry':d.industry,
         'tech':d.tech,
         'up_time':datetime.strftime(d.up_time,"%Y-%m-%d %H:%M"),
-        'QRcode':d.qrcode
+        'QRcode':d.qrcode,
+        'howmuch': d.howmuch,
+        'howlong': d.howlong
     }
 
 
@@ -155,6 +162,29 @@ class UIDemand(Resource):
 class HBDemand(Resource):
     def post(self):
         d = Demand.from_request_hb(request)
+        uid = request.json.get("uid")
+        if not uid:
+            return jsonify({'code': -1})
+        u = User.query.filter_by(uid=uid).first()
+        if not u:
+            u = User(uid=uid)
+            db.session.add(u)
+            db.session.flush()
+        u.demands.append(d)
+        db.session.commit()
+        return jsonify({'code': 0, 'data': {'id': d.id}})
+    def get(self):
+        id = request.values.get("id")
+        d = Demand.query.filter_by(id=id).first()
+        if not d:
+            return jsonify({'code': -1})
+        return jsonify({'code': 0, 'data': {'demand': d.detailtext}})
+
+
+
+class LOGODemand(Resource):
+    def post(self):
+        d = Demand.from_request_logo(request)
         uid = request.json.get("uid")
         if not uid:
             return jsonify({'code': -1})

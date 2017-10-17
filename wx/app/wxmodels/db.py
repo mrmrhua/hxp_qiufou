@@ -73,10 +73,35 @@ class Color(db.Model):
 class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(INTEGER(unsigned=True), primary_key=True)
-    # UID = OPENID
     uid = db.Column(db.String(64),unique=True,nullable=True)
+    # 弃用unionid
     unionid = db.Column(db.String(64), unique=True,nullable=True)
+    nickname = db.Column(db.String(64))
     demands = db.relationship("Demand", backref="user",order_by='desc(Demand.up_time)')
+
+    # # 生成一个会过期的token,默认200分钟
+    def generate_auth_token(self, expiration=12000):
+        s = Serializer(current_app.config['SECRET_KEY'],
+                       expires_in=expiration)
+        # 生成一个随机数,存进token里. session里也存一个
+        nonce = random.randint(1, 100)
+        session['lognonce'] = nonce
+        t = s.dumps({'id': self.id, 'nonce': nonce})
+        return t
+
+    # 验证token
+    @staticmethod
+    def verify_auth_token(token):
+        s = Serializer(current_app.config['SECRET_KEY'])
+        try:
+            data = s.loads(token)
+        except SignatureExpired:
+            return None  # valid token, but expired
+        except BadSignature:
+            return None  # invalid token
+
+        return User.query.get(data['id'])
+
     def __repr__(self):
         return '<User: %r>' % (self.id)
 
@@ -94,15 +119,19 @@ class Demand(db.Model):
 
     industry = db.Column(db.String(8))
     tel = db.Column(db.String(11),server_default='未填写')
+    wx_num = db.Column(db.String(64),server_default='未填写')
     name = db.Column(db.String(10),server_default='未填写')
     business_desc =  db.Column(db.String(32),server_default='未填写')
     qrcode = db.Column(db.Boolean)
     tech = db.Column(db.String(8))
+    howmuch = db.Column(db.String(32))
+    howlong = db.Column(db.String(32))
+
 
     user_id =  db.Column(INTEGER(unsigned=True), db.ForeignKey('users.id'))
 
     detailtext = db.Column(db.Text)
-
+    pro = db.relationship("Project",backref='demand')
 
     @staticmethod
     def from_request_ppt(request):
@@ -114,10 +143,13 @@ class Demand(db.Model):
         desc = request.json.get("desc")
         scale = request.json.get("scale")
         up_time = datetime.now()
-        tel = request.json.get("tel")
+        # 微信：参数名为tel
+        wx = request.json.get("tel")
         name = request.json.get("name")
-        return  Demand(cat_id=cat_id,screen=screen,imglist=imglist,color=color,page=page,desc=desc,scale=scale,up_time=up_time,tel=tel,\
-                       name=name)
+        howmuch=request.json.get("howmuch")
+        howlong = request.json.get("howlong")
+        return  Demand(cat_id=cat_id,screen=screen,imglist=imglist,color=color,page=page,desc=desc,scale=scale,up_time=up_time,wx_num=wx,\
+                       name=name,howmuch=howmuch,howlong=howlong)
 
     @staticmethod
     def from_request_card(request):
@@ -126,14 +158,18 @@ class Demand(db.Model):
         # imglist='[{"tag":"文艺质感","url":"http://work.houxiaopang.com/mp/wyzg/10.jpg"},{"tag":"文艺质感","url":"http://work.houxiaopang.com/mp/wyzg/2.jpg"}]'
         imglist=request.json.get("imglist")
         color = request.json.get("color")
-        tel = request.json.get("tel")
+        # 微信：参数名为tel
+        wx = request.json.get("tel")
         name = request.json.get("name")
         up_time = datetime.now()
         business_desc= request.json.get("business_desc")
         qrcode = request.json.get("QRcode")
         tech=request.json.get("tech")
-        return Demand(cat_id=cat_id,industry=industry,imglist=imglist,color=color,tel=tel,name=name\
-                      ,up_time=up_time,business_desc=business_desc,qrcode=qrcode,tech=tech)
+        howmuch=request.json.get("howmuch")
+        howlong = request.json.get("howlong")
+
+        return Demand(cat_id=cat_id,industry=industry,imglist=imglist,color=color,wx_num=wx,name=name\
+                      ,up_time=up_time,business_desc=business_desc,qrcode=qrcode,tech=tech,howmuch=howmuch,howlong=howlong)
 
     @staticmethod
     def from_request_ui(request):
@@ -149,7 +185,23 @@ class Demand(db.Model):
         up_time = datetime.now()
         return Demand(cat_id=cat_id, up_time=up_time, detailtext=detailtext)
 
+    @staticmethod
+    def from_request_logo(request):
+        cat_id = request.json.get("cat_id")
+        detailtext = request.json.get("detail")
+        up_time = datetime.now()
+        return Demand(cat_id=cat_id, up_time=up_time, detailtext=detailtext)
+
 
     def __repr__(self):
         return '<Demand: %r>' % (self.id)
 
+class Feedback(db.Model):
+    __tablename__ = 'feedbacks'
+    id = db.Column(INTEGER(unsigned=True), primary_key=True)
+    uid = db.Column(db.String(64))
+    tel = db.Column(db.String(11))
+    content = db.Column(db.Text)
+
+    def __repr__(self):
+        return '<Feedback: %r>' % (self.content)

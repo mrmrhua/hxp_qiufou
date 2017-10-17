@@ -6,7 +6,7 @@ api_v1_1 = Api(api_1_1)
 
 from .postdemand import *
 from .info import *
-
+from .system import *
 api_v1_1.add_resource(GetTags,'/get_tag')
 
 
@@ -31,3 +31,15 @@ api_v1_1.add_resource(GetHot,'/get_hot')
 api_v1_1.add_resource(UIDemand,'/mydemand/ui')
 
 api_v1_1.add_resource(HBDemand,'/mydemand/hb')
+api_v1_1.add_resource(LOGODemand,'/mydemand/logo')
+
+api_v1_1.add_resource(FeedBack,'/feedback')
+
+
+api_v1_1.add_resource(Claim,'/claim')
+
+# api_v1_1.add_resource(Projectlist,'/projectlist')
+# api_v1_1.add_resource(Timeline,'/timeline')
+# api_v1_1.add_resource(Postdetail,'/postdetail')
+
+api_v1_1.add_resource(Systemlogin,'/system_login')
