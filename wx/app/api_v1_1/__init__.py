@@ -21,7 +21,7 @@ api_v1_1.add_resource(GetUID,'/wx_login')
 api_v1_1.add_resource(GetDemand,'/get_mydemand')
 
 api_v1_1.add_resource(DelDemand,'/del_mydemand')
-
+api_v1_1.add_resource(DelProject,'/del_project')
 
 api_v1_1.add_resource(CardDemand,'/mydemand/card')
 
@@ -38,8 +38,15 @@ api_v1_1.add_resource(FeedBack,'/feedback')
 
 api_v1_1.add_resource(Claim,'/claim')
 
-# api_v1_1.add_resource(Projectlist,'/projectlist')
-# api_v1_1.add_resource(Timeline,'/timeline')
-# api_v1_1.add_resource(Postdetail,'/postdetail')
+api_v1_1.add_resource(Projectlist,'/projectlist')
+api_v1_1.add_resource(Projectlist_WX,'/projectlist_wx')
+api_v1_1.add_resource(Timeline,'/timeline')
 
 api_v1_1.add_resource(Systemlogin,'/system_login')
+
+api_v1_1.add_resource(TokenVerify,'/tokenverify')
+
+
+api_v1_1.add_resource(Postlist,'/postlist')
+
+api_v1_1.add_resource(Postdetail,'/postdetail')

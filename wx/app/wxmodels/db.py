@@ -3,8 +3,10 @@ from sqlalchemy.dialects.mysql import INTEGER
 from flask import g
 import json
 from datetime import datetime
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer,BadSignature,SignatureExpired
+from flask import request,current_app,session
 
-
+import random
 Tag_Screen  = db.Table('tags_screens',
                       db.Column('screen_id',INTEGER(unsigned=True), db.ForeignKey('screens.id')),
                       db.Column('tag_id',INTEGER(unsigned=True), db.ForeignKey('tags.id'))
@@ -131,7 +133,7 @@ class Demand(db.Model):
     user_id =  db.Column(INTEGER(unsigned=True), db.ForeignKey('users.id'))
 
     detailtext = db.Column(db.Text)
-    pro = db.relationship("Project",backref='demand')
+    projects = db.relationship("Project",backref='demand')
 
     @staticmethod
     def from_request_ppt(request):
@@ -176,21 +178,36 @@ class Demand(db.Model):
         cat_id = request.json.get("cat_id")
         detailtext = request.json.get("detail")
         up_time = datetime.now()
-        return Demand(cat_id=cat_id,up_time=up_time,detailtext=detailtext)
+        # 微信：参数名为tel
+        wx = request.json.get("tel")
+        name = request.json.get("name")
+        howmuch = request.json.get("howmuch")
+        howlong = request.json.get("howlong")
+        return Demand(cat_id=cat_id,up_time=up_time,wx_num=wx,name=name,detailtext=detailtext,howmuch=howmuch,howlong=howlong)
 
     @staticmethod
     def from_request_hb(request):
         cat_id = request.json.get("cat_id")
         detailtext = request.json.get("detail")
         up_time = datetime.now()
-        return Demand(cat_id=cat_id, up_time=up_time, detailtext=detailtext)
+        # 微信：参数名为tel
+        wx = request.json.get("tel")
+        name = request.json.get("name")
+        howmuch = request.json.get("howmuch")
+        howlong = request.json.get("howlong")
+        return Demand(cat_id=cat_id, up_time=up_time, wx_num=wx,name=name,detailtext=detailtext,howmuch=howmuch,howlong=howlong)
 
     @staticmethod
     def from_request_logo(request):
         cat_id = request.json.get("cat_id")
         detailtext = request.json.get("detail")
         up_time = datetime.now()
-        return Demand(cat_id=cat_id, up_time=up_time, detailtext=detailtext)
+        # 微信：参数名为tel
+        wx = request.json.get("tel")
+        name = request.json.get("name")
+        howmuch = request.json.get("howmuch")
+        howlong = request.json.get("howlong")
+        return Demand(cat_id=cat_id, up_time=up_time, wx_num=wx,name=name,detailtext=detailtext,howmuch=howmuch,howlong=howlong)
 
 
     def __repr__(self):
