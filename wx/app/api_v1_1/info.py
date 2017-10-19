@@ -67,7 +67,8 @@ class GetUID(Resource):
                 headimg = decrypt_val.get("avatarUrl")
                 # 头像转存七牛
                 r = get_wx_head(headimg, res_unionid)
-                headimg = 'http://userhead.houxiaopang.com/wxhead/' + res_unionid + '.jpg'
+                print(r)
+                headimg = 'http://userhead.houxiaopang.com/' + res_unionid + '.jpg'
                 # 存头像结束
 
                 if not u.uid:  # 如果unionid木有
@@ -98,7 +99,8 @@ class GetUID(Resource):
             # 头像转存七牛
             # 用户更换头像会导致微信的头像URL失效,因此要先存七牛
             r = get_wx_head(headimg, res_unionid)
-            headimg = 'http://userhead.houxiaopang.com/wxhead/' + res_unionid + '.jpg'
+            print(r)
+            headimg = 'http://userhead.houxiaopang.com/' + res_unionid + '.jpg'
             # 存头像结束
 
             u = User(uid=res_unionid, nickname=nickname,headimg=headimg)

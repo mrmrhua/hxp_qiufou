@@ -180,11 +180,12 @@ class Demand(db.Model):
         cat_id = request.json.get("cat_id")
         detailtext = request.json.get("detail")
         up_time = datetime.now()
+        detail = json.loads(detailtext)
         # 微信：参数名为tel
-        wx = request.json.get("tel")
-        name = request.json.get("name")
-        howmuch = request.json.get("howmuch")
-        howlong = request.json.get("howlong")
+        wx = detail.get("tel")
+        name = detail.get("nickname")
+        howmuch = detail.get("howmuch")
+        howlong = detail.get("howlong")
         return Demand(cat_id=cat_id,up_time=up_time,wx_num=wx,name=name,detailtext=detailtext,howmuch=howmuch,howlong=howlong)
 
     @staticmethod
@@ -192,11 +193,12 @@ class Demand(db.Model):
         cat_id = request.json.get("cat_id")
         detailtext = request.json.get("detail")
         up_time = datetime.now()
+        detail = json.loads(detailtext)
         # 微信：参数名为tel
-        wx = request.json.get("tel")
-        name = request.json.get("name")
-        howmuch = request.json.get("howmuch")
-        howlong = request.json.get("howlong")
+        wx = detail.get("tel")
+        name = detail.get("name")
+        howmuch = detail.get("howmuch")
+        howlong = detail.get("howlong")
         return Demand(cat_id=cat_id, up_time=up_time, wx_num=wx,name=name,detailtext=detailtext,howmuch=howmuch,howlong=howlong)
 
     @staticmethod
@@ -204,11 +206,12 @@ class Demand(db.Model):
         cat_id = request.json.get("cat_id")
         detailtext = request.json.get("detail")
         up_time = datetime.now()
+        detail = json.loads(detailtext)
         # 微信：参数名为tel
-        wx = request.json.get("tel")
-        name = request.json.get("name")
-        howmuch = request.json.get("howmuch")
-        howlong = request.json.get("howlong")
+        wx = detail.get("tel")
+        name = detail.get("name")
+        howmuch = detail.get("howmuch")
+        howlong = detail.get("howlong")
         return Demand(cat_id=cat_id, up_time=up_time, wx_num=wx,name=name,detailtext=detailtext,howmuch=howmuch,howlong=howlong)
 
 
