@@ -80,6 +80,7 @@ class User(db.Model):
     unionid = db.Column(db.String(64), unique=True,nullable=True)
     nickname = db.Column(db.String(64))
     login_code = db.Column(db.String(32))
+    headimg = db.Column(db.String(255))
     demands = db.relationship("Demand", backref="user",order_by='desc(Demand.up_time)')
 
     # # 生成一个会过期的token,默认200分钟

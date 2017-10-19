@@ -3,7 +3,10 @@ from flask.ext.httpauth import HTTPTokenAuth
 from app.wxmodels import *
 import urllib.parse
 from flask import g
+import requests
+from qiniu import Auth,urlsafe_base64_encode
 
+from config import qiniu_secret_key,qiniu_access_key
 
 auth = HTTPTokenAuth(scheme='Token')
 
@@ -46,3 +49,29 @@ def get_user_info(access_token,openid):
     res = urllib.request.urlopen(url).read().decode('utf-8')
     userinfo = json.loads(urllib.request.urlopen(url).read().decode('utf-8'))
     return userinfo
+
+
+
+
+def get_wx_head(headimg,unionid):
+    Encodedurl = urlsafe_base64_encode(headimg)
+    Encodedentryuri = urlsafe_base64_encode('userhead:' + unionid + ".jpg")
+    upheadurl = '/fetch/' + Encodedurl + '/to/' + Encodedentryuri
+    Host = 'iovip.qbox.me'
+    Content_type = 'application/x-www-form-urlencoded'
+    requrl = "http://" + Host + upheadurl
+
+    q = Auth(qiniu_access_key, qiniu_secret_key)
+    AccessToken = q.token_of_request(requrl, content_type=Content_type)
+
+    Authorization = 'QBox ' + AccessToken
+    headers = {'Host': Host,
+               'Content-Type': Content_type,
+               'Authorization': Authorization,
+               }
+    r = requests.post(requrl, headers=headers)
+    if (r.status_code != 200):  # 抓取不成功
+        return 0
+    else:
+        return 1
+

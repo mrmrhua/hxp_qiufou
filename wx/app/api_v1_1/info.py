@@ -7,6 +7,7 @@ import urllib.parse
 import random
 import base64
 from Crypto.Cipher import AES
+from app.common import get_wx_head
 
 class WXBizDataCrypt:
     def __init__(self, appId, sessionKey):
@@ -39,6 +40,7 @@ def Decrypt(encryptedData, iv,sessionKey):
     return pc.decrypt(encryptedData, iv)
 
 
+
 class GetUID(Resource):
     def get(self):
         code = request.values.get("code")
@@ -63,12 +65,21 @@ class GetUID(Resource):
                 res_unionid = decrypt_val.get("unionId")
                 nickname = decrypt_val.get("nickName")
                 headimg = decrypt_val.get("avatarUrl")
+                # 头像转存七牛
+                r = get_wx_head(headimg, res_unionid)
+                headimg = 'http://userhead.houxiaopang.com/wxhead/' + res_unionid + '.jpg'
+                # 存头像结束
+
                 if not u.uid:  # 如果unionid木有
                     u.uid = res_unionid
                     db.session.add(u)
                     db.session.commit()
                 if not u.nickname:  # 如果昵称木有
                     u.nickname = nickname
+                    db.session.add(u)
+                    db.session.commit()
+                if not u.headimg:
+                    u.headimg = headimg
                     db.session.add(u)
                     db.session.commit()
             return jsonify({'code': 0, 'data': {'uid': u.uid}})
@@ -83,7 +94,14 @@ class GetUID(Resource):
             res_unionid = decrypt_val.get("unionId")
             nickname = decrypt_val.get("nickName")
             headimg = decrypt_val.get("avatarUrl")
-            u = User(uid=res_unionid, nickname=nickname)
+            # TODO
+            # 头像转存七牛
+            # 用户更换头像会导致微信的头像URL失效,因此要先存七牛
+            r = get_wx_head(headimg, res_unionid)
+            headimg = 'http://userhead.houxiaopang.com/wxhead/' + res_unionid + '.jpg'
+            # 存头像结束
+
+            u = User(uid=res_unionid, nickname=nickname,headimg=headimg)
             db.session.add(u)
             db.session.commit()
 
