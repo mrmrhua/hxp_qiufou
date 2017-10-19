@@ -26,14 +26,15 @@ if (!code) {
         success: function (result) {
             if (result.code === 0) {
                 window.localStorage.token = result.data.token;
+				location.href = "http://houxiaopang.com/s/admin";
             } else {
                 alert("微信授权失败，请重试");
-                //location.href = "http://houxiaopang.com/s";
+                location.href = "http://houxiaopang.com/s";
             }
         },
         error: function () {
             alert("网络拥挤，请稍后再试");
-            //location.href = "http://houxiaopang.com/s";
+            location.href = "http://houxiaopang.com/s";
         }
     });
 }
