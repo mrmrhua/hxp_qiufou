@@ -116,8 +116,13 @@
             },
             success(res){
                 if (res.code === 0) {
-                    window.localStorage.token = res.data.token
-                    location.href = "http://houxiaopang.com/s/admin"
+                    window.localStorage.token = res.data.token;
+                    var user = {
+                        headimg: res.data.headimg,
+                        nickname: res.data.nickname
+                    }
+                    window.localStorage.houxiaopanguser = user;
+                    location.href = "http://houxiaopang.com/s/admin";
                 }
             }
         })
