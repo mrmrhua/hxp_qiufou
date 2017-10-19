@@ -1,10 +1,13 @@
-from  flask import  session,jsonify,request,url_for,g,current_app
+from  flask import  session,jsonify,request,url_for,g,current_app,send_file
 from flask_restful import Resource
 from app.wxmodels import *
 from app import db
 import json
 from datetime import datetime
 from app.common import *
+import qrcode
+from io import BytesIO
+import string,random
 
 class Claim(Resource):
     def post(self):
@@ -78,6 +81,7 @@ class Timeline(Resource):
         singlepost = [ {'postid':i.id,'desc':i.desc, 'up_time':datetime.strftime( i.up_time, "%Y-%m-%d %H:%M"),
         'imglist': [ n.work_url for n in i.works ],'imgnum':len(i.works)     }  for i in pro.posts ]
 
+
         return jsonify({'code': 0,'data':{
             'cat':cat,
             'demand_id':demand_id,
@@ -103,21 +107,61 @@ class Postdetail(Resource):
 
 class Systemlogin(Resource):
     def get(self):
-        if request.args.get("code") is None:
-            return jsonify({'code': -1, 'data': {"message":"code mistake"}})
-        code = request.args.get("code")
-        result = get_access_token(code)
-        if result is None:  # 验证失败,
-            return jsonify({'code': -1, 'data': {'message': 'code mistake'}})
-        userinfo = get_user_info(result.get('access_token'), result.get('openid'))
-        nickname = userinfo.get('nickname')
-        headimg = userinfo['headimgurl']
-        unionid = userinfo.get('unionid')
-        u = User.query.filter_by(uid=unionid).first()
-        if not u:
-            return jsonify({'code': -1})
-        token = u.generate_auth_token().decode()
-        return jsonify({'code': 0,'token':token,'nickname':nickname,'headimg':headimg})
+        # if request.args.get("code") is None:
+        #     return jsonify({'code': -1, 'data': {"message":"code mistake"}})
+        # code = request.args.get("code")
+        # result = get_access_token(code)
+        # if result is None:  # 验证失败,
+        #     return jsonify({'code': -1, 'data': {'message': 'code mistake'}})
+        # userinfo = get_user_info(result.get('access_token'), result.get('openid'))
+        # nickname = userinfo.get('nickname')
+        # headimg = userinfo['headimgurl']
+        # unionid = userinfo.get('unionid')
+        # u = User.query.filter_by(uid=unionid).first()
+        # if not u:
+        #     return jsonify({'code': -1})
+        # token = u.generate_auth_token().decode()
+        # return jsonify({'code': 0,'token':token,'nickname':nickname,'headimg':headimg})
+        ran_str = request.values.get("code")
+        if not ran_str:
+            return jsonify({"code":-1})
+        # ran_str = ''.join(random.sample(string.ascii_letters + string.digits, 16))
+        qr = qrcode.QRCode(
+            version=4,
+            error_correction=qrcode.constants.ERROR_CORRECT_H,
+            box_size=10,
+            border=1
+        )
+        qr.add_data(ran_str)
+        img = qr.make_image()
+
+        byte_io = BytesIO()
+        img.save(byte_io, 'PNG')
+        byte_io.seek(0)
+        return  send_file(byte_io,mimetype='image/png')
+        # return jsonify({'code': 123})
+
+class WX_qrlogin(Resource):
+    def post(self):
+        uid = request.json.get("uid")
+        code = request.json.get("code")
+        # # 存数据库
+        u = User.query.filter_by(uid=uid).first()
+        u.login_code = code
+        db.session.add(u)
+        db.session.commit()
+        return jsonify({'code': 0})
+
+class Polling(Resource):
+    def get(self):
+        code = request.values.get("code")
+        #  验证
+        u = User.query.filter_by(login_code=code).first()
+        if u:
+            token =  u.generate_auth_token().decode()
+            return jsonify({'code':0,'data':{'token':token}})
+        else:
+            return jsonify({'code':-1})
 
 
 

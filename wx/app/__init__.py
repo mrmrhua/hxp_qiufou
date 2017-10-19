@@ -7,6 +7,7 @@ from flask_mail import Mail
 from flask_migrate import Migrate
 from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
+from flask_socketio import SocketIO,emit,send
 
 db = SQLAlchemy()
 lm = LoginManager()
@@ -17,6 +18,7 @@ sess = Session()
 cors = CORS()
 # alembic = Alembic()
 migrate = Migrate()
+socketio = SocketIO()
 
 def create_app():
     app = Flask(__name__,instance_relative_config=True,static_url_path='/static')
@@ -27,6 +29,7 @@ def create_app():
     db.init_app(app)
     lm.init_app(app)
     mail.init_app(app)
+    socketio.init_app(app)
     if app.debug:
         toolbar.init_app(app)
         import logging
@@ -40,6 +43,12 @@ def create_app():
     cors.init_app(app,resources={r"/api/*":{"origins":"*"}})
     # alembic.init_app(app)
     migrate.init_app(app,db)
+
+
+    @socketio.on('message')
+    def handle_message(message):
+        print('receiverd message:'+ message)
+        send(message)
 
 
     import logging

@@ -15,6 +15,8 @@ manager = Manager(app)
 # 命令行工具
 manager.add_command('shell',Shell(make_context=make_shell_context))
 manager.add_command('db', MigrateCommand)
+
+
 # 测试环境使用debugger工具
 if app.config['ENVFLAG']=='dev' or 'testing':
     # DEBUG

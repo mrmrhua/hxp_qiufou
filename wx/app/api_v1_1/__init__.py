@@ -43,6 +43,10 @@ api_v1_1.add_resource(Projectlist_WX,'/projectlist_wx')
 api_v1_1.add_resource(Timeline,'/timeline')
 
 api_v1_1.add_resource(Systemlogin,'/system_login')
+api_v1_1.add_resource(WX_qrlogin,'/wx_qrlogin')
+api_v1_1.add_resource(Polling,'/polling')
+
+
 
 api_v1_1.add_resource(TokenVerify,'/tokenverify')
 

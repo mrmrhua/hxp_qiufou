@@ -147,3 +147,5 @@ class FeedBack(Resource):
         #  TODO
         # 发邮件给管理员
         return jsonify({'code':0})
+
+
