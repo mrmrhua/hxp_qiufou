@@ -121,7 +121,7 @@
                         headimg: res.data.headimg,
                         nickname: res.data.nickname
                     }
-                    window.localStorage.houxiaopanguser = user;
+                    window.localStorage.houxiaopanguser = JSON.stringify(user);
                     location.href = "http://s.houxiaopang.com/admin";
                 }
             }
