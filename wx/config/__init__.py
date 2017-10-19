@@ -1,3 +1,5 @@
 import os
 
-#  环境变量WX_APP_CONFIG_FILE为环境的配置文件
+
+qiniu_access_key = os.environ.get('QINIU_access_key')
+qiniu_secret_key = os.environ.get('QINIU_secret_key')

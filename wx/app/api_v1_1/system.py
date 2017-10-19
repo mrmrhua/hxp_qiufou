@@ -159,7 +159,7 @@ class Polling(Resource):
         u = User.query.filter_by(login_code=code).first()
         if u:
             token =  u.generate_auth_token().decode()
-            return jsonify({'code':0,'data':{'token':token}})
+            return jsonify({'code':0,'data':{'token':token,'nickname':u.nickname,'headimg':u.headimg}})
         else:
             return jsonify({'code':-1})
 
