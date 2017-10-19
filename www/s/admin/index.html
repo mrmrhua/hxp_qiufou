@@ -20,7 +20,7 @@
       location.href = "http://houxiaopang.com/browsernotsupport";
     }</script><link href=./static/css/app.a3e7e14ade193cde643967a93c4fd224.css rel=stylesheet></head><body><div id=app></div><script src=https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js></script><script src=http://image.houxiaopang.com/static/baseform/js/qiniu.js></script><script src=https://cdn.staticfile.org/plupload/2.1.8/plupload.full.min.js></script><script src=./static/js/jquery.pagewalkthrough.js></script><script src=./static/js/icheck.min.js></script><script src=./static/js/upwork.js></script><script src=./static/js/cropper.js></script><script src=./static/js/main.js></script><script>var token = window.localStorage.token;
   if (token === "undefined" || token === "" || token === null) {
-    location.href = "http://houxiaopang.com/s";
+    location.href = "http://s.houxiaopang.com";
   }
   //todo 验证token是否过期
   $.ajax({
@@ -29,11 +29,11 @@
     headers: {"Authorization": "Token " + token},
     success(data) {
       if (data.code !== 0) {
-        location.href = "http://houxiaopang.com/s"
+        location.href = "http://s.houxiaopang.com"
       }
     },
     error() {
-      location.href = "http://houxiaopang.com/s"
+      location.href = "http://s.houxiaopang.com"
     }
   })
 
