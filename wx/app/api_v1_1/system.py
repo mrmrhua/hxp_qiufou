@@ -117,7 +117,7 @@ class Systemlogin(Resource):
             box_size=10,
             border=1
         )
-        qr.add_data('http://m.houxiaopang.com/error?code='+ran_str)
+        qr.add_data('http://s.houxiaopang.com/error?code='+ran_str)
         img = qr.make_image()
         # change COLOR
         img = img.convert("RGBA")
