@@ -5,40 +5,8 @@ from app import db
 import json
 import urllib.parse
 import random
-import base64
-from Crypto.Cipher import AES
-from app.common import get_wx_head
-
-class WXBizDataCrypt:
-    def __init__(self, appId, sessionKey):
-        self.appId = appId
-        self.sessionKey = sessionKey
-
-    def decrypt(self, encryptedData, iv):
-        # base64 decode
-        sessionKey = base64.b64decode(self.sessionKey)
-        encryptedData = base64.b64decode(encryptedData)
-        iv = base64.b64decode(iv)
-
-        cipher = AES.new(sessionKey, AES.MODE_CBC, iv)
-
-        n = str(self._unpad(cipher.decrypt(encryptedData)), 'utf-8')
-        decrypted = json.loads(n)
-
-        if decrypted['watermark']['appid'] != self.appId:
-            raise Exception('Invalid Buffer')
-
-        return decrypted
-
-    def _unpad(self, s):
-        return s[:-ord(s[len(s) - 1:])]
-
-
-def Decrypt(encryptedData, iv,sessionKey):
-    appId = 'wxdfb82dad3e5a5d2f'
-    pc = WXBizDataCrypt(appId, sessionKey)
-    return pc.decrypt(encryptedData, iv)
-
+from app.common import get_wx_head,WXBizDataCrypt,Decrypt
+from datetime import datetime
 
 
 class GetUID(Resource):
@@ -49,25 +17,28 @@ class GetUID(Resource):
         url = 'https://api.weixin.qq.com/sns/jscode2session?appid=wxdfb82dad3e5a5d2f&secret=00aae3c9d4335121e944761b0ab95a57&js_code=' \
               + code + '&grant_type=authorization_code'
         # get acess_token
-        result = json.loads(urllib.request.urlopen(url).read().decode('utf-8'))
-        res_unionid = result.get("unionid")
+        try:
+            result = json.loads(urllib.request.urlopen(url).read().decode('utf-8'))
+            res_unionid = result.get("unionid")
+        except Exception:
+            return jsonify({'code': 1})
 
         u = User.query.filter_by(uid=res_unionid).first()
         if u:
-            if u.unionid and u.nickname:
+            if u.unionid and u.nickname and u.headimg:
                 pass
             else:   # todo 待删除
                   # 兼容早期用户，缺unionid或nickname
                 try:
                     decrypt_val = Decrypt(encryptedData, iv, result.get("session_key"))
-                except UnicodeDecodeError:
+                except Exception:
                     return jsonify({'code': 1})
+
                 res_unionid = decrypt_val.get("unionId")
                 nickname = decrypt_val.get("nickName")
                 headimg = decrypt_val.get("avatarUrl")
                 # 头像转存七牛
                 r = get_wx_head(headimg, res_unionid)
-                print(r)
                 headimg = 'http://userhead.houxiaopang.com/' + res_unionid + '.jpg'
                 # 存头像结束
 
@@ -99,7 +70,6 @@ class GetUID(Resource):
             # 头像转存七牛
             # 用户更换头像会导致微信的头像URL失效,因此要先存七牛
             r = get_wx_head(headimg, res_unionid)
-            print(r)
             headimg = 'http://userhead.houxiaopang.com/' + res_unionid + '.jpg'
             # 存头像结束
 
@@ -169,3 +139,15 @@ class FeedBack(Resource):
         return jsonify({'code':0})
 
 
+class GetReceived(Resource):
+    def get(self):
+        uid = request.values.get("uid")
+        u = User.query.filter_by(uid=uid).first()
+        if not u:
+            return jsonify({'code': -1})
+        if u.lastvisited is None:
+            demands=[]
+        else:
+            demands = [{'demand_id': i.id, 'demand_title': i.cat.cat_name,
+                    'up_time': datetime.strftime(i.up_time, "%Y-%m-%d %H:%M"), 'cat': i.cat_id} for i in u.lastvisited]
+        return jsonify({'code': 0, 'data': {'demands': demands}})

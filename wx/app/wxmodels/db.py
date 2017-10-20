@@ -72,6 +72,13 @@ class Color(db.Model):
         return '<Color: %r>' % (self.color_name)
 
 
+LastVisited = db.Table('lastvisited',
+                    db.Column('user_id', INTEGER(unsigned=True), db.ForeignKey('users.id')),
+                    db.Column('demand_id', INTEGER(unsigned=True), db.ForeignKey('demands.id'))
+                    )
+
+
+
 class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(INTEGER(unsigned=True), primary_key=True)
@@ -82,6 +89,11 @@ class User(db.Model):
     login_code = db.Column(db.String(32))
     headimg = db.Column(db.String(255))
     demands = db.relationship("Demand", backref="user",order_by='desc(Demand.up_time)')
+
+    # lastvisited
+    lastvisited = db.relationship('Demand',
+                            secondary=LastVisited,
+                            lazy='dynamic')  # lazy = 'dynamic' :关系两侧返回的查询都可接受额外的过滤器
 
     # # 生成一个会过期的token,默认200分钟
     def generate_auth_token(self, expiration=12000):
@@ -227,3 +239,4 @@ class Feedback(db.Model):
 
     def __repr__(self):
         return '<Feedback: %r>' % (self.content)
+

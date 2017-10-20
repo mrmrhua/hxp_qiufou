@@ -34,7 +34,7 @@ api_v1_1.add_resource(HBDemand,'/mydemand/hb')
 api_v1_1.add_resource(LOGODemand,'/mydemand/logo')
 
 api_v1_1.add_resource(FeedBack,'/feedback')
-
+api_v1_1.add_resource(GetReceived,'/get_received')
 
 api_v1_1.add_resource(Claim,'/claim')
 

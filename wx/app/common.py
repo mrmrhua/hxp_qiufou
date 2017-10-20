@@ -7,6 +7,8 @@ import requests
 from qiniu import Auth,urlsafe_base64_encode
 
 from config import qiniu_secret_key,qiniu_access_key
+import base64
+from Crypto.Cipher import AES
 
 auth = HTTPTokenAuth(scheme='Token')
 
@@ -75,3 +77,34 @@ def get_wx_head(headimg,unionid):
     else:
         return 1
 
+
+
+class WXBizDataCrypt:
+    def __init__(self, appId, sessionKey):
+        self.appId = appId
+        self.sessionKey = sessionKey
+
+    def decrypt(self, encryptedData, iv):
+        # base64 decode
+        sessionKey = base64.b64decode(self.sessionKey)
+        encryptedData = base64.b64decode(encryptedData)
+        iv = base64.b64decode(iv)
+
+        cipher = AES.new(sessionKey, AES.MODE_CBC, iv)
+
+        n = str(self._unpad(cipher.decrypt(encryptedData)), 'utf-8')
+        decrypted = json.loads(n)
+
+        if decrypted['watermark']['appid'] != self.appId:
+            raise Exception('Invalid Buffer')
+
+        return decrypted
+
+    def _unpad(self, s):
+        return s[:-ord(s[len(s) - 1:])]
+
+
+def Decrypt(encryptedData, iv,sessionKey):
+    appId = 'wxdfb82dad3e5a5d2f'
+    pc = WXBizDataCrypt(appId, sessionKey)
+    return pc.decrypt(encryptedData, iv)

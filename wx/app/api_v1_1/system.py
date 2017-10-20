@@ -107,21 +107,6 @@ class Postdetail(Resource):
 
 class Systemlogin(Resource):
     def get(self):
-        # if request.args.get("code") is None:
-        #     return jsonify({'code': -1, 'data': {"message":"code mistake"}})
-        # code = request.args.get("code")
-        # result = get_access_token(code)
-        # if result is None:  # 验证失败,
-        #     return jsonify({'code': -1, 'data': {'message': 'code mistake'}})
-        # userinfo = get_user_info(result.get('access_token'), result.get('openid'))
-        # nickname = userinfo.get('nickname')
-        # headimg = userinfo['headimgurl']
-        # unionid = userinfo.get('unionid')
-        # u = User.query.filter_by(uid=unionid).first()
-        # if not u:
-        #     return jsonify({'code': -1})
-        # token = u.generate_auth_token().decode()
-        # return jsonify({'code': 0,'token':token,'nickname':nickname,'headimg':headimg})
         ran_str = request.values.get("code")
         if not ran_str:
             return jsonify({"code":-1})
@@ -132,9 +117,20 @@ class Systemlogin(Resource):
             box_size=10,
             border=1
         )
-        qr.add_data(ran_str)
+        qr.add_data('http://m.houxiaopang.com/error?code='+ran_str)
         img = qr.make_image()
+        # change COLOR
+        img = img.convert("RGBA")
+        datas = img.getdata()
+        newData = []
+        for item in datas:
+            if item[0] == 0 and item[1] == 0 and item[2] == 0:
+                newData.append((251,96,75, item[3]))
+            else:
+                newData.append(item)
+        img.putdata(newData)
 
+        # CHANGE COLOR
         byte_io = BytesIO()
         img.save(byte_io, 'PNG')
         byte_io.seek(0)
