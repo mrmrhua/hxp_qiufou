@@ -49,7 +49,18 @@
             display: table-cell;
             vertical-align: middle;
         }
-
+    	.logo{
+    		width: 60px;
+    		height: 60px;
+    		position: absolute;
+    		top: 127px;
+    		left: 145px;
+    		background: #fff;
+    		padding: 5px 5px;
+    		box-sizing: border-box;
+    		border-radius: 5px;
+    		display: none;
+    	}
         @media screen and (min-width: 1600px) and (max-width: 2000px) {
             .thisdiv {
                 transform: scale(1.4);
@@ -65,10 +76,14 @@
             <div style="position: absolute;height:100%;width: 50%;left: 0;top: 0;">
                 <a href="http://www.houxiaopang.com"><img style="margin: 3% 10% 3%;"
                                                           src="http://image.houxiaopang.com/first/logodown.png"></a>
-                <div style="height: 433px;width: 350px;margin: 0 auto;background: url('http://image.houxiaopang.com/qrlogin/v1.1/loginback.png') no-repeat;background-size: 100%;">
-                    <div style="text-align: center;padding-top: 10px;">
+                <div style="height: 433px;width: 350px;margin: 0 auto;background: url('http://image.houxiaopang.com/qrlogin/v1.1/loginback.png') no-repeat;background-size: 100%;text-align: center;color: #999;font-size: 14px;">
+                    <div style="text-align: center;padding-top: 10px;position: relative;box-sizing: border-box;">
+                    	<img id="logo" class="logo" src="http://image.houxiaopang.com/notextlogo/logo2.png">
                         <img id="wxqrcode" style="width: 300px;height: 300px;margin: 0 auto;" alt="">
                     </div>
+                    <p style="line-height: 1.5">进入微信小程序－猴小胖设计管家</p>
+                    <p style="line-height: 1.5">扫描二维码</p>
+                    <p style="line-height: 1.5">在线上传项目进度</p>
                 </div>
             </div>
             <div style="position: absolute;height:100%;width: 50%;right: 0;top: 0;">
@@ -106,7 +121,11 @@
         return hashcode;
     }
     var code = gethashcode();
-    document.getElementById("wxqrcode").src = "https://m.houxiaopang.com/api/v1.1/system_login?code=" + code
+    var qrcode = document.getElementById("wxqrcode")
+    qrcode.src = "https://m.houxiaopang.com/api/v1.1/system_login?code=" + code
+	qrcode.onload =  function(){
+		 document.getElementById("logo").style.display = 'block';
+	}
     setInterval(polling, 5000)
     function polling() {
         $.ajax({
