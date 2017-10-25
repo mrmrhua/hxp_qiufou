@@ -10,6 +10,9 @@ from config import qiniu_secret_key,qiniu_access_key
 import base64
 from Crypto.Cipher import AES
 
+DEMO_ID = 288
+DEMO_TITLE = '样例－海报设计'
+
 auth = HTTPTokenAuth(scheme='Token')
 
 @auth.verify_token

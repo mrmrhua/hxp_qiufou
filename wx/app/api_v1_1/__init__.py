@@ -35,7 +35,8 @@ api_v1_1.add_resource(LOGODemand,'/mydemand/logo')
 
 api_v1_1.add_resource(FeedBack,'/feedback')
 api_v1_1.add_resource(GetReceived,'/get_received')
-
+api_v1_1.add_resource(DelReceived,'/del_received')
+api_v1_1.add_resource(VisitiDemand,'/visit_demand')
 api_v1_1.add_resource(Claim,'/claim')
 
 api_v1_1.add_resource(Projectlist,'/projectlist')

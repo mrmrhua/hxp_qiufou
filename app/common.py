@@ -16,7 +16,6 @@ import uuid
 
 
 
-
 def get_access_token(code):
     url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxbfacdb1b99885182&secret=c4f876b16ddc8d8e4259b9c2388e5493&code='\
               + code + '&grant_type=authorization_code'

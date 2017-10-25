@@ -5,10 +5,10 @@ env.user = 'root'
 env.password='qclouding123'
 env.activate = 'source venv/bin/activate'
 
-# def wxtest():
-#     with cd('/home/hxp'):
-#         with prefix(env.activate):
-#                 run('python h.py runserver')
+def wxtest():
+    with cd('/home/hxp'):
+        with prefix(env.activate):
+                run('python wx/wx.py runserver')
 
 
 def go():

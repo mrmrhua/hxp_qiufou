@@ -5,6 +5,7 @@ from app import db
 import json
 from datetime import datetime
 
+
 class GetTags(Resource):
     def get(self):
         screen = request.values.get("screen")

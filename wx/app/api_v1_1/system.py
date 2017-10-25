@@ -7,7 +7,6 @@ from datetime import datetime
 from app.common import *
 import qrcode
 from io import BytesIO
-import string,random
 
 class Claim(Resource):
     def post(self):
@@ -51,13 +50,31 @@ class Projectlist(Resource):
 class Projectlist_WX(Resource):
     def get(self):
         uid = request.values.get("uid")
-        pros = Project.query.filter_by(uid=uid).all()
+        pros = Project.query.filter_by(uid=uid).order_by(Project.id.desc()).all()
 
-        project = [{'cat': i.demand.cat_id,
+        # project = [{'cat': i.demand.cat_id,
+        #             'up_time': datetime.strftime(i.demand.up_time, "%Y-%m-%d %H:%M"),
+        #             'id': i.id, 'client': i.demand.name, 'designer': i.designer,
+        #             'lastimg': getlastimg(i)
+        #             } for i in pros]
+
+        project = []
+        for i in pros:
+            if i.demand.id==DEMO_ID:
+
+                project.append({'cat': i.demand.cat_id,
+                 'up_time': datetime.strftime(i.demand.up_time, "%Y-%m-%d %H:%M"),
+                 'id': i.id, 'client': i.demand.name, 'designer': i.designer,
+                 'lastimg': getlastimg(i),
+                 'title':DEMO_TITLE
+                 })
+            else:
+                project.append({'cat': i.demand.cat_id,
                     'up_time': datetime.strftime(i.demand.up_time, "%Y-%m-%d %H:%M"),
                     'id': i.id, 'client': i.demand.name, 'designer': i.designer,
                     'lastimg': getlastimg(i)
-                    } for i in pros]
+                    })
+
         return jsonify({'code': 0, 'data': {'project': project}})
 
 
@@ -169,7 +186,11 @@ class TokenVerify(Resource):
 class Postlist(Resource):
     @auth.login_required
     def post(self):
+        if not request.values.get("imglist"):
+            return jsonify({'code': -1})
         imglist = json.loads(request.values.get("imglist"))
+        if imglist == []:
+            return jsonify({'code': -1})
         desc = request.values.get("desc")
         project_id= request.values.get("project_id")
         up_time = datetime.now()

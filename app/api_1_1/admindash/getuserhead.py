@@ -8,14 +8,20 @@ from app.common import  support_jsonp
 from flask_login import login_required
 from app.common import auth
 
+def getcity(info):
+    if not info:
+        return ''
+    else:
+        return info.city
 
 class GetUserHead(Resource):
     @auth.login_required
     def get(self):
+        current_app.logger.info('g.user.info: %r' % g.user.info)
         return jsonify({
           'code':0,
             'data': {'headimg': g.user.headimg
                           ,'nickname':g.user.nickname,
                      'userid':g.user.id,
-                     'city':g.user.info.city}
+                     'city':getcity(g.user.info)}
         })
