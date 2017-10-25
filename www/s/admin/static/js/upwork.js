@@ -33,12 +33,14 @@ function registerup(vu) {
       'UploadComplete': function () {
         $(".up-section").removeClass("loading");
         $(".up-img").removeClass("up-opcity");
+        vu.replay = false
       },
       'FileUploaded': function (up, file, info) {
         if (info['status'] == '200') {
           var tmp = JSON.parse(info['response']);
           vu.$set(vu.img_url, vu.img_index++, 'http://work.houxiaopang.com/' + tmp.key);
-          console.log(vu.img_url);
+        } else {
+          vu.img_url.splice(vu.img_index, 1);
         }
       },
 
