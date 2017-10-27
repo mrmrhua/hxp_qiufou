@@ -1,6 +1,6 @@
 from flask import Blueprint,abort,current_app
 from flask_restful import Api
-from .errors import ServerException
+# from .errors import ServerException
 api_1_1 = Blueprint('apiv1_1',__name__)
 
 # 让FLASK-RESTFUL来处理404
@@ -17,7 +17,7 @@ from .admindash import NewAlbum,GetAlbum,GetCollection,GetUserHead,GetAlbumDetai
 from .adminsystem import SendNotice,AllDesignerManage,DesignerRecom,AgreeApply,DisAgreeApply, \
     AdminLogin,GetApplyinfo,ListNews,AllDemand,DemandApply,GetDemandApplyInfo,RecomList, \
     DelRecom
-
+from .wxpublic import  *
 
 # wx verify info
 api_v1_1.add_resource(WxVerify,'/wx_verify')
@@ -103,3 +103,8 @@ api_v1_1.add_resource(RecomList,'/adminsystem/pricelist_tmp')
 
 api_v1_1.add_resource(DelRecom,'/adminsystem/pricelist/remove')
 
+
+
+api_v1_1.add_resource(WxTest,'/wxpublic')
+
+api_v1_1.add_resource(WxUserinfo,'/wx_userinfo')

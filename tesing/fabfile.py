@@ -9,7 +9,10 @@ def wxtest():
     with cd('/home/hxp'):
         with prefix(env.activate):
                 run('python wx/wx.py runserver')
-
+def test():
+    with cd('/home/hxp'):
+        with prefix(env.activate):
+                run('gunicorn manage:app -b 127.0.0.1:8000')
 
 def go():
     run('systemctl start hxp')
