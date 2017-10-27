@@ -57,6 +57,10 @@ api_v1_1.add_resource(GetUserHead,'/designerdash/header')
 api_v1_1.add_resource(GetAlbumDetail,'/albumdetail')
 
 api_v1_1.add_resource(Userinfo,'/designerdash/userinfo')
+
+
+
+
 api_v1_1.add_resource(DeleteAlbum,'/designerdash/deletealbum')
 # api_v1_1.add_resource(AddExp,'/desigenrdash/userinfo/addexp')
 api_v1_1.add_resource(DelExp,'/designerdash/userinfo/deletexp')
@@ -107,4 +111,6 @@ api_v1_1.add_resource(DelRecom,'/adminsystem/pricelist/remove')
 
 api_v1_1.add_resource(WxTest,'/wxpublic')
 
-api_v1_1.add_resource(WxUserinfo,'/wx_userinfo')
+api_v1_1.add_resource(WxUserinfo,'/wx_getuid')
+
+api_v1_1.add_resource(WX_Userinfo,'/designerdash/wx_userinfo')
