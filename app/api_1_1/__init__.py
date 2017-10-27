@@ -114,3 +114,5 @@ api_v1_1.add_resource(WxTest,'/wxpublic')
 api_v1_1.add_resource(WxUserinfo,'/wx_getuid')
 
 api_v1_1.add_resource(WX_Userinfo,'/designerdash/wx_userinfo')
+
+api_v1_1.add_resource(QRBind,'/qrbind')

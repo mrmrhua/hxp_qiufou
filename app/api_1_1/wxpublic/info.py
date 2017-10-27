@@ -3,8 +3,8 @@ import  random
 from flask_restful import Resource
 from app.models import *
 from app.common import adminauth
-
-
+import requests
+import urllib
 
 class WX_Userinfo(Resource):
     def get(self):
@@ -41,3 +41,27 @@ class WX_Userinfo(Resource):
 
             }
         })
+
+
+
+class QRBind(Resource):
+    def get(self):
+        appid = "wx35c4ce958bc7eb68"
+        secret = "4cde0db3bb0df9597bebcad3352d503d"
+        url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='+appid+"&secret="+secret
+
+        # get acess_token
+        result = json.loads(urllib.request.urlopen(url).read().decode('utf-8'))
+        if('errcode' in result.keys()):
+            return  None
+        access_token = result['access_token']
+
+
+        url = 'https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token='+access_token
+        values = {"expire_seconds": 604800, "action_name": "QR_SCENE", "action_info": {"scene": {"scene_id": 123}}}
+        r = requests.post(url, data=json.dumps(values))
+        TICKET = json.loads(r.content.decode()).get("ticket")
+
+        url = 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket='+TICKET
+        r =requests.get(url)
+        return r.text
