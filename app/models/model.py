@@ -34,7 +34,6 @@ class User(UserMixin,db.Model):
                                cascade='all,delete-orphan')
 
 
-
     def __repr__(self):
         return '<User %r>' % self.nickname
 
@@ -111,3 +110,14 @@ def load_user_from_request(request):
         if user:
             return user
     return  None
+
+class City(UserMixin,db.Model):
+    __tablename__ = 'city'
+    id = db.Column(INTEGER(unsigned=True),primary_key=True)
+    province_id = db.Column(INTEGER(unsigned=True))
+    name=db.Column(db.String(8))
+
+class Province(UserMixin,db.Model):
+    __tablename__ = 'province'
+    id = db.Column(INTEGER(unsigned=True),primary_key=True)
+    name=db.Column(db.String(8))

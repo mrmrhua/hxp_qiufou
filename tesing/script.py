@@ -1,73 +1,56 @@
 
-# -*- coding: utf-8 -*-
-'''
-Created on 2012-7-3
+import redis  # redis数据库链接
+import json
+import urllib
+import time
+import requests
+class Conn_db():
+    def __init__(self):
+        # 创建对本机数据库的连接对象
+        self.conn = redis.StrictRedis(host='127.0.0.1', port=6379, db=0)
 
-@author: lihao
-'''
-import top.api
+    # 存储
+    def set(self, key_, value_):
+        # 将数据存储到数据库
+        print(value_)
+        self.conn.set(key_, value_)
 
-
-'''
-这边可以设置一个默认的appkey和secret，当然也可以不设置
-注意：默认的只需要设置一次就可以了
-
-'''
-# top.setDefaultAppInfo("24592121", "e4af5ea5f3c1687320650f1678db4a7a")
-
-'''
-使用自定义的域名和端口（测试沙箱环境使用）
-a = top.api.UserGetRequest("gw.api.tbsandbox.com",80)
-
-使用自定义的域名（测试沙箱环境使用）
-a = top.api.UserGetRequest("gw.api.tbsandbox.com")
-
-使用默认的配置（调用线上环境）
-a = top.api.UserGetRequest()
-
-'''
-# a = top.api.UserGetRequest('http://gw.api.taobao.com/router/rest')
+    # 读取
+    def get(self, key_):
+        # 从数据库根据键（key）获取值
+        print(key_)
+        value_ = self.conn.get(key_)
+        return value_
 
 
-'''
-可以在运行期替换掉默认的appkey和secret的设置
-a.set_app_info(top.appinfo("appkey","*******"))
-'''
+def wx_get_common_access_token():
+    appid = "wx35c4ce958bc7eb68"
+    secret = "4cde0db3bb0df9597bebcad3352d503d"
+    url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='+appid+"&secret="+secret
 
-# a.fields="nick"
+    # get acess_token
+    # result = json.loads(urllib.request.urlopen(url).read().decode('utf-8'))
+    result= json.loads(requests.get(url).content.decode())
+    if('errcode' in result):
+        return  None
 
-# req=top.api.OpenimUsersAddRequest()
-# # req.set_app_info(top.appinfo(appkey,secret))
-#
-# req.userinfos= [
-#     {'nick': 'ding', 'userid': 1, 'password': '123456'},
-#     {'nick': 'robin', 'userid': 2, 'password': '123456'}
-# ]
-
-#
-# try:
-#     f= req.getResponse()
-#     print("ok")
-#     print(f)
-# except Exception as e:
-#     print(e)
+    access_token = result.get("access_token")
+    return access_token
 
 
-#
-# Userinfo = [
-#     {'nick': 'ding', 'userid': 1, 'password': '123456'},
-#     {'nick': 'robin', 'userid': 2, 'password': '123456'}
-#
-# ]
 
 
-req=top.api.OpenimUsersAddRequest('taobao.openim.users.add',80)
-req.set_app_info(top.appinfo("24592121", "e4af5ea5f3c1687320650f1678db4a7a"))
+def update_access_token_intime():
+    global conn
+    token = wx_get_common_access_token()
+    conn.set('access_token',token)
 
-req.userinfos="ding"
-try:
-    resp= req.getResponse()
-    print(resp)
-except Exception as e:
-    print(e)
+
+conn = Conn_db()
+
+if __name__ == '__main__':
+    while True:
+        update_access_token_intime()
+        time.sleep(6900)
+
 

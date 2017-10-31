@@ -116,3 +116,14 @@ api_v1_1.add_resource(WxUserinfo,'/wx_getuid')
 api_v1_1.add_resource(WX_Userinfo,'/designerdash/wx_userinfo')
 
 api_v1_1.add_resource(QRBind,'/qrbind')
+
+api_v1_1.add_resource(TTTest,'/tttest')
+
+
+api_v1_1.add_resource(IsBind,'/isbind')
+
+api_v1_1.add_resource(DelBind,'/delbind')
+
+
+# api_v1_1.add_resource(ApplySuccess,'/test')
+api_v1_1.add_resource(GetCity,'/getcity')

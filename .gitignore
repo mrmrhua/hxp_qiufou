@@ -30,3 +30,6 @@ wx/static/
 wx/templates/
 /wx/instance/
 /wx/wx.log
+/app/templates/
+/app/main/
+/app/add_project/
