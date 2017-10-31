@@ -7,7 +7,7 @@ import sys
 from app.models import *
 from app.common import *
 import xml.etree.ElementTree as ET
-from .common import wxpublic_get_access_token,wx_get_common_access_token
+from .common import wxpublic_get_access_token,ReturnText
 def UnScribe(openid):
     pm = PushMessage.query.filter_by(openid=openid).first()
     if not pm:
@@ -45,93 +45,77 @@ class WxTest(Resource):
         # 扫码关注
         xml = request.data.decode()
         root = ET.fromstring(xml)
+        openid=None
+        event=None
+        msgtype=None
+        content=None
+        user_id=None
+        dever = None
+
         # 查找元素
         for child in root.iter(tag='FromUserName'):
             openid = child.text
-
-
-
+        # print("openid %r" % openid)
         for child in root.iter(tag='Event'):
             event = child.text
+        # print("event %r" % event)
+        for child in root.iter(tag='ToUserName'):
+            dever = child.text
         if not event:
+            # print("no event")
             for child in root.iter(tag='MsgType'):
                 msgtype = child.text
+            # print("msgtype %r" % msgtype)
             if msgtype=='text':
                 for child in root.iter(tag='Content'):
                     content = child.text
-                if content=='T':
+                # print("Content %r" % content)
+                if content=='T' or content=='解绑':
                     UnScribe(openid)
-                    return ''
+                    return ReturnText(openid,dever,'成功解绑')
 
         if event == 'TEMPLATESENDJOBFINISH':
             return ''
-        if event =='subscribe':
+        if event =='subscribe' or event=='SCAN':
 
             for child in root.iter(tag='FromUserName'):
                 openid = child.text
             for child in root.iter(tag='EventKey'):
                 user_id = child.text
-            for child in root.iter(tag='ToUserName'):
-                dever = child.text
+            #     搜索关注的
+            if not user_id:
+                return Response('', mimetype='text')
+            if event=='subscribe':
+                user_id= user_id.split("_")[1]
+            # print("user_id %r"%user_id)
             u = User.query.filter_by(id=user_id).first()
             if not u:
-                return -1
+                return Response('', mimetype='text')
             # 排重处理
             # todo
 
-            nakexml = ('''
-                    <xml>
-                    <ToUserName>
-                        <![CDATA[{a}]]>
-                    </ToUserName>
-                    <FromUserName>
-                        <![CDATA[{b}]]>
-                    </FromUserName>
-                    <CreateTime>{c}</CreateTime>
-                    <MsgType>
-                        <![CDATA[{d}]]>
-                    </MsgType>
-                    <Content>
-                        <![CDATA[{e}]]>
-                    </Content>
-                    </xml>
-                            ''')
-
-
-
             # 该微信号是否已经有绑定了
             pm = PushMessage.query.filter_by(openid=openid,user_id=user_id).first()
+            # print("pm %r" % pm)
             if pm:
                 # 不返回消息
-                xml = nakexml.format(a=openid, b=dever, c='12345678', d='text', e='绑定成功')
-                r = make_response(xml)
-                r.content_type = 'applicaiton/xml'
-                return r
+                return Response('', mimetype='text')
             pm = PushMessage.query.filter_by(user_id=user_id).first()
             if pm:
                 # 您的账户已被他人绑定
-                xml = nakexml.format(a=openid, b=dever, c='12345678', d='text', e='该账户已被他人绑定')
-                r = make_response(xml)
-                r.content_type = 'applicaiton/xml'
-                return r
+                return ReturnText(openid, dever, '该账户已被他人绑定')
             pm = PushMessage.query.filter_by(openid=openid).first()
             if pm:
                 # 您的账户已绑定其他账户
-                xml = nakexml.format(a=openid, b=dever, c='12345678', d='text', e='您的微信已绑定其他账户')
-                r = make_response(xml)
-                r.content_type = 'applicaiton/xml'
-                return r
+                return ReturnText(openid, dever, '您的微信已绑定其他账号')
 
             pm = PushMessage(user_id=user_id,openid=openid)
             db.session.add(pm)
             db.session.commit()
-            xml = nakexml.format(a=openid, b=dever, c='12345678', d='text', e='绑定成功')
-
-            r = make_response(xml)
-            r.content_type = 'applicaiton/xml'
-            return r
+            # print("xml")
+            return ReturnText(openid, dever, '绑定成功')
         else:
-            return ''
+            return Response('', mimetype='text')
 
 
 #

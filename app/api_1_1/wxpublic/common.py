@@ -2,6 +2,8 @@ import urllib
 import json
 import redis
 # 获取access_token
+from flask import jsonify,request,current_app,make_response
+from flask_restful import Resource
 def wxpublic_get_access_token(code):
     appid = "wx35c4ce958bc7eb68"
     secret = "4cde0db3bb0df9597bebcad3352d503d"
@@ -44,6 +46,9 @@ class Conn_db():
 
 
 def wx_get_common_access_token():
+    if  current_app.debug:
+    #     调试模式
+        return ''
     conn = Conn_db()
     access_token = conn.get("access_token")
     if not access_token:
@@ -59,3 +64,63 @@ def wx_get_common_access_token():
         access_token = result['access_token']
 
     return access_token
+
+# 本地测试用的access_token
+class TokenForTest(Resource):
+    def get(self):
+        # pw='123'
+        pw = request.values.get("pw")
+        if pw =='123':
+            conn = Conn_db()
+            access_token = conn.get("access_token")
+            return jsonify({"ac":access_token})
+        else:
+            return 0
+
+
+# 返回文本消息
+# nakexml = ('''
+#                     <xml>
+#                     <ToUserName>
+#                         <![CDATA[{a}]]>
+#                     </ToUserName>
+#                     <FromUserName>
+#                         <![CDATA[{b}]]>
+#                     </FromUserName>
+#                     <CreateTime>{c}</CreateTime>
+#                     <MsgType>
+#                         <![CDATA[{d}]]>
+#                     </MsgType>
+#                     <Content>
+#                         <![CDATA[{e}]]>
+#                     </Content>
+#                     </xml>
+#                             ''')
+#
+# xml = nakexml.format(a=openid, b=dever, c='12345678', d='text', e='绑定成功')
+#                 r = make_response(xml)
+#                 r.content_type = 'applicaiton/xml'
+def ReturnText(openid,dever,text):
+    nakexml = ('''
+                        <xml>
+                        <ToUserName>
+                            <![CDATA[{a}]]>
+                        </ToUserName>
+                        <FromUserName>
+                            <![CDATA[{b}]]>
+                        </FromUserName>
+                        <CreateTime>{c}</CreateTime>
+                        <MsgType>
+                            <![CDATA[{d}]]>
+                        </MsgType>
+                        <Content>
+                            <![CDATA[{e}]]>
+                        </Content>
+                        </xml>
+                                ''')
+
+    xml = nakexml.format(a=openid, b=dever, c='12345678', d='text', e=text)
+    r = make_response(xml)
+    r.content_type = 'applicaiton/xml'
+    return r
+

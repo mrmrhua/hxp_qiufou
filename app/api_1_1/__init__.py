@@ -127,3 +127,7 @@ api_v1_1.add_resource(DelBind,'/delbind')
 
 # api_v1_1.add_resource(ApplySuccess,'/test')
 api_v1_1.add_resource(GetCity,'/getcity')
+
+api_v1_1.add_resource(TokenForTest,'/testtoken')
+
+api_v1_1.add_resource(PushDemand,'/adminsystem/demand/pushdemand')
