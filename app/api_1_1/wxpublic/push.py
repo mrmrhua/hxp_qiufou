@@ -5,7 +5,7 @@ from flask_restful import Resource
 from flask import request,jsonify,current_app
 import json
 from datetime import datetime
-
+import re
 # 审核结果推送
 # 通过
 def ApplySuccess(id):
@@ -85,6 +85,11 @@ def ApplyFail(id):
     r = requests.post(url, data=json.dumps(values))
     return r
 
+def re_html(html):
+    re_h = re.compile('</?\w+[^>]*>')
+    s = re_h.sub('', html)
+    return s[0:10]
+
 # 需求推送
 class PushDemand(Resource):
     def post(self):
@@ -113,7 +118,7 @@ class PushDemand(Resource):
                         "color": "#173177"
                     },
                     "keyword2": {
-                        "value": '',
+                        "value": re_html(d.description),
                         "color": "#173177"
                     },
                     "keyword3": {

@@ -72,7 +72,7 @@ class WxTest(Resource):
                 # print("Content %r" % content)
                 if content=='T' or content=='解绑':
                     UnScribe(openid)
-                    return ReturnText(openid,dever,'成功解绑')
+                    return ReturnText(openid,dever,'成功解绑。可到猴小胖官网个人中心重新绑定。')
 
         if event == 'TEMPLATESENDJOBFINISH':
             return ''
@@ -103,17 +103,17 @@ class WxTest(Resource):
             pm = PushMessage.query.filter_by(user_id=user_id).first()
             if pm:
                 # 您的账户已被他人绑定
-                return ReturnText(openid, dever, '该账户已被他人绑定')
+                return ReturnText(openid, dever, '该账户已被他人绑定。')
             pm = PushMessage.query.filter_by(openid=openid).first()
             if pm:
                 # 您的账户已绑定其他账户
-                return ReturnText(openid, dever, '您的微信已绑定其他账号')
+                return ReturnText(openid, dever, '您的微信已绑定其他账号。')
 
             pm = PushMessage(user_id=user_id,openid=openid)
             db.session.add(pm)
             db.session.commit()
             # print("xml")
-            return ReturnText(openid, dever, '绑定成功')
+            return ReturnText(openid, dever, '绑定成功。回复T解绑。')
         else:
             return Response('', mimetype='text')
 
