@@ -17,7 +17,6 @@ def getcity(info):
 class GetUserHead(Resource):
     @auth.login_required
     def get(self):
-        current_app.logger.info('g.user.info: %r' % g.user.info)
         return jsonify({
           'code':0,
             'data': {'headimg': g.user.headimg
