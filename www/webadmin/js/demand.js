@@ -137,6 +137,27 @@ function brokerapply(id) {
     th.parentElement.className = "active";
     location.href = "demandbrokerdetail.html?id=" + id;
 }
+
+function ts(id) {//项目推送给关注服务号的设计师
+    $.ajax({
+        type: "post",
+        headers: {"Authorization": "Token " + window.localStorage.token},
+        url: "http://www.houxiaopang.com/api/v1.1/adminsystem/demand/pushdemand",
+        data: {
+            demand_id: id
+        },
+        success(res){
+            if (res.code === 0) {
+                alert("项目推送成功。")
+            } else {
+                alert("项目推送失败，code不为零。")
+            }
+        },
+        error(e){
+            alert("错误:" + JSON.stringify(e));
+        }
+    })
+}
 //获取需求
 function getDemand() {
     $.ajax({
@@ -164,7 +185,7 @@ function getDemand() {
         			<tr><td><div><span onclick="javascript:window.top.open('http://houxiaopang.com/demand/#/detail/${item.demand_id}');" class="colorSpan">详情</span>　<span class="colorSpan"
                     onclick="broker(${item.demand_id})">推荐设计师</span>　<span onclick="replydesigner(${item.demand_id})" class="colorSpan">查看已报价设计师</span>
                     　<span onclick="brokerapply(${item.demand_id})" class="colorSpan">查看已推荐设计师</span>
-                    　<span onclick="javascript:window.top.open('http://m.houxiaopang.com/demand/#/project/${item.demand_id}');" class="colorSpan">报价单</span></div></td></tr>`;
+                    　<span onclick="javascript:window.top.open('http://m.houxiaopang.com/demand/#/project/${item.demand_id}');" class="colorSpan">报价单</span> <span onclick="ts(${item.demand_id})" class="colorSpan">推送</span></div></td></tr>`;
                     operate.innerHTML += stroperate;
                     var strcontent = `
         					<tr>
