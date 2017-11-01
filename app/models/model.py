@@ -89,11 +89,12 @@ class User(UserMixin,db.Model):
             return None  # valid token, but expired
         except BadSignature:
             return None  # invalid token
+        print("id  %r" % data['id'])
 
         # 验证随机数是否过期
-        nonce = data['nonce']
-        if 'lognonce'  not in session or nonce != session['lognonce']:
-            return None  # invalid token
+        # nonce = data['nonce']
+        # if 'lognonce'  not in session or nonce != session['lognonce']:
+        #     return None  # invalid token
         return User.query.get(data['id'])
 
 
