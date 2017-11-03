@@ -3,7 +3,7 @@ import  random
 from flask_restful import Resource
 from app.common import  send_mail_in_html,adminauth
 import json
-from app.models import User,db,Applyform,DesignerInfo,Category_User,Category
+from app.models import User,db,Applyform,DesignerInfo,Category_User,Category,Wallet
 from config import APPLYSTATUS,SEX,AGREE_EMAIL_HTML,DISAGREE_EMAIL_HTML
 from app.common import auth
 from app.api_1_1.wxpublic import ApplySuccess,ApplyFail
@@ -41,6 +41,9 @@ class AgreeApply(Resource):
             i.users.append(u)
             db.session.add(i)
         db.session.commit()
+        # 生成钱包
+        Wallet.init_wallet(u)
+
         # 发送通过的邮件
         send_mail_in_html(di.email,'恭喜您通过了猴小胖的入驻审核',AGREE_EMAIL_HTML)
         ApplySuccess(u.id)

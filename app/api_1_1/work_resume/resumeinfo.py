@@ -14,8 +14,8 @@ class GetResumeInfo(Resource):
         user = User.query.filter_by(id=designer_id).first()
         if not user:
             return jsonify({'code': -1, 'data': {'msg': '该用户不存在'}})
-        if user.info.privacy==1:
-            return jsonify({'code':-2,'data':{'msg':'无权限查看'}})
+        # if user.info.privacy==1:
+        #     return jsonify({'code':-2,'data':{'msg':'无权限查看'}})
         di = user.info
 
         if user.usertype==0:

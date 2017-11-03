@@ -361,7 +361,7 @@
                 if (data.code === 0) {
                     window.localStorage.applystatus = data.data.applystatus;
                     $.ajax({//获取用户信息
-                        url: 'http://houxiaopang.com/api/v1.1/designerdash/header',
+                        url: 'http://www.houxiaopang.com/api/v1.1/designerdash/header',
                         type: "GET",
                         headers: {"Authorization": "Token " + token},
                         success: function (data) {
