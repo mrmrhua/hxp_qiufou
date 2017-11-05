@@ -144,8 +144,11 @@ class WithdrawApply(Resource):
         # single_send(mobile=ADMIN_TEL, text=text)
         after_money= g.user.wallet.money-float(money)
         cf = CashFlow(change_money=money,after_money=after_money,remark='提现',from_who='设计师钱包'\
-                 ,to_who='设计师个人',related_user=g.user.id,status='审核中')
+                 ,to_who='设计师个人',related_user=g.user.id,status='审核中',when=datetime.datetime.now())
         db.session.add(cf)
+        # 钱包余额应该变少，审核如果没通过就加回来
+        g.user.wallet.money = after_money
+        db.session.add(g.user.wallet)
         db.session.commit()
         return  jsonify({"code":0})
 

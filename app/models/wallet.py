@@ -34,6 +34,7 @@ class CashFlow(db.Model):
     to_who = db.Column(db.String(5))
     related_user = db.Column(INTEGER(unsigned=True), db.ForeignKey('users.id'))
     status = db.Column(db.String(6))
+    detail = db.Column(db.String(64))
 
     def __repr__(self):
         return '<CashFlow %r>' % self.id
