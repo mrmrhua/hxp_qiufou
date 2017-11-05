@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.staticfile.org/Swiper/3.4.2/css/swiper.min.css">
     <link rel="stylesheet" href="index.css">
     <!-- Piwik Code -->
-    <script type="text/javascript">
+   <!-- <script type="text/javascript">
         var _paq = _paq || [];
         /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
         _paq.push(['trackPageView']);
@@ -31,8 +31,6 @@
             s.parentNode.insertBefore(g, s);
         })();
     </script>
-    <!-- End Piwik Code -->
-     <!-- CNZZ -->
     <script>
     //声明_czc对象:
     var _czc = _czc || [];
@@ -40,11 +38,12 @@
     _czc.push(["_setAccount", "1261952519"]);
     _czc.push(["_trackPageview", "/"]);
     </script>
+-->
 </head>
 <body style="overflow: auto;position: relative;">
 <h1 style="position: absolute;height: 200px;top: -200px;">
     37分钟帮你找到好设计师,logo在线制作,海报设计,vi设计,ppt制作,公司logo设计,商业计划书,二维码名片</h1>
-<div id="load" class="preloader">
+<div id="load" class="preloader" style="display: none">
     <div class="sk-spinner-pulse"></div>
 </div>
 <div class="header" id="header">
@@ -80,7 +79,7 @@
             </li>
 
             <li id="showoption">
-                <img style="width: 40px;height: 40px;border-radius: 50%;display: block" alt="">
+                <img style="width: 40px;height: 40px;border-radius: 50%;display: block;background:#bbb;" alt="">
                 <ul class="useroption" style="display: none" id="useroption">
                     <li onclick="javascript:location.href = 'http://houxiaopang.com/admin';">我的作品</li>
                     <li onclick="javascript:location.href = 'http://houxiaopang.com/admin/#/designer';">我的资料</li>
@@ -100,7 +99,7 @@
             <li>插画</li>
             <li>...</li>
         </ul>
-        <a class="publish" target="_blank" href="http://cn.mikecrm.com/smA81u2">发布需求</a>
+        <a class="publish" onclick="showkh()" href="javascript:;">发布需求</a>
     </div>
 </div>
 <div class="middle">
@@ -286,17 +285,65 @@
     </div>
 </div>
 <div id="app" style="color:#787878;"></div>
-
-<!-- cnzz统计  -->
+<div id="kh" style="height: 100%;width: 100%;position: absolute;left: 0;top: 0;display:none;background: rgba(0,0,0,0.4);z-index: 2048;">
+    <div style="width:100%;height: 100%;position: relative;vertical-align:middle;display:table-cell;">
+        <div style="width: 486px;height: 552px;background: #fff;margin: 0 auto;border-radius: 10px;overflow: hidden;position: relative;">
+            <div style="height: 65px;background: linear-gradient(to right,#fe6549,#d01667);font-size: 20px;color: #fff;text-align: center;line-height: 65px;position: relative;">
+                <span>发布需求</span>
+                <span onclick="hidekh()" style="position: absolute;right: 20px;cursor: pointer;">X</span>
+            </div>
+            <div id="kh_alert" style="position: absolute;top: 65px;bottom: 0;width: 100%;left: 0;display: none">
+                <div style="background: url('icon.png') no-repeat 0 -50px;height: 100px;width: 100px;margin: 69px auto 0;"></div>
+                <div style="color: #d11866;font-size: 24px;margin-top: 34px;text-align: center;">发布成功</div>
+                <div style="font-size: 20px;text-align: center;margin-top: 67px;">猴小胖设计师顾问将立即联系你</div>
+                <div style="margin-top: 16px;font-size: 20px;text-align: center;">请耐心等待</div>
+            </div>
+            <div id="kh_from" style="position: absolute;top: 65px;bottom: 0;width: 100%;left: 0;">
+            <div id="kh_select" style="background: #f5f5f5;width: 350px;margin: 48px auto 0;height: 50px;border:1px solid #d9d9d9;padding-left: 15px;font-size: 16px;line-height: 50px;position: relative;cursor: pointer;">
+                <span id="kh_name">我需要：UI设计</span>
+                <div id="kh_icon" style="position: absolute;;height: 15px;width:15px;top:16px;background: url('icon.png') no-repeat -97px -47px;right: 15px;"></div>
+                <div id="kh_options" style="position: absolute;top: 50px;left: 0;overflow: hidden;background: #fff;border:1px solid #d9d9d9;width: 350px;margin-left: -1px;margin-top: -1px;display: none;">
+                    <div class="kh_option">UI设计</div>
+                    <div class="kh_option">PPT定制</div>
+                    <div class="kh_option">海报展板</div>
+                    <div class="kh_option">LOGO</div>
+                    <div class="kh_option">企业形象设计VI</div>
+                </div>
+            </div>
+            <div style="width: 350px;margin: 20px auto 0;height: 50px;border:1px solid #d9d9d9">
+                <input class="kh_input" type="text" id="kh_nickname" placeholder="您的称呼">
+            </div>
+            <div style="width: 350px;margin: 20px auto 0;height: 50px;border:1px solid #d9d9d9">
+                <input class="kh_input" type="text" id="kh_tel" placeholder="请输入您的联系方式，如手机号，微信号等。">
+            </div>
+            <div id="kh_btn" class="kh_btn">立即发布</div>
+            <p style="text-align: center;margin-bottom: 20px;">猴小胖设计顾问为您免费提供</p>
+            <div style="height: 80px;width: 300px;overflow: hidden;margin: 0 auto;padding: 0 15px;">
+                <div style="width: 50px;height: 80px;float: left;">
+                    <div style="height: 50px;background: url('icon.png') no-repeat;margin-bottom: 7px;"></div>
+                    <span style="white-space: nowrap;margin-left: -8px;">设计咨询</span>
+                </div>
+                <div style="width: 50px;height: 80px;float: left;margin-left: 65px;">
+                    <div style="height: 50px;background: url('icon.png') no-repeat -50px 0;margin-bottom: 7px;"></div>
+                    <span style="white-space: nowrap;margin-left: -8px;">方案制定</span>
+                </div>
+                <div style="width: 50px;height: 80px;float: right;">
+                    <div style="background: url('icon.png') no-repeat -100px 0;height: 50px;margin-bottom: 7px;"></div>
+                    <span style="white-space: nowrap;margin-left: -8px;">风格定位</span>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+<!-- cnzz统计 -->
 <div style="display: none">
     <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
     document.write(unescape("%3Cspan id='cnzz_stat_icon_1261952519'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1261952519' type='text/javascript'%3E%3C/script%3E"));</script>
 </div>
-
 <script type='text/javascript'
         src='https://webchat.7moor.com/javascripts/7moorInit.js?accessId=79287e10-97ae-11e7-ab2f-893c517e6691&autoShow=true'
         async='async'></script>
-
 <script type="text/javascript">
     if (document.getElementById("bgload").complete) {
         document.getElementById("load").style.display = 'none';
@@ -308,15 +355,82 @@
 </script>
 <script src="index.js"></script>
 <script src="hxp-footer.js"></script>
-
 <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.staticfile.org/Swiper/3.4.2/js/swiper.min.js"></script>
-<!-- <script src="https://cdn.staticfile.org/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script> -->
+<script type="text/javascript">
+    var kh_ops = document.getElementById("kh_options")
+    var kh_op = document.getElementById("kh_options").children
+    var kh_name = document.getElementById("kh_name")
+    var kh_from  = document.getElementById("kh_from");
+    var kh_alert = document.getElementById("kh_alert")
+    var kh_btn = document.getElementById("kh_btn")
+    var kh = document.getElementById("kh")
+    var kh_select = document.getElementById("kh_select")
+    var kh_icon = document.getElementById("kh_icon")
+    var kh_nickname = document.getElementById("kh_nickname")
+    var kh_tel = document.getElementById("kh_tel")
+    var ispost = true
+    for(var i = 0,size = kh_op.length;i<size;i++){
+        kh_op[i].onclick =function(){
+            kh_name.innerText = "我需要：" + this.innerText
+        }
+    }   
+    kh_btn.onclick = function(){
+      if(ispost){
+        if(kh_nickname.value.trim()==="" || kh_tel.value.trim()===""){
+          alert("您的称呼和联系方式不能为空！")
+          return
+        }
+       ispost = false
+       $.ajax({
+        url:'http://www.houxiaopang.com/api/v1.1/client/postdemand',
+        type:'POST',
+        data:{
+          cat:kh_name.innerText.substr(4),
+          name:kh_nickname.value.trim(),
+          wxnum: kh_tel.value.trim()
+        },
+        timeout:5000,
+        success(res){
+          ispost = true
+          if(res.code === 0){
+            kh_from.style.display = 'none'
+            kh_alert.style.display = 'block'
+          }else{
+            alert("需求发布失败！请刷新重试。")
+          }
+        },
+        error(){
+          ispost = true
+          alert("需求发布失败！请刷新重试。")
+        }
+      })
+     }
+    }
+    kh_select.onclick = function(){
+        if(kh_ops.style.display === "none"){
+            kh_icon.style.background = "url('icon.png') no-repeat -112px -49px";
+            kh_ops.style.display="block"
+        }else{
+            kh_icon.style.background = "url('icon.png') no-repeat -97px -47px";
+            kh_ops.style.display="none"
+        }
+    }
+    function hidekh(){
+        document.body.style.overflow = 'auto'
+        kh.style.display = 'none'
+    }
+
+    function showkh(){
+     window.scrollTo(0,0);
+     document.body.style.overflow = 'hidden'
+     kh.style.display = 'table'   
+    }
+</script>
 <script type="text/javascript">
     var option = document.getElementById("useroption");
     document.getElementById("showoption").onclick = function (e) {
         e.stopPropagation();
-
         if (option.style.display === "none") {
             option.style.display = "block";
         } else {
@@ -328,7 +442,6 @@
             option.style.display = "none";
         }
     }
-
     function exit() {
         $.ajax({
             type: "post",
@@ -341,17 +454,14 @@
         window.localStorage.token = "";
         window.localStorage.applystatus = "";
         window.localStorage.houxiaiopanguser = "";
-        location.href = "http://houxiaopang.com";
+        location.href = "http://www.houxiaopang.com";
     }
 
     function jump() {
-        open("http://houxiaopang.com/workdetail/#/user/" + window.localStorage.userid);
+        open("http://houxiaopang.com/workdetail/user/" + window.localStorage.userid);
     }
-
-    /*$("img.lazy").lazyload({
-     threshold: 1000
-     });*/
     var token = window.localStorage.token;
+    //todo 开发模式
     if (token) {
         $.ajax({//验证是否登录
             type: "get",
@@ -378,10 +488,7 @@
             },
         });
     }
-
-
 </script>
-<!-- 百度统计 -->
 <script src="https://s19.cnzz.com/z_stat.php?id=1263786655&web_id=1263786655" language="JavaScript"></script>
-
 </body>
+</html>
