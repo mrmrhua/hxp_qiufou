@@ -1,9 +1,6 @@
 from  flask import jsonify,request,Response,make_response
 from flask_restful import Resource
 import hashlib
-import json
-import urllib
-import sys
 from app.models import *
 from app.common import *
 import xml.etree.ElementTree as ET

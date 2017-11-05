@@ -4,3 +4,4 @@ from .DemanManage import *
 from .applyinfo import *
 from .AgreeManage import *
 from .login import *
+from .TradeManage import *

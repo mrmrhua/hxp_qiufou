@@ -9,16 +9,16 @@ api_v1_1 = Api(api_1_1,catch_all_404s=True)
 from .apply import *
 from .login_verify import WxVerify,TokenVerify,LogOut
 from .applystatus import GetApplyStatus
-from .demand import GetDemandCenter,DemandDeatil,ReplyDemand,TMPReplyDemand
+from .demand import GetDemandCenter,DemandDeatil,ReplyDemand,TMPReplyDemand,ClientPostDemand
 from .work_resume import GetAllWork,GetResumeInfo
 from .admindash import NewAlbum,GetAlbum,GetCollection,GetUserHead,GetAlbumDetail,\
     Userinfo,DeleteAlbum,AddExp,DelExp,NoticeRecent,UnreadNum,AllNotice,\
     ClearAll,RemoveAll
 from .adminsystem import SendNotice,AllDesignerManage,DesignerRecom,AgreeApply,DisAgreeApply, \
     AdminLogin,GetApplyinfo,ListNews,AllDemand,DemandApply,GetDemandApplyInfo,RecomList, \
-    DelRecom
+    DelRecom,GetAllCashFlow
 from .wxpublic import  *
-
+from .wallet import *
 # wx verify info
 api_v1_1.add_resource(WxVerify,'/wx_verify')
 api_v1_1.add_resource(LogOut,'/logout')
@@ -115,6 +115,9 @@ api_v1_1.add_resource(WxUserinfo,'/wx_getuid')
 
 api_v1_1.add_resource(WX_Userinfo,'/designerdash/wx_userinfo')
 
+
+
+# 服务号接口
 api_v1_1.add_resource(QRBind,'/qrbind')
 
 api_v1_1.add_resource(TTTest,'/tttest')
@@ -131,3 +134,22 @@ api_v1_1.add_resource(GetCity,'/getcity')
 api_v1_1.add_resource(TokenForTest,'/testtoken')
 
 api_v1_1.add_resource(PushDemand,'/adminsystem/demand/pushdemand')
+
+
+# 钱包
+api_v1_1.add_resource(WalletInfo,'/designer/walletinfo')
+api_v1_1.add_resource(GetCashFlow,'/designer/getcashflow')
+
+api_v1_1.add_resource(VerifySend,'/designer/verifysend')
+
+
+api_v1_1.add_resource(BindAlipay,'/designer/bindalipay')
+api_v1_1.add_resource(WithdrawApply,'/designer/withdrawapply')
+
+
+#客户需求意向
+api_v1_1.add_resource(ClientPostDemand,'/client/postdemand')
+
+
+# 查看所有资金流动
+api_v1_1.add_resource(GetAllCashFlow,'/adminsystem/getallcashflow')

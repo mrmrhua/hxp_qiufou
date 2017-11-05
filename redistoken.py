@@ -12,7 +12,6 @@ class Conn_db():
     # 存储
     def set(self, key_, value_):
         # 将数据存储到数据库
-        print(value_)
         self.conn.set(key_, value_)
 
     # 读取
