@@ -17,6 +17,8 @@ class GetResumeInfo(Resource):
         # if user.info.privacy==1:
         #     return jsonify({'code':-2,'data':{'msg':'无权限查看'}})
         di = user.info
+        if not di:
+            return jsonify({'code': -1, 'data': {'msg': '尚未通过审核'}})
 
         if user.usertype==0:
             de_name = user.nickname
