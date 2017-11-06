@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang=zh-cmn-Hans><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,user-scalable=0"><link rel=stylesheet href=./static/css/example.css><link rel=stylesheet href=./static/css/weui.min.css><title>猴小胖设计服务专家</title><link href=./static/css/app.261de1d312305455e3f437d7b62c09bf.css rel=stylesheet></head><body><div id=app></div><div id=loadingToast style=display:none><div class=weui-mask_transparent></div><div class=weui-toast><i class="weui-loading weui-icon_toast"></i><p id=loadText class=weui-toast__content></p></div></div><div class=js_dialog id=iosDialog2 style="display: none"><div class=weui-mask></div><div class=weui-dialog><div class=weui-dialog__bd id=iosDialogtext></div><div class=weui-dialog__ft><a href=javascript:; ontouchend=hideModal() class="weui-dialog__btn weui-dialog__btn_primary">确定</a></div></div></div><script>var code = getQueryString("code");
+<!DOCTYPE html><html lang=zh-cmn-Hans><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,user-scalable=0"><link rel=stylesheet href=./static/css/example.css><link rel=stylesheet href=./static/css/weui.min.css><title>猴小胖设计服务专家</title><link href=./static/css/app.261de1d312305455e3f437d7b62c09bf.css rel=stylesheet></head><body><div id=app></div><div id=loadingToast style=display:none><div class=weui-mask_transparent></div><div class=weui-toast><i class="weui-loading weui-icon_toast"></i><p id=loadText class=weui-toast__content></p></div></div><div class=js_dialog id=iosDialog2 style="display: none"><div class=weui-mask></div><div class=weui-dialog><div class=weui-dialog__bd id=iosDialogtext></div><div onclick=hideModal() class=weui-dialog__ft><a href=javascript:; class="weui-dialog__btn weui-dialog__btn_primary">确定</a></div></div></div><script>var code = getQueryString("code");
   var token = window.localStorage.token;
   var applystatus = window.localStorage.applystatus;
   function getQueryString(name) {
@@ -38,6 +38,12 @@
         options.url += i + "=" + options.data[i] + "&";
       }
       options.url = options.url.substring(0, options.url.length - 1);
+    } else {
+      var data = []
+      for (var i in options.data) {
+        data.push(i + "=" + options.data[i])
+      }
+      options.data = data.join("&")
     }
     var ajax = new XMLHttpRequest();
     ajax.onreadystatechange = function () {
@@ -55,14 +61,14 @@
       }, options.timeout)
     }
     ajax.open(options.type, options.url, true);
-    ajax.setRequestHeader("Content-type", "application/json;charset=utf-8");
-    //ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=utf-8");
     if (options.token) {
       ajax.setRequestHeader("Authorization", "Token " + token);
     }
     if (options.type === "get" || options.type === "GET") {
+      ajax.setRequestHeader("Content-type", "application/json;charset=utf-8")
       ajax.send();
     } else {
+      ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=utf-8")
       ajax.send(options.data);
     }
-  }</script><script type=text/javascript src=./static/js/manifest.be3b8eaf102480d8fdfe.js></script><script type=text/javascript src=./static/js/vendor.90b64cc27cbebdbef83e.js></script><script type=text/javascript src=./static/js/app.c3b87f09856cf6b588b8.js></script></body></html>
+  }</script><script type=text/javascript src=./static/js/manifest.7821fc6ead2756ffa025.js></script><script type=text/javascript src=./static/js/vendor.4565ed97dbc74c133142.js></script><script type=text/javascript src=./static/js/app.d8294e9d895eefa80fba.js></script></body></html>
