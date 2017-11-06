@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <link href="css/style.css" rel="stylesheet" type="text/css"/>
+    <link href="css/common.css" rel="stylesheet" type="text/css"/>
+    <link href="css/phone.css" rel="stylesheet" type="text/css"/>
+    <link href="css/skin1.css" rel="stylesheet" type="text/css"/>
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="js/money.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".click").click(function () {
+                $(".tip").fadeIn(200);
+            });
+
+            $(".tiptop a").click(function () {
+                $(".tip").fadeOut(200);
+            });
+
+            $(".sure").click(function () {
+                $(".tip").fadeOut(100);
+            });
+
+            $(".cancel").click(function () {
+                $(".tip").fadeOut(100);
+            });
+
+        });
+    </script>
+</head>
+<body>
+<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+        <li><a href="#">首页</a></li>
+        <li><a href="#">待处理资金流动</a></li>
+    </ul>
+</div>
+<div class="rightinfo">
+    <div class="table-context">
+        <!-- 表格主体 -->
+        <div class="table-main">
+            <!-- 表头 -->
+            <div class="titleBorder">
+                <!-- 选择框 -->
+                <div class="checkbox">
+                    <input type="checkbox" style="margin-top: 10px;" onclick="checkAll()">
+                </div>
+                <div class="title" style="cursor: default;width: 706px;" id="title">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>
+                                <div>
+                                    <span>ID</span><i></i>
+                                </div>
+                            </th>
+                            <th>
+                                <div>
+                                    <span>变动金额</span><i></i>
+                                </div>
+                            </th>
+                            <th>
+                                <div>
+                                    <span>类型</span><i></i>
+                                </div>
+                            </th>
+                            <th>
+                                <div>
+                                    <span>设计师id</span><i></i>
+                                </div>
+                            </th>
+                            <th>
+                                <div>
+                                    <span>状态</span><i></i>
+                                </div>
+                            </th>
+                            <th>
+                                <div>
+                                    <span>时间</span><i></i>
+                                </div>
+                            </th>
+                            <th>
+                                <div>
+                                    <span>说明</span><i></i>
+                                </div>
+                            </th>
+                        </thead>
+                    </table>
+                </div>
+                <!-- 操作列 -->
+                <div class="operate" style="width: 378px">
+                    <span>操作</span>
+                </div>
+            </div>
+            <!-- 表格内容 -->
+            <div class="content">
+                <!-- 选择框 -->
+                <div class="checks">
+                    <table style="width: 100%;">
+                        <!-- 使用tfoot用于区分，便于使用css样式 -->
+                        <tfoot id="checktfoot">
+
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div id="context" class="context" style="width: 706px;">
+                    <table>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+                <!-- 操作列 -->
+                <div class="operate" style="width:378px;">
+                    <table style="width: 100%;">
+                        <tfoot id="operate">
+
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <div id="content"
+                 style="width: 80%; height: 18px; overflow-x: auto; overflow-y: hidden; margin-left: 40px;">
+                <div id="tableScroll" style="height: 1px;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="tip">
+        <div class="tiptop"><span>提示信息</span><a></a></div>
+
+        <div class="tipinfo">
+            <span><img src="images/ticon.png"/></span>
+            <div class="tipright">
+                <p>是否确认对信息的修改 ？</p>
+                <cite>如果是请点击确定按钮 ，否则请点取消。</cite>
+            </div>
+        </div>
+        <div class="tipbtn">
+            <input name="" type="button" class="sure" value="确定"/>&nbsp;
+            <input name="" type="button" class="cancel" value="取消"/>
+        </div>
+
+    </div>
+
+
+</div>
+
+<script type="text/javascript">
+    $('.tablelist tbody tr:odd').addClass('odd');
+</script>
+</body>
+</html>
