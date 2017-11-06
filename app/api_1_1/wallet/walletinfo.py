@@ -126,6 +126,8 @@ class WithdrawApply(Resource):
         money = request.values.get("money")
         tel = request.values.get("tel")
         code = request.values.get("code")
+        if not money:
+            return jsonify({"code":-1})
         r = VerifyCode(tel, code)
         if r == -1:
             return jsonify({"code": -1, 'msg': '验证码超时，请重试'})
@@ -143,7 +145,7 @@ class WithdrawApply(Resource):
         # todo
         # single_send(mobile=ADMIN_TEL, text=text)
         after_money= g.user.wallet.money-float(money)
-        cf = CashFlow(change_money=money,after_money=after_money,remark='提现',from_who='设计师钱包'\
+        cf = CashFlow(change_money=-float(money),after_money=after_money,remark='提现',from_who='设计师钱包'\
                  ,to_who='设计师个人',related_user=g.user.id,status='审核中',when=datetime.datetime.now())
         db.session.add(cf)
         # 钱包余额应该变少，审核如果没通过就加回来
@@ -153,5 +155,32 @@ class WithdrawApply(Resource):
         return  jsonify({"code":0})
 
 
+
+# 提现申请_无验证码版本
+class WithdrawApply_WX(Resource):
+    @auth.login_required
+    def post(self):
+        money = request.values.get("money")
+        tel = request.values.get("tel")
+        if not money:
+            return jsonify({"code":-1})
+        if (g.user.wallet.money < float(money)) or (float(money)==0)  or (g.user.wallet.money==0) :
+            return jsonify({"code":-1,"msg":"余额不足"})
+        # 发条短信通知管理员
+        username= g.user.nickname
+        tel = g.user.wallet.tel
+        alipay = g.user.wallet.alipay
+        text = '【猴小胖】有用户%s申请提现%s元，对方联系电话是%s，提现账号是%s，请尽快处理' % (username,money,tel,alipay)
+        # todo
+        # single_send(mobile=ADMIN_TEL, text=text)
+        after_money= g.user.wallet.money-float(money)
+        cf = CashFlow(change_money=-float(money),after_money=after_money,remark='提现',from_who='设计师钱包'\
+                 ,to_who='设计师个人',related_user=g.user.id,status='审核中',when=datetime.datetime.now())
+        db.session.add(cf)
+        # 钱包余额应该变少，审核如果没通过就加回来
+        g.user.wallet.money = after_money
+        db.session.add(g.user.wallet)
+        db.session.commit()
+        return  jsonify({"code":0})
 
 

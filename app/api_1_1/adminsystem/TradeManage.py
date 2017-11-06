@@ -10,7 +10,11 @@ import datetime
 class GetAllCashFlow(Resource):
     @adminauth.login_required
     def get(self):
-        cf = CashFlow.query.order_by(CashFlow.when.desc()).all()
+        status = request.values.get("status")
+        if status=='审核中':
+            cf = CashFlow.query.filter_by(status='审核中').order_by(CashFlow.when.desc()).all()
+        else:
+            cf = CashFlow.query.order_by(CashFlow.when.desc()).all()
         res = [{
             'id':i.id,
             "change_money":i.change_money,
@@ -20,7 +24,8 @@ class GetAllCashFlow(Resource):
             'from_who':i.from_who,
             'to_who':i.to_who,
             'related_user':i.related_user,
-            'status':i.status
+            'status':i.status,
+            'detail':i.detail
         } for i in cf]
         return jsonify({"code":0,"data":{"cashflow":res}})
 
@@ -46,8 +51,8 @@ class CancelPay(Resource):
         cf = CashFlow.query.filter_by(id=cf_id).first()
         cf.status = '失败'
         cf.detail = detail
-        u = cf.user
-        u.wallet.money += cf.change_money
+        u = User.query.filter_by(id=cf.related_user).first()
+        u.wallet.money -= cf.change_money
         db.session.add(cf)
         db.session.add(u.wallet)
         db.session.commit()
@@ -57,10 +62,10 @@ class CancelPay(Resource):
 class PayToDesigner(Resource):
     @adminauth.login_required
     def post(self):
-        user_id = request.values.get("id")
+        user_id = request.values.get("user_id")
         money = float(request.values.get("money"))
         remark = request.values.get("remark")
-        when = datetime.datetime.nwo()
+        when = datetime.datetime.now()
         from_who = '平台'
         to_who = '设计师钱包'
         related_user = user_id
@@ -73,6 +78,17 @@ class PayToDesigner(Resource):
         cf = CashFlow(change_money=money,after_money=after_money,remark=remark,when=when,from_who=from_who,to_who=to_who,related_user=related_user,status=status)
         db.session.add(cf)
         db.session.commit()
+        return jsonify({"code": 0})
 
 
 
+
+# 转账验证
+class ShowUserInfo(Resource):
+    @adminauth.login_required
+    def get(self):
+        user_id = request.values.get("user_id")
+        u = User.query.filter_by(id=user_id).first()
+        if not u:
+            return -1
+        return jsonify({"code":0,"data":{"nickname":u.nickname,'headimg':u.headimg}})

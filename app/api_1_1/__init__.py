@@ -7,18 +7,19 @@ api_1_1 = Blueprint('apiv1_1',__name__)
 api_v1_1 = Api(api_1_1,catch_all_404s=True)
 
 from .apply import *
-from .login_verify import WxVerify,TokenVerify,LogOut
+from .login_verify import *
 from .applystatus import GetApplyStatus
 from .demand import GetDemandCenter,DemandDeatil,ReplyDemand,TMPReplyDemand,ClientPostDemand
 from .work_resume import GetAllWork,GetResumeInfo
 from .admindash import NewAlbum,GetAlbum,GetCollection,GetUserHead,GetAlbumDetail,\
     Userinfo,DeleteAlbum,AddExp,DelExp,NoticeRecent,UnreadNum,AllNotice,\
     ClearAll,RemoveAll
-from .adminsystem import SendNotice,AllDesignerManage,DesignerRecom,AgreeApply,DisAgreeApply, \
-    AdminLogin,GetApplyinfo,ListNews,AllDemand,DemandApply,GetDemandApplyInfo,RecomList, \
-    DelRecom,GetAllCashFlow
+from .adminsystem import *
 from .wxpublic import  *
 from .wallet import *
+
+
+
 # wx verify info
 api_v1_1.add_resource(WxVerify,'/wx_verify')
 api_v1_1.add_resource(LogOut,'/logout')
@@ -145,6 +146,7 @@ api_v1_1.add_resource(VerifySend,'/designer/verifysend')
 
 api_v1_1.add_resource(BindAlipay,'/designer/bindalipay')
 api_v1_1.add_resource(WithdrawApply,'/designer/withdrawapply')
+api_v1_1.add_resource(WithdrawApply_WX,'/designer/withdrawapply_wx')
 
 
 #客户需求意向
@@ -153,3 +155,14 @@ api_v1_1.add_resource(ClientPostDemand,'/client/postdemand')
 
 # 查看所有资金流动
 api_v1_1.add_resource(GetAllCashFlow,'/adminsystem/getallcashflow')
+
+api_v1_1.add_resource(ConfirmPay,'/adminsystem/confirmpay')
+
+api_v1_1.add_resource(CancelPay,'/adminsystem/cancelpay')
+
+api_v1_1.add_resource(PayToDesigner,'/adminsystem/paytodesigner')
+
+
+api_v1_1.add_resource(FeedBack,'/designer/feedback')
+
+api_v1_1.add_resource(ShowUserInfo,'/adminsystem/showuserinfo')
