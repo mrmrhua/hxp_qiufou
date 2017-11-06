@@ -1,8 +1,8 @@
 $(document).ready(function () {
     tableMove();
-    getNotice();
+    getDemand();
 });
-
+var left = window.parent.document.getElementById("leftFrame");
 //全选 取消全选
 function checkAll() {
     var inputs = $(".checkbox input");
@@ -97,7 +97,6 @@ function tableMove() {
                         + "px";
                 }
             }
-
         }
         document.onmouseup = function () {
             if (p.b) {
@@ -108,18 +107,73 @@ function tableMove() {
     }
 }
 
+//移除left选中
+function removeActive(left) {
+    var tt = left.contentDocument.body.querySelectorAll(".menuson li a");
+    for (var i = 0, size = tt.length; i < size; i++) {
+        tt[i].parentElement.className = "";
+    }
+}
 
-//获取通知
-function getNotice() {
+function agren(id) {// 确定资金流动
+    $.ajax({
+        type: "post",
+        headers: {"Authorization": "Token " + window.localStorage.token},
+        url: "http://www.houxiaopang.com/api/v1.1/adminsystem/confirmpay",
+        data: {
+            id: id
+        },
+        success(res){
+            if (res.code === 0) {
+                alert("成功。")
+            } else {
+                alert("操作失败！")
+            }
+        },
+        error(){
+            alert("操作失败！")
+        }
+    })
+}
+function pass(id, e) {//取消提现
+    var detail = e.target.nextElementSibling.innerHTML
+    if (detail === 'null' || detail.trim() === "") {
+        detail = null
+    }
+    $.ajax({
+        type: "post",
+        headers: {"Authorization": "Token " + window.localStorage.token},
+        url: "http://www.houxiaopang.com/api/v1.1/adminsystem/cancelpay",
+        data: {
+            id: id,
+            detail: detail
+        },
+        success(res){
+            if (res.code === 0) {
+                alert("成功。")
+            } else {
+                alert("操作失败！")
+            }
+        },
+        error(){
+            alert("操作失败！")
+        }
+    })
+}
+//获取需求
+function getDemand() {
     $.ajax({
         type: "get",
-        url: "http://www.houxiaopang.com/api/v1.1/adminsystem/notice/allnotice",
         headers: {"Authorization": "Token " + window.localStorage.token},
+        url: "http://www.houxiaopang.com/api/v1.1/adminsystem/getallcashflow",
+        data: {
+            status: "审核中"
+        },
         success(data){
             if (data.code === 0) {
-                var applyer = data.data.notice;
+                var applyer = data.data.cashflow;
                 if (applyer.length === 0) {
-                    alert("无通知");
+                    alert("无资金流动情况。");
                     return;
                 }
                 var tbody = document.getElementsByTagName("tbody")[0];
@@ -133,8 +187,8 @@ function getNotice() {
         			  onclick="checkCheck()"></div></td></tr>`;
                     checktfoot.innerHTML += strchecktfoot;
                     var stroperate = `
-        			<tr><td><div><span class="colorSpan">操作1</span> <span class="colorSpan"
-                    >操作2</span></div></td></tr>`;
+        			<tr><td><div><span onclick="agren(${item.id})" class="colorSpan">确定资金流动</span>　<span class="colorSpan"
+                    onclick="pass(${item.id},event)">取消提现</span>　<span style="display: inline-block;width: 100px;border:1px solid #d9d9d9;height: 24px;line-height: 24px;margin-top: 5px;" contenteditable="true">null</span></div></td></tr>`;
                     operate.innerHTML += stroperate;
                     var strcontent = `
         					<tr>
@@ -142,27 +196,29 @@ function getNotice() {
                                             <span>${item.id}</span>
                                         </div></td>
                                     <td><div>
-                                            <span>${item.title}</span>
-                                        </div></td>
-                                    <td><div style = "width:443px;">
-                                            <span zhecon="${item.content}"></span>
-                                        </div></td>
-                                    <td><div style = "width:140px;">
-                                            <span>${item.up_time }</span>
+                                            <span>${item.change_money}</span>
                                         </div></td>
                                     <td><div>
-                                            <span>${item.isread }</span>
+                                            <span>${item.remark}</span>
                                         </div></td>
                                     <td><div>
-                                            <span>${item.receive_num }</span>
+                                            <span>${item.related_user }</span>
+                                        </div></td>
+                                    <td><div>
+                                            <span>${item.status }</span>
+                                        </div></td>
+                                    <td><div>
+                                        <span>${item.when }</span>
+                                    </div></td>
+                                    <td><div>
+                                            <span>${item.detail }</span>
                                         </div></td>
                                 </tr>
         	`;
                     tbody.innerHTML += strcontent;
-
-                    $("[zhecon]").each(function () {
-                        $(this).text($(this).attr("zhecon"));
-                    });
+                });
+                $("[zhecon]").each(function () {
+                    $(this).text(applyer[$(this).attr("zhecon")].description);
                 });
             } else {
                 alert("获取数据失败！");
@@ -171,6 +227,5 @@ function getNotice() {
         error(){
             alert("获取数据失败！");
         }
-
-    })
+    });
 }
