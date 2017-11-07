@@ -3,7 +3,15 @@ function getQueryString(name) {
 	    var r = window.location.search.substr(1).match(reg);
 	    if (r != null) return unescape(r[2]);
 	    return null;
-	}
+}
+try{
+	window.localStorage.test = "ok";
+	init();
+}catch(e){
+	alert("请勿使用safari的无痕浏览模式。")
+}
+
+function init(){
 	var code = getQueryString("code");
     if (!code) {
         var obj = new WxLogin({
@@ -43,3 +51,5 @@ function getQueryString(name) {
 			}
 		});
 	}
+}
+	
