@@ -38,6 +38,6 @@ class ClientPostDemand(Resource):
         # 给管理员发短信
         text = '【猴小胖】有客户发布了新的设计需求。类型:%s，客户称呼：%s，微信号：%s，发布时间：%s' %(cat,name,wxnum,now)
         r = single_send(mobile=ADMIN_TEL,text=text)
-        # send_admin_email(ADMIN_EMAIL,'有新需求',text)
+        send_admin_email(ADMIN_EMAIL,'有新需求',text)
         return jsonify({"code":0})
 
