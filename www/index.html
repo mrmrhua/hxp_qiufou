@@ -391,7 +391,7 @@
           wxnum: kh_tel.value.trim()
         },
         timeout:5000,
-        success(res){
+        success:function(res){
           ispost = true
           if(res.code === 0){
             kh_from.style.display = 'none'
@@ -400,7 +400,7 @@
             alert("需求发布失败！请刷新重试。")
           }
         },
-        error(){
+        error:function(){
           ispost = true
           alert("需求发布失败！请刷新重试。")
         }
