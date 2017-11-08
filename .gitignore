@@ -33,3 +33,4 @@ wx/templates/
 /app/templates/
 /app/main/
 /app/add_project/
+/app/assets.py

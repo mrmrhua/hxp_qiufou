@@ -61,8 +61,8 @@ class VerifySend(Resource):
         # 发验证码
         # todo
         text = '【猴小胖】您的验证码是%s。如非本人操作，请忽略本短信' % code
-        # r = single_send(mobile=tel,text=text)
-        r= 0
+        r = single_send(mobile=tel,text=text)
+        # r= 0
         if r==0:
           return jsonify({"code":0})
         else:
