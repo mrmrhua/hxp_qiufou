@@ -34,6 +34,7 @@ function init(){
 			success: function(result) {
 				if(result.code=='0'){
 	           		window.localStorage.token = result.data.token;
+					window.localStorage.applystatus = result.data.applystatus
 					if(result.data.applystatus === 0){
 						_czc.push(["_trackEvent",'新客登录','扫码']);
 					}else{
