@@ -58,6 +58,17 @@ class WxVerify(Resource):
             else:
                 url = '/group-apply'
 
+        #
+        #
+        # if user.applystatus == APPLYSTATUS['APPLYING']:  # 0
+        #     url = "/apply"
+        # else:
+        #     url = "/admin"
+
+
+
+
+
         token = user.generate_auth_token().decode()
         applystatus = user.applystatus
         return jsonify({'code': 0, 'data': {'url': url,'token':token,'applystatus':applystatus}})

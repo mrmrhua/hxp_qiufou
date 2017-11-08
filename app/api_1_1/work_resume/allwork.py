@@ -34,6 +34,7 @@ class GetAllWork(Resource):
         # Album.query.filter_by(category = cat)
         PER_PAGE = num
 
+        # 作品详情页面
         if not designer_id:
             if cat == '-1':  # 全部都要
                 count = Album.query.filter(Album.privacy != 1).count()
@@ -41,13 +42,14 @@ class GetAllWork(Resource):
             else:
                 count = Album.query.filter_by(category=cat).filter(Album.privacy != 1).count()
                 al = Album.query.filter(Album.privacy!=1).filter_by(category=cat).order_by(Album.up_time.desc()).paginate(page,PER_PAGE,False).items
+        # 个人简历页面的查看部分
         else:
             if cat == '-1':  # 全部都要
-                count = Album.query.filter(Album.privacy != 1).filter_by(user_id=designer_id).count()
-                al = Album.query.filter(Album.privacy!=1).filter_by(user_id=designer_id).order_by(Album.up_time.desc()).paginate(page,PER_PAGE,False).items
+                count = Album.query.filter_by(user_id=designer_id).count()
+                al = Album.query.filter_by(user_id=designer_id).order_by(Album.up_time.desc()).paginate(page,PER_PAGE,False).items
             else:
-                count = Album.query.filter_by(user_id=designer_id,category=cat).filter(Album.privacy != 1).count()
-                al = Album.query.filter(Album.privacy!=1).filter_by(user_id=designer_id,category=cat).order_by(Album.up_time.desc()).paginate(page,PER_PAGE,False).items
+                count = Album.query.filter_by(user_id=designer_id,category=cat).count()
+                al = Album.query.filter_by(user_id=designer_id,category=cat).order_by(Album.up_time.desc()).paginate(page,PER_PAGE,False).items
 
         album = []
         for i in al:

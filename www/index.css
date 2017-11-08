@@ -13,6 +13,41 @@
     url('//at.alicdn.com/t/font_335733_30de29a5t949rudi.svg#iconfont') format('svg');
 }
 
+.kh_btn{
+    font-size:20px;
+    text-align:center;
+    line-height:50px;
+    color:#d11866;
+    border:1px solid #d11866;
+    height: 50px;
+    margin: 35px auto 20px;
+    width: 200px;
+    cursor: pointer;
+}
+.kh_btn:hover{
+    color: #fff;
+    border:1px solid #fff;
+    background: linear-gradient(to right,#fe6549,#d01667);
+}
+.kh_option{
+    height: 36px;
+    width: 100%;
+    line-height: 36px;
+    font-size: 14px;
+    padding-left: 15px;
+}
+.kh_option:hover{
+    background: #f7f7f7;
+}
+.kh_input{
+    width: 100%;
+    padding-left: 15px;
+    height: 100%;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    background: #f5f5f5;
+}
 .iconfontyyy {
     font-family: "iconfont", serif !important;
     font-style: normal;

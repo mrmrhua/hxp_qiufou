@@ -9,6 +9,8 @@ from config import APPLYSTATUS,SEX
 from app.common import auth
 from app.models import Album,Designwork
 from datetime import datetime
+from flask import abort
+from app.api_1_1.errors import ServerException
 
 class GetAlbumDetail(Resource):
     # def get(self):
@@ -32,8 +34,9 @@ class GetAlbumDetail(Resource):
     def get(self):
         album_id = request.values.get("album_id")
         al = Album.query.filter_by(id=album_id).first()
-        if not al:
-            return jsonify({'code': -1})
+        # todo
+        # if not al:
+        #     return jsonify({'code': -1})
         worklist = [(i.work_url) for i in al.designworks.all()]
         return jsonify({'code': 0, 'data': {
             'title': al.title,
@@ -46,5 +49,6 @@ class GetAlbumDetail(Resource):
             'belong_head':al.designer.headimg,
             'belong_nick':al.designer.nickname
         }})
+
 
 

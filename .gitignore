@@ -24,3 +24,13 @@ app/static/.webaseets-cache
 /flask_session/
 /tesing/
 /tests/
+/wx/flask_session/
+www/group-apply/static/
+wx/static/
+wx/templates/
+/wx/instance/
+/wx/wx.log
+/app/templates/
+/app/main/
+/app/add_project/
+/app/assets.py

@@ -1,0 +1,96 @@
+<!DOCTYPE html><html lang=zh-cmn-Hans><head><meta charset=UTF-8><title>猴小胖设计服务专家——找到更好的设计师</title><meta http-equiv=X-UA-Compatible content="ie=edge"><meta name=viewport content="width=device-width,initial-scale=1"><link rel="shortcut icon" href=http://image.houxiaopang.com/houicon.ico><link rel=stylesheet href=./static/css/cropper.css><link rel=stylesheet href=./static/css/jquery.pagewalkthrough.css><link rel=stylesheet href=./static/css/red.css><script>function myBrowser() {
+      var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
+      var isOpera = userAgent.indexOf("Opera") > -1;
+      if (isOpera) {
+        return "Opera"
+      } else if (userAgent.indexOf("Firefox") > -1) {
+        return "FF";
+      } else if (userAgent.indexOf("Chrome") > -1) {
+        return "Chrome";
+      } else if (userAgent.indexOf("Safari") > -1) {
+        return "Safari";
+      } else {
+        return "IE";
+      }
+      ; //判断是否IE浏览器
+    }
+    //以下是调用上面的函数
+    var mb = myBrowser();
+    if ("IE" == mb) {
+      location.href = "http://houxiaopang.com/browsernotsupport";
+    }</script><link href=./static/css/app.a3e7e14ade193cde643967a93c4fd224.css rel=stylesheet></head><body><div id=app></div><script src=https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js></script><script src=http://image.houxiaopang.com/static/baseform/js/qiniu.js></script><script src=https://cdn.staticfile.org/plupload/2.1.8/plupload.full.min.js></script><script src=./static/js/jquery.pagewalkthrough.js></script><script src=./static/js/icheck.min.js></script><script src=./static/js/upwork.js></script><script src=./static/js/cropper.js></script><script src=./static/js/main.js></script><script>var token = window.localStorage.token;
+  if (token === "undefined" || token === "" || token === null) {
+    location.href = "http://s.houxiaopang.com";
+  }
+  //todo 验证token是否过期
+  $.ajax({
+    url: "https://m.houxiaopang.com/api/v1.1/tokenverify",
+    type: "get",
+    headers: {"Authorization": "Token " + token},
+    success(data) {
+      if (data.code !== 0) {
+        location.href = "http://s.houxiaopang.com"
+      }
+    },
+    error() {
+      location.href = "http://s.houxiaopang.com"
+    }
+  })
+
+
+  function getDateTimeStamp(dateStr) {
+    return Date.parse(dateStr.replace(/-/gi, "/"));
+  }
+  function getDateDiff(dateTimeStamp) {
+    var minute = 1000 * 60;
+    var hour = minute * 60;
+    var day = hour * 24;
+    var month = day * 30;
+    var now = new Date().getTime();
+    var diffValue = now - dateTimeStamp;
+    var monthC = diffValue / month;
+    var weekC = diffValue / (7 * day);
+    var dayC = diffValue / day;
+    var hourC = diffValue / hour;
+    var minC = diffValue / minute;
+    var result = "刚刚";
+    if (monthC >= 1) {
+      result = parseInt(monthC) + "个月前";
+    } else if (weekC >= 1) {
+      result = parseInt(weekC) + "周前";
+    } else if (dayC >= 1) {
+      result = parseInt(dayC) + "天前";
+    } else if (hourC >= 1) {
+      result = parseInt(hourC) + "小时前";
+    } else if (minC >= 1) {
+      result = parseInt(minC) + "分钟前";
+    }
+    return result;
+  }
+  function getCatname(cat) {
+    var name = null;
+    switch (cat) {
+      case 1:
+        name = "PPT设计"
+        break;
+      case 2:
+        name = "LOGO设计"
+        break;
+      case 3:
+        name = "名片设计"
+        break;
+      case 4:
+        name = "网站设计"
+        break;
+      case 5:
+        name = "app设计"
+        break;
+      case 6:
+        name = "微信网页设计"
+        break;
+      case 7:
+        name = "海报设计"
+        break;
+    }
+    return name
+  }</script><script type=text/javascript src=./static/js/manifest.64cd103111714fb433f2.js></script><script type=text/javascript src=./static/js/vendor.e54934cf9b0e60b7db33.js></script><script type=text/javascript src=./static/js/app.1bf59ea6b1904f0a45be.js></script></body></html>

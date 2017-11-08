@@ -78,7 +78,7 @@ function tableMove() {
 
     //为表头的每一个列都添加拖拽功能
     for (var j = 0; j < table.rows[0].cells.length; j++) {
-        var i = table.rows[0].cells[j].childNodes[0].childNodes[2];
+        var i = table.rows[0].cells[j].children[0].children[1];
         i.onmousedown = function () {
             p.x = event.clientX;
             p.b = true;
@@ -113,7 +113,7 @@ function tableMove() {
 function getNotice() {
     $.ajax({
         type: "get",
-        url: "http://houxiaopang.com/api/v1.1/adminsystem/notice/allnotice",
+        url: "http://www.houxiaopang.com/api/v1.1/adminsystem/notice/allnotice",
         headers: {"Authorization": "Token " + window.localStorage.token},
         success(data){
             if (data.code === 0) {

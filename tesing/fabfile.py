@@ -5,10 +5,15 @@ env.user = 'root'
 env.password='qclouding123'
 env.activate = 'source venv/bin/activate'
 
-# def go():
-#     with cd('/home/hxp'):
-#         with prefix(env.activate):
-#             run('')
+def wxtest():
+    with cd('/home/hxp'):
+        with prefix(env.activate):
+                run('python wx/wx.py runserver')
+def test():
+    with cd('/home/hxp'):
+        with prefix(env.activate):
+                run('gunicorn manage:app -b 127.0.0.1:8000')
+
 def go():
     run('systemctl start hxp')
 
@@ -26,3 +31,19 @@ def updb():
         with prefix(env.activate):
             run("python manage.py db migrate -m 'upgrade'")
             run('python manage.py db upgrade')
+
+def nginx():
+    run("nginx -s reload")
+
+
+def wxgo():
+    run('systemctl start hxpwx')
+
+def wxstop():
+    run('systemctl stop hxpwx')
+
+def wxstatus():
+    run('systemctl status hxpwx -l')
+
+def wxrestart():
+    run('systemctl restart hxpwx')

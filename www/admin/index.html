@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang=zh-cmn-Hans><head><meta charset=UTF-8><title>猴小胖设计服务专家——找到更好的设计师</title><meta http-equiv=X-UA-Compatible content="ie=edge"><meta name=viewport content="width=device-width,initial-scale=1"><link rel="shortcut icon" href=http://image.houxiaopang.com/houicon.ico><link rel=stylesheet href=./static/css/cropper.css><link rel=stylesheet href=./static/css/jquery.pagewalkthrough.css><link rel=stylesheet href=./static/css/red.css><script>//声明_czc对象:
+<!DOCTYPE html><html lang=zh-cmn-Hans><head><meta charset=UTF-8><title>猴小胖设计服务专家——找到更好的设计师</title><meta http-equiv=X-UA-Compatible content="ie=edge"><meta name=viewport content="width=device-width,initial-scale=1"><link rel="shortcut icon" href=http://image.houxiaopang.com/houicon.ico><link rel=stylesheet href=./static/css/cropper.css><link rel=stylesheet href=./static/css/jquery.pagewalkthrough.css><link rel=stylesheet href=./static/css/red.css><link rel=stylesheet href=./static/css/jquery.slider.css><script>//声明_czc对象:
     var _czc = _czc || [];
     //绑定siteid，请用您的siteid替换下方"XXXXXXXX"部分
     _czc.push(["_setAccount", "1261952519"]);
@@ -36,11 +36,21 @@
       g.defer = true;
       g.src = u + 'piwik.js';
       s.parentNode.insertBefore(g, s);
-    })();</script><link href=./static/css/app.e11d7abf4a13ac3dec0cffe2c31c7353.css rel=stylesheet></head><body><div style="display: none"><script type=text/javascript>var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-  document.write(unescape("%3Cspan id='cnzz_stat_icon_1261952519'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1261952519' type='text/javascript'%3E%3C/script%3E"));</script></div><div id=app></div><script src=https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js></script><script src=http://image.houxiaopang.com/static/baseform/js/qiniu.js></script><script src=https://cdn.staticfile.org/plupload/2.1.8/plupload.full.min.js></script><script src=./static/js/jquery.pagewalkthrough.js></script><script src=./static/js/icheck.min.js></script><script src=./static/js/upwork.js></script><script src=./static/js/cropper.js></script><script src=./static/js/main.js></script><script>var token = window.localStorage.token, login = false;
-  if (token === "undefined" || token === "" || token === null) {
-    location.href = "http://houxiaopang.com/qrlogin";
+    })();</script><link href=./static/css/app.6e3ebedfdc79cfefe1b62ea3874c3dbc.css rel=stylesheet></head><body><div style="display: none"><script type=text/javascript>var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+  document.write(unescape("%3Cspan id='cnzz_stat_icon_1261952519'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1261952519' type='text/javascript'%3E%3C/script%3E"));</script></div><div id=app></div><script src=https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js></script><script src=http://image.houxiaopang.com/static/baseform/js/qiniu.js></script><script src=https://cdn.staticfile.org/plupload/2.1.8/plupload.full.min.js></script><script src=./static/js/icheck.min.js></script><script src=./static/js/upwork.js></script><script src=./static/js/cropper.js></script><script src=./static/js/main.js></script><script src=./static/js/jquery.slider.min.js></script><script>var token = window.localStorage.token, login = false;
+  var applystatus = window.localStorage.applystatus;
+  creatinit();
+  function creatinit() {
+    if (token === "undefined" || token === "" || token === null) {
+      location.href = "http://houxiaopang.com/qrlogin";
+      return
+    }
+    if (applystatus != "2") {
+      location.href = "http://houxiaopang.com/apply";
+      return
+    }
   }
+
   function getDateTimeStamp(dateStr) {
     return Date.parse(dateStr.replace(/-/gi, "/"));
   }
@@ -105,4 +115,4 @@
      i.innerHTML = "&#xe611;";
      msgmore.style.display = "none";
      }*/
-  }</script><script type=text/javascript src=./static/js/manifest.86795c6d7ac60f53e1f4.js></script><script type=text/javascript src=./static/js/vendor.59f875cfc69f99c6c9fa.js></script><script type=text/javascript src=./static/js/app.99539ff2325efae1a34f.js></script></body></html>
+  }</script><script type=text/javascript src=./static/js/manifest.dca9b9a6a14c1919bff2.js></script><script type=text/javascript src=./static/js/vendor.0b662ca3278fe6d4d371.js></script><script type=text/javascript src=./static/js/app.92d213ef2a137177dadd.js></script></body></html>

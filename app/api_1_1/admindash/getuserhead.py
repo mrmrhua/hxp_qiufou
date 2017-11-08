@@ -8,6 +8,11 @@ from app.common import  support_jsonp
 from flask_login import login_required
 from app.common import auth
 
+def getcity(info):
+    if not info:
+        return ''
+    else:
+        return info.city
 
 class GetUserHead(Resource):
     @auth.login_required
@@ -17,5 +22,5 @@ class GetUserHead(Resource):
             'data': {'headimg': g.user.headimg
                           ,'nickname':g.user.nickname,
                      'userid':g.user.id,
-                     'city':g.user.info.city}
+                     'city':getcity(g.user.info)}
         })

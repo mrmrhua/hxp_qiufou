@@ -100,7 +100,7 @@
           data: {
             category: c
           },
-          url: 'http://houxiaopang.com/api/v1.1/designerdash/collection',
+          url: 'http://www.houxiaopang.com/api/v1.1/designerdash/collection',
           headers: {"Authorization": "Token " + token},
           timeout: 5000,
           success: function (data) {
@@ -157,7 +157,7 @@
         $.ajax({
           type: "post",
           headers: {"Authorization": "Token " + token},
-          url: "http://houxiaopang.com/api/v1.1/designerdash/deletealbum",
+          url: "http://www.houxiaopang.com/api/v1.1/designerdash/deletealbum",
           data: {
             album_id: that.removeid
           },

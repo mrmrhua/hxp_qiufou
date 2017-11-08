@@ -7,6 +7,27 @@ from config import APPLYSTATUS
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer,BadSignature,SignatureExpired
 from . import Category,Subscribtion
 import random
+import redis
+class Conn_db():
+    def __init__(self):
+        # 创建对本机数据库的连接对象
+        self.conn = redis.StrictRedis(host='127.0.0.1', port=6379, db=0)
+
+    # 读取
+    def get(self, key_):
+        # 从数据库根据键（key）获取值
+        value_ = self.conn.get(key_)
+        if not value_:
+            return None
+        else:
+            return value_.decode()
+
+    # 存储
+    def set(self, key_, value_,ex_):
+        # 将数据存储到数据库
+        self.conn.set(key_, value_,ex=ex_)
+
+
 
 class User(UserMixin,db.Model):
     __tablename__ = 'users'
@@ -32,8 +53,7 @@ class User(UserMixin,db.Model):
     notice = db.relationship('Subscribtion',foreign_keys=[Subscribtion.user_id],backref=db.backref('receiver',lazy='joined'),
                                lazy='dynamic',
                                cascade='all,delete-orphan')
-
-
+    wallet = db.relationship('Wallet',backref='user',cascade="delete",uselist=False)
 
     def __repr__(self):
         return '<User %r>' % self.nickname
@@ -76,7 +96,10 @@ class User(UserMixin,db.Model):
                        expires_in=expiration)
         # 生成一个随机数,存进token里. session里也存一个
         nonce = random.randint(1,100)
-        session['lognonce'] = nonce
+        # session['lognonce'] = nonce
+        # nonce存redis
+        conn = Conn_db()
+        conn.set('nonce'+str(self.id),nonce,12000)
         t = s.dumps({'id': self.id,'nonce':nonce})
         return t
 
@@ -90,11 +113,15 @@ class User(UserMixin,db.Model):
             return None  # valid token, but expired
         except BadSignature:
             return None  # invalid token
+        # print("id  %r" % data['id'])
 
         # 验证随机数是否过期
         nonce = data['nonce']
-        if 'lognonce'  not in session or nonce != session['lognonce']:
+        conn = Conn_db()
+        if str(nonce) != conn.get("nonce"+str(data['id'])):
             return None  # invalid token
+        # if 'lognonce'  not in session or nonce != session['lognonce']:
+        #     return None  # invalid token
         return User.query.get(data['id'])
 
 
@@ -111,3 +138,14 @@ def load_user_from_request(request):
         if user:
             return user
     return  None
+
+class City(UserMixin,db.Model):
+    __tablename__ = 'city'
+    id = db.Column(INTEGER(unsigned=True),primary_key=True)
+    province_id = db.Column(INTEGER(unsigned=True))
+    name=db.Column(db.String(8))
+
+class Province(UserMixin,db.Model):
+    __tablename__ = 'province'
+    id = db.Column(INTEGER(unsigned=True),primary_key=True)
+    name=db.Column(db.String(8))

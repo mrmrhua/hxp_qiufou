@@ -10,6 +10,8 @@ class Userinfo(Resource):
     def get(self):
         u = g.user
         info = u.info
+        if not u.info:
+            return jsonify({'code':-1})
         return jsonify({
             'code':0,
             'data':{'usertype':u.usertype,

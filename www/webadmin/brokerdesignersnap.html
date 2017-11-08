@@ -251,7 +251,7 @@
                 } else if (i === 3) {
                     fromdata.worklist.push($(this).val().trim());
                 } else if (i === 4) {
-                    if ($(this).val().length > 16) {
+                    if ($(this).val().length > 255) {
                         alert("构想字数超限");
                         return false;
                     } else {
@@ -282,7 +282,7 @@
     function insertDesigner(id) {
         $.ajax({
             type: "get",
-            url: "http://houxiaopang.com/api/v1.1/adminsystem/demand/getapplyinfo",
+            url: "http://www.houxiaopang.com/api/v1.1/adminsystem/demand/getapplyinfo",
             headers: {"Authorization": "Token " + window.localStorage.token},
             data: {
                 'apply_id': id,
@@ -358,7 +358,7 @@
                 $.ajax({
                     type: "post",
                     headers: {"Authorization": "Token " + window.localStorage.token},
-                    url: "http://houxiaopang.com/api/v1.1/adminsystem/recommend_tmp",
+                    url: "http://www.houxiaopang.com/api/v1.1/adminsystem/recommend_tmp",
                     data: {
                         'demand_id': demandid,
                         'designer': JSON.stringify(fromdatas),

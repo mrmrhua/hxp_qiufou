@@ -9,6 +9,7 @@ from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 from .assets import bundle
 from .exceptions import ValidationError
+from .libs import send_mail_in_text
 
 db = SQLAlchemy()
 lm = LoginManager()
@@ -62,7 +63,6 @@ def create_app():
     #app.register_blueprint(designers_bp)
 
 
-
     #API_1_1
     from .api_1_1 import api_1_1 as a_1_1
     app.register_blueprint(a_1_1,url_prefix='/api/v1.1')
@@ -78,7 +78,7 @@ def create_app():
         from logging.handlers import RotatingFileHandler
         handler = RotatingFileHandler('flask.log', maxBytes=1024 * 1024 * 100, backupCount=20)
         # 设置日志记录最低级别为DEBUG，低于DEBUG级别的日志记录会被忽略，不设置setLevel()则默认为NOTSET级别。
-        handler.setLevel(logging.DEBUG)
+        handler.setLevel(logging.INFO)
         # 控制日志记录格式
         logging_format = logging.Formatter(
             '%(asctime)s - %(levelname)s - %(filename)s - %(funcName)s - %(lineno)s - %(message)s')

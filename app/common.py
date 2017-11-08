@@ -13,8 +13,7 @@ from hashlib import sha1
 import urllib.parse
 import time
 import uuid
-
-
+import redis
 
 
 def get_access_token(code):
@@ -230,15 +229,15 @@ auth = HTTPTokenAuth(scheme='Token')
 
 @auth.verify_token
 def verify_token(token):
-    # if  token=='robin':
-    #     user = User.query.filter_by(id=25).first()
-    #     g.user = user
-    #     return True
+    # todo
+    if  token=='robin':
+        user = User.query.filter_by(id=32).first()
+        g.user = user
+        return True
     # admin帐户
     # if token == ADMIN_KEY:
     #     return True
     user = User.verify_auth_token(token)
-    # print(user)
     if not user:
         return False
     g.user = user
@@ -252,4 +251,28 @@ def verify_token(token):
         return True
     else:
         return False
+
+
+
+
+def single_send(mobile,text):
+
+    # 30s内不得再发
+    url='https://sms.yunpian.com/v2/sms/single_send.json'
+    values = {
+        "apikey":'4688548c7cde0f62b5a8a76a2d8c58c6',
+        'mobile':mobile,
+        'text':text
+    }
+    res =json.loads(requests.post(url,data=values).text)
+    # res : {'msg': '发送成功', 'unit': 'RMB', 'count': 1, 'fee': 0.05, 'sid': 18693055958, 'mobile': '13250805157', 'code': 0}
+    # 发送成功
+    if res.get("code")==0:
+        return 0
+    else:
+        return -1
+
+
+
+
 

@@ -1,20 +1,23 @@
-from flask import Blueprint
+from flask import Blueprint,abort,current_app
 from flask_restful import Api
-
+# from .errors import ServerException
 api_1_1 = Blueprint('apiv1_1',__name__)
-api_v1_1 = Api(api_1_1)
+
+# 让FLASK-RESTFUL来处理404
+api_v1_1 = Api(api_1_1,catch_all_404s=True)
 
 from .apply import *
-from .login_verify import WxVerify,TokenVerify,LogOut
+from .login_verify import *
 from .applystatus import GetApplyStatus
-from .demand import GetDemandCenter,DemandDeatil,ReplyDemand,TMPReplyDemand
+from .demand import GetDemandCenter,DemandDeatil,ReplyDemand,TMPReplyDemand,ClientPostDemand
 from .work_resume import GetAllWork,GetResumeInfo
 from .admindash import NewAlbum,GetAlbum,GetCollection,GetUserHead,GetAlbumDetail,\
     Userinfo,DeleteAlbum,AddExp,DelExp,NoticeRecent,UnreadNum,AllNotice,\
     ClearAll,RemoveAll
-from .adminsystem import SendNotice,AllDesignerManage,DesignerRecom,AgreeApply,DisAgreeApply, \
-    AdminLogin,GetApplyinfo,ListNews,AllDemand,DemandApply,GetDemandApplyInfo,RecomList, \
-    DelRecom
+from .adminsystem import *
+from .wxpublic import  *
+from .wallet import *
+
 
 
 # wx verify info
@@ -55,6 +58,10 @@ api_v1_1.add_resource(GetUserHead,'/designerdash/header')
 api_v1_1.add_resource(GetAlbumDetail,'/albumdetail')
 
 api_v1_1.add_resource(Userinfo,'/designerdash/userinfo')
+
+
+
+
 api_v1_1.add_resource(DeleteAlbum,'/designerdash/deletealbum')
 # api_v1_1.add_resource(AddExp,'/desigenrdash/userinfo/addexp')
 api_v1_1.add_resource(DelExp,'/designerdash/userinfo/deletexp')
@@ -100,3 +107,62 @@ api_v1_1.add_resource(GetDemandApplyInfo,'/adminsystem/demand/getapplyinfo')
 api_v1_1.add_resource(RecomList,'/adminsystem/pricelist_tmp')
 
 api_v1_1.add_resource(DelRecom,'/adminsystem/pricelist/remove')
+
+
+
+api_v1_1.add_resource(WxTest,'/wxpublic')
+
+api_v1_1.add_resource(WxUserinfo,'/wx_getuid')
+
+api_v1_1.add_resource(WX_Userinfo,'/designerdash/wx_userinfo')
+
+
+
+# 服务号接口
+api_v1_1.add_resource(QRBind,'/qrbind')
+
+api_v1_1.add_resource(TTTest,'/tttest')
+
+
+api_v1_1.add_resource(IsBind,'/isbind')
+
+api_v1_1.add_resource(DelBind,'/delbind')
+
+
+# api_v1_1.add_resource(ApplySuccess,'/test')
+api_v1_1.add_resource(GetCity,'/getcity')
+
+api_v1_1.add_resource(TokenForTest,'/testtoken')
+
+api_v1_1.add_resource(PushDemand,'/adminsystem/demand/pushdemand')
+
+
+# 钱包
+api_v1_1.add_resource(WalletInfo,'/designer/walletinfo')
+api_v1_1.add_resource(GetCashFlow,'/designer/getcashflow')
+
+api_v1_1.add_resource(VerifySend,'/designer/verifysend')
+
+
+api_v1_1.add_resource(BindAlipay,'/designer/bindalipay')
+api_v1_1.add_resource(WithdrawApply,'/designer/withdrawapply')
+api_v1_1.add_resource(WithdrawApply_WX,'/designer/withdrawapply_wx')
+
+
+#客户需求意向
+api_v1_1.add_resource(ClientPostDemand,'/client/postdemand')
+
+
+# 查看所有资金流动
+api_v1_1.add_resource(GetAllCashFlow,'/adminsystem/getallcashflow')
+
+api_v1_1.add_resource(ConfirmPay,'/adminsystem/confirmpay')
+
+api_v1_1.add_resource(CancelPay,'/adminsystem/cancelpay')
+
+api_v1_1.add_resource(PayToDesigner,'/adminsystem/paytodesigner')
+
+
+api_v1_1.add_resource(FeedBack,'/designer/feedback')
+
+api_v1_1.add_resource(ShowUserInfo,'/adminsystem/showuserinfo')

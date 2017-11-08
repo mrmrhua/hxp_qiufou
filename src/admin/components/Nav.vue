@@ -73,7 +73,7 @@
         $.ajax({
           type: "post",
           headers: {"Authorization": "Token " + token},
-          url: "http://houxiaopang.com/api/v1.1/logout",
+          url: "http://www.houxiaopang.com/api/v1.1/logout",
           success(data){
 
           },
@@ -96,7 +96,7 @@
           if (this.noticenum > 0) {
             var that = this;
             $.ajax({
-              url: 'http://houxiaopang.com/api/v1.1/designerdash/notice/clearall',
+              url: 'http://www.houxiaopang.com/api/v1.1/designerdash/notice/clearall',
               type: "POST",
               headers: {"Authorization": "Token " + token},
               success(data) {
@@ -120,7 +120,7 @@
         //this.notice.push();
         var that = this;
         $.ajax({
-          url: 'http://houxiaopang.com/api/v1.1/designerdash/notice/recent',
+          url: 'http://www.houxiaopang.com/api/v1.1/designerdash/notice/recent',
           type: "GET",
           headers: {"Authorization": "Token " + token},
           success(data) {
@@ -136,7 +136,7 @@
       getnoticenum(){
         var that = this;
         $.ajax({
-          url: 'http://houxiaopang.com/api/v1.1/designerdash/notice/unreadnum',
+          url: 'http://www.houxiaopang.com/api/v1.1/designerdash/notice/unreadnum',
           type: "GET",
           headers: {"Authorization": "Token " + token},
           success(data) {
@@ -155,14 +155,14 @@
       if (token) {//token存在，验证token是否过期
         $.ajax({
           type: "get",
-          url: "http://houxiaopang.com/api/v1.1/token/authenticated",
+          url: "http://www.houxiaopang.com/api/v1.1/token/authenticated",
           headers: {"Authorization": "Token " + token},
           success(data){
             if (data.code === 0) {
               login = true;
               window.localStorage.applystatus = data.data.applystatus;
               $.ajax({
-                url: 'http://houxiaopang.com/api/v1.1/designerdash/header',
+                url: 'http://www.houxiaopang.com/api/v1.1/designerdash/header',
                 type: "GET",
                 headers: {"Authorization": "Token " + token},
                 success(data) {
