@@ -115,7 +115,7 @@ function ajax(options) {
       options.type = "GET"
     }
     //todo options.url 临时去掉https 的 s
-    options.url = options.url.replace("https", "http")
+    //options.url = options.url.replace("https", "http")
     if (options.type === "get" || options.type === "GET") {
       options.url += "?";
       for (var i in options.data) {
@@ -182,7 +182,7 @@ function ajax(options) {
         }
        ispost = false
        ajax({
-        url:'http://www.houxiaopang.com/api/v1.1/client/postdemand',
+        url:'https://www.houxiaopang.com/api/v1.1/client/postdemand',
         type:'POST',
         data:{
           cat:kh_name.innerText.substr(4),
