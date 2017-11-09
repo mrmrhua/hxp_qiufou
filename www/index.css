@@ -391,7 +391,7 @@ footer .footer-links ul{
 
 .server {
     width: 100%;
-    margin: 0 auto 100px;
+    margin: 40px auto 0px;
     background-color: #fff;
     text-align: center;
     overflow: hidden;
@@ -447,7 +447,8 @@ footer .footer-links ul{
 .difficult{
     width: 100%;
     height: 400px;
-    background: linear-gradient(to right,#FE6549,#D01667);
+    padding-top: 40px;
+    background: url(http://image.houxiaopang.com/first/723/banner2.jpg) no-repeat;
 }
 .difficult>p{
     font-size: 32px;
@@ -477,8 +478,6 @@ footer .footer-links ul{
     float: left;
     height: 136px;
     width: 33%;
-    padding-left: 93px;
-    padding-right: 93px;
     border-right: 1px solid #ffffff;
     white-space: nowrap;
 }
