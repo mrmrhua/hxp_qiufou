@@ -366,6 +366,7 @@ footer .footer-links ul{
     height: 350px;
 }
 
+
 .target-left{
     background: url(icon.png);
     background-position: -200px 0px;
@@ -389,13 +390,10 @@ footer .footer-links ul{
     right: 20px;
 }
 
+
 .server {
     width: 100%;
-<<<<<<< HEAD
     margin: 40px auto 0px;
-=======
-    margin: 80px auto 100px;
->>>>>>> 764b7e4c422b0a6ea60147e8b47f6f4e39a48bd8
     background-color: #fff;
     text-align: center;
     overflow: hidden;
