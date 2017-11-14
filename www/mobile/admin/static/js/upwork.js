@@ -1,5 +1,5 @@
 var uploader
-function registerup(vu) {
+function registerup(func) {
 // 上传文件相关
   uploader = Qiniu.uploader({
     runtimes: 'html5,flash,html4',
@@ -7,7 +7,7 @@ function registerup(vu) {
     flash_swf_url: 'https://cdn.staticfile.org/plupload/2.1.1/Moxie.swf',  //引入flash，相对路径
     chunk_size: '4mb',
 
-    uptoken_url: 'http://www.houxiaopang.com/api/v1.0/apply/uptoken',
+    uptoken_url: 'https://www.houxiaopang.com/api/v1.0/apply/uptoken',
     multi_selection: !(mOxie.Env.OS.toLowerCase() === "ios"),
     filters: {
       max_file_size: '10mb',
@@ -33,14 +33,14 @@ function registerup(vu) {
       'UploadProgress': function (up, file) {
       },
       'UploadComplete': function () {
-        $(".up-section").removeClass("loading");
-        $(".up-img").removeClass("up-opcity");
-        vu.imgupload = false
+
       },
       'FileUploaded': function (up, file, info) {
         if (info['status'] == '200') {
           var tmp = JSON.parse(info['response']);
-          vu.$set(vu.img_url, vu.img_index++, 'http://work.houxiaopang.com/' + tmp.key);
+          //vu.$set(vu.img_url, vu.img_index++, 'http://work.houxiaopang.com/' + tmp.key);
+          //alert('http://work.houxiaopang.com/' + tmp.key)
+          func('http://work.houxiaopang.com/' + tmp.key);
         }
       },
 
