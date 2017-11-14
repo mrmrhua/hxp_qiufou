@@ -448,9 +448,9 @@ footer .footer-links ul{
 
 .difficult{
     width: 100%;
-    height: 400px;
-    padding-top: 40px;
-    background: url(http://image.houxiaopang.com/first/723/banner2.jpg) no-repeat;
+    padding-bottom: 40px;
+    background: url(http://image.houxiaopang.com/index/kh/hardpoint.png);
+    background-repeat: no-repeat;
 }
 .difficult>p{
     font-size: 32px;
