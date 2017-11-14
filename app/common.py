@@ -6,7 +6,7 @@ from config import qiniu_secret_key,qiniu_access_key
 from functools import wraps
 from flask import request, current_app,g
 from flask.ext.httpauth import HTTPTokenAuth
-from app.models import User
+from app.models import *
 import base64
 import hmac
 from hashlib import sha1
@@ -243,6 +243,17 @@ def verify_token(token):
     g.user = user
     return True
 
+clientauth = HTTPTokenAuth(scheme='Token')
+
+@clientauth.verify_token
+def verify_token(token):
+    client = Client.verify_auth_token(token)
+    if not client:
+        return False
+    g.client = client
+    return True
+
+
 adminauth = HTTPTokenAuth(scheme='Token')
 
 @adminauth.verify_token
@@ -273,6 +284,15 @@ def single_send(mobile,text):
         return -1
 
 
+
+
+def getcatname(id):
+    return Category.query.get(id).category_name
+
+def getclientname(id):
+    return Client.query.get(id).nickname
+def getdesignername(id):
+    return User.query.get(id).nickname
 
 
 

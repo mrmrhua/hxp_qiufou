@@ -36,7 +36,8 @@ class ClientPostDemand(Resource):
         wxnum = request.values.get("wxnum")
         now = (datetime.datetime.now()).strftime("%Y-%m-%d %H:%M:%S")
         # 给管理员发短信
-        text = '【猴小胖】有客户发布了新的设计需求。类型为%s，客户称呼为%s，请尽快查看' %(cat,name)
+       # text = '【猴小胖】有客户发布了新的设计需求。类型为%s，客户称呼为%s，请尽快查看' %(cat,name)
+        text = '【猴小胖】有客户%s发布了新的设计需求。请尽快查看通知邮件。' %  name
         r = single_send(mobile=ADMIN_TEL,text=text)
         email =  '【猴小胖】有客户发布了新的设计需求。类型为%s，客户称呼为%s，微信号为%s, 发布时间为%s,请尽快查看' %(cat,name,wxnum,now)
         send_admin_email(ADMIN_EMAIL,'有新需求',email)

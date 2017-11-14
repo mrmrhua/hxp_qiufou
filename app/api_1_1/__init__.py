@@ -11,12 +11,11 @@ from .login_verify import *
 from .applystatus import GetApplyStatus
 from .demand import GetDemandCenter,DemandDeatil,ReplyDemand,TMPReplyDemand,ClientPostDemand
 from .work_resume import GetAllWork,GetResumeInfo
-from .admindash import NewAlbum,GetAlbum,GetCollection,GetUserHead,GetAlbumDetail,\
-    Userinfo,DeleteAlbum,AddExp,DelExp,NoticeRecent,UnreadNum,AllNotice,\
-    ClearAll,RemoveAll
+from .admindash import *
 from .adminsystem import *
 from .wxpublic import  *
 from .wallet import *
+from .project import *
 
 
 
@@ -121,7 +120,7 @@ api_v1_1.add_resource(WX_Userinfo,'/designerdash/wx_userinfo')
 # 服务号接口
 api_v1_1.add_resource(QRBind,'/qrbind')
 
-api_v1_1.add_resource(TTTest,'/tttest')
+# api_v1_1.add_resource(TTTest,'/tttest')
 
 
 api_v1_1.add_resource(IsBind,'/isbind')
@@ -166,3 +165,21 @@ api_v1_1.add_resource(PayToDesigner,'/adminsystem/paytodesigner')
 api_v1_1.add_resource(FeedBack,'/designer/feedback')
 
 api_v1_1.add_resource(ShowUserInfo,'/adminsystem/showuserinfo')
+
+
+# 客户确定设计师人选后，经纪人新建项目
+# 经纪人绑定设计师／需求
+
+api_v1_1.add_resource(CreateProject,'/adminsystem/createproject')
+
+
+# 获取项目列表
+api_v1_1.add_resource(Cli_ProjectList,'/wxfwh/projectlist')
+api_v1_1.add_resource(De_ProjectList,'/designer/projectlist')
+# 项目进度
+api_v1_1.add_resource(ProjectPage,'/wxfwh/projectpage')
+
+api_v1_1.add_resource(PayRecord,'/wxfwh/payrecord')
+# 设计师发起收款
+api_v1_1.add_resource(ChargeApply,'/chargeapply')
+

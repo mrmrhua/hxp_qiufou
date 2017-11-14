@@ -114,11 +114,6 @@ function ajax(options) {
     if (!options.type) {
       options.type = "GET"
     }
-<<<<<<< HEAD
-    //todo options.url 临时去掉https 的 s
-    //options.url = options.url.replace("https", "http")
-=======
->>>>>>> 08dccd7301b03b4860c294825742699f789f0e05
     if (options.type === "get" || options.type === "GET") {
       options.url += "?";
       for (var i in options.data) {

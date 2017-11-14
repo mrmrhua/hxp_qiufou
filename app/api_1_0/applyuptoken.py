@@ -18,11 +18,10 @@ class GetApplyUptoken(Resource):
         #     'callbackUrl': 'houxiaopang.com/qiniu/callback',
         #     'callbackBody': 'filename=$(fname)'
         # }
+        # 带HEADIMG=1则是上传头像
         if headimg == '1':
             upToken = q.upload_token(bucket='userhead', key=None)
         else:
             upToken = q.upload_token(bucket='designfile', key=None)
-        print(q)
-        print(upToken)
         return jsonify({ 'uptoken':upToken })
 

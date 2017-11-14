@@ -5,6 +5,7 @@ from app.models import *
 from app.common import adminauth
 import requests
 import urllib
+from .common import wx_get_common_access_token
 
 class WX_Userinfo(Resource):
     def get(self):
@@ -44,23 +45,28 @@ class WX_Userinfo(Resource):
 
 
 
+# 测试环境该接口不能使用
 class QRBind(Resource):
     def get(self):
         token = request.values.get("token")
         if not token:
             return -1
-        appid = "wx35c4ce958bc7eb68"
-        secret = "4cde0db3bb0df9597bebcad3352d503d"
-        url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='+appid+"&secret="+secret
-        # get acess_token
-        result = json.loads(urllib.request.urlopen(url).read().decode('utf-8'))
-        if('errcode' in result.keys()):
-            return  None
-        access_token = result['access_token']
+        if current_app.debug:
+            # appid = "wx35c4ce958bc7eb68"
+            # secret = "4cde0db3bb0df9597bebcad3352d503d"
+            # url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='+appid+"&secret="+secret
+            # # get acess_token
+            # result = json.loads(urllib.request.urlopen(url).read().decode('utf-8'))
+            # if('errcode' in result.keys()):
+            #     return  None
+            # access_token = result['access_token']
+            return -1
+            # todo
+            # 测试环境该接口不能使用
+        else:
+            access_token = wx_get_common_access_token()
         url = 'https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token='+access_token
         user = User.verify_auth_token(token)
-        # todo
-        user = User.query.filter_by(id=32).first()
         if not user:
             return  -1
         # scene_id:user.id

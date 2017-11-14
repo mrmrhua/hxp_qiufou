@@ -1,7 +1,7 @@
 from  flask import  session,jsonify,g,request
 import  random
 from flask_restful import Resource
-from app.models import User,db,Demand_User,Demand_Recom,Demand
+from app.models import User,db,Demand_User,Demand_Recom,Demand,Project
 import json
 from app.common import adminauth
 # houxiaopang.com/api/v1.1/adminsystem/recommend_tmp
@@ -100,3 +100,19 @@ class DelRecom(Resource):
         db.session.delete(dr)
         db.session.commit()
         return jsonify({'code':0})
+
+
+
+    # http: // houxiaopang.com / api / v1.1 /adminsystem/createproject
+    # POST
+    # 经纪人绑定项目
+class CreateProject(Resource):
+    @adminauth.login_required
+    def post(self):
+        demand_id =request.values.get("demand_id")
+        demand = Demand.query.filter_by(id=demand_id).first()
+        designer = request.values.get("designer")
+        pro = Project(demand_id=demand_id,user_id=designer,cat_id=demand.category)
+        db.session.add(pro)
+        db.session.commit()
+        return jsonify({'code':0,'data':{"project_id":pro.id}})

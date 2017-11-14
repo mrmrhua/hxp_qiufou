@@ -143,39 +143,27 @@ class PushDemand(Resource):
             print(r.content)
             return jsonify({"code":0})
 
-
-# 回复T取消项目推送
-# 调用解绑
-
-
-# todo
-# class
-
-
-# def RemovePush()
-
-
-
-class TTTest(Resource):
-    def get(self):
-        ACCESS_TOKEN = wx_get_common_access_token()
-        url = 'https://api.weixin.qq.com/cgi-bin/menu/create?access_token='+ACCESS_TOKEN
-        values = {
-  "button": [
-    {
-      "name": "设计",
-      "type": "view",
-      "url": "http://houxiaopang.com"
-    },
-      {
-          "name": "客户",
-          "type": "view",
-          "url": "http://houxiaopang.com"
-      }
-
-  ]
-}
-        r= requests.post(url,data=values)
-        print(r.content)
-
-        return jsonify({"code": 0})
+#
+# class TTTest(Resource):
+#     def get(self):
+#         ACCESS_TOKEN = wx_get_common_access_token()
+#         url = 'https://api.weixin.qq.com/cgi-bin/menu/create?access_token='+ACCESS_TOKEN
+#         values = {
+#   "button": [
+#     {
+#       "name": "设计",
+#       "type": "view",
+#       "url": "http://houxiaopang.com"
+#     },
+#       {
+#           "name": "客户",
+#           "type": "view",
+#           "url": "http://houxiaopang.com"
+#       }
+#
+#   ]
+# }
+#         r= requests.post(url,data=values)
+#         print(r.content)
+#
+#         return jsonify({"code": 0})

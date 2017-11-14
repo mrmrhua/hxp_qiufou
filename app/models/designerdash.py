@@ -38,7 +38,7 @@ class DesignerInfo(db.Model):
     def from_apply(af):
         return DesignerInfo(user_id = af.user.id,tel=af.tel, city=af.city, email=af.email, qq=af.qq, wx=af.wx, school=af.school,
                      startyear=af.graduate, project_text=af.project_text, blog_url=af.blog_url,
-                     identity=af.identity, worktime=af.worktime,company_name=af.company_name,company_web=af.company_web,company_size=af.company_size)
+                     identity=af.identity, worktime=af.worktime,company_name=af.company_name,company_web=af.company_web,company_size=af.company_size,privacy=0)
 
     def from_admin(self,basic_obj,worksetting_obj):
         if basic_obj:
@@ -156,8 +156,11 @@ class Album(db.Model):
         description= request.values.get("description")
         category = request.values.get("category")
         up_time = datetime.now()
+        privacy = 1
+        if g.user:
+            privacy = g.user.info.privacy
 
-        return Album(title=title,cover=cover,description=description,category=category,up_time=up_time,user_id=g.user.id,privacy = g.user.info.privacy)
+        return Album(title=title,cover=cover,description=description,category=category,up_time=up_time,user_id=g.user.id,privacy = privacy)
 
     def update_from_request(self,request):
         self.title = request.values.get("title")
