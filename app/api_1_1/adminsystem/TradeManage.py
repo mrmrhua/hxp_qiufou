@@ -3,22 +3,23 @@ import  random
 from flask_restful import Resource
 from app.models import User,db,Demand,CashFlow
 from config import ADMIN_TEL,ADMIN_EMAIL
-from app.common import send_admin_email,single_send,adminauth
+from app.common import send_admin_email,single_send,adminauth,decimal_default
 import datetime
-
+from sqlalchemy import or_
 # 查看所有资金流动
 class GetAllCashFlow(Resource):
     @adminauth.login_required
     def get(self):
         status = request.values.get("status")
         if status=='审核中':
-            cf = CashFlow.query.filter_by(status='审核中').order_by(CashFlow.when.desc()).all()
+        # if status=='提现审核中' or status=='收款申请中':
+            cf = CashFlow.query.filter(CashFlow.status.in_(['收款申请中','提现审核中'])).order_by(CashFlow.when.desc()).all()
         else:
             cf = CashFlow.query.order_by(CashFlow.when.desc()).all()
         res = [{
             'id':i.id,
-            "change_money":i.change_money,
-            'after_money':i.after_money,
+            "change_money":decimal_default(i.change_money),
+            'after_money':decimal_default(i.after_money),
             'remark':i.remark,
             'when':i.when.strftime("%Y-%m-%d %H:%M:%S"),
             'from_who':i.from_who,
@@ -30,13 +31,15 @@ class GetAllCashFlow(Resource):
         return jsonify({"code":0,"data":{"cashflow":res}})
 
 # 支付给设计师后确认该资金流动
-# todo 自动转账
 class ConfirmPay(Resource):
     @adminauth.login_required
     def post(self):
         cf_id = request.values.get("id")
         cf = CashFlow.query.filter_by(id=cf_id).first()
-        cf.status = '已完成'
+        if cf.status=='收款申请中':
+            cf.status = '等待付款中'
+        elif cf.status=='提现审核中':
+            cf.status = '已完成'
         db.session.add(cf)
         db.session.commit()
         return  jsonify({"code":0})
@@ -92,3 +95,26 @@ class ShowUserInfo(Resource):
         if not u:
             return -1
         return jsonify({"code":0,"data":{"nickname":u.nickname,'headimg':u.headimg}})
+
+
+
+# HTTP
+# https://m.houxiaopang.com/api/v1.1/chargeapply
+# POST
+# 发起收款
+
+class AdminChargeApply(Resource):
+    @adminauth.login_required
+    def post(self):
+        project_id = request.values.get("project_id")
+        feetype = request.values.get("feetype")
+        money = request.values.get("money")
+        desc = request.values.get("desc")
+
+        designer_id = request.values.get("designer_id")
+        # 生成CASHFLOW数据
+        when = datetime.datetime.now()
+        cf = CashFlow(change_money=money,remark=feetype,related_user=designer_id,status='等待付款中',project_id=project_id,when=when,detail=desc)
+        db.session.add(cf)
+        db.session.commit()
+        return jsonify({"code":0})

@@ -34,9 +34,8 @@ class GetAlbumDetail(Resource):
     def get(self):
         album_id = request.values.get("album_id")
         al = Album.query.filter_by(id=album_id).first()
-        # todo
-        # if not al:
-        #     return jsonify({'code': -1})
+        if not al:
+            return jsonify({'code': -1})
         worklist = [(i.work_url) for i in al.designworks.all()]
         return jsonify({'code': 0, 'data': {
             'title': al.title,

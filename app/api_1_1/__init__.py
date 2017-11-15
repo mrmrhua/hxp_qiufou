@@ -113,6 +113,8 @@ api_v1_1.add_resource(WxTest,'/wxpublic')
 
 api_v1_1.add_resource(WxUserinfo,'/wx_getuid')
 
+# 根据CODE返回微信用户的基本信息
+api_v1_1.add_resource(WxGetUserinfo,'/wx_getuserinfo')
 api_v1_1.add_resource(WX_Userinfo,'/designerdash/wx_userinfo')
 
 
@@ -183,3 +185,7 @@ api_v1_1.add_resource(PayRecord,'/wxfwh/payrecord')
 # 设计师发起收款
 api_v1_1.add_resource(ChargeApply,'/chargeapply')
 
+api_v1_1.add_resource(AdminChargeApply,'/adminsystem/adminchargeapply')
+
+
+api_v1_1.add_resource(TestPay,'/testpay')

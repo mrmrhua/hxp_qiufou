@@ -14,7 +14,7 @@ import urllib.parse
 import time
 import uuid
 import redis
-
+from decimal import Decimal
 
 def get_access_token(code):
     url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxbfacdb1b99885182&secret=c4f876b16ddc8d8e4259b9c2388e5493&code='\
@@ -296,3 +296,10 @@ def getdesignername(id):
 
 
 
+def decimal_default(obj):
+    if not obj:
+        return None
+    if isinstance(obj, Decimal):
+        return float(obj)
+    else:
+        raise TypeError

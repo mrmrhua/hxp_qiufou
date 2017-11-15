@@ -181,6 +181,51 @@ class WxUserinfo(Resource):
 
 
 
+class WxGetUserinfo(Resource):
+    def get(self):
+        code = request.values.get("code")
+        if not code:
+            return jsonify({'code': -1, 'data': {"message": "code mistake"}})
+        result = wxpublic_get_access_token(code)
+        if result is None:  # 验证失败,
+            return jsonify({'code': -1, 'data': {'message': 'code mistake'}})
+        userinfo = wxpublic_get_user_info(result.get('access_token'), result.get('openid'))
+        unionid = userinfo['unionid']
+        nickname = userinfo['nickname']
+        # sex = userinfo['sex']
+        headimg = userinfo['headimgurl']
+
+        # user = User.query.filter_by(unionid=unionid).first()
+        # if user is None:  # 第一次登陆
+        #     applystatus = APPLYSTATUS['APPLYING']
+        #     nickname = userinfo['nickname']
+        #     sex = userinfo['sex']
+        #     headimg = userinfo['headimgurl']
+        #
+        #     # 用户更换头像会导致微信的头像URL失效,因此要先存七牛
+        #     r = get_wx_head(headimg, unionid)
+        #     # if (r == 0):  # 抓取不成功
+        #     #    return redirect(url_for('main.index'))
+        #     headimg = 'http://userhead.houxiaopang.com/' + unionid + '.jpg'
+        #     # 存头像结束
+
+        #     #创建该用户实例
+        #     user = User(nickname=nickname, unionid=unionid, sex=sex, headimg=headimg, applystatus=applystatus)
+        #     db.session.add(user)
+        #     try:
+        #         db.session.commit()
+        #     except:
+        #         db.session.rollback()()
+        #
+        # token = user.generate_auth_token().decode()
+        # applystatus = user.applystatus
+        # return jsonify({'code': 0, 'data': {'token':token,'applystatus':applystatus}})
+        return jsonify({"code":0,'data':{"unionid":unionid,"nickname":nickname,"headimg":headimg}})
+
+
+
+
+
 
 def wxpublic_get_user_info(access_token,openid):
     url = 'https://api.weixin.qq.com/sns/userinfo?access_token={a}&openid={b}&lang=zh_CN'.format(a=access_token, b=openid)

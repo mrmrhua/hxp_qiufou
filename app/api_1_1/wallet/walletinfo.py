@@ -1,17 +1,14 @@
 from  flask import jsonify,request,g,session
 from flask_restful import Resource
 from app.models import *
-from app.common import auth,single_send
+from app.common import auth,single_send,decimal_default
 import random
 import time
 import datetime
 from config import ADMIN_TEL
 from decimal import Decimal
 
-def decimal_default(obj):
-    if isinstance(obj, Decimal):
-        return float(obj)
-    raise TypeError
+
 
 
 # 查看钱包信息
@@ -155,7 +152,7 @@ class WithdrawApply(Resource):
         # single_send(mobile=ADMIN_TEL, text=text)
         after_money= g.user.wallet.money-Decimal(money)
         cf = CashFlow(change_money=-Decimal(money),after_money=after_money,remark='提现',from_who='设计师钱包'\
-                 ,to_who='设计师个人',related_user=g.user.id,status='审核中',when=datetime.datetime.now())
+                 ,to_who='设计师个人',related_user=g.user.id,status='提现审核中',when=datetime.datetime.now())
         db.session.add(cf)
         # 钱包余额应该变少，审核如果没通过就加回来
         g.user.wallet.money = after_money

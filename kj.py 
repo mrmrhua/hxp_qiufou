@@ -1,0 +1,401 @@
+# coding: utf-8
+from sqlalchemy import BigInteger, Column, DateTime, ForeignKey, Integer, Numeric, String, Table, Text, text
+from sqlalchemy.orm import relationship
+from sqlalchemy.ext.declarative import declarative_base
+
+
+Base = declarative_base()
+metadata = Base.metadata
+
+
+class Album(Base):
+    __tablename__ = 'albums'
+
+    id = Column(Integer, primary_key=True)
+    user_id = Column(ForeignKey('users.id'), index=True)
+    title = Column(String(50))
+    description = Column(Text)
+    category = Column(Integer)
+    up_time = Column(DateTime)
+    cover = Column(String(255), server_default=text("''"))
+    privacy = Column(Integer)
+
+    user = relationship('User')
+
+
+t_applies_categories = Table(
+    'applies_categories', metadata,
+    Column('apply_id', ForeignKey('applyforms.id'), index=True),
+    Column('cat_id', ForeignKey('categories.id'), index=True)
+)
+
+
+class Applyform(Base):
+    __tablename__ = 'applyforms'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(16))
+    born = Column(String(16))
+    tel = Column(String(11))
+    email = Column(String(64))
+    qq = Column(String(16))
+    wx = Column(String(64))
+    school = Column(String(64))
+    major = Column(String(64))
+    graduate = Column(Integer)
+    project_text = Column(Text)
+    blog_url = Column(String(255))
+    worktime = Column(String(30))
+    identity = Column(String(16))
+    city = Column(String(20))
+    role = Column(String(16))
+    company_name = Column(String(16))
+    company_web = Column(String(255))
+    company_size = Column(Integer)
+    ticket = Column(Integer)
+    ticket_num = Column(Integer)
+    user_id = Column(ForeignKey('users.id'), index=True)
+
+    user = relationship('User')
+    cats = relationship('Category', secondary='applies_categories')
+
+
+class Applywork(Base):
+    __tablename__ = 'applyworks'
+
+    id = Column(Integer, primary_key=True)
+    work_url = Column(String(255))
+    apply_id = Column(ForeignKey('applyforms.id'), index=True)
+
+    apply = relationship('Applyform')
+
+
+class Cashflow(Base):
+    __tablename__ = 'cashflow'
+
+    id = Column(Integer, primary_key=True)
+    change_money = Column(Numeric(10, 2))
+    after_money = Column(Numeric(10, 2))
+    remark = Column(String(16))
+    when = Column(DateTime)
+    from_who = Column(String(5))
+    to_who = Column(String(5))
+    related_user = Column(ForeignKey('users.id'), index=True)
+    status = Column(String(6))
+    detail = Column(String(64))
+    related_client = Column(ForeignKey('clients.id'), index=True)
+    project_id = Column(ForeignKey('projects.id'), index=True)
+
+    project = relationship('Project')
+    client = relationship('Client')
+    user = relationship('User')
+
+
+class Category(Base):
+    __tablename__ = 'categories'
+
+    id = Column(Integer, primary_key=True)
+    category_name = Column(String(64))
+
+    users = relationship('User', secondary='categories_users')
+
+
+t_categories_users = Table(
+    'categories_users', metadata,
+    Column('user_id', ForeignKey('users.id'), index=True),
+    Column('cat_id', ForeignKey('categories.id'), index=True)
+)
+
+
+class City(Base):
+    __tablename__ = 'city'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(255))
+    province_id = Column(Integer)
+
+
+class Client(Base):
+    __tablename__ = 'clients'
+
+    id = Column(Integer, primary_key=True)
+    nickname = Column(String(64))
+    unionid = Column(String(64), unique=True)
+    sex = Column(Integer)
+    headimg = Column(String(255))
+
+
+class Demand(Base):
+    __tablename__ = 'demands'
+
+    id = Column(Integer, primary_key=True)
+    title = Column(String(50))
+    description = Column(Text)
+    desc_img = Column(Text)
+    howlong = Column(String(20))
+    howmuch = Column(String(20))
+    agent_id = Column(Integer)
+    category = Column(Integer)
+    up_time = Column(DateTime)
+    demandstatus = Column(Integer)
+
+
+class DemandsRecom(Base):
+    __tablename__ = 'demands_recom'
+
+    id = Column(Integer, primary_key=True)
+    demand_id = Column(ForeignKey('demands.id'), index=True)
+    user_id = Column(ForeignKey('users.id'), index=True)
+    howmuch = Column(String(20))
+    ideas = Column(String(255))
+    howlong = Column(String(20))
+    worklist = Column(Text)
+    deapply_id = Column(ForeignKey('demands_users.id'), index=True)
+    nickname = Column(String(20))
+
+    deapply = relationship('DemandsUser')
+    demand = relationship('Demand')
+    user = relationship('User')
+
+
+class DemandsUser(Base):
+    __tablename__ = 'demands_users'
+
+    id = Column(Integer, primary_key=True)
+    demand_id = Column(ForeignKey('demands.id'), index=True)
+    user_id = Column(ForeignKey('users.id'), ForeignKey('users.id'), index=True)
+    howmuch = Column(String(20))
+    howlong = Column(String(20))
+    ideas = Column(Text)
+    tel = Column(String(11))
+    worklist = Column(Text)
+    nickname = Column(String(20), server_default=text("''"))
+
+    demand = relationship('Demand')
+    user = relationship('User', primaryjoin='DemandsUser.user_id == User.id')
+    user1 = relationship('User', primaryjoin='DemandsUser.user_id == User.id')
+
+
+class Designer(Base):
+    __tablename__ = 'designers'
+
+    id = Column(Integer, primary_key=True)
+    tel = Column(String(11))
+    user_id = Column(ForeignKey('users.id'), index=True)
+    email = Column(String(64))
+    qq = Column(String(16))
+    wx = Column(String(64))
+    school = Column(String(64))
+    project_text = Column(Text)
+    blog_url = Column(String(255))
+    worktime = Column(String(30))
+    identity = Column(String(16))
+    city = Column(String(20))
+    company_name = Column(String(16))
+    company_web = Column(String(255))
+    company_size = Column(Integer)
+    ticket = Column(Integer)
+    ticket_num = Column(Integer)
+    privacy = Column(Integer)
+    startyear = Column(Integer)
+
+    user = relationship('User')
+
+
+class Designwork(Base):
+    __tablename__ = 'designworks'
+
+    id = Column(Integer, primary_key=True)
+    work_url = Column(String(255))
+    category = Column(Integer, server_default=text("'0'"))
+    up_time = Column(DateTime)
+    album_id = Column(ForeignKey('albums.id'), ForeignKey('albums.id'), ForeignKey('albums.id'), ForeignKey('albums.id'), ForeignKey('albums.id'), ForeignKey('albums.id'), ForeignKey('albums.id'), ForeignKey('albums.id'), ForeignKey('albums.id'), ForeignKey('albums.id'), index=True)
+    position = Column(Integer)
+
+    album = relationship('Album', primaryjoin='Designwork.album_id == Album.id')
+    album1 = relationship('Album', primaryjoin='Designwork.album_id == Album.id')
+    album2 = relationship('Album', primaryjoin='Designwork.album_id == Album.id')
+    album3 = relationship('Album', primaryjoin='Designwork.album_id == Album.id')
+    album4 = relationship('Album', primaryjoin='Designwork.album_id == Album.id')
+    album5 = relationship('Album', primaryjoin='Designwork.album_id == Album.id')
+    album6 = relationship('Album', primaryjoin='Designwork.album_id == Album.id')
+    album7 = relationship('Album', primaryjoin='Designwork.album_id == Album.id')
+    album8 = relationship('Album', primaryjoin='Designwork.album_id == Album.id')
+    album9 = relationship('Album', primaryjoin='Designwork.album_id == Album.id')
+
+
+class Experience(Base):
+    __tablename__ = 'experiences'
+
+    id = Column(Integer, primary_key=True)
+    title = Column(String(20))
+    content = Column(Text)
+    user_id = Column(ForeignKey('users.id'), index=True)
+
+    user = relationship('User')
+
+
+class Notice(Base):
+    __tablename__ = 'notices'
+
+    id = Column(Integer, primary_key=True)
+    content = Column(Text)
+    up_time = Column(DateTime)
+    title = Column(String(20))
+
+
+class Post(Base):
+    __tablename__ = 'posts'
+
+    id = Column(Integer, primary_key=True)
+    project_id = Column(ForeignKey('projects.id'), index=True)
+    up_time = Column(DateTime)
+    desc = Column(Text)
+
+    project = relationship('Project')
+
+
+class Project(Base):
+    __tablename__ = 'projects'
+
+    id = Column(Integer, primary_key=True)
+    cat_id = Column(ForeignKey('categories.id'), index=True)
+    client_id = Column(ForeignKey('clients.id'), index=True)
+    demand_id = Column(ForeignKey('demands.id'), index=True)
+    user_id = Column(ForeignKey('users.id'), index=True)
+    isnew = Column(Integer)
+    status = Column(Integer)
+    up_time = Column(DateTime)
+    title = Column(String(50))
+    starttime = Column(DateTime)
+
+    cat = relationship('Category')
+    client = relationship('Client')
+    demand = relationship('Demand')
+    user = relationship('User')
+
+
+class Projectwork(Base):
+    __tablename__ = 'projectworks'
+
+    id = Column(Integer, primary_key=True)
+    work_url = Column(String(255))
+    post_id = Column(ForeignKey('posts.id'), index=True)
+
+    post = relationship('Post')
+
+
+class Province(Base):
+    __tablename__ = 'province'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(255))
+
+
+class Pushmessage(Base):
+    __tablename__ = 'pushmessages'
+
+    id = Column(Integer, primary_key=True)
+    user_id = Column(ForeignKey('users.id'), index=True)
+    openid = Column(String(64), unique=True)
+
+    user = relationship('User')
+
+
+class Subscribtion(Base):
+    __tablename__ = 'subscribtion'
+
+    notice_id = Column(ForeignKey('notices.id'), primary_key=True, nullable=False)
+    user_id = Column(ForeignKey('users.id'), primary_key=True, nullable=False, index=True)
+    isread = Column(Integer)
+
+    notice = relationship('Notice')
+    user = relationship('User')
+
+
+class Tag(Base):
+    __tablename__ = 'tags'
+
+    id = Column(Integer, primary_key=True)
+    tag_name = Column(String(20), unique=True)
+
+    users = relationship('User', secondary='tags_users')
+
+
+t_tags_users = Table(
+    'tags_users', metadata,
+    Column('user_id', ForeignKey('users.id'), index=True),
+    Column('tag_id', ForeignKey('tags.id'), index=True)
+)
+
+
+class TbBargain(Base):
+    __tablename__ = 'tb_bargain'
+
+    id = Column(BigInteger, primary_key=True)
+    demand_id = Column(BigInteger, nullable=False, index=True)
+    user_id = Column(ForeignKey('tb_user.id'), nullable=False, index=True)
+    date = Column(DateTime, nullable=False)
+    money = Column(Numeric(10, 2), nullable=False)
+
+    user = relationship('TbUser')
+
+
+class TbDemand(Base):
+    __tablename__ = 'tb_demand'
+
+    id = Column(BigInteger, primary_key=True)
+    demand_id = Column(BigInteger, nullable=False)
+    start_money = Column(Numeric(10, 2), nullable=False)
+    end_money = Column(Numeric(10, 2), nullable=False)
+    aims_money = Column(Numeric(10, 2), nullable=False)
+    nickname = Column(String(64), nullable=False)
+
+
+class TbUser(Base):
+    __tablename__ = 'tb_user'
+
+    id = Column(BigInteger, primary_key=True)
+    uid = Column(String(128), nullable=False)
+    name = Column(String(64), nullable=False)
+    head_img = Column(String(256), nullable=False)
+
+
+class User(Base):
+    __tablename__ = 'users'
+
+    id = Column(Integer, primary_key=True)
+    unionid = Column(String(64), unique=True)
+    nickname = Column(String(64), server_default=text("''"))
+    applystatus = Column(Integer)
+    sex = Column(Integer)
+    headimg = Column(String(255), server_default=text("''"))
+    usertype = Column(Integer, server_default=text("'0'"))
+
+
+t_vw_bargain = Table(
+    'vw_bargain', metadata,
+    Column('id', BigInteger),
+    Column('nickname', String(64)),
+    Column('start_money', Numeric(10, 2)),
+    Column('end_money', Numeric(10, 2)),
+    Column('aims_money', Numeric(10, 2)),
+    Column('NAME', String(64)),
+    Column('head_img', String(256)),
+    Column('DATE', DateTime),
+    Column('money', Numeric(10, 2))
+)
+
+
+class Wallet(Base):
+    __tablename__ = 'wallets'
+
+    id = Column(Integer, primary_key=True)
+    user_id = Column(ForeignKey('users.id'), index=True)
+    alipay = Column(String(64))
+    tel = Column(String(11))
+    money = Column(Numeric(10, 2))
+    frozen_money = Column(Numeric(10, 2))
+    name = Column(String(8))
+
+    user = relationship('User')
