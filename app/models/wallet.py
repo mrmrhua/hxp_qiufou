@@ -37,7 +37,7 @@ class CashFlow(db.Model):
     status = db.Column(db.String(6))
     detail = db.Column(db.String(64))
     project_id = db.Column(INTEGER(unsigned=True), db.ForeignKey('projects.id'))
-    # order_no = db.Column(db.String(9))
+    order_no = db.Column(db.String(9))
 
     def __repr__(self):
         return '<CashFlow %r>' % self.id

@@ -30,7 +30,9 @@ class GetAllCashFlow(Resource):
         } for i in cf]
         return jsonify({"code":0,"data":{"cashflow":res}})
 
+# 审核（1. 提现；2.收款)
 # 支付给设计师后确认该资金流动
+# 或生成收款信息
 class ConfirmPay(Resource):
     @adminauth.login_required
     def post(self):

@@ -182,9 +182,13 @@ api_v1_1.add_resource(De_ProjectList,'/designer/projectlist')
 api_v1_1.add_resource(ProjectPage,'/wxfwh/projectpage')
 
 api_v1_1.add_resource(PayRecord,'/wxfwh/payrecord')
+
+
 # 设计师发起收款
 api_v1_1.add_resource(ChargeApply,'/chargeapply')
 
+
+#  经纪人代设计师发起收款
 api_v1_1.add_resource(AdminChargeApply,'/adminsystem/adminchargeapply')
 
 
