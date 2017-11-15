@@ -187,6 +187,8 @@ api_v1_1.add_resource(PayRecord,'/wxfwh/payrecord')
 # 设计师发起收款
 api_v1_1.add_resource(ChargeApply,'/chargeapply')
 
+# 客户获取待支付账单
+api_v1_1.add_resource(GetClientRecord,'/getclientrecord')
 
 #  经纪人代设计师发起收款
 api_v1_1.add_resource(AdminChargeApply,'/adminsystem/adminchargeapply')
