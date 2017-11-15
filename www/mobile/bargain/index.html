@@ -60,7 +60,7 @@
 <script>
     var code = getQueryString("code");
     var demand_id = getQueryString("state");
-    console.log(demand_id)
+	alert(demand_id)
     if(demand_id){
     new Vue({
         el:"#box",
@@ -158,8 +158,6 @@ location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx35c
             }
         }
     })
-    }else{
-        location.href ="http://www.houxiaopang.com/404";
     }
 
 </script>
