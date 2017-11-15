@@ -81,6 +81,8 @@ class GetClientRecord(Resource):
 class GetAlipayCharge(Resource):
     def post(self):
         order_no = request.values.get("order_no")
+        dt = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+        order_no = 
         money = request.values.get("money")
         # 单位：分
         amount = money * 100

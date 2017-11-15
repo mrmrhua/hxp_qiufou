@@ -195,3 +195,7 @@ api_v1_1.add_resource(AdminChargeApply,'/adminsystem/adminchargeapply')
 
 
 api_v1_1.add_resource(TestPay,'/testpay')
+
+
+# 发起PING++支付请求，唤起支付宝APP
+api_v1_1.add_resource(GetAlipayCharge,'/getalipaycharge')
