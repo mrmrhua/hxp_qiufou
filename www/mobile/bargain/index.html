@@ -144,7 +144,7 @@ location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx35c
                     timeout: 5000,
                     success:function(res){
                         if (res.code === 0) {
-                            location.href = "https://m.houxiaopang.com/bargain?demandid="+demand_id;
+                            location.href = "https://m.houxiaopang.com/bargain?state="+demand_id;
                         } else {
                            alert("登录失败，请重试。")
                         }
