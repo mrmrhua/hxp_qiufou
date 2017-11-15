@@ -4,7 +4,7 @@ function ajax(options) {
     }
     options.timeout = 5000;
     //todo options.url 临时去掉https 的 s
-    options.url = options.url.replace("https", "http").replace("www.houxiaopang.com/api/v1.2", "192.168.0.101")
+    options.url = options.url.replace("www.houxiaopang.com/api/v1.2", "192.168.0.101")
 	
     if (options.type === "get" || options.type === "GET") {
         options.url += "?";
