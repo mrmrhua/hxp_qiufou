@@ -1,4 +1,4 @@
-from  flask import jsonify,request,g,session
+from  flask import jsonify,request,g,session,Response
 from flask_restful import Resource
 from app.models import *
 from app.common import auth,single_send,clientauth,getdesignername
@@ -80,9 +80,9 @@ class GetClientRecord(Resource):
 #            alipay_wap	支付宝手机网页支付
 class GetAlipayCharge(Resource):
     def post(self):
-        order_no = request.values.get("order_no")
+        client_id = request.values.get("client_id")
         dt = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
-        order_no = 
+        order_no = dt+str(100000+int(client_id))
         money = request.values.get("money")
         # 单位：分
         amount = money * 100
@@ -107,3 +107,111 @@ class GetAlipayCharge(Resource):
             return jsonify({"code": -1})
 
 
+
+
+
+# http://www.houxiaopang.com/api/v1.1/pingxx/webhooks
+# Post
+# 接受PING++支付成功的回调
+# 接收到 Webhooks 后需要返回服务器状态码 2xx 表示接收成功，否则请返回状态码 500
+
+# 收到POST的JSON请求例子：
+'''
+{
+    "id":"evt_qwertyuioplkjhgfdsazxcvb",
+    "created":1440407617,
+    "livemode":true,
+    "type":"order.succeeded",
+    "data":{
+        "object":{
+            "id":"2011609180000014351",
+            "object":"order",
+            "created":1474181699,
+            "livemode":true,
+            "paid":true,
+            "refunded":true,
+            "status":"refunded",
+            "app":"app_LibTW1n1xxxxxxxx",
+            "uid":"uid@pingxx.com",
+            "merchant_order_no":"AO1474181696078",
+            "type":"purchase",
+            "amount":10,
+            "coupon_amount":0,
+            "balance_amount":0,
+            "charge_amount":10,
+            "amount_refunded":10,
+            "currency":"cny",
+            "subject":"商品简介",
+            "body":"详细描述",
+            "client_ip":"206.3.161.110",
+            "time_paid":1474181751,
+            "time_expire":1474182006,
+            "refunds":{
+                "object":"list",
+                "url":"/v1/orders/2011609180000014351/refunds",
+                "has_more":false,
+                "data":[
+                    {
+                        "id":"2111609180000002442",
+                        "object":"order_refund",
+                        "order":"2011609180000014351",
+                        "app":"app_LibTW1n1xxxxxxxx",
+                        "uid":"uid@pingxx.com",
+                        "merchant_order_no":"AO1474181696078",
+                        "amount":10,
+                        "coupon_amount":0,
+                        "balance_amount":0,
+                        "charge_amount":10,
+                        "coupon":null,
+                        "balance_transaction":null,
+                        "charge_refund":"re_nHifjPKyvPOGafzTXXXXXXXX",
+                        "status":"succeeded",
+                        "created":1474181823,
+                        "time_succeed":1474181822,
+                        "description":"订单的退款",
+                        "metadata":{
+                            "userStr":"KTs/YDg3ZFUFONZUC10SuA=="
+                        },
+                        "extra":{
+                        }
+                    }
+                ]
+            },
+            "charge":"ch_CKe9COm58SK0SKy1qD9mfXDG",
+            "balance_transaction":null,
+            "coupon":null,
+            "description":"商品详情",
+            "metadata":{
+                "userStr":"KTs/YDg3ZFUFONZUC10SuA=="
+            },
+            "charge_essentials":{
+                "channel":"alipay_qr",
+                "transaction_no":"2016091821001004850xxxxxxxxx",
+                "credential":{
+                    "object":"credential",
+                    "alipay_qr":"https://qr.alipay.com/xxxxxxxxxx"
+                },
+                "extra":{
+                    "buyer_account":"user@qq.com"
+                }
+            }
+        }
+    },
+    "object":"event",
+    "request":"iar_TqvPiDH8SGeHm5GaTKbLuDW",
+    "pending_webhooks":8
+}
+'''
+
+# 支付成功后后台收到webhooks
+# 更改状态为已支付，并通知管理员
+# todo
+class GetPayHooks(Resource):
+    def post(self):
+        try:
+            type = request.json.get("type")
+            if type== "order.succeeded":
+                pass
+            return Response(status=200)
+        except:
+            return Response(status=500)
