@@ -45,7 +45,7 @@ api_v1_1.add_resource(ReplyDemand,'/replydemand')
 api_v1_1.add_resource(TMPReplyDemand,'/replydemand_tmp')
 api_v1_1.add_resource(TokenVerify,'/token/authenticated')
 
-
+api_v1_1.add_resource(ClientTokenVerify,'/wxfwh/token/clientauthenticated')
 
 api_v1_1.add_resource(NewAlbum,'/newalbum')
 api_v1_1.add_resource(GetAlbum,'/designerdash/index/recent')
@@ -194,7 +194,7 @@ api_v1_1.add_resource(GetClientRecord,'/getclientrecord')
 api_v1_1.add_resource(AdminChargeApply,'/adminsystem/adminchargeapply')
 
 
-api_v1_1.add_resource(TestPay,'/testpay')
+# api_v1_1.add_resource(TestPay,'/testpay')
 
 
 # 发起PING++支付请求，唤起支付宝APP
