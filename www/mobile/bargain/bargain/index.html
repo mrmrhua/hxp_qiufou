@@ -29,7 +29,7 @@
                     </div>
                 </div>
                 <div class="pic-center">
-                    <img class="k-pic" src="http://image.houxiaopang.com/hd/bargain/bargain.png" @click="changePage()"/>
+                    <img class="k-pic" src="http://image.houxiaopang.com/hd/bargain/bargin.png" @click="changePage()"/>
                 </div>
             </div>
         </div>
@@ -100,7 +100,7 @@
     <script type="text/javascript">
     var code = getQueryString("code");
     var demand_id = getQueryString("state");
-    if(!demand_id){
+    if(demand_id){
             var  app = new  Vue({
                 el: '#box',
                 data: {
