@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>砍价活动</title>
+    <link rel="stylesheet" type="text/css" href="https://m.houxiaopang.com/bargain/static/kj.css">
+    <script src="https://cdn.bootcss.com/vue/2.5.3/vue.min.js"></script>
+</head>
+<body>
+    <div id="box" class="box" v-cloak>
+        <div  v-show="finish" class="finish">
+            <img src="http://image.houxiaopang.com/hd/bargain/end.png" style="height: 100%;width: 100%">
+        </div>
+        <div v-show="boxHeader" class="box-header">
+            <a href="../role">《活动规则》</a>
+            <p>您的好友{{mydata.nickname}}在猴小胖设计平台发布</p>
+            <p>了一个项目，现邀请您来帮他砍价，</p>
+            <p>点击下方按钮即可砍价。</p>
+        </div>
+        <div v-show="boxContent" class="box-content">
+            <div class="pic-box">
+                <div class="pic">
+                    <div style="width: 50%;height: 100%;display: flex;">
+                        <img style="height: 100%;" src="http://image.houxiaopang.com/hd/bargain/left.png" />
+                    </div>
+                    <div style="width: 50%;height: 100%;display: flex;justify-content: flex-end">
+                        <img style="height: 100%;" src="http://image.houxiaopang.com/hd/bargain/right.png" />
+                    </div>
+                </div>
+                <div class="pic-center">
+                    <img class="k-pic" src="http://image.houxiaopang.com/hd/bargain/bargain.png" @click="changePage()"/>
+                </div>
+            </div>
+        </div>
+        <div :style="{opacity: success}" class="success" >
+            <div class="success-pic">
+                <img style="height: 100%;width: 100%" src="http://image.houxiaopang.com/hd/bargain/tc.png">
+            </div>
+            <div class="success-message">
+                <div class="success-self" >
+                    <p>您帮好友砍了{{help_money}}元~</p>
+                </div>
+                <div class="success-rate">
+                    <div class="rate-left">
+                        <p>原价</p>
+                        <p style="font-size: 25px">{{mydata.startMoney}}</p>
+                    </div>
+                    <div class="rate-center">
+                        <div style=" position:relative; border:1px #FFDE6D solid; border-radius:20px;height:40px; width:95%; margin: 5px auto; padding:2px 1.5px;">
+                            <div id="bar" class="bar_start" :style="{width: barWidth+'%'}" ></div>
+                        </div>
+                    </div>
+
+                    <div class="rate-right">
+                        <p>目标</p>
+                        <p style="font-size: 25px">{{mydata.aimsMoney}}</p>
+                    </div>
+                </div>
+                <div class="success-remaining">
+                    <p>已砍{{mydata.startMoney-mydata.endMoney}}元，还剩{{mydata.endMoney-mydata.aimsMoney}}元</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+        <div class="box-footer" style="height: 184.1px">
+            <div id="show-message" class="show-message">
+                <p v-for="te in test" style="line-height: 35px;position: relative">{{te}}刚刚砍了{{rm}}元</p>
+            </div>
+            <div class="list-header">
+                <div style="width: 140px;position: relative;height: 28px;top: -14px;margin: 0 auto;">
+                    <p>好友砍价榜</p>
+                    <img style="height: 28px ; width: 135px" src="http://image.houxiaopang.com/hd/bargain/fr.png"/>
+                </div>
+            </div>
+            <div class="list-content">
+                    <ul >
+                        <li v-for="item in bargains">
+                            <div class="head-pic">
+                                <img :src="item.headImg" style="height: 100%;width: 100%">
+                            </div>
+                            <div class="message">
+                                <div class="message-top">
+                                    <span>{{item.name}}帮忙砍了</span>
+                                    <span>{{item.money}}元</span>
+                                </div>
+                                <p><span>{{item.date}}</span></p>
+                            </div>
+                        </li>
+
+                    </ul>
+            </div>
+        </div>
+        </div>
+        <div class="list-footer">
+            <p>本活动由猴小胖平台提供技术支持</p>
+        </div>
+    </div>
+    <script type="text/javascript" src="https://m.houxiaopang.com/bargain/static/index.js"></script>
+    <script type="text/javascript">
+    var code = getQueryString("code");
+    var demand_id = getQueryString("state");
+    if(!demand_id){
+            var  app = new  Vue({
+                el: '#box',
+                data: {
+                    mydata:{
+                        startMoney:0,
+                        endMoney:0,
+                        aimsMoney:0
+                    },
+                    bargains:{
+                    },
+                    finish : false,   /*活动已结束*/
+                    boxHeader:true,   /*砍价首页 头部*/
+                    boxContent:true,  /*砍价首页 砍*/
+                    success:0,    /*砍价成功 页面*/
+                    help_money:0,
+                    isActive:false,
+                    barWidth:20,
+                    test:[
+                        "安",
+                        "carlyang",
+                        "人丑多读书",
+                        "人间四月天",
+                        "戎马一生",
+                        "如人饮水",
+                        "让心去流浪",
+                        "此生不换",
+                        "chien",
+                        "火力全开",
+                        "点灯人",
+                        "阿呆",
+                        "大蚂蚁",
+                        "淡静",
+                        "稻草人",
+                        "王港",
+                        "离殇",
+                        "火柴梗",
+                        "个性男孩",
+                        "chindia",
+                        "搁浅",
+                        "孤狼",
+                        "隔壁小王",
+                        "风之物语",
+                        "浮生若梦",
+                        "峰华正茂",
+                        "紫茵",
+                        "弱水三千",
+                        "人生在奔跑",
+                        "fantasy",
+                        "二六",
+                        "大渊",
+                        "涤生",
+                        "道奇",
+                    ],
+                    rm:null,
+                    submit:false,
+                },
+                methods:{
+                    changePage:function () {
+                        if(this.submit){
+                            return
+                        }
+                        this.submit = true
+                        var that = this;
+                        ajax({
+                            url: "https://www.houxiaopang.com/api/v1.2/bargain/bargain",
+                            type: "POST",
+                            data: {
+                                id: that.id
+                            },
+                            timeout: 5000,
+                            success:function(res){
+                                if(res.code === 0){
+                                    setTimeout(function (){
+                                        that.boxHeader=false;
+                                        that.boxContent=false;
+                                        that.success=1;
+                                        that.barWidth=(Math.round((that.mydata.startMoney-that.mydata.endMoney)/(that.mydata.startMoney-that.mydata.aimsMoney)*8000)/100.00+20);
+                                        that.help_money = res.data.money;
+                                    }, 500);
+                                }
+                                else if(res.code === -2){
+                                    alert(res.data.msg)
+                                }else {
+                                    alert(res.data.errorMsg);
+
+                                }
+                                that.submit = false
+                            },
+                            error:function(){
+                                that.submit = false
+                                alert("网络拥挤，请稍后再试。")
+                            }
+                        })
+
+                        
+                    },
+                    randomMoney:function (start,end) {
+                        var m = parseInt((Math.random()*start)+end);
+                        return m;
+                    },
+                    getfirstpage(){
+                        var that = this;
+                        ajax({
+                            url: "https://www.houxiaopang.com/api/v1.2/bargain/getfirstpage",
+                            data: {
+                                id: demand_id
+                            },
+                            timeout: 5000,
+                            success:function(res){
+                                if(res.code === 0){
+                                 that.mydata= res.data.demand;
+                                 that.bargains=res.data.bargains;
+                                }
+                                else if(res.code === -2){
+                                    alert(res.data.errorMsg);
+                                }else {
+                                    alert("网络拥挤，请稍后再试。")
+                                }
+                            },
+                            error:function(){
+                                alert("网络拥挤，请稍后再试。")
+                            }
+                        })
+                    },
+                    run:function(){
+                        var that = this;
+                        this.rm = this.randomMoney(20,40);
+                        setInterval(function () {
+                            var show=document.getElementById("show-message");
+                            that.rm = that.randomMoney(20,40);
+                            show.appendChild(show.firstChild);
+                        },10000);
+                    },
+                    logined(collback){
+                ajax({
+                    url: "https://www.houxiaopang.com/api/v1.2/bargain/loginverification",
+                    timeout: 5000,
+                    success:function(res){
+                        if(res.code === 0){
+                            collback();
+                        }else{
+location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx35c4ce958bc7eb68&redirect_uri=https%3A%2F%2Fm.houxiaopang.com%2Fbargain&response_type=code&scope=snsapi_userinfo&state="+demand_id+"#wechat_redirect";
+                        }
+                    },
+                    error:function(){
+                        alert("网络拥挤，请稍后再试。")
+                    }
+                })
+            },
+            login(){
+                var that = this;
+                ajax({
+                    url: "https://www.houxiaopang.com/api/v1.2/bargain/login",
+                    timeout: 5000,
+                    success:function(res){
+                        if(res.code === 0){
+                            that.mydata= res.data.demand;
+                        }
+                        else if(res.code === -2){
+                            alert(res.data.errorMsg);
+                        }else {
+                            alert("网络拥挤，请稍后再试。")
+                        }
+                    },
+                    error:function(){
+                        alert("网络拥挤，请稍后再试。")
+                    }
+                })
+            },
+                },
+                created:function () {
+                   var that = this
+                    if (code) {
+                        ajax({
+                            url: "https://www.houxiaopang.com/api/v1.2/bargain/login",
+                            data: {
+                                code: code
+                            },
+                            timeout: 5000,
+                            success:function(res){
+                                that.run();
+                                if (res.code === 0) {
+                                    location.href = "https://m.houxiaopang.com/bargain?state="+demand_id;
+                                } else {
+                                   alert("登录失败，请重试。")
+                                }
+                            },
+                            error:function(){
+                                alert("网络拥挤，请稍后再试。")
+                            }
+                        })
+                    } else {
+                        this.logined(this.getfirstpage)
+                    }
+                }
+            })
+        }else{
+                location.href ="http://www.houxiaopang.com/404";
+        }
+    </script>
+</body>
+</html>
