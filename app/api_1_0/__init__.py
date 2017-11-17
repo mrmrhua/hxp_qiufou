@@ -25,16 +25,16 @@ api.add_resource(RandomToken,'/randomtoken')
 api.add_resource(GetApplyUptoken,'/apply/uptoken')
 
 # api.add_resource(Applyinfo,'/apply/form')
-
-# 已废弃
-api.add_resource(GetApplyStatus,'/apply/status')
-
-# 废弃
-api.add_resource(GetGalleryWork,'/workgallery')
-
-
-#获取最近上传的图片
-# api.add_resource(GetRecent,'/designerdash/index/recent')
-
-# 废弃
-api.add_resource(GetDesignerRecom,'/DesignerRecommend')
+#
+# # 已废弃
+# api.add_resource(GetApplyStatus,'/apply/status')
+#
+# # 废弃
+# api.add_resource(GetGalleryWork,'/workgallery')
+#
+#
+# #获取最近上传的图片
+# # api.add_resource(GetRecent,'/designerdash/index/recent')
+#
+# # 废弃
+# api.add_resource(GetDesignerRecom,'/DesignerRecommend')
