@@ -175,6 +175,9 @@
 <script type="text/javascript">
     function showdesigner() {
         var user_id = document.getElementById("user_id").value
+        if(user_id===""){
+            return
+        }
         $.ajax({
             type: "get",
             headers: {"Authorization": "Token " + window.localStorage.token},
