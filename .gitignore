@@ -34,3 +34,5 @@ wx/templates/
 /app/main/
 /app/add_project/
 /app/assets.py
+/jar/logs/
+/nginx_for_mac.conf
