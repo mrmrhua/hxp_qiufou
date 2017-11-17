@@ -1,4 +1,4 @@
-﻿* {
+* {
     padding: 0 0;
     margin: 0 0;
     box-sizing: border-box;
@@ -12,13 +12,13 @@ html,body{
     width: 100%;
     background: linear-gradient(to bottom, #ec8c69, #ed5fa0);
     overflow-y: hidden;
-    position: relative;
 }
 /*活动规则页面*/
 .roles-header{
     height: 67px;
     text-align: center;
 }
+
 .roles-header h1{
     color: #ffffff;
     font-size: 24px;
@@ -27,7 +27,7 @@ html,body{
 }
 .roles-body{
     text-align: center;
-    font-size: 12px;
+    font-size: 14px;
     color: #ffffff;
 }
 .roles-body{
@@ -82,7 +82,7 @@ html,body{
     left: 0;
     top: 0;
 
-    background: url(ios/彩带左@2x.png);
+    background: url(ios/left.png);
     background-repeat: no-repeat;
     width: 50%;
     height: 216px;
@@ -96,7 +96,7 @@ html,body{
 .k-pic{
     height: 130px;width: 130px;border-radius: 50%
 }
-.k-pic:hover{
+.k-pic:active{
     animation: shake 0.5s cubic-bezier(.36, .07, .19, .97) both;
     transform: translate3d(0, 0, 0);
     backface-visibility: hidden;
@@ -121,7 +121,7 @@ html,body{
     position: absolute;
     right: 0;
     top: 0;
-    background: url(ios/彩带右@2x.png);
+    background: url(ios/right.png);
     background-repeat: no-repeat;
     width: 50%;
     height: 216px;
@@ -233,9 +233,8 @@ html,body{
     text-align: center;
     font-size: 10px;
     position: absolute;
-    bottom: 0;
+    bottom: 10px;
     width: 100%;
-    left:0;
 }
 /*首页尾部结束*/
 .success-pic{
@@ -307,9 +306,7 @@ html,body{
     display: none;
 }
 
-
-
-   .guizhe{
+.guizhe{
     font-size: 14px;
 }
 
@@ -330,7 +327,9 @@ html,body{
     margin-top: 5px;
     outline: none;
 } 
-
+.btn_share:active{
+    opacity: 0.6;
+}
 
 @media screen and (min-width: 375px){
 .guizhe{
@@ -355,6 +354,10 @@ html,body{
     margin-top: 5px;
     outline: none;
 } 
+.roles-body{
+    font-size: 16px;
+    color: #ffffff;
+}
 }
 
 @media screen and (min-width: 410px){
@@ -362,7 +365,10 @@ html,body{
     font-size: 20px;
     line-height: 30px;
 }
-
+.roles-body{
+    font-size: 18px;
+    color: #ffffff;
+}
 .tips{
     font-size: 24px;
     letter-spacing: 2px;

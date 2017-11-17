@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh_CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
     <title>砍价活动</title>
-    <link rel="stylesheet" type="text/css" href="kj.css">
-    <script src="vue.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://m.houxiaopang.com/bargain/static/kj.css">
+    <script src="https://cdn.bootcss.com/vue/2.5.3/vue.min.js"></script>
 </head>
 <body>
-<div class="box" id="box" v-cloak>
-    <div style="font-size: 14px;text-align:center;position: absolute;top: 0;left: 0;right: 0;">
+<div class="box" id="box">
+    <div style="font-size: 12px;text-align:center;position: absolute;top: 0;left: 0;right: 0;">
         <a style=" color: #2340B6;font-weight: 500;margin: 0 auto;line-height: 34px;border-bottom:0.6px solid #0710B9;">《活动规则》</a>
     </div>
     <div class="success">
         <div class="success-pic">
-            <img style="height: 100%;width: 100%" src="ios/图层5@2x.png">
+            <img style="height: 100%;width: 100%" src="http://image.houxiaopang.com/hd/bargain/tc.png">
         </div>
         <div class="success-message">
             <div class="success-rate">
@@ -24,7 +24,7 @@
                 </div>
                 <div class="rate-center">
                     <div style=" position:relative; border:1px #FFDE6D solid; border-radius:20px;height:40px; width:95%; margin: 5px auto; padding:2px 1.5px;">
-                        <div style="background: linear-gradient(to bottom, #FFDE6D, #FFC002,#FFDE6D); border-radius:20px;height: 34px; width:66.6%"></div>
+                        <div class="bar_start" :style="{width: barWidth+'%'}"></div>
                     </div>
                 </div>
                 <div class="rate-right">
@@ -37,42 +37,91 @@
             </div>
         </div>
     </div>
-    <div style="border-radius: 5px;text-align: center;width: 60%;font-size: 14px;background-color: rgba(255,255,255,0.15);margin: 10px auto;height: 35px;">
-        <p style="line-height: 35px">吴鹏刚刚砍了666元</p>
+    <div id="show-message" style="border-radius: 5px;text-align: center;width: 60%;font-size: 14px;background-color: rgba(255,255,255,0.15);margin: 10px auto;height: 35px;overflow: hidden;">
+        <!--<p style="line-height: 35px">吴鹏刚刚砍了666元</p>-->
+        <p v-for="te in test" style="line-height: 35px;position: relative">{{te}}刚刚砍了{{rm}}元</p>
     </div>
     <div class="complete-message">
-        <div style="text-align: left; font-size: 14px;letter-spacing: 1px;line-height: 20px">
-            <p class="guizhe" style="text-indent: 2em">欢迎参加本次的项目砍价活动，在这次活动里，您可要通过分享链接给朋友或者朋友圈来邀请朋友帮您砍价,活动结束时，将会根据您最终砍价的结果来作为您的项目花费金额，赶快邀请朋友来帮您砍价吧！</p>
+        <div style="text-align: left; font-size: 13px;letter-spacing: 1px;line-height: 20px">
+            <p style="text-indent: 2em" class="guizhe">欢迎参加本次的项目砍价活动，在这次活动里，您可要通过分享链接给朋友或者朋友圈来邀请朋友帮您砍价,活动结束时，将会根据您最终砍价的结果来作为您的项目花费金额，赶快邀请朋友来帮您砍价吧！</p>
         </div>
         <div class="tips">
             <p>Tips：邀请的好友越多，能砍</p>
             <p>的价格越高哦！</p>
         </div>
-        <button class="btn_share" >
-            <p style="margin:1px 5px">分享给朋友来砍价&#8680</p>
+        <button class="btn_share">分享给朋友来砍价&#8680</p>
         </button>
     </div>
     <div class="list-footer">
-        <p>本活动由猴小胖平台提供技术支持</p>
-    </div>
+            <p>本活动由猴小胖平台提供技术支持</p>
+        </div>
 </div>
-<script type="text/javascript" src="index.js"></script>
+<script type="text/javascript" src="https://m.houxiaopang.com/bargain/static/index.js"></script>
 <script>
-    var code = getQueryString("code");
-    var demand_id = getQueryString("state");
-	alert(demand_id)
-    if(demand_id){
+var code = getQueryString("code");
+var demand_id = getQueryString("state");
+if(!demand_id){
     new Vue({
         el:"#box",
         data:{
             mydata:{
-				startMoney:null,
-				endMoney:null,
-				aimsMoney:null
+                startMoney:0,
+                endMoney:0,
+                aimsMoney:0
             },
+            barWidth:20,
+            test:[
+                "安",
+                "carlyang",
+                "人丑多读书",
+                "人间四月天",
+                "戎马一生",
+                "如人饮水",
+                "让心去流浪",
+                "此生不换",
+                "chien",
+                "火力全开",
+                "点灯人",
+                "阿呆",
+                "大蚂蚁",
+                "淡静",
+                "稻草人",
+                "王港",
+                "离殇",
+                "火柴梗",
+                "个性男孩",
+                "chindia",
+                "搁浅",
+                "孤狼",
+                "隔壁小王",
+                "风之物语",
+                "浮生若梦",
+                "峰华正茂",
+                "紫茵",
+                "弱水三千",
+                "人生在奔跑",
+                "fantasy",
+                "二六",
+                "大渊",
+                "涤生",
+                "道奇",
+            ],
+            rm:null,
             login:false
         },
         methods:{
+            randomMoney:function (start,end) {
+                var m = parseInt((Math.random()*start)+end);
+                return m;
+            },
+            run:function(){
+                this.rm = this.randomMoney(20,40);
+                setInterval(function () {
+                    var show=document.getElementById("show-message");
+                    that.rm = that.randomMoney(20,40);
+                    show.appendChild(show.firstChild);
+                },10000);
+            },
             logined(collback){
                 ajax({
                     url: "https://www.houxiaopang.com/api/v1.2/bargain/loginverification",
@@ -143,6 +192,7 @@ location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx35c
                     },
                     timeout: 5000,
                     success:function(res){
+                        that.run();
                         if (res.code === 0) {
                             location.href = "https://m.houxiaopang.com/bargain?state="+demand_id;
                         } else {
@@ -158,8 +208,9 @@ location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx35c
             }
         }
     })
+}else{
+        location.href ="http://www.houxiaopang.com/404";
     }
-
 </script>
 </body>
 </html>
