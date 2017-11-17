@@ -1,14 +1,24 @@
-<!DOCTYPE html><html><html lang=zh-cmn-Hans><head><meta charset=UTF-8><title>猴小胖报价单</title><meta name=keywords content=包装设计,网页制作,logo设计在线生成><meta name=description content=猴小胖是杭州求否科技旗下的设计师经纪服务平台。通过猴小胖可以高效对接多个专业的设计师,满足PPT定制、UI设计、企业画册、海报展览、LOGO设计、企业形象设计、VI等设计需求。><meta http-equiv=X-UA-Compatible content="ie=edge"><meta name=viewport content="width=device-width,initial-scale=1"><link rel=stylesheet href=./static/css/weui.min.css><link rel="shortcut icon" href=http://image.houxiaopang.com/houicon.ico><link href=./static/css/app.997b5edee24186be2a69bfa6f5a12cba.css rel=stylesheet></head><body><div id=app></div><script type=text/javascript>var token = null;
+<!DOCTYPE html><html><html lang=zh-cmn-Hans><head><meta charset=UTF-8><title>猴小胖报价单</title><meta name=keywords content=包装设计,网页制作,logo设计在线生成><meta name=description content=猴小胖是杭州求否科技旗下的设计师经纪服务平台。通过猴小胖可以高效对接多个专业的设计师,满足PPT定制、UI设计、企业画册、海报展览、LOGO设计、企业形象设计、VI等设计需求。><meta http-equiv=X-UA-Compatible content="ie=edge"><meta name=viewport content="width=device-width,initial-scale=1"><link rel=stylesheet href=./static/css/weui.min.css><link rel="shortcut icon" href=http://image.houxiaopang.com/houicon.ico><link href=./static/css/app.a94a890927143a7691ac0270d1ffc163.css rel=stylesheet></head><body><div id=app></div><script type=text/javascript>// var token = window.localStorage.token;
+  var token = "robin";
   function ajax(options) {
     if (!options.type) {
       options.type = "GET"
     }
+    options.timeout = 5000;
+    //todo options.url 临时去掉https 的 s
+    //options.url = options.url.replace("https", "http")
     if (options.type === "get" || options.type === "GET") {
       options.url += "?";
       for (var i in options.data) {
         options.url += i + "=" + options.data[i] + "&";
       }
       options.url = options.url.substring(0, options.url.length - 1);
+    } else {
+      var data = []
+      for (var i in options.data) {
+        data.push(i + "=" + options.data[i])
+      }
+      options.data = data.join("&")
     }
     var ajax = new XMLHttpRequest();
     ajax.onreadystatechange = function () {
@@ -26,14 +36,14 @@
       }, options.timeout)
     }
     ajax.open(options.type, options.url, true);
-    ajax.setRequestHeader("Content-type", "application/json;charset=utf-8");
-    //ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=utf-8");
     if (options.token) {
       ajax.setRequestHeader("Authorization", "Token " + token);
     }
     if (options.type === "get" || options.type === "GET") {
+      ajax.setRequestHeader("Content-type", "application/json;charset=utf-8")
       ajax.send();
     } else {
+      ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=utf-8")
       ajax.send(options.data);
     }
   }
@@ -71,6 +81,4 @@
     }
     return type;
   }
-
-
-  var pptType = "";</script><script type=text/javascript src=./static/js/manifest.b25578d2425cc6b72f3e.js></script><script type=text/javascript src=./static/js/vendor.110cb8e2c500f36c564d.js></script><script type=text/javascript src=./static/js/app.6b5789f46d1d8eec8507.js></script></body></html></html>
+  var pptType = "";</script><script type=text/javascript src=./static/js/manifest.e73939d59f3eb7b42018.js></script><script type=text/javascript src=./static/js/vendor.518d55e98729725db834.js></script><script type=text/javascript src=./static/js/app.d44dd9b366ae0c958182.js></script></body></html></html>
