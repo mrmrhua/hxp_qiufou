@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>经纪人添加项目</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./css/simditor.css">
+    <link href="css/style.css" rel="stylesheet" type="text/css"/>
+    <style type="text/css">
+        .container {
+            padding-top: 25px;
+        }
+
+        .imgbox {
+            min-height: 200px;
+            width: 100%;
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+            -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+            -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+            transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+
+        .upfile {
+            border: 2px dashed #e0e4e8;
+            padding: 30px 60px 30px 30px;
+            float: left;
+        }
+
+        .addbtn {
+            opacity: 0.4;
+            width: 240px;
+            height: 180px;
+            display: inline-block;
+            margin-left: 30px;
+            position: relative;
+        }
+
+        .addbtn:hover {
+            opacity: 0.8;
+        }
+
+        .addbtn .file {
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            cursor: pointer;
+        }
+
+        .addbtn .add-img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .preview {
+            width: 240px;
+            height: 180px;
+            display: inline-block;
+            margin-left: 30px;
+            vertical-align: top;
+            position: relative;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .preview .up-span {
+            display: block;
+            width: 100%;
+            height: 100%;
+            visibility: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            background: rgba(0, 0, 0, .5);
+        }
+
+        .preview:hover .up-span {
+            visibility: visible;
+        }
+
+        .preview .close-upimg {
+            position: absolute;
+            top: 6px;
+            right: 8px;
+            display: none;
+            z-index: 10;
+            cursor: pointer;
+        }
+
+        .preview:hover .close-upimg {
+            display: block;
+        }
+
+        .preview .up-img {
+            width: 240px;
+        }
+
+        .mymodal {
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, .7);
+            display: none;
+        }
+
+        .mymodal > .text {
+            font-size: 24px;
+            margin-top: 15%;
+            color: #fff;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+        <li><a href="#">首页</a></li>
+        <li><a href="#">模块设计</a></li>
+        <li><a href="#">需求绑定设计师（新建项目）</a></li>
+    </ul>
+</div>
+<div class="container">
+
+    <form class="form-horizontal" role="form">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">设计师编号</label>
+            <div class="col-sm-10">
+                <input onblur="showdesigner()" type="number" class="form-control" id="designer_id"
+                       placeholder="请输入设计师编号">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">需求编号</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" id="demand_id"
+                       placeholder="请输入需求编号">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <div onclick="submit()" class="btn btn-primary btn-block">提交</div>
+            </div>
+        </div>
+
+    </form>
+    <div style="width: 100px;height: 130px;margin: 50px 0 0 100px;">
+        <img id="headimg" alt="" style="height: 100px;width: 100px;">
+        <span id="username"></span>
+    </div>
+</div>
+<div class="mymodal">
+    <p class="text">提交中···</p>
+</div>
+<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+<script src="./js/module.min.js"></script>
+<script src="./js/hotkeys.min.js"></script>
+<script src="./js/simditor.min.js"></script>
+<script type="text/javascript">
+    var modal = document.getElementsByClassName("mymodal")[0];
+
+    function showdesigner() {
+        var designer_id = document.getElementById("designer_id").value.trim();
+        if (designer_id === "") {
+            return
+        }
+        $.ajax({
+            type: "get",
+            headers: {"Authorization": "Token " + window.localStorage.token},
+            url: "http://www.houxiaopang.com/api/v1.1/adminsystem/showuserinfo",
+            data: {
+                user_id: designer_id,
+            },
+            success(res){
+                if (res.code === 0) {
+                    document.getElementById("headimg").src = res.data.headimg
+                    document.getElementById("username").innerText = res.data.nickname
+                } else {
+                    alert("获取设计师信息失败。")
+                }
+            },
+            error(){
+                alert("获取设计师信息失败。")
+            }
+        })
+    }
+
+    function submit() {
+        var designer_id = document.getElementById("designer_id").value.trim();
+        var demand_id = document.getElementById("demand_id").value.trim();
+        if (designer_id === "" || demand_id === "") {
+            alert("请检查表单！");
+            return;
+        }
+        modal.style.display = 'block';
+        $.ajax({
+            'type': "post",
+            headers: {"Authorization": "Token " + window.localStorage.token},
+            data: {
+                'demand_id': demand_id,
+                'designer': designer_id,
+            },
+            url: "http://www.houxiaopang.com/api/v1.1/adminsystem/createproject",
+            success(data){
+                if (data.code === 0) {
+                    alert("项目id:"+data.data.project_id);
+                } else {
+                    alert("失败");
+                }
+                modal.style.display = 'none';
+            },
+            error(){
+                modal.style.display = 'none';
+                alert("失败");
+            }
+
+        });
+
+    }
+
+</script>
+</body>
+</html>
