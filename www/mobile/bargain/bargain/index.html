@@ -165,7 +165,7 @@
                         this.submit = true
                         var that = this;
                         ajax({
-                            url: "https://www.houxiaopang.com/api/v1.2/bargain/bargain",
+                            url: "https://m.houxiaopang.com/api/v1.2/bargain/bargain",
                             type: "POST",
                             data: {
                                 id: that.id
@@ -204,7 +204,7 @@
                     getfirstpage(){
                         var that = this;
                         ajax({
-                            url: "https://www.houxiaopang.com/api/v1.2/bargain/getfirstpage",
+                            url: "https://m.houxiaopang.com/api/v1.2/bargain/getfirstpage",
                             data: {
                                 id: demand_id
                             },
@@ -236,7 +236,7 @@
                     },
                     logined(collback){
                 ajax({
-                    url: "https://www.houxiaopang.com/api/v1.2/bargain/loginverification",
+                    url: "https://m.houxiaopang.com/api/v1.2/bargain/loginverification",
                     timeout: 5000,
                     success:function(res){
                         if(res.code === 0){
@@ -253,7 +253,7 @@ location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx35c
             login(){
                 var that = this;
                 ajax({
-                    url: "https://www.houxiaopang.com/api/v1.2/bargain/login",
+                    url: "https://m.houxiaopang.com/api/v1.2/bargain/login",
                     timeout: 5000,
                     success:function(res){
                         if(res.code === 0){
@@ -275,7 +275,7 @@ location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx35c
                    var that = this
                     if (code) {
                         ajax({
-                            url: "https://www.houxiaopang.com/api/v1.2/bargain/login",
+                            url: "https://m.houxiaopang.com/api/v1.2/bargain/login",
                             data: {
                                 code: code
                             },
