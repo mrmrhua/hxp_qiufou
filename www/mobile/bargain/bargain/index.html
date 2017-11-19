@@ -168,7 +168,8 @@
                             url: "https://m.houxiaopang.com/api/v1.2/bargain/bargain",
                             type: "POST",
                             data: {
-                                id: that.id
+                                id: that.id,
+								token:window.localStorage.token
                             },
                             timeout: 5000,
                             success:function(res){
@@ -206,7 +207,8 @@
                         ajax({
                             url: "https://m.houxiaopang.com/api/v1.2/bargain/getfirstpage",
                             data: {
-                                id: demand_id
+                                id: demand_id,
+								token:window.localStorage.token
                             },
                             timeout: 5000,
                             success:function(res){
@@ -233,43 +235,7 @@
                             that.rm = that.randomMoney(20,40);
                             show.appendChild(show.firstChild);
                         },10000);
-                    },
-                    logined(collback){
-                ajax({
-                    url: "https://m.houxiaopang.com/api/v1.2/bargain/loginverification",
-                    timeout: 5000,
-                    success:function(res){
-                        if(res.code === 0){
-                            collback();
-                        }else{
-location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx35c4ce958bc7eb68&redirect_uri=https%3A%2F%2Fm.houxiaopang.com%2Fbargain&response_type=code&scope=snsapi_userinfo&state="+demand_id+"#wechat_redirect";
-                        }
-                    },
-                    error:function(){
-                        alert("网络拥挤，请稍后再试。")
                     }
-                })
-            },
-            login(){
-                var that = this;
-                ajax({
-                    url: "https://m.houxiaopang.com/api/v1.2/bargain/login",
-                    timeout: 5000,
-                    success:function(res){
-                        if(res.code === 0){
-                            that.mydata= res.data.demand;
-                        }
-                        else if(res.code === -2){
-                            alert(res.data.errorMsg);
-                        }else {
-                            alert("网络拥挤，请稍后再试。")
-                        }
-                    },
-                    error:function(){
-                        alert("网络拥挤，请稍后再试。")
-                    }
-                })
-            },
                 },
                 created:function () {
                    var that = this
@@ -283,6 +249,7 @@ location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx35c
                             success:function(res){
                                 that.run();
                                 if (res.code === 0) {
+									window.localStorage.token = res.data.msg;
                                     location.href = "https://m.houxiaopang.com/bargain?state="+demand_id;
                                 } else {
                                    alert("登录失败，请重试。")
@@ -293,7 +260,12 @@ location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx35c
                             }
                         })
                     } else {
-                        this.logined(this.getfirstpage)
+						if(window.localStorage.token){
+							this.getfirstpage();
+						}else{
+							location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx35c4ce958bc7eb68&redirect_uri=https%3A%2F%2Fm.houxiaopang.com%2Fbargain&response_type=code&scope=snsapi_userinfo&state="+demand_id+"#wechat_redirect";
+						}
+                        
                     }
                 }
             })
