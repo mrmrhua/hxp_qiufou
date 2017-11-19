@@ -125,7 +125,11 @@ function agren(id) {// 确定资金流动
         },
         success(res){
             if (res.code === 0) {
-                alert("成功。")
+                if (res.data.project_id) {
+                    alert("收款账单地址: https://m.houxiaopang.com/demand/#/receipt?project_id=" + res.data.project_id + "&cashflow=" + id);
+                } else {
+                    alert("成功")
+                }
             } else {
                 alert("操作失败！")
             }
