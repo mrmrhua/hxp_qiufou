@@ -46,7 +46,7 @@ class GetCashFlow(Resource):
         } for i in cf]
 
         if not cf:
-            return jsonify({"code":-1,"msg":"钱包无法访问"})
+            return jsonify({"code":-1, "msg":"无记录"})
         return jsonify({"code":0,"data":{
            "cashflow":cashflow
         }})

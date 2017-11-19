@@ -40,11 +40,12 @@ class ConfirmPay(Resource):
         cf = CashFlow.query.filter_by(id=cf_id).first()
         if cf.status=='收款申请中':
             cf.status = '等待付款中'
+            project_id = cf.project_id
         elif cf.status=='提现审核中':
             cf.status = '已完成'
         db.session.add(cf)
         db.session.commit()
-        return  jsonify({"code":0})
+        return  jsonify({"code":0,"data":{"project_id":project_id}})
 
 
 # 因为一些原因无法转账，需要取消这笔操作,填写理由detail

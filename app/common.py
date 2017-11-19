@@ -292,6 +292,8 @@ def getcatname(id):
     return Category.query.get(id).category_name
 
 def getclientname(id):
+    if not id:
+        return '等待确认中...'
     return Client.query.get(id).nickname
 def getdesignername(id):
     return User.query.get(id).nickname

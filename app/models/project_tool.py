@@ -55,7 +55,7 @@ class Project(db.Model):
     # 设计师是谁
     user_id = db.Column(INTEGER(unsigned=True), db.ForeignKey('users.id'))
     #   客户是谁
-    client_id = db.Column(INTEGER(unsigned=True), db.ForeignKey('clients.id'))
+    client_id = db.Column(INTEGER(unsigned=True), db.ForeignKey('clients.id'),nullable=True)
     # 完成状况:  0: 进行中， 1： 已结束， 2: 已关闭
     status = db.Column(INTEGER(unsigned=True))
     # 是否有新更新
