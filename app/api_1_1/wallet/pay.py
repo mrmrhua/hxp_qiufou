@@ -118,11 +118,8 @@ class GetAlipayCharge(Resource):
                     app_pay=True,
                 )
             )
-            print(ip)
-            print(charge)
             return jsonify({"code": 0,"data":{"charge":charge}})
         except Exception as e:
-            print(e)
             return jsonify({"code": -1})
 
 

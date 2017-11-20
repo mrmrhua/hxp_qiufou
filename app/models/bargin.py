@@ -51,3 +51,24 @@ t_vw_bargain = Table(
     Column('money', Numeric(10, 2))
 )
 
+
+class TbCase(Base):
+    __tablename__ = 'tb_case'
+
+    id = Column(BigInteger, primary_key=True)
+    cover = Column(String(512), nullable=False)
+    title = Column(String(128), nullable=False)
+    description = Column(String(1024), nullable=False)
+    date = Column(DateTime, nullable=False)
+    content = Column(Text, nullable=False)
+
+
+class TbDesign(Base):
+    __tablename__ = 'tb_design'
+
+    id = Column(BigInteger, primary_key=True)
+    title = Column(String(128), nullable=False)
+    date = Column(DateTime, nullable=False)
+    content = Column(Text, nullable=False)
+    description = Column(String(1024), nullable=False)
+    cover = Column(String(512), nullable=False)
