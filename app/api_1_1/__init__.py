@@ -21,6 +21,10 @@ from .project import *
 
 # wx verify info
 api_v1_1.add_resource(WxVerify,'/wx_verify')
+
+api_v1_1.add_resource(WxVerify_Client,'/wx_verfify_client')
+
+
 api_v1_1.add_resource(LogOut,'/logout')
 api_v1_1.add_resource(GetApplyStatus,'/apply/status')
 
