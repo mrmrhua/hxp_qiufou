@@ -149,3 +149,42 @@ class Province(UserMixin,db.Model):
     __tablename__ = 'province'
     id = db.Column(INTEGER(unsigned=True),primary_key=True)
     name=db.Column(db.String(8))
+
+
+
+class Client(UserMixin,db.Model):
+    __tablename__ = 'clients'
+    id = db.Column(INTEGER(unsigned=True), primary_key=True)
+    nickname = db.Column(db.String(64))
+    unionid = db.Column(db.String(64), unique=True)
+    sex = db.Column(db.Integer)
+    headimg = db.Column(db.String(255))
+
+    def __repr__(self):
+        return '<User %r>' % self.nickname
+
+    # # 生成一个会过期的token,默认60分钟
+    def generate_auth_token(self, expiration=3600):
+        s = Serializer(current_app.config['SECRET_KEY'],
+                       expires_in=expiration)
+        # # 生成一个随机数,存进token里. session里也存一个
+        # nonce = random.randint(1, 100)
+        # # session['lognonce'] = nonce
+        # # nonce存redis
+        # conn = Conn_db()
+        # conn.set('nonce' + str(self.id), nonce, 12000)
+        # t = s.dumps({'id': self.id, 'nonce': nonce})
+        t = s.dumps({'id': self.id})
+        return t
+
+    # 验证token
+    @staticmethod
+    def verify_auth_token(token):
+        s = Serializer(current_app.config['SECRET_KEY'])
+        try:
+            data = s.loads(token)
+        except SignatureExpired:
+            return None  # valid token, but expired
+        except BadSignature:
+            return None  # invalid token
+        return Client.query.get(data['id'])

@@ -145,7 +145,7 @@ function getbrokerdesigner(demand_id) {
         			  onclick="checkCheck()"></div></td></tr>`;
                     checktfoot.innerHTML += strchecktfoot;
                     var stroperate = `
-        			<tr><td><div><span onclick="removebroker(${item.recom_id})" class="colorSpan">取消推荐</span></div></td></tr>`;
+        			<tr><td><div><span onclick="removebroker(${item.recom_id})" class="colorSpan">取消推荐</span> <span class="colorSpan">绑定</span></div></td></tr>`;
                     operate.innerHTML += stroperate;
                     var strcontent = `
         					<tr>

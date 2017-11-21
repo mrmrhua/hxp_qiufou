@@ -6,7 +6,7 @@ from config import qiniu_secret_key,qiniu_access_key
 from functools import wraps
 from flask import request, current_app,g
 from flask.ext.httpauth import HTTPTokenAuth
-from app.models import User
+from app.models import *
 import base64
 import hmac
 from hashlib import sha1
@@ -14,7 +14,7 @@ import urllib.parse
 import time
 import uuid
 import redis
-
+from decimal import Decimal
 
 def get_access_token(code):
     url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxbfacdb1b99885182&secret=c4f876b16ddc8d8e4259b9c2388e5493&code='\
@@ -230,10 +230,11 @@ auth = HTTPTokenAuth(scheme='Token')
 @auth.verify_token
 def verify_token(token):
     # todo
-    if  token=='robin':
-        user = User.query.filter_by(id=32).first()
-        g.user = user
-        return True
+    if current_app.debug:
+        if  token=='robin':
+            user = User.query.filter_by(id=32).first()
+            g.user = user
+            return True
     # admin帐户
     # if token == ADMIN_KEY:
     #     return True
@@ -242,6 +243,20 @@ def verify_token(token):
         return False
     g.user = user
     return True
+
+clientauth = HTTPTokenAuth(scheme='Token')
+
+@clientauth.verify_token
+def verify_token(token):
+    client = Client.verify_auth_token(token)
+    if current_app.debug:
+        if token=='robin':
+            client =Client.query.get(1)
+    if not client:
+        return False
+    g.client = client
+    return True
+
 
 adminauth = HTTPTokenAuth(scheme='Token')
 
@@ -275,4 +290,22 @@ def single_send(mobile,text):
 
 
 
+def getcatname(id):
+    return Category.query.get(id).category_name
 
+def getclientname(id):
+    if not id:
+        return '等待确认中...'
+    return Client.query.get(id).nickname
+def getdesignername(id):
+    return User.query.get(id).nickname
+
+
+
+def decimal_default(obj):
+    if not obj:
+        return None
+    if isinstance(obj, Decimal):
+        return float(obj)
+    else:
+        raise TypeError

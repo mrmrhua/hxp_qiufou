@@ -12,6 +12,8 @@ class Project(db.Model):
     uid = db.Column(db.String(64),nullable=True)
     designer = db.Column(db.String(64),nullable=True)
     posts = db.relationship('Post', backref='project',order_by='Post.up_time.desc()')
+    # 完成状况:  0: 进行中， 1： 已结束， 2: 已关闭
+    # status = db.Column(INTEGER(unsigned=True))
     def __repr__(self):
         return '<Project: %r>' % (self.demand_id)
 

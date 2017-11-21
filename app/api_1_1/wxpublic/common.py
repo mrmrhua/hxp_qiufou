@@ -1,9 +1,12 @@
-import urllib
 import json
+import urllib
+
 import redis
 # 获取access_token
-from flask import jsonify,request,current_app,make_response
+from flask import jsonify, request, current_app, make_response
 from flask_restful import Resource
+
+
 def wxpublic_get_access_token(code):
     appid = "wx35c4ce958bc7eb68"
     secret = "4cde0db3bb0df9597bebcad3352d503d"
@@ -51,17 +54,19 @@ def wx_get_common_access_token():
         return ''
     conn = Conn_db()
     access_token = conn.get("access_token")
-    if not access_token:
-        appid = "wx35c4ce958bc7eb68"
-        secret = "4cde0db3bb0df9597bebcad3352d503d"
-        url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='+appid+"&secret="+secret
-
-        # get acess_token
-        result = json.loads(urllib.request.urlopen(url).read().decode('utf-8'))
-        if('errcode' in result.keys()):
-            return  None
-
-        access_token = result['access_token']
+    # TODO
+    # 如果没取到咋办
+    # if not access_token:
+    #     appid = "wx35c4ce958bc7eb68"
+    #     secret = "4cde0db3bb0df9597bebcad3352d503d"
+    #     url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='+appid+"&secret="+secret
+    #
+    #     # get acess_token
+    #     result = json.loads(urllib.request.urlopen(url).read().decode('utf-8'))
+    #     if('errcode' in result.keys()):
+    #         return  None
+    #
+    #     access_token = result['access_token']
 
     return access_token
 
@@ -69,10 +74,14 @@ def wx_get_common_access_token():
 class TokenForTest(Resource):
     def get(self):
         # pw='123'
+        # 本地环境下是取不到的
+        if current_app.debug:
+            return -1
         pw = request.values.get("pw")
         if pw =='123':
-            conn = Conn_db()
-            access_token = conn.get("access_token")
+            # conn = Conn_db()
+            # access_token = conn.get("access_token")
+            access_token = wx_get_common_access_token()
             return jsonify({"ac":access_token})
         else:
             return 0

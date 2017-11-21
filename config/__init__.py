@@ -74,3 +74,9 @@ DISAGREE_EMAIL_HTML = """\
 ADMIN_EMAIL = 'mrmrhua@126.com'
 
 ADMIN_TEL='15700079780'
+
+
+# ping++支付参数
+live_key  = 'sk_live_9O4GKSq5CCSKHunHyHyfLmbH'
+test_key = 'sk_test_fXLC88nXD4y1ePK4mTH0uP0K'
+pingxx_app_id = 'app_rnjXr9fDuTSSfHmn'

@@ -35,6 +35,7 @@ function registerup(vu) {
       'UploadComplete': function () {
         $(".up-section").removeClass("loading");
         $(".up-img").removeClass("up-opcity");
+        vu.imgupload = false
       },
       'FileUploaded': function (up, file, info) {
         if (info['status'] == '200') {

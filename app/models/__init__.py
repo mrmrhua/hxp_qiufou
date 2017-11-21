@@ -5,3 +5,4 @@ from .model import *
 from .apply import *
 from .wxpublic import *
 from .wallet import *
+from .bargin import *

@@ -11,17 +11,20 @@ from .login_verify import *
 from .applystatus import GetApplyStatus
 from .demand import GetDemandCenter,DemandDeatil,ReplyDemand,TMPReplyDemand,ClientPostDemand
 from .work_resume import GetAllWork,GetResumeInfo
-from .admindash import NewAlbum,GetAlbum,GetCollection,GetUserHead,GetAlbumDetail,\
-    Userinfo,DeleteAlbum,AddExp,DelExp,NoticeRecent,UnreadNum,AllNotice,\
-    ClearAll,RemoveAll
+from .admindash import *
 from .adminsystem import *
 from .wxpublic import  *
 from .wallet import *
+from .project import *
 
 
 
 # wx verify info
 api_v1_1.add_resource(WxVerify,'/wx_verify')
+
+api_v1_1.add_resource(WxVerify_Client,'/wx_verfify_client')
+
+
 api_v1_1.add_resource(LogOut,'/logout')
 api_v1_1.add_resource(GetApplyStatus,'/apply/status')
 
@@ -46,7 +49,7 @@ api_v1_1.add_resource(ReplyDemand,'/replydemand')
 api_v1_1.add_resource(TMPReplyDemand,'/replydemand_tmp')
 api_v1_1.add_resource(TokenVerify,'/token/authenticated')
 
-
+api_v1_1.add_resource(ClientTokenVerify,'/wxfwh/token/clientauthenticated')
 
 api_v1_1.add_resource(NewAlbum,'/newalbum')
 api_v1_1.add_resource(GetAlbum,'/designerdash/index/recent')
@@ -114,6 +117,8 @@ api_v1_1.add_resource(WxTest,'/wxpublic')
 
 api_v1_1.add_resource(WxUserinfo,'/wx_getuid')
 
+# 根据CODE返回微信用户的基本信息
+api_v1_1.add_resource(WxGetUserinfo,'/wx_getuserinfo')
 api_v1_1.add_resource(WX_Userinfo,'/designerdash/wx_userinfo')
 
 
@@ -121,7 +126,7 @@ api_v1_1.add_resource(WX_Userinfo,'/designerdash/wx_userinfo')
 # 服务号接口
 api_v1_1.add_resource(QRBind,'/qrbind')
 
-api_v1_1.add_resource(TTTest,'/tttest')
+# api_v1_1.add_resource(TTTest,'/tttest')
 
 
 api_v1_1.add_resource(IsBind,'/isbind')
@@ -166,3 +171,35 @@ api_v1_1.add_resource(PayToDesigner,'/adminsystem/paytodesigner')
 api_v1_1.add_resource(FeedBack,'/designer/feedback')
 
 api_v1_1.add_resource(ShowUserInfo,'/adminsystem/showuserinfo')
+
+
+# 客户确定设计师人选后，经纪人新建项目
+# 经纪人绑定设计师／需求
+
+api_v1_1.add_resource(CreateProject,'/adminsystem/createproject')
+
+
+# 获取项目列表
+api_v1_1.add_resource(Cli_ProjectList,'/wxfwh/projectlist')
+api_v1_1.add_resource(De_ProjectList,'/designer/projectlist')
+# 项目进度
+api_v1_1.add_resource(ProjectPage,'/wxfwh/projectpage')
+# 客户查看流水
+api_v1_1.add_resource(PayRecord,'/wxfwh/payrecord')
+
+
+# 设计师发起收款
+api_v1_1.add_resource(ChargeApply,'/chargeapply')
+
+# 客户获取待支付账单
+api_v1_1.add_resource(GetClientRecord,'/getclientrecord')
+
+#  经纪人代设计师发起收款
+api_v1_1.add_resource(AdminChargeApply,'/adminsystem/adminchargeapply')
+
+
+# api_v1_1.add_resource(TestPay,'/testpay')
+
+
+# 发起PING++支付请求，唤起支付宝APP
+api_v1_1.add_resource(GetAlipayCharge,'/getalipaycharge')
