@@ -10,16 +10,16 @@ from decimal import Decimal
 import pingpp
 
 # HTTP
-# https://m.houxiaopang.com/api/v1.1/wxfwh/payrecord
+# https://www.houxiaopang.com/api/v1.1/wxfwh/payrecord
 # Get
 # 支付记录
 class PayRecord(Resource):
     @clientauth.login_required
     def get(self):
         project_id = request.values.get("project_id")
-        cfs = CashFlow.query.filter_by(related_client = g.client.id,project_id=project_id).order_by(CashFlow.up_time.desc()).all()
+        cfs = CashFlow.query.filter_by(related_client = g.client.id,project_id=project_id).order_by(CashFlow.when.desc()).all()
         cashflow = [ {"remark":i.remark,
-           "up_time":i.up_time.strf.strftime("%Y-%m-%d %H:%M:%S"),
+           "up_time":i.when.strf.strftime("%Y-%m-%d %H:%M:%S"),
            "status":i.status,
            "money":i.change_money,
            'detail':i.detail
@@ -28,7 +28,7 @@ class PayRecord(Resource):
 
 
 # HTTP
-# https://m.houxiaopang.com/api/v1.1/chargeapply
+# https://www.houxiaopang.com/api/v1.1/chargeapply
 # POST
 # 设计师发起收款
 
@@ -48,7 +48,7 @@ class ChargeApply(Resource):
 
 
 # HTTP
-# https://m.houxiaopang.com/api/v1.1/wxfwh/payinfo
+# https://www.houxiaopang.com/api/v1.1/wxfwh/payinfo
 # GET
 # 获取支付账单
 
@@ -240,6 +240,9 @@ class GetPayHooks(Resource):
                 order_no = data.object.id
                 cf = CashFlow.query.filter_by(order_no=order_no).first()
                 cf.detail = '客户已支付'
+                user_id = cf.related_user
+                w = Wallet.query.get(user_id)
+                # w.frozenmoeny += data.
                 db.session.add(cf)
                 db.session.commit()
             return Response(status=200)

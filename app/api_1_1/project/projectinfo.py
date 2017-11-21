@@ -14,8 +14,10 @@ class Cli_ProjectList(Resource):
         pros = Project.query.filter_by(client_id=g.client.id).order_by(Project.up_time.desc()).all()
         projects =  [ {"title":i.title,
            "status":i.status,
+            'client': getclientname(i.client_id),
+            'designer': getdesignername(i.user_id),
            "isnew":i.isnew,
-           "cat":i.cat,
+            "cat":getcatname(i.cat_id),
            "up_time":i.up_time.strftime("%Y-%m-%d %H:%M:%S"),
            "project_id":i.id }  for i in pros ]
         return jsonify({"code":0,"data":{"projects":projects}})
@@ -40,7 +42,7 @@ class De_ProjectList(Resource):
            "project_id":i.id,
           'lastimg': getlastimg(i),
            'client':getclientname(i.client_id),
-           'desigenr': getdesignername(i.user_id),
+           'designer': getdesignername(i.user_id),
                        }  for i in pros ]
         return jsonify({"code":0,"data":{"projects":projects}})
 
