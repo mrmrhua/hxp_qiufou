@@ -2,11 +2,11 @@
 from sqlalchemy import BigInteger, Column, DateTime, ForeignKey, Integer, Numeric, String, Table, Text, text
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
-
+from app import db
 Base = declarative_base()
 metadata = Base.metadata
 
-class TbBargain(Base):
+class TbBargain(db.Model):
     __tablename__ = 'tb_bargain'
 
     id = Column(BigInteger, primary_key=True)
@@ -18,7 +18,7 @@ class TbBargain(Base):
     user = relationship('TbUser')
 
 
-class TbDemand(Base):
+class TbDemand(db.Model):
     __tablename__ = 'tb_demand'
 
     id = Column(BigInteger, primary_key=True)
@@ -29,7 +29,7 @@ class TbDemand(Base):
     nickname = Column(String(64), nullable=False)
 
 
-class TbUser(Base):
+class TbUser(db.Model):
     __tablename__ = 'tb_user'
 
     id = Column(BigInteger, primary_key=True)
@@ -52,7 +52,7 @@ t_vw_bargain = Table(
 )
 
 
-class TbCase(Base):
+class TbCase(db.Model):
     __tablename__ = 'tb_case'
 
     id = Column(BigInteger, primary_key=True)
@@ -63,7 +63,7 @@ class TbCase(Base):
     content = Column(Text, nullable=False)
 
 
-class TbDesign(Base):
+class TbDesign(db.Model):
     __tablename__ = 'tb_design'
 
     id = Column(BigInteger, primary_key=True)
