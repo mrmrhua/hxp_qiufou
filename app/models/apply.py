@@ -107,13 +107,13 @@ class Applyform(db.Model):
         company_name = request.form.get('company_name')
         company_web = request.form.get('company_web')
         company_size = request.form.get('company_size')
-
+        startyear = request.form.get("startyear")
         blog_url = request.form.get('blog_url')
         user_id = g.user.id
         return Applyform(name=name, tel=tel, city=city, email=email, qq=qq, wx=wx,
                          company_name=company_name, company_web=company_web,
                          company_size=company_size, role=role,
-                         blog_url=blog_url, user_id=user_id)
+                         blog_url=blog_url, user_id=user_id,graduate=startyear)
 
 
     @staticmethod

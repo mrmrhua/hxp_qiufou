@@ -184,7 +184,7 @@ api_v1_1.add_resource(Cli_ProjectList,'/wxfwh/projectlist')
 api_v1_1.add_resource(De_ProjectList,'/designer/projectlist')
 # 项目进度
 api_v1_1.add_resource(ProjectPage,'/wxfwh/projectpage')
-
+# 客户查看流水
 api_v1_1.add_resource(PayRecord,'/wxfwh/payrecord')
 
 

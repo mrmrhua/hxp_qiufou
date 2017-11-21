@@ -40,6 +40,9 @@ class ConfirmPay(Resource):
         cf = CashFlow.query.filter_by(id=cf_id).first()
         if cf.status=='收款申请中':
             cf.status = '等待付款中'
+            dt = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+            order_no = dt + str(100000 + int(cf.id))
+            cf.order_no = order_no
             project_id = cf.project_id
         elif cf.status=='提现审核中':
             cf.status = '已完成'
