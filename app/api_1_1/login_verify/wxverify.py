@@ -6,7 +6,7 @@ from app.common import  support_jsonp,get_access_token,get_user_info,get_wx_head
 import json
 from app.models import User,db,Client
 from config import APPLYSTATUS
-
+from app.api_1_1.wxpublic import wxpublic_get_access_token
 class WxVerify(Resource):
     def get(self):
         if request.args.get("code") is None:
@@ -81,7 +81,8 @@ class WxVerify_Client(Resource):
         if request.args.get("code") is None:
             return jsonify({'code': -1, 'data': {"message":"code mistake"}})
         code = request.args.get("code")
-        result = get_access_token(code)
+        # result = get_access_token(code)
+        result = wxpublic_get_access_token(code)
         if result is None:  # 验证失败,
             return jsonify({'code': -1, 'data': {'message': 'code mistake'}})
         userinfo = get_user_info(result.get('access_token'), result.get('openid'))
@@ -102,7 +103,7 @@ class WxVerify_Client(Resource):
         client = Client.query.filter_by(unionid=unionid).first()
         if client is None:  # 第一次登陆
             #创建该用户实例
-            user = Client(nickname=nickname, unionid=unionid, sex=sex, headimg=headimg)
+            client = Client(nickname=nickname, unionid=unionid, sex=sex, headimg=headimg)
             db.session.add(client)
             try:
                 db.session.commit()

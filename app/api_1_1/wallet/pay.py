@@ -19,7 +19,7 @@ class PayRecord(Resource):
         project_id = request.values.get("project_id")
         cfs = CashFlow.query.filter_by(related_client = g.client.id,project_id=project_id).order_by(CashFlow.when.desc()).all()
         cashflow = [ {"remark":i.remark,
-           "up_time":i.when.strf.strftime("%Y-%m-%d %H:%M:%S"),
+           "up_time":i.when.strftime("%Y-%m-%d %H:%M:%S"),
            "status":i.status,
            "money":i.change_money,
            'detail':i.detail
@@ -56,16 +56,20 @@ class ChargeApply(Resource):
 class GetClientRecord(Resource):
     @clientauth.login_required
     def get(self):
+        # 已经没有project_id了
         project_id = request.values.get("project_id")
         cashflow_id  = request.values.get("cashflow")
         cf = CashFlow.query.get(cashflow_id)
+        # 绑定客户信息
         cf.related_client = g.client.id
-        db.session.add(cf)
-        db.session.commit()
         if not project_id:
             pro = Project.query.get(cf.project_id)
+            pro.client_id = g.client.id
         else:
             pro = Project.query.get(project_id)
+        db.session.add(cf)
+        db.session.add(pro)
+        db.session.commit()
         data = {"title":pro.title,
         "designer":getdesignername(pro.user_id),
         "feetype":cf.remark,
