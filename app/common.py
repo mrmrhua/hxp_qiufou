@@ -230,10 +230,11 @@ auth = HTTPTokenAuth(scheme='Token')
 @auth.verify_token
 def verify_token(token):
     # todo
-    if  token=='robin':
-        user = User.query.filter_by(id=32).first()
-        g.user = user
-        return True
+    if current_app.debug:
+        if  token=='robin':
+            user = User.query.filter_by(id=32).first()
+            g.user = user
+            return True
     # admin帐户
     # if token == ADMIN_KEY:
     #     return True
@@ -248,8 +249,9 @@ clientauth = HTTPTokenAuth(scheme='Token')
 @clientauth.verify_token
 def verify_token(token):
     client = Client.verify_auth_token(token)
-    if token=='robin':
-        client =Client.query.get(1)
+    if current_app.debug:
+        if token=='robin':
+            client =Client.query.get(1)
     if not client:
         return False
     g.client = client
