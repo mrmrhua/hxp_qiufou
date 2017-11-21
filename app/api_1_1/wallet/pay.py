@@ -10,25 +10,25 @@ from decimal import Decimal
 import pingpp
 
 # HTTP
-# https://m.houxiaopang.com/api/v1.1/wxfwh/payrecord
+# https://www.houxiaopang.com/api/v1.1/wxfwh/payrecord
 # Get
 # 支付记录
 class PayRecord(Resource):
     @clientauth.login_required
     def get(self):
         project_id = request.values.get("project_id")
-        cfs = CashFlow.query.filter_by(related_client = g.client.id,project_id=project_id).order_by(CashFlow.up_time.desc()).all()
+        cfs = CashFlow.query.filter_by(related_client = g.client.id,project_id=project_id).order_by(CashFlow.when.desc()).all()
         cashflow = [ {"remark":i.remark,
-           "up_time":i.up_time.strf.strftime("%Y-%m-%d %H:%M:%S"),
+           "up_time":i.when.strftime("%Y-%m-%d %H:%M:%S"),
            "status":i.status,
-           "money":i.change_money,
+           "change_money":decimal_default(i.change_money),
            'detail':i.detail
            }  for i in cfs]
         return jsonify({"code":0,"data":{"cashflow":cashflow}})
 
 
 # HTTP
-# https://m.houxiaopang.com/api/v1.1/chargeapply
+# https://www.houxiaopang.com/api/v1.1/chargeapply
 # POST
 # 设计师发起收款
 
@@ -48,7 +48,7 @@ class ChargeApply(Resource):
 
 
 # HTTP
-# https://m.houxiaopang.com/api/v1.1/wxfwh/payinfo
+# https://www.houxiaopang.com/api/v1.1/wxfwh/payinfo
 # GET
 # 获取支付账单
 
@@ -56,16 +56,20 @@ class ChargeApply(Resource):
 class GetClientRecord(Resource):
     @clientauth.login_required
     def get(self):
+        # 已经没有project_id了
         project_id = request.values.get("project_id")
         cashflow_id  = request.values.get("cashflow")
         cf = CashFlow.query.get(cashflow_id)
+        # 绑定客户信息
         cf.related_client = g.client.id
-        db.session.add(cf)
-        db.session.commit()
         if not project_id:
             pro = Project.query.get(cf.project_id)
+            pro.client_id = g.client.id
         else:
             pro = Project.query.get(project_id)
+        db.session.add(cf)
+        db.session.add(pro)
+        db.session.commit()
         data = {"title":pro.title,
         "designer":getdesignername(pro.user_id),
         "feetype":cf.remark,
@@ -240,6 +244,9 @@ class GetPayHooks(Resource):
                 order_no = data.object.id
                 cf = CashFlow.query.filter_by(order_no=order_no).first()
                 cf.detail = '客户已支付'
+                user_id = cf.related_user
+                w = Wallet.query.get(user_id)
+                # w.frozenmoeny += data.
                 db.session.add(cf)
                 db.session.commit()
             return Response(status=200)
