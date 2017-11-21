@@ -21,7 +21,7 @@ class PayRecord(Resource):
         cashflow = [ {"remark":i.remark,
            "up_time":i.when.strftime("%Y-%m-%d %H:%M:%S"),
            "status":i.status,
-           "money":i.change_money,
+           "change_money":decimal_default(i.change_money),
            'detail':i.detail
            }  for i in cfs]
         return jsonify({"code":0,"data":{"cashflow":cashflow}})

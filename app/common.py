@@ -251,7 +251,7 @@ def verify_token(token):
     client = Client.verify_auth_token(token)
     if current_app.debug:
         if token=='robin':
-            client =Client.query.get(1)
+            client =Client.query.get(2)
     if not client:
         return False
     g.client = client
