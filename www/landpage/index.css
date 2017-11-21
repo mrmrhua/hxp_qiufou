@@ -72,6 +72,17 @@ hr{
     font-size:20px;
     line-height:50px;
     text-align: center;
+	cursor:pointer;
+}
+.content-btn a{
+	text-decoration:none;
+	color:#ffffff;
+}
+.content-btn:hover{
+	background:#fff;
+}
+.content-btn:hover a{
+	color:#E3365B;
 }
 
 #main{
@@ -348,6 +359,16 @@ hr{
     color: #FFFFFF;
     line-height:50px;
     cursor: pointer;
+}
+.footer-btn a{
+	text-decoration:none;
+}
+.footer-btn:hover{
+	background:#fff;
+
+}
+.footer-btn:hover p{
+	color:#E3365B;
 }
 
 @font-face {
