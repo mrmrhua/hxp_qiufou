@@ -203,3 +203,6 @@ api_v1_1.add_resource(AdminChargeApply,'/adminsystem/adminchargeapply')
 
 # 发起PING++支付请求，唤起支付宝APP
 api_v1_1.add_resource(GetAlipayCharge,'/getalipaycharge')
+# ping++ 支付成功的回调
+# http://www.houxiaopang.com/api/v1.1/pingxx/webhooks
+api——.add_resource
