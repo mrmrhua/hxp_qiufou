@@ -240,6 +240,9 @@ class GetPayHooks(Resource):
                 order_no = data.object.id
                 cf = CashFlow.query.filter_by(order_no=order_no).first()
                 cf.detail = '客户已支付'
+                user_id = cf.related_user
+                w = Wallet.query.get(user_id)
+                # w.frozenmoeny += data.
                 db.session.add(cf)
                 db.session.commit()
             return Response(status=200)
