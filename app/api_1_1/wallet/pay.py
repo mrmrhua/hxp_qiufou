@@ -52,13 +52,20 @@ class ChargeApply(Resource):
 # GET
 # 获取支付账单
 
+# 这个页面经纪人不能进，会存客户数据
 class GetClientRecord(Resource):
     @clientauth.login_required
     def get(self):
         project_id = request.values.get("project_id")
         cashflow_id  = request.values.get("cashflow")
-        pro = Project.query.get(project_id)
         cf = CashFlow.query.get(cashflow_id)
+        cf.related_client = g.client.id
+        db.session.add(cf)
+        db.session.commit()
+        if not project_id:
+            pro = Project.query.get(cf.project_id)
+        else:
+            pro = Project.query.get(project_id)
         data = {"title":pro.title,
         "designer":getdesignername(pro.user_id),
         "feetype":cf.remark,
@@ -81,9 +88,11 @@ class GetClientRecord(Resource):
 class GetAlipayCharge(Resource):
     @clientauth.login_required
     def post(self):
-        client_id = g.client.id
-        dt = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
-        order_no = dt+str(100000+int(client_id))
+        cashflow_id = request.values.get("cashflow_id")
+        # client_id = g.client.id
+        # dt = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+        # order_no = dt+str(100000+int(cashflow_id))
+        order_no = CashFlow.query.get(cashflow_id).order_no
         money = float(request.values.get("money"))
         # 单位：分
         amount = int(money * 100)
@@ -227,7 +236,12 @@ class GetPayHooks(Resource):
         try:
             type = request.json.get("type")
             if type== "order.succeeded":
-                pass
+                data = request.json.get("data")
+                order_no = data.object.id
+                cf = CashFlow.query.filter_by(order_no=order_no).first()
+                cf.detail = '客户已支付'
+                db.session.add(cf)
+                db.session.commit()
             return Response(status=200)
         except:
             return Response(status=500)
