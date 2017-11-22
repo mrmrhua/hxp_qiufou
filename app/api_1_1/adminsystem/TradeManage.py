@@ -6,6 +6,7 @@ from config import ADMIN_TEL,ADMIN_EMAIL
 from app.common import send_admin_email,single_send,adminauth,decimal_default
 import datetime
 from sqlalchemy import or_
+from decimal import Decimal
 # 查看所有资金流动
 class GetAllCashFlow(Resource):
     @adminauth.login_required
@@ -72,7 +73,7 @@ class PayToDesigner(Resource):
     @adminauth.login_required
     def post(self):
         user_id = request.values.get("user_id")
-        money = float(request.values.get("money"))
+        money = Decimal(request.values.get("money"))
         remark = request.values.get("remark")
         when = datetime.datetime.now()
         from_who = '平台'
@@ -82,9 +83,13 @@ class PayToDesigner(Resource):
         u =User.query.filter_by(id=user_id).first()
         if not u:
             return -1
+        if u.wallet.frozen_money < money:
+            return jsonify({"code":-1,"msg":'托管资金不足'})
         after_money =u.wallet.money+money
-        db.session.add(u.wallet)
         cf = CashFlow(change_money=money,after_money=after_money,remark=remark,when=when,from_who=from_who,to_who=to_who,related_user=related_user,status=status)
+        u.wallet.frozen_money -= money
+        u.wallet.money += money
+        db.session.add(u.wallet)
         db.session.add(cf)
         db.session.commit()
         return jsonify({"code": 0})

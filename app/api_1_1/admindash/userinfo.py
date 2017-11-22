@@ -24,6 +24,7 @@ class Userinfo(Resource):
                     'city':info.city,
                     'tel':info.tel,
                     'email':info.email,
+                    'recom_code':info.recom_code
                 },
                 'worksetting':{
                     'worktime':info.worktime,
