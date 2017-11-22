@@ -34,8 +34,11 @@ class WxTest(Resource):
             if hashcode == signature:
                 return  Response(echostr, mimetype='text')
             else:
+                print(hashcode)
+                print(signature)
                 return -1
-        except Exception:
+        except Exception as e:
+            print(e)
             return -1
     def post(self):
 
