@@ -55,7 +55,7 @@ class ProjectPage(Resource):
     @auth.login_required
     def get(self):
         project_id = request.values.get("project_id")
-        pro = Project.query.filter_by(id=project_id,user_id=g.user.id).first()
+        pro = Project.query.filter_by(id=project_id,user_id=g.user.id).order_by(Project.up_time.desc()).first()
         posts = pro.posts
         postlist =  [ {"up_time":i.up_time.strftime("%Y-%m-%d %H:%M:%S"),
                        "imglist":[ n.work_url for n in i.works ],
@@ -93,6 +93,30 @@ class ProjectPage(Resource):
             p.works.append(d)
         db.session.commit()
         return jsonify({'code': 0})
+
+
+        # https://m.houxiaopang.com/api/v1.1/wxfwh/client/projectpage
+        # GET
+        # 项目进度
+class ClientProjectPage(Resource):
+    @clientauth.login_required
+    def get(self):
+        project_id = request.values.get("project_id")
+        pro = Project.query.filter_by(id=project_id, client_id=g.client.id).order_by(Project.up_time.desc()).first()
+        posts = pro.posts
+        postlist = [{"up_time": i.up_time.strftime("%Y-%m-%d %H:%M:%S"),
+                     "imglist": [n.work_url for n in i.works],
+                     "post_id": i.id,
+                     "desc": i.desc
+                     } for i in posts]
+
+        data = {"title": pro.title,
+                "client": getclientname(pro.client_id),
+                "designer": getdesignername(pro.user_id),
+                "postlist": postlist,
+                'starttime': pro.starttime.strftime("%Y-%m-%d %H:%M:%S"),
+                'demand_id': pro.demand_id}
+        return jsonify({"code": 0, "data": data})
 
 
 
