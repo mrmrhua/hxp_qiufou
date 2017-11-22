@@ -53,9 +53,13 @@
     var ajax = new XMLHttpRequest();
     ajax.onreadystatechange = function () {
       if (ajax.readyState === 4 && ajax.status === 200) {
-        options.success(eval("(" + ajax.responseText + ")"));
+		if(options.success){
+			options.success(eval("(" + ajax.responseText + ")"));
+		}        
       } else if (ajax.readyState === 4 && ajax.status !== 200) {
-        options.error(ajax);
+		if(options.error){
+			options.error(ajax);
+		}        
       }
     };
     if (options.timeout && typeof(options.timeout) === "number") {
