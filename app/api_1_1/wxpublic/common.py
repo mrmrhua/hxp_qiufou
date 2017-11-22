@@ -1,6 +1,6 @@
 import json
 import urllib
-
+import requests
 import redis
 # 获取access_token
 from flask import jsonify, request, current_app, make_response
@@ -36,6 +36,15 @@ def wxpublic_get_access_token(code):
     return {'access_token': access_token, 'openid': openid}
 
 
+def wxpublic_get_jsapi_ticket(access_token):
+    url = 'https://api.weixin.qq.com/cgi-bin/ticket/getticket'
+    data = {"access_token":access_token,"type":'jsapi'}
+    r= requests.get(url,data)
+    d = json.loads(r.text)
+    return d.get("ticket")
+
+
+
 class Conn_db():
     def __init__(self):
         # 创建对本机数据库的连接对象
@@ -45,6 +54,8 @@ class Conn_db():
     def get(self, key_):
         # 从数据库根据键（key）获取值
         value_ = self.conn.get(key_)
+        if not value_:
+            return None
         return value_.decode()
 
 

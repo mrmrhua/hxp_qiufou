@@ -5,8 +5,9 @@ from app.models import *
 from app.common import adminauth
 import requests
 import urllib
-from .common import wx_get_common_access_token
-
+from .common import wx_get_common_access_token,wxpublic_get_jsapi_ticket
+from app.common import Conn_db
+import hashlib
 class WX_Userinfo(Resource):
     def get(self):
         uid= request.values.get("uid")
@@ -86,3 +87,35 @@ class GetCity(Resource):
         citys = City.query.filter_by(province_id=provice_id).all()
         city_names = [ i.name for i in citys]
         return jsonify({"code":0,'data':{"citys":city_names}})
+
+
+def GetTicket(noncestr,timestamp,url):
+    conn = Conn_db()
+    ticket = conn.get("jsapi_ticket")
+    if not ticket: #expired
+        token = 'eCos4KDKU8eisorJaRtqnHofCWnivQFK1N07IeQqzD7Tj6IvnqTDZBUzwAU0okN7EMtdSpy630yTlVM-VwvAtg4GHfWsS7lpzyS3cbaf5yEWvrZSqxDTHE_oSUbffi_lGOEcAIALTJ'
+        # token = wx_get_common_access_token
+        ticket = wxpublic_get_jsapi_ticket(token)
+        conn.set("jsapi_ticket",ticket,6900)
+    s = 'jsapi_ticket='+ ticket + '&noncestr='+ noncestr+'&timestamp='+timestamp+'&url='+url
+    # print(s)
+    # r = hashlib.sha1(s).hexdigest()
+    h = hashlib.sha1()
+    h.update(s.encode('utf-8'))
+    r = h.hexdigest()
+    return r
+
+
+class GetJsTicket(Resource):
+    def get(self):
+        noncestr=request.values.get("nonceStr")
+        timestamp = request.values.get("timestamp")
+        url=request.values.get("url")
+        r= GetTicket(noncestr,timestamp,url)
+        # # token = wx_get_common_access_token
+        # token = 'eCos4KDKU8eisorJaRtqnHofCWnivQFK1N07IeQqzD7Tj6IvnqTDZBUzwAU0okN7EMtdSpy630yTlVM-VwvAtg4GHfWsS7lpzyS3cbaf5yEWvrZSqxDTHE_oSUbffi_lGOEcAIALTJ'
+        # r = wxpublic_get_jsapi_ticket(token)
+        # obj = json.loads(r.text)
+        # ticket = obj.get("ticket")
+        return r
+
