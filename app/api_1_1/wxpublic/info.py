@@ -92,17 +92,17 @@ class GetCity(Resource):
 def GetTicket(noncestr,timestamp,url):
     conn = Conn_db()
     ticket = conn.get("jsapi_ticket")
-    if not ticket: #expired
-        token = 'eCos4KDKU8eisorJaRtqnHofCWnivQFK1N07IeQqzD7Tj6IvnqTDZBUzwAU0okN7EMtdSpy630yTlVM-VwvAtg4GHfWsS7lpzyS3cbaf5yEWvrZSqxDTHE_oSUbffi_lGOEcAIALTJ'
-        # token = wx_get_common_access_token
+    if not ticket or ticket=="None": #expired
+        token = 'Eya7gE1GGE9aCWdWwnX_LjUTTnh0fUoQaQJuZK5JbSUupTpvm6z6uPdSGkpKfT7BVTacWbWXoZM2SEjq8RRUy3LzHRG688bJIBduDIlTTmiYn4I1_WGQ5CLoGWpoTX9jTKCfAFABSK'    # token = wx_get_common_access_token
         ticket = wxpublic_get_jsapi_ticket(token)
         conn.set("jsapi_ticket",ticket,6900)
     s = 'jsapi_ticket='+ ticket + '&noncestr='+ noncestr+'&timestamp='+timestamp+'&url='+url
-    # print(s)
+    print(s)
     # r = hashlib.sha1(s).hexdigest()
     h = hashlib.sha1()
     h.update(s.encode('utf-8'))
     r = h.hexdigest()
+    print(r)
     return r
 
 
