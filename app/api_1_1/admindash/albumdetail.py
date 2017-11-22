@@ -46,7 +46,12 @@ class GetAlbumDetail(Resource):
             'works': worklist,
             'belong_id':al.user_id,
             'belong_head':al.designer.headimg,
-            'belong_nick':al.designer.nickname
+            'belong_nick':al.designer.nickname,
+            'price':al.price,
+            'not_business':al.not_business,
+            'not_anonymous':al.not_anonymous,
+            'not_single':al.not_single,
+            'not_saved':al.not_saved
         }})
 
 

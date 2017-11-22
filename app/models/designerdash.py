@@ -33,10 +33,13 @@ class DesignerInfo(db.Model):
     # 开票情况
     ticket = db.Column(db.Integer, nullable=True)
     ticket_num = db.Column(db.Integer, nullable=True)
-
+    # 推荐码
+    recom_code = db.Column(db.String(4))
     @staticmethod
     def from_apply(af):
-        return DesignerInfo(user_id = af.user.id,tel=af.tel, city=af.city, email=af.email, qq=af.qq, wx=af.wx, school=af.school,
+        # 生成四位推荐码（设定为1000+ID）
+        recom_code = str(1000+ af.user.id)
+        return DesignerInfo(recom_code=recom_code,user_id = af.user.id,tel=af.tel, city=af.city, email=af.email, qq=af.qq, wx=af.wx, school=af.school,
                      startyear=af.graduate, project_text=af.project_text, blog_url=af.blog_url,
                      identity=af.identity, worktime=af.worktime,company_name=af.company_name,company_web=af.company_web,company_size=af.company_size,privacy=0)
 
@@ -142,6 +145,12 @@ class Album(db.Model):
     designworks = db.relationship('Designwork',order_by="Designwork.position",collection_class=ordering_list('position'),backref='album',cascade='save-update,delete,delete-orphan',lazy='dynamic')
     user_id = db.Column(INTEGER(unsigned=True), db.ForeignKey('users.id'))
     privacy = db.Column(db.Integer)
+    price =db.Column(db.String(20))
+    not_business = db.Column(db.Boolean)
+    not_anonymous = db.Column(db.Boolean)
+    not_single = db.Column(db.Boolean)
+    not_saved = db.Column(db.Boolean)
+
 
     def __repr__(self):
         return '<Album: %r at %r>' % (self.title,self.up_time)
@@ -155,12 +164,19 @@ class Album(db.Model):
         cover = request.values.get("cover")
         description= request.values.get("description")
         category = request.values.get("category")
+        price=request.values.get("price")
+        not_business = request.values.get("not_business")
+        not_anonymous=request.values.get("not_anonymous")
+        not_single = request.values.get("not_single")
+        not_saved = request.values.get("not_saved")
         up_time = datetime.now()
         privacy = 1
         if g.user:
             privacy = g.user.info.privacy
 
-        return Album(title=title,cover=cover,description=description,category=category,up_time=up_time,user_id=g.user.id,privacy = privacy)
+        return Album(price=price,not_business=not_business,not_anonymous=not_anonymous, \
+                     not_single=not_single,not_saved=not_saved,title=title,cover=cover,description=description,\
+                     category=category,up_time=up_time,user_id=g.user.id,privacy = privacy)
 
     def update_from_request(self,request):
         self.title = request.values.get("title")
@@ -168,6 +184,11 @@ class Album(db.Model):
         self.description = request.values.get("description")
         self.category = request.values.get("category")
         self.up_time = datetime.now()
+        self.price= request.values.get("price")
+        self.not_business=request.values.get("not_business")
+        self.not_anonymous=request.values.get("not_anonymous")
+        self.not_single=request.values.get("not_single")
+        self.not_saved=request.values.get("not_saved")
 
 
 # TAG 系统-多对多

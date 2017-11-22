@@ -117,7 +117,22 @@ class CreateProject(Resource):
         designer = request.values.get("designer")
         st = datetime.datetime.now()
         title = getdemandtitle(demand_id)
-        pro = Project(demand_id=demand_id,user_id=designer,cat_id=demand.category,starttime=st,title=title,status=0)
+        pro = Project(status=0,demand_id=demand_id,user_id=designer,cat_id=demand.category,starttime=st,title=title)
         db.session.add(pro)
         db.session.commit()
         return jsonify({'code':0,'data':{"project_id":pro.id}})
+
+
+  # http: // houxiaopang.com / api / v1.1 /adminsystem/changeprojectstatus
+    # POST
+    # 经纪人关闭项目
+class EndProject(Resource):
+    @adminauth.login_required
+    def post(self):
+        pro_id = request.values.get("project_id")
+        status = request.values.get("status")
+        pro = Project.query.get(pro_id)
+        pro.status =status
+        db.session.add(pro)
+        db.session.commit()
+        return jsonify({'code':0})
