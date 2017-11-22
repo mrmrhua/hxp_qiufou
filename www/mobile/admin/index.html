@@ -53,13 +53,11 @@
     var ajax = new XMLHttpRequest();
     ajax.onreadystatechange = function () {
       if (ajax.readyState === 4 && ajax.status === 200) {
-		if(options.success){
-			options.success(eval("(" + ajax.responseText + ")"));
-		}        
+        options.success(eval("(" + ajax.responseText + ")"));
       } else if (ajax.readyState === 4 && ajax.status !== 200) {
-		if(options.error){
-			options.error(ajax);
-		}        
+        if (options.error) {
+          options.error(ajax);
+        }
       }
     };
     if (options.timeout && typeof(options.timeout) === "number") {
@@ -80,4 +78,4 @@
       ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=utf-8")
       ajax.send(options.data);
     }
-  }</script><script type=text/javascript src=./static/js/manifest.32c672c3c8c57fcefecd.js></script><script type=text/javascript src=./static/js/vendor.c54c31dc7eeb9a4a537e.js></script><script type=text/javascript src=./static/js/app.c774b5b88d69c0c2224f.js></script></body></html>
+  }</script><script type=text/javascript src=./static/js/manifest.4a4cc950e8ca99c4fdb6.js></script><script type=text/javascript src=./static/js/vendor.c54c31dc7eeb9a4a537e.js></script><script type=text/javascript src=./static/js/app.7d9977a5b5ffc532d11d.js></script></body></html>
