@@ -1,7 +1,7 @@
 from  flask import jsonify,request
 from flask_restful import Resource
 from app.models import Album
-
+from random import shuffle
 
 class GetAllWork(Resource):
     def get(self):
@@ -66,5 +66,5 @@ class GetAllWork(Resource):
             'desc':i.description
             }
             album.append(each_album)
-
+        shuffle(album)
         return jsonify({'code':0,'data':{'album':album,'total':count}})
