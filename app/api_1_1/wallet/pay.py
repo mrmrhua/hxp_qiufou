@@ -103,6 +103,7 @@ class GetAlipayCharge(Resource):
         # alipay_pc_direct  // alipay
         channel = request.values.get("channel")
         ip = request.remote_addr
+        # ip='183.156.126.238'
         subject = request.values.get("subject")
         body = request.values.get("body")
         try:
@@ -131,6 +132,7 @@ class GetAlipayCharge(Resource):
                     app_pay=True,
                 )
             )
+            print(charge)
             return jsonify({"code": 0,"data":{"charge":charge}})
         except Exception as e:
             return jsonify({"code": -1})
@@ -240,7 +242,7 @@ class GetPayHooks(Resource):
         try:
             type = request.json.get("type")
             print(request.json)
-
+            # if type=='charge.succeeded':
             #     order_no = data.object.id
             #     cf = CashFlow.query.filter_by(order_no=order_no).first()
             #     cf.detail = '客户已支付'
