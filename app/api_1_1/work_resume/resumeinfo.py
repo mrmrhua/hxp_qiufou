@@ -22,7 +22,7 @@ class GetResumeInfo(Resource):
 
         if user.usertype==0:
             de_name = user.nickname
-            de_worktime = di.worktime
+            de_worktime = di.worktime or []
         else:
             de_name= di.company_name
             de_worktime = ''
