@@ -1,11 +1,11 @@
 from  flask import jsonify,request,g,session,Response
 from flask_restful import Resource
 from app.models import *
-from app.common import auth,single_send,clientauth,getdesignername,decimal_default
+from app.common import auth,single_send,clientauth,getdesignername,decimal_default,send_admin_email
 import random
 import time
 import datetime
-from config import ADMIN_TEL,live_key,test_key,pingxx_app_id
+from config import ADMIN_TEL,live_key,test_key,pingxx_app_id,ADMIN_EMAIL
 from decimal import Decimal
 import pingpp
 
@@ -236,21 +236,24 @@ class GetAlipayCharge(Resource):
 
 # 支付成功后后台收到webhooks
 # 更改状态为已支付，并通知管理员
-# todo
 class GetPayHooks(Resource):
     def post(self):
         try:
             type = request.json.get("type")
             print(request.json)
-            # if type=='charge.succeeded':
-            #     order_no = data.object.id
-            #     cf = CashFlow.query.filter_by(order_no=order_no).first()
-            #     cf.detail = '客户已支付'
-            #     user_id = cf.related_user
-            #     w = Wallet.query.get(user_id)
-            #     # w.frozenmoeny += data.
-            #     db.session.add(cf)
-            #     db.session.commit()
+            if type=='charge.succeeded':
+                obj = request.json.get("data").get("object")
+                order_no= obj.get("order_no")
+                amount = obj.get("amount")
+                cf = CashFlow.query.filter_by(order_no=order_no).first()
+                cf.detail = '客户已支付'
+                user_id = cf.related_user
+                w = Wallet.query.get(user_id)
+                w.frozenmoeny += amount
+                db.session.add(cf)
+                db.session.add(w)
+                db.session.commit()
+                send_admin_email(ADMIN_EMAIL,'一笔订单支付成功',json.dumps(request.json))
             return Response(status=200)
         except:
             return Response(status=500)
