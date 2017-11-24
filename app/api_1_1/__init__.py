@@ -180,9 +180,11 @@ api_v1_1.add_resource(ShowUserInfo,'/adminsystem/showuserinfo')
 # 经纪人绑定设计师／需求
 
 api_v1_1.add_resource(CreateProject,'/adminsystem/createproject')
-# 关闭项目
+# 经纪人关闭项目
 api_v1_1.add_resource(EndProject,'/adminsystem/changeprojectstatus')
 
+# 经纪人查看所有项目
+api_v1_1.add_resource(SeeAllProjects,'/adminsystem/seeallprojects')
 # 获取项目列表
 api_v1_1.add_resource(Cli_ProjectList,'/wxfwh/projectlist')
 api_v1_1.add_resource(De_ProjectList,'/designer/projectlist')
