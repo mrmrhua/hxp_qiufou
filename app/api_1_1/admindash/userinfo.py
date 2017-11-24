@@ -24,9 +24,10 @@ class Userinfo(Resource):
                     'city':info.city,
                     'tel':info.tel,
                     'email':info.email,
+                    'recom_code':info.recom_code
                 },
                 'worksetting':{
-                    'worktime':info.worktime,
+                    'worktime':info.worktime or [],
                     'category':u.get_categories_str(),
                     'tag':u.get_tags_str(),
                     'exp':u.get_exps_str(),

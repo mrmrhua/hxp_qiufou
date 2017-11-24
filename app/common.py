@@ -16,6 +16,30 @@ import uuid
 import redis
 from decimal import Decimal
 
+
+
+class Conn_db():
+    def __init__(self):
+        # 创建对本机数据库的连接对象
+        self.conn = redis.StrictRedis(host='127.0.0.1', port=6379, db=0)
+
+    # 读取
+    def get(self, key_):
+        # 从数据库根据键（key）获取值
+        value_ = self.conn.get(key_)
+        if not value_:
+            return None
+        else:
+            return value_.decode()
+
+    # 存储
+    def set(self, key_, value_,ex_):
+        # 将数据存储到数据库
+        self.conn.set(key_, value_,ex=ex_)
+
+
+
+
 def get_access_token(code):
     url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxbfacdb1b99885182&secret=c4f876b16ddc8d8e4259b9c2388e5493&code='\
               + code + '&grant_type=authorization_code'
@@ -251,7 +275,7 @@ def verify_token(token):
     client = Client.verify_auth_token(token)
     if current_app.debug:
         if token=='robin':
-            client =Client.query.get(1)
+            client =Client.query.get(2)
     if not client:
         return False
     g.client = client
@@ -303,7 +327,7 @@ def getdesignername(id):
 
 
 def decimal_default(obj):
-    if not obj:
+    if (not obj) and (obj != 0):
         return None
     if isinstance(obj, Decimal):
         return float(obj)

@@ -1,34 +1,34 @@
 from  flask import jsonify,request,g,session,Response
 from flask_restful import Resource
 from app.models import *
-from app.common import auth,single_send,clientauth,getdesignername,decimal_default
+from app.common import auth,single_send,clientauth,getdesignername,decimal_default,send_admin_email
 import random
 import time
 import datetime
-from config import ADMIN_TEL,live_key,test_key,pingxx_app_id
+from config import ADMIN_TEL,live_key,test_key,pingxx_app_id,ADMIN_EMAIL
 from decimal import Decimal
 import pingpp
 
 # HTTP
-# https://m.houxiaopang.com/api/v1.1/wxfwh/payrecord
+# https://www.houxiaopang.com/api/v1.1/wxfwh/payrecord
 # Get
 # 支付记录
 class PayRecord(Resource):
     @clientauth.login_required
     def get(self):
         project_id = request.values.get("project_id")
-        cfs = CashFlow.query.filter_by(related_client = g.client.id,project_id=project_id).order_by(CashFlow.up_time.desc()).all()
+        cfs = CashFlow.query.filter_by(related_client = g.client.id,project_id=project_id).order_by(CashFlow.when.desc()).all()
         cashflow = [ {"remark":i.remark,
-           "up_time":i.up_time.strf.strftime("%Y-%m-%d %H:%M:%S"),
+           "up_time":i.when.strftime("%Y-%m-%d %H:%M:%S"),
            "status":i.status,
-           "money":i.change_money,
+           "change_money":decimal_default(i.change_money),
            'detail':i.detail
            }  for i in cfs]
         return jsonify({"code":0,"data":{"cashflow":cashflow}})
 
 
 # HTTP
-# https://m.houxiaopang.com/api/v1.1/chargeapply
+# https://www.houxiaopang.com/api/v1.1/chargeapply
 # POST
 # 设计师发起收款
 
@@ -48,7 +48,7 @@ class ChargeApply(Resource):
 
 
 # HTTP
-# https://m.houxiaopang.com/api/v1.1/wxfwh/payinfo
+# https://www.houxiaopang.com/api/v1.1/wxfwh/payinfo
 # GET
 # 获取支付账单
 
@@ -56,16 +56,20 @@ class ChargeApply(Resource):
 class GetClientRecord(Resource):
     @clientauth.login_required
     def get(self):
+        # 已经没有project_id了
         project_id = request.values.get("project_id")
         cashflow_id  = request.values.get("cashflow")
         cf = CashFlow.query.get(cashflow_id)
+        # 绑定客户信息
         cf.related_client = g.client.id
-        db.session.add(cf)
-        db.session.commit()
         if not project_id:
             pro = Project.query.get(cf.project_id)
+            pro.client_id = g.client.id
         else:
             pro = Project.query.get(project_id)
+        db.session.add(cf)
+        db.session.add(pro)
+        db.session.commit()
         data = {"title":pro.title,
         "designer":getdesignername(pro.user_id),
         "feetype":cf.remark,
@@ -99,6 +103,7 @@ class GetAlipayCharge(Resource):
         # alipay_pc_direct  // alipay
         channel = request.values.get("channel")
         ip = request.remote_addr
+        # ip='183.156.126.238'
         subject = request.values.get("subject")
         body = request.values.get("body")
         try:
@@ -127,6 +132,7 @@ class GetAlipayCharge(Resource):
                     app_pay=True,
                 )
             )
+            print(charge)
             return jsonify({"code": 0,"data":{"charge":charge}})
         except Exception as e:
             return jsonify({"code": -1})
@@ -230,18 +236,24 @@ class GetAlipayCharge(Resource):
 
 # 支付成功后后台收到webhooks
 # 更改状态为已支付，并通知管理员
-# todo
 class GetPayHooks(Resource):
     def post(self):
         try:
             type = request.json.get("type")
-            if type== "order.succeeded":
-                data = request.json.get("data")
-                order_no = data.object.id
+            print(request.json)
+            if type=='charge.succeeded':
+                obj = request.json.get("data").get("object")
+                order_no= obj.get("order_no")
+                amount = obj.get("amount")
                 cf = CashFlow.query.filter_by(order_no=order_no).first()
                 cf.detail = '客户已支付'
+                user_id = cf.related_user
+                w = Wallet.query.get(user_id)
+                w.frozenmoeny += amount
                 db.session.add(cf)
+                db.session.add(w)
                 db.session.commit()
+                send_admin_email(ADMIN_EMAIL,'一笔订单支付成功',json.dumps(request.json))
             return Response(status=200)
         except:
             return Response(status=500)

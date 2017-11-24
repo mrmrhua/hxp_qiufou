@@ -57,5 +57,10 @@ class NewAlbum(Resource):
             'description':al.description,
             'category':al.category,
             'cover':al.cover,
-            'worklist':worklist
+            'worklist':worklist,
+            'price': al.price,
+            'not_business': al.not_business,
+            'not_anonymous': al.not_anonymous,
+            'not_single': al.not_single,
+            'not_saved': al.not_saved
         }})

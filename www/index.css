@@ -954,3 +954,104 @@ ul.userInfo > li {
   .msg {
     font-size: 14px;
   }
+  
+  footer {
+        height: 220px;
+        display: block;
+        padding: 40px 0;
+        box-sizing: border-box;
+        color: #727272;
+    }
+
+    footer > .con {
+        width: 1100px;
+        margin: 0 auto;
+        height: 100%;
+    }
+
+    footer .logo {
+        background: url('http://image.houxiaopang.com/demand/logodown.png') no-repeat;
+        background-size: cover;
+        width: 173px;
+        height: 54px;
+        text-align: right;
+        float: left;
+        cursor: pointer;
+    }
+
+    footer .con > .left {
+        height: 100%;
+        float: left;
+        width: 300px;
+    }
+
+    footer .con > .center {
+        height: 100%;
+        float: left;
+        width: 300px;
+    }
+
+    footer .con > .center > li {
+        float: left;
+        padding-left: 50px;
+        width: 150px;
+        box-sizing: border-box;
+        height: 30px;
+        line-height: 30px;
+
+    }
+
+    footer .con > .center > li > a {
+        text-decoration: none;
+        color: #313131;
+    }
+
+    footer .con > .center > li > a:hover {
+        color: #d01667;
+    }
+
+    footer .con > .right {
+        width: 400px;
+        float: left;
+        height: 100%;
+    }
+
+    footer li, footer a {
+        text-decoration: none;
+        list-style: none;
+        color: #313131;
+    }
+
+    footer .right > p {
+        text-align: center;
+        height: 30px;
+        line-height: 30px;
+    }
+
+    footer .footer-links, footer .products-links {
+        clear: both;
+        border-top: 1px solid rgba(101, 105, 115, 0.3)
+    }
+
+    footer .footer-links ul, footer .products-links ul {
+        *zoom: 1
+    }
+
+    footer .footer-links ul:before, footer .products-links ul:before, footer .footer-links ul:after, footer .products-links ul:after {
+        display: table;
+        content: ""
+    }
+
+    footer .footer-links ul:after, footer .products-links ul:after {
+        clear: both
+    }
+
+    footer .footer-links li, footer .products-links li {
+        float: left;
+        margin: 0 39px 0 0;
+        font-size: 14px
+    }
+
+    footer .footer-links li a, footer .products-links li a {
+        color: #a6a7aa
+    }

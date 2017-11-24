@@ -29,7 +29,7 @@ target_metadata = current_app.extensions['migrate'].db.metadata
 
 
 def include_object(object, name, type_, reflected, compare_to):
-    if type_ == 'table' and name in ('tb_user','tb_bargain','tb_demand','vw_bargain'):
+    if type_ == 'table' and ( name.startswith('tb_') or name.startswith('vw_')):
         return False
 
     return True
