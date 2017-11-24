@@ -32,7 +32,7 @@ api_v1_1.add_resource(GetApplyStatus,'/apply/status')
 
 api_v1_1.add_resource(GetDemandCenter,'/demandcenter')
 
-api_v1_1.add_resource(PostApply,'/apply/form')
+# api_v1_1.add_resource(PostApply,'/apply/form')
 api_v1_1.add_resource(NewPostApply,'/apply/form_new')
 
 # api_v1_1.add_resource(CompanyPostApply,'/apply/companyform')

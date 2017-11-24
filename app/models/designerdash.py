@@ -35,6 +35,10 @@ class DesignerInfo(db.Model):
     ticket_num = db.Column(db.Integer, nullable=True)
     # 推荐码
     recom_code = db.Column(db.String(4))
+    # 实名认证状态
+    verify_status = db.Column(db.Boolean)
+
+
     @staticmethod
     def from_apply(af):
         # 生成四位推荐码（设定为1000+ID）
