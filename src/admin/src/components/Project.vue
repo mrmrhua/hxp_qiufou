@@ -39,17 +39,17 @@
     </div>
     <div class="mymodal" v-show="delmodel">
       <div class="conte">
-        <div style="background: #bbb;height: 30px;line-height: 30px;padding: 0 15px;">
-          <span style="color: #fff;">删除提醒</span><span
+        <div style="background: #DEDEDE;height: 30px;line-height: 30px;padding: 0 15px;text-align: center;">
+          <span >删除提醒</span><span
           style="float: right;cursor: pointer"
           @click="delmodel=false"><i class="iconfontyyy">&#xe67c;</i></span>
         </div>
-        <div style="position: relative">
-          <i class="iconfontyyy" style="display: inline-block;font-size: 90px;margin-left: 10px;margin-top: 5px;">&#xe691;</i>
-          <p style="position: absolute;top: 20px;left: 110px;font-size: 18px;">确定删除此图片作品？</p>
-          <div style="height: 30px;line-height: 30px;position: absolute;top: 65px;left: 150px;">
+        <div style="text-align: center;margin: 25px 30px 20px">
+          <i class="iconfontyyy" style="font-size: 43px;color: red">&#xe691;</i>
+          <p style="font-size: 18px;margin:15px 0 ;">确定删除此图片作品？</p>
+          <div style="height: 30px;line-height: 30px;">
             <span
-              style="display: inline-block;background: #d01667;padding: 0 15px;color: #fff;cursor: pointer;"
+              style="display: inline-block;color:#4762FF;padding: 0 15px;cursor: pointer;"
               @click="remove">确定</span>
             <span @click="delmodel=false" style="display: inline-block;padding: 0 15px;cursor: pointer;">取消</span>
           </div>
@@ -357,7 +357,6 @@
 
   .mymodal > .conte {
     width: 350px;
-    height: 140px;
     overflow: hidden;
     background: #FFF;
     border-radius: 5px;
