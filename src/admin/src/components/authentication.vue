@@ -138,7 +138,7 @@
           ajax({
             type: "file",
             timeout: -1,
-            url: 'http://192.168.0.101:9181/api/v1.2/verified/addverified',
+            url: 'http://www.houxiaopang.com/api/v1.2/verified/addverified',
             data: fd,
             token: true,
             success(res) {
@@ -207,8 +207,8 @@
     created(){
       var that = this;
       ajax({
-//        url: "http://www.houxiaopang.com/api/v1.2/verified/getverified",
-        url: "http://192.168.0.101:9181/api/v1.2/verified/getverified",
+        url: "http://www.houxiaopang.com/api/v1.2/verified/getverified",
+//        url: "http://192.168.0.101:9181/api/v1.2/verified/getverified",
         token : true,
         timeout:6000,
         success(res){
