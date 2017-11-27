@@ -1,3 +1,6 @@
+#coding=utf-8
+
+
 import os
 
 #  环境变量APP_CONFIG_FILE为环境的配置文件
