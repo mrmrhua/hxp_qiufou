@@ -113,7 +113,8 @@ class Applyform(db.Model):
         startyear = request.form.get("startyear")
         blog_url = request.form.get('blog_url')
         user_id = g.user.id
-        return Applyform(name=name, tel=tel, city=city, email=email, qq=qq, wx=wx,
+        recom_code = request.form.get('recom_code')
+        return Applyform(recom_code=recom_code,name=name, tel=tel, city=city, email=email, qq=qq, wx=wx,
                          company_name=company_name, company_web=company_web,
                          company_size=company_size, role=role,
                          blog_url=blog_url, user_id=user_id,graduate=startyear)
@@ -131,8 +132,8 @@ class Applyform(db.Model):
         wx = request.form.get('wx')
         blog_url = request.form.get('blog_url')
         user_id = g.user.id
-
-        return Applyform(name=name, tel=tel, city=city, email=email, qq=qq, wx=wx,
+        recom_code = request.form.get('recom_code')
+        return Applyform(recom_code=recom_code,name=name, tel=tel, city=city, email=email, qq=qq, wx=wx,
                          graduate=int(graduate), blog_url=blog_url, user_id=user_id)
     def __repr__(self):
         return '<Applyform %r>' % self.name

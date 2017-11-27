@@ -13,6 +13,8 @@ from flask_login import current_user
 class NewCompanyPostApply(Resource):
     @auth.login_required
     def post(self):
+        if g.user.applystatus == 2:
+            return  jsonify({'code':-1,'msg':"用户已存在"})
         #记录申请
         current_app.logger.info('新收到入驻申请:%s' % request)
         af = Applyform.company_from_request_new(request)

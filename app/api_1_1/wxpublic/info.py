@@ -33,7 +33,7 @@ class WX_Userinfo(Resource):
                     'email':info.email,
                 },
                 'worksetting':{
-                    'worktime':info.worktime,
+                    'worktime':info.worktime or [],
                     'category':u.get_categories_str(),
                     'tag':u.get_tags_str(),
                     'exp':u.get_exps_str(),

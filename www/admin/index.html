@@ -36,8 +36,9 @@
       g.defer = true;
       g.src = u + 'piwik.js';
       s.parentNode.insertBefore(g, s);
-    })();</script><link href=./static/css/app.c6bf236f5ac3309c86a274f71edaf513.css rel=stylesheet></head><body><div style="display: none"><script type=text/javascript>var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    })();</script><link href=./static/css/app.7a4ee9a0f9369a48c3b607aa041c5f1b.css rel=stylesheet></head><body><div style="display: none"><script type=text/javascript>var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
   document.write(unescape("%3Cspan id='cnzz_stat_icon_1261952519'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1261952519' type='text/javascript'%3E%3C/script%3E"));</script></div><div id=app></div><script src=https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js></script><script src=http://image.houxiaopang.com/static/baseform/js/qiniu.js></script><script src=https://cdn.staticfile.org/plupload/2.1.8/plupload.full.min.js></script><script src=./static/js/icheck.min.js></script><script src=./static/js/upwork.js></script><script src=./static/js/cropper.js></script><script src=./static/js/main.js></script><script src=./static/js/jquery.slider.min.js></script><script>var token = window.localStorage.token, login = false;
+  window.localStorage.applystatus= "2";
   //todo 开发模式
   //token = "robin"
   var applystatus = window.localStorage.applystatus;
@@ -87,7 +88,7 @@
     let text = li.innerText.substr(0, li.innerText.length - 1);
     let lis = document.getElementById("label").children;
     for (let i = 0, size = lis.length; i < size; i++) {
-      if (lis[i].innerText === text) {
+      if (lis[i].innerText.trim() === text.trim()) {
         lis[i].className = "choose";
       }
     }
@@ -116,4 +117,60 @@
      i.innerHTML = "&#xe611;";
      msgmore.style.display = "none";
      }*/
-  }</script><script type=text/javascript src=./static/js/manifest.2a297d761d2a3e817d1f.js></script><script type=text/javascript src=./static/js/vendor.f9386ccfd92672177aa0.js></script><script type=text/javascript src=./static/js/app.dc1311b689bdec539a49.js></script></body></html>
+  }
+
+  function ajax(options) {
+    if (!options.type) {
+      options.type = "GET"
+    }
+    if(!options.timeout){
+      options.timeout = 5000;
+    }
+    //todo options.url 临时去掉https 的 s
+//    options.url = options.url.replace("https", "http")
+    if (options.type === "get" || options.type === "GET") {
+      options.url += "?";
+      for (var i in options.data) {
+        options.url += i + "=" + options.data[i] + "&";
+      }
+      options.url = options.url.substring(0, options.url.length - 1);
+    } else if(options.type === "post" || options.type === "POST"){
+      var data = []
+      for (var i in options.data) {
+        data.push(i + "=" + options.data[i])
+      }
+      options.data = data.join("&")
+    }
+    var ajax = new XMLHttpRequest();
+    ajax.onreadystatechange = function () {
+      if (ajax.readyState === 4 && ajax.status === 200) {
+        if (options.success) {
+          options.success(JSON.parse(ajax.responseText));
+        }
+      } else if (ajax.readyState === 4 && ajax.status !== 200) {
+        if (options.error) {
+          options.error(ajax);
+        }
+      }
+    };
+    if (options.timeout !== -1 && typeof(options.timeout) === "number") {
+      setTimeout(function () {
+        if (ajax.readyState !== 4) {
+          ajax.abort();
+        }
+      }, options.timeout)
+    }
+    var opentype = options.type === "file" ? "post" : options.type;
+    ajax.open(opentype, options.url, true);
+    if (options.token) {
+      ajax.setRequestHeader("Authorization", "Token " + token);
+    }
+    if (options.type === "get" || options.type === "GET") {
+      ajax.setRequestHeader("Content-type", "application/json;charset=utf-8")
+      ajax.send();
+    } else if(options.type === "post" || options.type === "POST"){
+      ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=utf-8")
+      ajax.send(options.data);
+    }else{
+      ajax.send(options.data);
+    }}</script><script type=text/javascript src=./static/js/manifest.c5f3b44ddc4e5f97fa12.js></script><script type=text/javascript src=./static/js/vendor.d15baf44f51281df7d8c.js></script><script type=text/javascript src=./static/js/app.10877875d6476509a0c2.js></script></body></html>

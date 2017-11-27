@@ -35,6 +35,10 @@ class DesignerInfo(db.Model):
     ticket_num = db.Column(db.Integer, nullable=True)
     # 推荐码
     recom_code = db.Column(db.String(4))
+    # 实名认证状态
+    verify_status = db.Column(db.Boolean)
+
+
     @staticmethod
     def from_apply(af):
         # 生成四位推荐码（设定为1000+ID）
@@ -132,6 +136,11 @@ class Designwork(db.Model):
     def __repr__(self):
         return '<Designwork of %r>' % (self.work_url)
 
+def StrToBool(str):
+    if str =='true' or str =='True':
+        return True
+    else:
+        return False
 
 class Album(db.Model):
     __tablename__ = 'albums'
@@ -165,10 +174,10 @@ class Album(db.Model):
         description= request.values.get("description")
         category = request.values.get("category")
         price=request.values.get("price")
-        not_business = request.values.get("not_business")
-        not_anonymous=request.values.get("not_anonymous")
-        not_single = request.values.get("not_single")
-        not_saved = request.values.get("not_saved")
+        not_business = StrToBool(request.values.get("not_business"))
+        not_anonymous=StrToBool(request.values.get("not_anonymous"))
+        not_single = StrToBool(request.values.get("not_single"))
+        not_saved = StrToBool(request.values.get("not_saved"))
         up_time = datetime.now()
         privacy = 1
         if g.user:
@@ -185,10 +194,10 @@ class Album(db.Model):
         self.category = request.values.get("category")
         self.up_time = datetime.now()
         self.price= request.values.get("price")
-        self.not_business=request.values.get("not_business")
-        self.not_anonymous=request.values.get("not_anonymous")
-        self.not_single=request.values.get("not_single")
-        self.not_saved=request.values.get("not_saved")
+        self.not_business=StrToBool(request.values.get("not_business"))
+        self.not_anonymous=StrToBool(request.values.get("not_anonymous"))
+        self.not_single=StrToBool(request.values.get("not_single"))
+        self.not_saved=StrToBool(request.values.get("not_saved"))
 
 
 # TAG 系统-多对多

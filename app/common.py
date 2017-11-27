@@ -327,7 +327,7 @@ def getdesignername(id):
 
 
 def decimal_default(obj):
-    if not obj:
+    if (not obj) and (obj != 0):
         return None
     if isinstance(obj, Decimal):
         return float(obj)
