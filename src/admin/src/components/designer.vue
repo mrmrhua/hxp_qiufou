@@ -143,7 +143,7 @@
                                        style="float: right;cursor: pointer;">&#xe67c;</i></div>
             </li>
           </ul>
-          <input style="display: inline-block;margin-left: 200px;width: 60%; height: 42px"  type="text" v-model="customLabel">
+          <input style="display: inline-block;margin-left: 200px;width: 60%; height: 42px"  type="text" v-model="customLabel" @input="labelInput">
           <div class="add_lable_btn" @click="addCustom">添加标签</div>
           <ul id="label" class="label" style="margin-top: 20px;">
             <li class="choose">大客户经验</li>
@@ -197,8 +197,8 @@
           <!--<i class="iconfontyyy" @click=""
              style="float: right;margin-right: 100px;color: #4cb6cb;cursor: pointer;">&#xe600;</i>-->
           <div id="project" style="margin-left: 200px;">
-            <label @click="addproject">标题</label><input style="display: block;" v-model="project.title" type="text">
-            <label>简介</label><textarea v-model="project.desc" rows="4"></textarea>
+            <label @click="addproject">标题</label><input style="display: block;" v-model="project.title" type="text" placeholder="填写您参与过的设计项目">
+            <label>简介</label><textarea v-model="project.desc" rows="4" placeholder="简要介绍项目与您在其中承担的职责"></textarea>
             <div class="btn_image" style="margin-left: 150px;" @click="addproject">添加</div>
             <!--todo 显示-->
             <div class="new_project" v-for="(item,index) in worksetting.exp">
@@ -208,13 +208,35 @@
             </div>
           </div>
         </div>
-        <div class="context">
+        <div class="context" style="overflow: inherit">
+          <div class="doubt" style="z-index: 99999">
+            <i class="iconfontyyy" style="color: #fe6549;font-size: 18px">&#xe6d4;</i>
+            <div class="pop-box" style="width: 260px;top: 40px;left: -20px;">
+              <div class="pop-content">
+                <div class="doubt_content">勾选后您的作品将不会出现在网站作品精选栏目，只有您主动报价客户才能查看您的简历与作品集</div>
+              </div>
+              <div class="pop-triangle">
+                <i></i>
+              </div>
+            </div>
+          </div>
           <label>隐私设置</label>
           <ul style="margin-left: 200px;">
             <li><input type="checkbox" value="1" name="privacy"><span class="checkbox_span">仅允许甲方查看我的资料</span></li>
           </ul>
         </div>
-        <div class="context">
+        <div class="context" style="overflow: inherit">
+          <div class="doubt">
+            <i class="iconfontyyy" style="color: #fe6549;font-size: 18px">&#xe6d4;</i>
+            <div class="pop-box" style="width: 260px;top: 40px;left: -20px;">
+              <div class="pop-content">
+                <div class="doubt_content">如果您能够为客户提供发票，请勾选此处</div>
+              </div>
+              <div class="pop-triangle">
+                <i></i>
+              </div>
+            </div>
+          </div>
           <label>发　　票</label>
           <ul style="margin-left: 200px;">
             <li><input type="checkbox" value="1" name="ticket"><span class="checkbox_span">支持开发票</span></li>
@@ -744,6 +766,8 @@
           errs[7].style.display = "none";
         }
         if (errs[6].style.display === "block" || errs[7].style.display === "block") {
+
+          window.scrollTo(0,0);
           return;
         }
 
@@ -889,6 +913,12 @@
         } else {
           //删除项目经历
           this.worksetting.exp.splice(index, 1);
+        }
+      },
+      labelInput(){//标签字数限制
+        if(this.customLabel.length>20){
+          var textVal = this.customLabel.substring(0,20);
+          this.customLabel = textVal;
         }
       },
       introInput(){//个人简历字数限制
@@ -1084,7 +1114,7 @@
   .context > #categroy > li {
     float: left;
     margin-right: 10px;
-    border: 1px solid #bbb;
+    border: 1px solid #eeeeee;
     padding: 5px 20px;
     margin-bottom: 10px;
     cursor: pointer;
@@ -1097,7 +1127,7 @@
   }
 
   .context > .label > .choose {
-    border: 1px solid #bbb;
+    border: 1px solid #eeeeee;
     cursor: pointer;
   }
 
