@@ -42,6 +42,7 @@ class GetResumeInfo(Resource):
                 'exp':di.startyear,
                 'filed':field,
                 'worktime':de_worktime,
-                'project_text':t
+                'project_text':t,
+                'intro':di.intro
             }
         })

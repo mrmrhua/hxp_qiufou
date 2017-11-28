@@ -33,6 +33,7 @@ class Userinfo(Resource):
                     'exp':u.get_exps_str(),
                     'privacy':info.privacy,
                     'ticket':info.ticket,
+                    'intro':info.intro
                 },
 
             }

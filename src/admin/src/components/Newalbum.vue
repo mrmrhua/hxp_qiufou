@@ -9,9 +9,9 @@
           <input v-model="title" type="text" placeholder="请输入作品名称">
         </div>
         <div class="context">
-          <span class="err" style="left:50px;">*限200字</span>
           <label>简　　介<span style="position: absolute;left: 96px;top: 25px;color: #999;">(选填)</span></label>
-          <textarea v-model="desc" rows="4" placeholder="请输入作品说明（限200字）"></textarea>
+          <textarea id="editor" placeholder="Balabala"  v-model="desc"></textarea>
+          <!--<textarea v-model="desc" rows="4" placeholder="请输入作品说明（限200字）"></textarea>-->
         </div>
         <div class="context">
           <label>所属品类</label>
@@ -159,6 +159,7 @@
 <script>
   import imgthumb from "@/components/Imgthumb"
   import prompt from "@/components/Prompt"
+
   function Pointer(x, y) {
     this.x = x;
     this.y = y;
@@ -184,15 +185,35 @@
         img_index: 0,
         album_id: null,
         imgupload: false,
-
+        editor:null,
         price:null,
         not_business:false,
         not_anonymous:false,
         not_single:false,
-        not_saved:false
+        not_saved:null,
+
+        toolbar: ['bold', 'italic', 'underline', 'strikethrough',
+          'color', '|', 'ol', 'ul',  '|',
+          'link', '|', 'indent', 'outdent'
+        ]//自定义工具栏
       }
     },
     mounted(){
+      this.editor = new Simditor({
+        textarea: $('#editor'),
+        placeholder: '',
+        params: {},
+        upload: false,
+        tabIndent: true,
+        toolbar: this.toolbar,
+        toolbarFloat: true,
+        toolbarFloatOffset: 0,
+        toolbarHidden: false,
+        pasteImage: false,
+        cleanPaste: false,
+      });
+
+
       registerup(this);//初始化上传图片
       cropper(this.uploadImg, {
         img: "#new_img",
@@ -425,33 +446,39 @@
         this.img_index--;
       },
       submit: function () {
+        this.desc = this.editor.getValue()
+        //禁止右键保存选中
+        let ban = $("input[type='radio'][name='ban']:checked");
+        if(ban[0]){
+          if(ban[0].value === "true"){
+            this.not_saved = true;
+          }else if(ban[0].value === "false"){
+            this.not_saved = false;
+          }
+        }
+
         // this.loading = true;
         if (this.title === null || this.title.trim() === "") {
           $(".err").eq(0).css("display", "block");
         } else {
           $(".err").eq(0).css("display", "none");
         }
-        if (this.desc.length > 200) {
+        if (this.not_saved === null) {
           $(".err").eq(1).css("display", "block");
         } else {
           $(".err").eq(1).css("display", "none");
         }
-        if (this.not_saved == null) {
+        if (this.img_url.length <= 0) {
           $(".err").eq(2).css("display", "block");
         } else {
           $(".err").eq(2).css("display", "none");
         }
-        if (this.img_url.length <= 0) {
+        if (this.ablumfile == 'http://image.houxiaopang.com/baseform/721/addpic.jpg') {
           $(".err").eq(3).css("display", "block");
         } else {
           $(".err").eq(3).css("display", "none");
         }
-        if (this.ablumfile == 'http://image.houxiaopang.com/baseform/721/addpic.jpg') {
-          $(".err").eq(4).css("display", "block");
-        } else {
-          $(".err").eq(4).css("display", "none");
-        }
-        for (var i = 0; i < 5; i++) {
+        for (var i = 0; i < 4; i++) {
           if ($(".err").eq(i).css("display") == "block") {
             return;
           }
@@ -473,13 +500,7 @@
             }
           }
         }
-        //禁止右键保存
-        let ban = $("input[type='radio'][name='ban']:checked");
-        if(ban[0].value === "true"){
-          this.not_saved = true;
-        }else {
-          this.not_saved = false;
-        }
+
 
         if (this.imgupload) {
           alert("请等待图片上传完成。")
@@ -490,10 +511,6 @@
           this.flag = false;
           _czc.push(["_trackEvent", '上传作品集-提交', '点击']);
           var that = this;
-          console.log(that.not_business);
-          console.log(that.not_anonymous);
-          console.log(that.not_single);
-          console.log(that.not_saved);
           $.ajax({
             headers: {"Authorization": "Token " + token},
             url: "http://www.houxiaopang.com/api/v1.1/newalbum",
@@ -550,6 +567,7 @@
       show_upload_album: function () {
         this.modelshow = true;
       },
+
     },
     created(){
       _czc.push(["_trackEvent", '上传作品集-进入', '点击']);
@@ -569,6 +587,7 @@
               var json = data.data;
               that.title = json.title;
               that.desc = json.description;
+              that.editor.setValue(that.desc);
               that.img_url = json.worklist;
               that.ablumfile = json.cover;
               that.img_index = json.worklist.length;
@@ -668,7 +687,7 @@
     border-color: #545ca6;
   }
 
-  .context > textarea {
+/*  .context > .desc {
     width: 80%;
     outline: none;
     padding-left: 10px;
@@ -683,9 +702,9 @@
     font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei", "Hiragino Sans GB", "HeitiSC", "WenQuanYi Micro Hei", sans-serif;
   }
 
-  .context > textarea:focus {
+  .context > .desc:focus {
     border-color: #545ca6;
-  }
+  }*/
 
   .context > select {
     width: 80%;

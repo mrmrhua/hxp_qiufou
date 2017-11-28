@@ -37,7 +37,8 @@ class DesignerInfo(db.Model):
     recom_code = db.Column(db.String(4))
     # 实名认证状态
     verify_status = db.Column(db.Boolean)
-
+    # 个人简介
+    intro = db.Column(db.Text)
 
     @staticmethod
     def from_apply(af):
@@ -59,6 +60,7 @@ class DesignerInfo(db.Model):
             self.worktime = json.dumps(worksetting_obj.get("worktime"))
             self.privacy = worksetting_obj.get("privacy")
             self.ticket = worksetting_obj.get("ticket")
+            self.intro = worksetting_obj.get("intro")
 
         # return self
 

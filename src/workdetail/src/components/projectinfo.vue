@@ -29,7 +29,7 @@
 
     <div class="work">
       <div class="worklist">
-        <div class="desc">{{projectinfo.description}}</div>
+        <div class="desc" v-html="projectinfo.description"></div>
         <div id="banbox"  class="ban_box">
           <span>作者设置了隐私保护，禁止保存到本地</span>
         </div>
