@@ -213,7 +213,7 @@
           },
           success(data){
             if (data.code === 0) {
-              if (data.data.worktime == "") {
+              if (data.data.worktime == null || data.data.worktime == "") {
                 data.data.worktime = []
               }
               that.userinfo = data.data;
