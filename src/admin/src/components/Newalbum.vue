@@ -1,6 +1,14 @@
 <template id="newablue">
   <div class="conbody">
     <p style="font-size: 16px;">上传作品集</p>
+<!--    <div class="labelpage">
+      <ul>
+&lt;!&ndash;        <li @click="showbasefrom" :class="{labelpage_active : basefrom}">上传本地作品</li>
+        <li @click="showworkfrom" :class="{labelpage_active : workfrom}">其它平台导入</li>&ndash;&gt;
+&lt;!&ndash;        <li >上传本地作品</li>
+        <li >其它平台导入</li>&ndash;&gt;
+      </ul>
+    </div>-->
     <div class="content">
       <form class="content_form">
         <div class="context">
@@ -10,7 +18,7 @@
         </div>
         <div class="context">
           <label>简　　介<span style="position: absolute;left: 96px;top: 25px;color: #999;">(选填)</span></label>
-          <textarea id="editor" placeholder="Balabala"  v-model="desc"></textarea>
+          <textarea id="editor" placeholder="请输入作品简介"  v-model="desc"></textarea>
           <!--<textarea v-model="desc" rows="4" placeholder="请输入作品说明（限200字）"></textarea>-->
         </div>
         <div class="context">
@@ -50,7 +58,7 @@
           <span class="err">*必填</span>
           <label>禁止右键保存</label>
           <div>
-            <input type="radio" value="true" name="ban" ><span style="margin-right: 20px;margin-left: 10px">是</span>
+            <input type="radio" value="true" name="ban" checked><span style="margin-right: 20px;margin-left: 10px">是</span>
             <input type="radio" value="false" name="ban"><span style="margin-right: 20px;margin-left: 10px">否</span>
           </div>
         </div>
@@ -186,11 +194,11 @@
         album_id: null,
         imgupload: false,
         editor:null,
-        price:null,
+        price:'无',
         not_business:false,
         not_anonymous:false,
         not_single:false,
-        not_saved:null,
+        not_saved:true,
 
         toolbar: ['bold', 'italic', 'underline', 'strikethrough',
           'color', '|', 'ol', 'ul',  '|',
@@ -630,6 +638,7 @@
       "$route"(){
         this.title = '';
         this.desc = '';
+        this.editor.setValue('');
         this.img_url = [];
         this.ablumfile = 'http://image.houxiaopang.com/baseform/721/addpic.jpg';
         this.category = 1;
@@ -637,17 +646,49 @@
         this.modelshow = false;//模态框显示
         this.img_index = 0;
         this.album_id = null;
-        this.price = "0-2000元";
+        this.price = "无";
         this.not_business=false;
         this.not_anonymous=false
         this.not_single=false;
-        this.not_saved=false;
+        this.not_saved=true;
+        $("input[type='checkbox'][name='power'][value='" + 1 + "']").iCheck('uncheck');
+        $("input[type='checkbox'][name='power'][value='" + 2 + "']").iCheck('uncheck');
+        $("input[type='checkbox'][name='power'][value='" + 3 + "']").iCheck('uncheck');
+        $("input[type='radio'][name='ban'][value='" + true + "']").iCheck('check');
       }
     }
   }
 </script>
 <style>
+  .conbody > .labelpage {
+    width: 100%;
+    height: 50px;
+  }
 
+  .labelpage > ul {
+    width: 100%;
+    height: 100%;
+  }
+
+  .labelpage > ul > li {
+    float: left;
+    padding: 0 3px;
+    font-size: 16px;
+    line-height: 30px;
+    margin-left: 10px;
+    margin-right: 25px;
+    margin-top: 9px;
+    background: #fff;
+    cursor: pointer;
+  }
+
+  .labelpage > ul > li:hover {
+    border-bottom: 2px solid #d01667;
+  }
+
+  .labelpage > ul > .labelpage_active {
+    border-bottom: 2px solid #d01667;
+  }
   .content_form {
     width: 800px;
     margin: 0 auto;
