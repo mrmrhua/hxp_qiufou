@@ -138,12 +138,13 @@
         <div class="context">
           <label>风格标签</label>
           <ul id="user_label" class="label">
-            <li v-for="item in tag">{{item}}
+            <li v-for="item in tag" class="label_new">{{item}}
               <div class="newlabel"><i onclick="removeLabel(this)" class="iconfontyyy"
                                        style="float: right;cursor: pointer;">&#xe67c;</i></div>
             </li>
-            <li @click="addnewlabel($event)" class="label_new">+ 新标签</li>
           </ul>
+          <input style="display: inline-block;margin-left: 200px;width: 60%; height: 42px"  type="text" v-model="customLabel">
+          <div class="add_lable_btn" @click="addCustom">添加标签</div>
           <ul id="label" class="label" style="margin-top: 20px;">
             <li class="choose">大客户经验</li>
             <li class="choose">简洁风</li>
@@ -154,6 +155,41 @@
             <li class="choose">Material Design</li>
             <li class="choose">苹果设计风格</li>
           </ul>
+        </div>
+
+        <div class="context">
+          <label>个人简历</label>
+          <!--<i class="iconfontyyy" @click=""
+             style="float: right;margin-right: 100px;color: #4cb6cb;cursor: pointer;">&#xe600;</i>-->
+          <textarea  style="width: 60%;margin-left: 200px;height: 330px"  :placeholder="resumeText1" rows="4" v-model="worksetting.intro"
+                     @input="introInput"></textarea>
+          <div class="share" @click.stop="showDemoMethod" style="margin-left: 200px;">查看范例
+            <div class="pop-box" v-show="show_demo" style="width: 480px;height: 330px;top: 0px;display:block;z-index: 6;color: #333333;cursor: auto">
+              <div class="pop-content">
+                <div class="doubt_content">
+                  <div class="resume_context">
+                    <p>【我的介绍】</p>
+                    <p>喜欢有挑战性的项目，专注于互联网产品，追求极致的设计和用户体验，帮助更多的人把想法变成现实。</p>
+                    <p>- 拥有五年视觉/交互设计的丰富经验，包括Web端、移动端及后台系统的设计</p>
+                    <p>- 曾就职于百度、腾讯等公司，主导及参与过十几个项目的设计过程，积累了丰富的实践经验</p>
+                    <p>- 北京邮电大学，工业设计毕业</p>
+                  </div>
+                  <div class="resume_context" style="margin-top: 20px">
+                    <p>【提供的服务】</p>
+                    <p>擅长App产品的从0-1的主风格定义</p>
+                    <p>Web网站的整案设计</p>
+                    <p>H5页面的风格策划及设计</p>
+                    <p>Logo的整体定义及细节设计</p>
+                    <p>多种风格的图标设计</p>
+                  </div>
+                </div>
+              </div>
+              <div class="pop-triangle-down">
+                <i></i>
+              </div>
+            </div>
+          </div>
+          <span style="position: absolute;right: 120px;">{{worksetting.intro.length}}/500字</span>
         </div>
 
         <div class="context">
@@ -225,7 +261,7 @@
   import prompt from "@/components/Prompt"
 
   export default {
-    props: ['show_share'],
+    props: ['show_share','show_demo'],
     data() {
       return {
         promptshow: false,
@@ -255,6 +291,7 @@
           worktime: [],
           tag: [],//风格标签,
           exp: [],
+          intro:'',
         },//接单设置
         tag: [],//风格标签，
         modelshow: false,
@@ -416,6 +453,10 @@
             "value": "新疆"
           }],
         city: [],
+        customLabel:'',
+        resumeText1:'对您在专业领域获得的成就和经验进行描述，充分展现您的才华和实力，吸引项目方\n\n' +
+        '【自我介绍】\n'+'　　对自己的综合描述，让别人感受到您的独特风采;\n　　您的教育背景;\n　　您得到过的骄傲成绩\n\n'+
+        '【擅长的服务】\n'+'　　描述您的技能特长;\n　　能给项目方提供的服务\n',
       }
     },
     components: {
@@ -555,7 +596,8 @@
               this.className = "choose categroy_active";
               let li = document.createElement("li");
               li.innerText = this.innerText;
-              user_label.insertBefore(li, user_label.lastChild);
+              li.classList.add('label_new')
+              user_label.appendChild(li);
               li.innerHTML += `<div class="newlabel"><i onclick="removeLabel(this)" class="iconfontyyy" style="float: right;cursor: pointer;">&#xe67c;</i></div>`;
             }
           }
@@ -565,7 +607,7 @@
         let ul = ev.target.parentElement;
         let li = document.createElement("li");
         li.setAttribute("contenteditable", "true");
-        ul.insertBefore(li, ul.lastChild);
+        ul.appendChild(li);
         li.focus();
         li.onkeydown = function (e) {//按下enter事件
           if (e.keyCode === 13) {
@@ -592,6 +634,18 @@
           }
         }
       },
+      addCustom(){   //添加自定义标签
+        if(this.customLabel){
+            let ul = document.getElementById('user_label');
+            let li = document.createElement("li");
+            li.innerText = this.customLabel;
+            li.classList.add('label_new');
+            ul.appendChild(li);
+            li.innerHTML += `<div class="newlabel"><i onclick="removeLabel(this)" class="iconfontyyy" style="float: right;cursor: pointer;">&#xe67c;</i></div>`;
+            this.customLabel = '';
+          }
+      },
+
       submitbasic() {//保存基本资料
         let errs = document.querySelectorAll(".err");
         if (this.basic.nickname === null || this.basic.nickname.trim() === "") {
@@ -696,7 +750,7 @@
         //风格标签
         this.worksetting.tag = [];
         let lis_label = document.getElementById("user_label").children;
-        for (let i = 0, size = lis_label.length - 1; i < size; i++) {
+        for (let i = 0, size = lis_label.length; i < size; i++) {
           let text = lis_label[i].innerText.substr(0, lis_label[i].innerText.length - 1);
           this.worksetting.tag.push(text);
         }
@@ -775,7 +829,7 @@
         let lis = document.getElementById("categroy").children;
         for (let i = 0, size = lis.length; i < size; i++) {
           lis[i].onclick = function () {
-            this.className = this.className === "" ? "categroy_active" : "";
+            this.className = this.className === "categroy_active" ? "categroy_can" : "categroy_active";
           }
         }
       },
@@ -837,9 +891,20 @@
           this.worksetting.exp.splice(index, 1);
         }
       },
+      introInput(){//个人简历字数限制
+        if(this.worksetting.intro.length>500){
+          var textVal = this.worksetting.intro.substring(0,500);
+          this.worksetting.intro = textVal;
+        }
+      },
+
       showShareMethod(){
         this.$emit("showshare");
       },
+      showDemoMethod(){
+        this.$emit("showdemo");
+      },
+
     }
   }
 
@@ -1032,6 +1097,7 @@
   }
 
   .context > .label > .choose {
+    border: 1px solid #bbb;
     cursor: pointer;
   }
 
@@ -1041,13 +1107,13 @@
   }
 
   .context > .label > .label_new:hover {
-    box-shadow: 0 0 2px 0 #d01667;
+    border: 1px solid #bbb;
+    background: rgba(0,0,0,0.3);
   }
 
   .context > .label > li {
     float: left;
     margin-right: 10px;
-    border: 1px solid #bbb;
     padding: 5px 20px;
     margin-bottom: 10px;
     min-width: 72px;
@@ -1063,23 +1129,28 @@
     width: 100%;
     bottom: 0;
     left: 0;
-    background: rgba(0, 0, 0, 0.4);
-    opacity: 0;
+  }
+  .context > .label > .label_new:hover .newlabel{
+    color: #ffffff;
   }
 
-  .newlabel:hover {
-    opacity: 1;
-  }
 
-  .context > #categroy > li:hover {
+  .context > #categroy > li:hover ,.context > #label > li:hover{
     background: #bbb;
     color: #fff;
+    border: 1px solid #bbb;
+  }
+/*擅长领域label*/
+  .context > #categroy >.categroy_active ,.context > #label >.categroy_active{
+    background: #fff;
+    color: #D01667;
+    border: 1px solid #D01667;
+  }
+  .context > #categroy > .categroy_can,.context > #label > .categroy_can{
+    background: #fff;
+    color: #333333;
   }
 
-  .categroy_active {
-    background: #bbb;
-    color: #fff;
-  }
 
   #project .new_project {
     width: 80%;
@@ -1166,6 +1237,40 @@
     border-width: 10px;
   }
 
+  .pop-triangle-down {
+    position: absolute;
+    left: 17px;
+    display: block;
+    height: 0;
+    width: 0;
+    font-size: 0;
+    line-height: 0;
+    border-color: #DEDEDE transparent transparent transparent;
+    border-style: solid dashed dashed dashed;
+    border-width: 10px;
+  }
+
+  .pop-triangle-down i {
+    position: absolute;
+    top: -12px;
+    left: -10px;
+    display: block;
+    height: 0;
+    width: 0;
+    font-size: 0;
+    line-height: 0;
+    border-color: #fff transparent transparent transparent;
+    border-style: solid dashed dashed dashed;
+    border-width: 10px;
+  }
+  .resume_context{
+    font-size: 14px;
+    line-height: 20px;
+    color: #333333;
+  }
+
+
+
   .doubt {
     position: absolute;
     left: 50px;
@@ -1183,4 +1288,22 @@
 /*  .share:hover .pop-box{
     display: block !important;
   }*/
+
+  .add_lable_btn{
+    display: inline-block;
+    line-height: 40px;
+    border: 1px solid #bbb;
+    padding: 0px 20px;
+    margin-left: 10px;
+    cursor: pointer;
+    color: #d01667;
+    background: #FAFAFA;
+  }
+
+
+  #hihi::-webkit-input-placeholder::after {
+    display:block;
+    content:"Line 2\A Line 3";
+  }
+
 </style>
