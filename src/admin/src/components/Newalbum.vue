@@ -447,7 +447,6 @@
       },
       submit: function () {
         this.desc = this.editor.getValue()
-        console.log(this.desc)
         //禁止右键保存选中
         let ban = $("input[type='radio'][name='ban']:checked");
         if(ban[0]){
@@ -512,7 +511,6 @@
           this.flag = false;
           _czc.push(["_trackEvent", '上传作品集-提交', '点击']);
           var that = this;
-          alert(this.desc)
           $.ajax({
             headers: {"Authorization": "Token " + token},
             url: "http://www.houxiaopang.com/api/v1.1/newalbum",

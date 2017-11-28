@@ -23,7 +23,8 @@
           </div>
         </div>
         <div class="right">
-          <router-view :showcategory="showcategory" @showcategory="showcategoryMethod"  @showshare="showShareMethod" :show_share="show_share"></router-view>
+          <router-view :showcategory="showcategory" @showcategory="showcategoryMethod"  @showshare="showShareMethod" :show_share="show_share"
+                       @showdemo="showDemoMethod" :show_demo="show_demo"></router-view>
         </div>
       </div>
     </div>
@@ -47,7 +48,8 @@
         show_option: false, //用户操作显示（nav品组件）
         shownotice: false, //显示通知（nav组件）
         showcategory: false,
-        show_share:false //分享给好友
+        show_share:false, //分享给好友
+        show_demo:false,//个人简历范例
       }
     },
     mounted(){
@@ -65,6 +67,9 @@
         }
         if(that.show_share){
           that.show_share = false;
+        }
+        if(that.show_demo){
+          that.show_demo = false;
         }
       }
     },
@@ -114,6 +119,12 @@
           return
         }
         this.show_share = !this.show_share;
+      },
+      showDemoMethod(){
+        if(this.show_demo){
+          return
+        }
+        this.show_demo = !this.show_demo;
       }
     }
   }
