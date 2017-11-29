@@ -158,7 +158,6 @@ function ajax(options) {
       if (ajax.readyState !== 4) {
         ajax.abort();
       }
-<<<<<<< HEAD
     }, options.timeout)
   }
   var opentype = options.type === "file" ? "post" : options.type;
@@ -175,28 +174,4 @@ function ajax(options) {
   } else {
     ajax.send(options.data);
   }
-}</script><script type=text/javascript src=./static/js/manifest.759164bc5f0d612932ab.js></script><script type=text/javascript src=./static/js/vendor.af55c1595e84c689fa94.js></script><script type=text/javascript src=./static/js/app.d22d6b3fcc4c1c680175.js></script></body></html>
-=======
-    };
-    if (options.timeout !== -1 && typeof(options.timeout) === "number") {
-      setTimeout(function () {
-        if (ajax.readyState !== 4) {
-          ajax.abort();
-        }
-      }, options.timeout)
-    }
-    var opentype = options.type === "file" ? "post" : options.type;
-    ajax.open(opentype, options.url, true);
-    if (options.token) {
-      ajax.setRequestHeader("Authorization", "Token " + token);
-    }
-    if (options.type === "get" || options.type === "GET") {
-      ajax.setRequestHeader("Content-type", "application/json;charset=utf-8")
-      ajax.send();
-    } else if(options.type === "post" || options.type === "POST"){
-      ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=utf-8")
-      ajax.send(options.data);
-    }else{
-      ajax.send(options.data);
-    }}</script><script type=text/javascript src=./static/js/manifest.e98e677d646ab371f6cb.js></script><script type=text/javascript src=./static/js/vendor.d15baf44f51281df7d8c.js></script><script type=text/javascript src=./static/js/app.cf50b152d46703037e9f.js></script></body></html>
->>>>>>> platform
+}</script><script type=text/javascript src=./static/js/manifest.338421f6eff7d4cc2507.js></script><script type=text/javascript src=./static/js/vendor.af55c1595e84c689fa94.js></script><script type=text/javascript src=./static/js/app.d22d6b3fcc4c1c680175.js></script></body></html>
