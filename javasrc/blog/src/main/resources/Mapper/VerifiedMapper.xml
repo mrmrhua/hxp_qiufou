@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.houxiaopang.dao.VerifiedMapper">
+    <resultMap id="BaseResultMap" type="com.houxiaopang.model.Verified">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="card" property="card" jdbcType="VARCHAR"/>
+        <result column="card_img_up" property="cardImgUp" jdbcType="VARCHAR"/>
+        <result column="card_img_dowm" property="cardImgDowm" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="up_time" property="upTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, user_id, name, card, card_img_up, card_img_dowm, status, up_time
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_verified
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+    select * from tb_verified where status = 1
+    </select>
+
+    <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select * FROM  tb_verified where user_id = #{id,jdbcType=INTEGER}
+  </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tb_verified
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.houxiaopang.model.Verified">
+    insert into tb_verified (id, user_id, name, 
+      card, card_img_up, card_img_dowm, 
+      status, up_time)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{card,jdbcType=VARCHAR}, #{cardImgUp,jdbcType=VARCHAR}, #{cardImgDowm,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{upTime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="com.houxiaopang.model.Verified">
+        insert into tb_verified
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="card != null">
+                card,
+            </if>
+            <if test="cardImgUp != null">
+                card_img_up,
+            </if>
+            <if test="cardImgDowm != null">
+                card_img_dowm,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="upTime != null">
+                up_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="card != null">
+                #{card,jdbcType=VARCHAR},
+            </if>
+            <if test="cardImgUp != null">
+                #{cardImgUp,jdbcType=VARCHAR},
+            </if>
+            <if test="cardImgDowm != null">
+                #{cardImgDowm,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="upTime != null">
+                #{upTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updataStatusByUserId">
+    UPDATE tb_verified SET status = #{status,jdbcType=INTEGER} where user_id = #{id,jdbcType=BIGINT}
+  </update>
+    <update id="updataAllByUserId" parameterType="com.houxiaopang.model.Verified">
+        update tb_verified
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="card != null">
+                card = #{card,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="upTime != null">
+                up_time = #{upTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="cardImgUp != null">
+                card_img_up = #{cardImgUp,jdbcType=VARCHAR},
+            </if>
+            <if test="cardImgDowm != null">
+                card_img_dowm = #{cardImgDowm,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where user_id = #{userId,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.houxiaopang.model.Verified">
+        update tb_verified
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="card != null">
+                card = #{card,jdbcType=VARCHAR},
+            </if>
+            <if test="cardImgUp != null">
+                card_img_up = #{cardImgUp,jdbcType=VARCHAR},
+            </if>
+            <if test="cardImgDowm != null">
+                card_img_dowm = #{cardImgDowm,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="upTime != null">
+                up_time = #{upTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.houxiaopang.model.Verified">
+    update tb_verified
+    set user_id = #{userId,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      card = #{card,jdbcType=VARCHAR},
+      card_img_up = #{cardImgUp,jdbcType=VARCHAR},
+      card_img_dowm = #{cardImgDowm,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      up_time = #{upTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
