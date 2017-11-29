@@ -29,5 +29,4 @@ class GetUserHead(Resource):
                      'city':getcity(g.user.info),
                     'verify_status':getveristatus(g.user.info)}
         })
-        print(r.json())
         return r
