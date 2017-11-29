@@ -84,8 +84,10 @@ class ProjectPage(Resource):
         desc = request.values.get("desc")
         project_id = request.values.get("project_id")
         up_time = datetime.datetime.now()
-
+        pro = Project.query.get(project_id)
+        pro.isnew = True
         p = Post(up_time=up_time, desc=desc, project_id=project_id)
+        db.session.add(pro)
         db.session.add(p)
         db.session.flush()
         for i in imglist:
@@ -103,6 +105,9 @@ class ClientProjectPage(Resource):
     def get(self):
         project_id = request.values.get("project_id")
         pro = Project.query.filter_by(id=project_id, client_id=g.client.id).order_by(Project.up_time.desc()).first()
+        pro.isnew=False
+        db.session.add(pro)
+        db.session.commit()
         posts = pro.posts
         postlist = [{"up_time": i.up_time.strftime("%Y-%m-%d %H:%M:%S"),
                      "imglist": [n.work_url for n in i.works],

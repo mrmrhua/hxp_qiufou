@@ -236,6 +236,7 @@ function fail(id, index) {
             if (data.code === 0) {
                 var tbody = document.getElementsByTagName("tbody")[0];
                 tbody.children[index].children[0].children[0].children[0].innerHTML = "拒绝";
+                alert("操作成功！");
             } else {
                 alert("操作失败，请重试！");
             }

@@ -54,6 +54,7 @@ class User(UserMixin,db.Model):
                                lazy='dynamic',
                                cascade='all,delete-orphan')
     wallet = db.relationship('Wallet',backref='user',cascade="delete",uselist=False)
+    last_login =  db.Column(db.DateTime)
 
     def __repr__(self):
         return '<User %r>' % self.nickname

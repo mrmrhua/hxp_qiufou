@@ -3,7 +3,7 @@ import  random
 from flask_restful import Resource
 from app.models import User,db,Demand_User,Demand_Recom,Demand,Project
 import json
-from app.common import adminauth
+from app.common import adminauth,getcatname,getclientname,getdesignername
 import datetime
 # houxiaopang.com/api/v1.1/adminsystem/recommend_tmp
 # 后台：管理员：项目推荐设计师
@@ -117,7 +117,47 @@ class CreateProject(Resource):
         designer = request.values.get("designer")
         st = datetime.datetime.now()
         title = getdemandtitle(demand_id)
-        pro = Project(demand_id=demand_id,user_id=designer,cat_id=demand.category,starttime=st,title=title,status=0)
+        pro = Project(status=0,demand_id=demand_id,user_id=designer,cat_id=demand.category,starttime=st,title=title)
         db.session.add(pro)
         db.session.commit()
         return jsonify({'code':0,'data':{"project_id":pro.id}})
+
+
+  # http: // houxiaopang.com / api / v1.1 /adminsystem/changeprojectstatus
+    # POST
+    # 经纪人关闭项目
+class EndProject(Resource):
+    @adminauth.login_required
+    def post(self):
+        pro_id = request.values.get("project_id")
+        status = request.values.get("status")
+        pro = Project.query.get(pro_id)
+        pro.status =status
+        db.session.add(pro)
+        db.session.commit()
+        return jsonify({'code':0})
+
+
+
+
+  # http: // houxiaopang.com / api / v1.1 /adminsystem/seeallprojects
+    # GET
+    # 查看所有项目
+class SeeAllProjects(Resource):
+    @adminauth.login_required
+    def get(self):
+        pros = Project.query.all()
+        projects = [{
+            "id":i.id,
+            "cat":getcatname(i.cat_id),
+            "client":getclientname(i.client_id),
+            'client_id':i.client_id,
+            'designer':getdesignername(i.user_id),
+            'designer_id':i.user_id,
+            'isNew':i.isnew,
+            'status':i.get_status(),
+            'up_time':i.up_time.strftime("%Y-%m-%d %H:%M:%S"),
+            'title':i.title,
+            'starttime':i.starttime.strftime("%Y-%m-%d %H:%M:%S")
+        } for i in pros ]
+        return jsonify({'code':0,"data":{"project":projects}})

@@ -13,14 +13,20 @@ def getcity(info):
         return ''
     else:
         return info.city
-
+def getveristatus(info):
+    if not info:
+        return ''
+    else:
+        return info.verify_status
 class GetUserHead(Resource):
     @auth.login_required
     def get(self):
-        return jsonify({
+        r = jsonify({
           'code':0,
             'data': {'headimg': g.user.headimg
                           ,'nickname':g.user.nickname,
                      'userid':g.user.id,
-                     'city':getcity(g.user.info)}
+                     'city':getcity(g.user.info),
+                    'verify_status':getveristatus(g.user.info)}
         })
+        return r

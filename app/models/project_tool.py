@@ -66,6 +66,15 @@ class Project(db.Model):
     starttime = db.Column(db.DateTime)
     def __repr__(self):
         return '<Project: %r>' % (self.demand_id)
+    def get_status(self):
+        if self.status == 0:
+            return '进行中'
+        elif self.status == 1:
+            return '已结束'
+        elif self.status == 2:
+            return '以中止'
+        else:
+            return ''
 
 class Post(db.Model):
     __tablename__ = 'posts'

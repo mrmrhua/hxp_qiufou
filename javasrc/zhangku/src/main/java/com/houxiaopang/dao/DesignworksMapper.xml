@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.houxiaopang.dao.DesignworksMapper">
+  <resultMap id="BaseResultMap" type="com.houxiaopang.pojo.Designworks">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="work_url" jdbcType="VARCHAR" property="workUrl" />
+    <result column="category" jdbcType="INTEGER" property="category" />
+    <result column="up_time" jdbcType="TIMESTAMP" property="upTime" />
+    <result column="album_id" jdbcType="INTEGER" property="albumId" />
+    <result column="position" jdbcType="INTEGER" property="position" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, work_url, category, up_time, album_id, position
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from designworks
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from designworks
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.houxiaopang.pojo.Designworks">
+    insert into designworks (id, work_url, category, 
+      up_time, album_id, position
+      )
+    values (#{id,jdbcType=INTEGER}, #{workUrl,jdbcType=VARCHAR}, #{category,jdbcType=INTEGER}, 
+      #{upTime,jdbcType=TIMESTAMP}, #{albumId,jdbcType=INTEGER}, #{position,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.houxiaopang.pojo.Designworks">
+    insert into designworks
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="workUrl != null">
+        work_url,
+      </if>
+      <if test="category != null">
+        category,
+      </if>
+      <if test="upTime != null">
+        up_time,
+      </if>
+      <if test="albumId != null">
+        album_id,
+      </if>
+      <if test="position != null">
+        position,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="workUrl != null">
+        #{workUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="category != null">
+        #{category,jdbcType=INTEGER},
+      </if>
+      <if test="upTime != null">
+        #{upTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="albumId != null">
+        #{albumId,jdbcType=INTEGER},
+      </if>
+      <if test="position != null">
+        #{position,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.houxiaopang.pojo.Designworks">
+    update designworks
+    <set>
+      <if test="workUrl != null">
+        work_url = #{workUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="category != null">
+        category = #{category,jdbcType=INTEGER},
+      </if>
+      <if test="upTime != null">
+        up_time = #{upTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="albumId != null">
+        album_id = #{albumId,jdbcType=INTEGER},
+      </if>
+      <if test="position != null">
+        position = #{position,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.houxiaopang.pojo.Designworks">
+    update designworks
+    set work_url = #{workUrl,jdbcType=VARCHAR},
+      category = #{category,jdbcType=INTEGER},
+      up_time = #{upTime,jdbcType=TIMESTAMP},
+      album_id = #{albumId,jdbcType=INTEGER},
+      position = #{position,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.houxiaopang.pojo.Designworks">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="work_url" jdbcType="VARCHAR" property="workUrl" />
+    <result column="category" jdbcType="INTEGER" property="category" />
+    <result column="up_time" jdbcType="TIMESTAMP" property="upTime" />
+    <result column="album_id" jdbcType="INTEGER" property="albumId" />
+    <result column="position" jdbcType="INTEGER" property="position" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, work_url, category, up_time, album_id, position
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from designworks
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from designworks
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.houxiaopang.pojo.Designworks">
+    insert into designworks (id, work_url, category, 
+      up_time, album_id, position
+      )
+    values (#{id,jdbcType=INTEGER}, #{workUrl,jdbcType=VARCHAR}, #{category,jdbcType=INTEGER}, 
+      #{upTime,jdbcType=TIMESTAMP}, #{albumId,jdbcType=INTEGER}, #{position,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.houxiaopang.pojo.Designworks">
+    insert into designworks
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="workUrl != null">
+        work_url,
+      </if>
+      <if test="category != null">
+        category,
+      </if>
+      <if test="upTime != null">
+        up_time,
+      </if>
+      <if test="albumId != null">
+        album_id,
+      </if>
+      <if test="position != null">
+        position,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="workUrl != null">
+        #{workUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="category != null">
+        #{category,jdbcType=INTEGER},
+      </if>
+      <if test="upTime != null">
+        #{upTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="albumId != null">
+        #{albumId,jdbcType=INTEGER},
+      </if>
+      <if test="position != null">
+        #{position,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.houxiaopang.pojo.Designworks">
+    update designworks
+    <set>
+      <if test="workUrl != null">
+        work_url = #{workUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="category != null">
+        category = #{category,jdbcType=INTEGER},
+      </if>
+      <if test="upTime != null">
+        up_time = #{upTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="albumId != null">
+        album_id = #{albumId,jdbcType=INTEGER},
+      </if>
+      <if test="position != null">
+        position = #{position,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.houxiaopang.pojo.Designworks">
+    update designworks
+    set work_url = #{workUrl,jdbcType=VARCHAR},
+      category = #{category,jdbcType=INTEGER},
+      up_time = #{upTime,jdbcType=TIMESTAMP},
+      album_id = #{albumId,jdbcType=INTEGER},
+      position = #{position,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

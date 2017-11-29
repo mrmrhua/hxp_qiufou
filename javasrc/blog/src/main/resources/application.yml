@@ -1,0 +1,28 @@
+spring:
+  profiles:
+    active: prod
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://mysql.rdsmbhsvs1vn5cx.rds.gz.baidubce.com/hxp?useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: dyh
+    password: baiduding123
+    tomcat:
+      initialSize: 1
+      min-idle: 1
+      max-idle: 20
+      max-wait: 60000
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 30000
+      validationQuery: SELECT 1
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+  mvc:
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: false
+logging:
+  file: logs/springboot.log
+mybatis:
+  type-aliases-package: com.houxiaopang.model
+  mapper-locations: classpath:Mapper/*.xml

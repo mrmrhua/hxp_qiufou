@@ -22,7 +22,7 @@ class GetResumeInfo(Resource):
 
         if user.usertype==0:
             de_name = user.nickname
-            de_worktime = di.worktime
+            de_worktime = di.worktime or []
         else:
             de_name= di.company_name
             de_worktime = ''
@@ -42,6 +42,7 @@ class GetResumeInfo(Resource):
                 'exp':di.startyear,
                 'filed':field,
                 'worktime':de_worktime,
-                'project_text':t
+                'project_text':t,
+                'intro':di.intro
             }
         })

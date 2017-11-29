@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.houxiaopang.dao.DesignworksMapper" >
+  <resultMap id="BaseResultMap" type="com.houxiaopang.model.Designworks" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="work_url" property="workUrl" jdbcType="VARCHAR" />
+    <result column="category" property="category" jdbcType="INTEGER" />
+    <result column="up_time" property="upTime" jdbcType="TIMESTAMP" />
+    <result column="album_id" property="albumId" jdbcType="INTEGER" />
+    <result column="position" property="position" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, work_url, category, up_time, album_id, position
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from designworks
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <insert id="insertList" parameterType="java.util.List">
+    insert into designworks (work_url, category,
+    up_time, album_id)
+    values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (#{item.workUrl,jdbcType=VARCHAR}, #{item.category,jdbcType=INTEGER},
+      #{item.upTime,jdbcType=TIMESTAMP}, #{item.albumId,jdbcType=INTEGER})
+    </foreach>
+  </insert>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from designworks
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.houxiaopang.model.Designworks" >
+    insert into designworks (id, work_url, category, 
+      up_time, album_id, position
+      )
+    values (#{id,jdbcType=INTEGER}, #{workUrl,jdbcType=VARCHAR}, #{category,jdbcType=INTEGER}, 
+      #{upTime,jdbcType=TIMESTAMP}, #{albumId,jdbcType=INTEGER}, #{position,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.houxiaopang.model.Designworks" >
+    insert into designworks
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="workUrl != null" >
+        work_url,
+      </if>
+      <if test="category != null" >
+        category,
+      </if>
+      <if test="upTime != null" >
+        up_time,
+      </if>
+      <if test="albumId != null" >
+        album_id,
+      </if>
+      <if test="position != null" >
+        position,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="workUrl != null" >
+        #{workUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="category != null" >
+        #{category,jdbcType=INTEGER},
+      </if>
+      <if test="upTime != null" >
+        #{upTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="albumId != null" >
+        #{albumId,jdbcType=INTEGER},
+      </if>
+      <if test="position != null" >
+        #{position,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.houxiaopang.model.Designworks" >
+    update designworks
+    <set >
+      <if test="workUrl != null" >
+        work_url = #{workUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="category != null" >
+        category = #{category,jdbcType=INTEGER},
+      </if>
+      <if test="upTime != null" >
+        up_time = #{upTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="albumId != null" >
+        album_id = #{albumId,jdbcType=INTEGER},
+      </if>
+      <if test="position != null" >
+        position = #{position,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.houxiaopang.model.Designworks" >
+    update designworks
+    set work_url = #{workUrl,jdbcType=VARCHAR},
+      category = #{category,jdbcType=INTEGER},
+      up_time = #{upTime,jdbcType=TIMESTAMP},
+      album_id = #{albumId,jdbcType=INTEGER},
+      position = #{position,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
