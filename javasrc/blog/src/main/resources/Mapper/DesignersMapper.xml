@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.houxiaopang.dao.DesignersMapper" >
+  <resultMap id="BaseResultMap" type="com.houxiaopang.model.Designers" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="qq" property="qq" jdbcType="VARCHAR" />
+    <result column="wx" property="wx" jdbcType="VARCHAR" />
+    <result column="school" property="school" jdbcType="VARCHAR" />
+    <result column="blog_url" property="blogUrl" jdbcType="VARCHAR" />
+    <result column="worktime" property="worktime" jdbcType="VARCHAR" />
+    <result column="identity" property="identity" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="company_web" property="companyWeb" jdbcType="VARCHAR" />
+    <result column="company_size" property="companySize" jdbcType="INTEGER" />
+    <result column="ticket" property="ticket" jdbcType="INTEGER" />
+    <result column="ticket_num" property="ticketNum" jdbcType="INTEGER" />
+    <result column="privacy" property="privacy" jdbcType="INTEGER" />
+    <result column="startyear" property="startyear" jdbcType="INTEGER" />
+    <result column="recom_code" property="recomCode" jdbcType="VARCHAR" />
+    <result column="verify_status" property="verifyStatus" jdbcType="BIT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.houxiaopang.model.DesignersWithBLOBs" extends="BaseResultMap" >
+    <result column="project_text" property="projectText" jdbcType="LONGVARCHAR" />
+    <result column="intro" property="intro" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, tel, user_id, email, qq, wx, school, blog_url, worktime, identity, city, company_name, 
+    company_web, company_size, ticket, ticket_num, privacy, startyear, recom_code, verify_status
+  </sql>
+  <sql id="Blob_Column_List" >
+    project_text, intro
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from designers
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from designers
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.houxiaopang.model.DesignersWithBLOBs" >
+    insert into designers (id, tel, user_id, 
+      email, qq, wx, school, 
+      blog_url, worktime, identity, 
+      city, company_name, company_web, 
+      company_size, ticket, ticket_num, 
+      privacy, startyear, recom_code, 
+      verify_status, project_text, intro
+      )
+    values (#{id,jdbcType=INTEGER}, #{tel,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, 
+      #{email,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, #{wx,jdbcType=VARCHAR}, #{school,jdbcType=VARCHAR}, 
+      #{blogUrl,jdbcType=VARCHAR}, #{worktime,jdbcType=VARCHAR}, #{identity,jdbcType=VARCHAR}, 
+      #{city,jdbcType=VARCHAR}, #{companyName,jdbcType=VARCHAR}, #{companyWeb,jdbcType=VARCHAR}, 
+      #{companySize,jdbcType=INTEGER}, #{ticket,jdbcType=INTEGER}, #{ticketNum,jdbcType=INTEGER}, 
+      #{privacy,jdbcType=INTEGER}, #{startyear,jdbcType=INTEGER}, #{recomCode,jdbcType=VARCHAR}, 
+      #{verifyStatus,jdbcType=BIT}, #{projectText,jdbcType=LONGVARCHAR}, #{intro,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.houxiaopang.model.DesignersWithBLOBs" >
+    insert into designers
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="tel != null" >
+        tel,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="qq != null" >
+        qq,
+      </if>
+      <if test="wx != null" >
+        wx,
+      </if>
+      <if test="school != null" >
+        school,
+      </if>
+      <if test="blogUrl != null" >
+        blog_url,
+      </if>
+      <if test="worktime != null" >
+        worktime,
+      </if>
+      <if test="identity != null" >
+        identity,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="companyName != null" >
+        company_name,
+      </if>
+      <if test="companyWeb != null" >
+        company_web,
+      </if>
+      <if test="companySize != null" >
+        company_size,
+      </if>
+      <if test="ticket != null" >
+        ticket,
+      </if>
+      <if test="ticketNum != null" >
+        ticket_num,
+      </if>
+      <if test="privacy != null" >
+        privacy,
+      </if>
+      <if test="startyear != null" >
+        startyear,
+      </if>
+      <if test="recomCode != null" >
+        recom_code,
+      </if>
+      <if test="verifyStatus != null" >
+        verify_status,
+      </if>
+      <if test="projectText != null" >
+        project_text,
+      </if>
+      <if test="intro != null" >
+        intro,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null" >
+        #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="wx != null" >
+        #{wx,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null" >
+        #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="blogUrl != null" >
+        #{blogUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="worktime != null" >
+        #{worktime,jdbcType=VARCHAR},
+      </if>
+      <if test="identity != null" >
+        #{identity,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyWeb != null" >
+        #{companyWeb,jdbcType=VARCHAR},
+      </if>
+      <if test="companySize != null" >
+        #{companySize,jdbcType=INTEGER},
+      </if>
+      <if test="ticket != null" >
+        #{ticket,jdbcType=INTEGER},
+      </if>
+      <if test="ticketNum != null" >
+        #{ticketNum,jdbcType=INTEGER},
+      </if>
+      <if test="privacy != null" >
+        #{privacy,jdbcType=INTEGER},
+      </if>
+      <if test="startyear != null" >
+        #{startyear,jdbcType=INTEGER},
+      </if>
+      <if test="recomCode != null" >
+        #{recomCode,jdbcType=VARCHAR},
+      </if>
+      <if test="verifyStatus != null" >
+        #{verifyStatus,jdbcType=BIT},
+      </if>
+      <if test="projectText != null" >
+        #{projectText,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="intro != null" >
+        #{intro,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.houxiaopang.model.DesignersWithBLOBs" >
+    update designers
+    <set >
+      <if test="tel != null" >
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null" >
+        qq = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="wx != null" >
+        wx = #{wx,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null" >
+        school = #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="blogUrl != null" >
+        blog_url = #{blogUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="worktime != null" >
+        worktime = #{worktime,jdbcType=VARCHAR},
+      </if>
+      <if test="identity != null" >
+        identity = #{identity,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        company_name = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyWeb != null" >
+        company_web = #{companyWeb,jdbcType=VARCHAR},
+      </if>
+      <if test="companySize != null" >
+        company_size = #{companySize,jdbcType=INTEGER},
+      </if>
+      <if test="ticket != null" >
+        ticket = #{ticket,jdbcType=INTEGER},
+      </if>
+      <if test="ticketNum != null" >
+        ticket_num = #{ticketNum,jdbcType=INTEGER},
+      </if>
+      <if test="privacy != null" >
+        privacy = #{privacy,jdbcType=INTEGER},
+      </if>
+      <if test="startyear != null" >
+        startyear = #{startyear,jdbcType=INTEGER},
+      </if>
+      <if test="recomCode != null" >
+        recom_code = #{recomCode,jdbcType=VARCHAR},
+      </if>
+      <if test="verifyStatus != null" >
+        verify_status = #{verifyStatus,jdbcType=BIT},
+      </if>
+      <if test="projectText != null" >
+        project_text = #{projectText,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="intro != null" >
+        intro = #{intro,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.houxiaopang.model.DesignersWithBLOBs" >
+    update designers
+    set tel = #{tel,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      email = #{email,jdbcType=VARCHAR},
+      qq = #{qq,jdbcType=VARCHAR},
+      wx = #{wx,jdbcType=VARCHAR},
+      school = #{school,jdbcType=VARCHAR},
+      blog_url = #{blogUrl,jdbcType=VARCHAR},
+      worktime = #{worktime,jdbcType=VARCHAR},
+      identity = #{identity,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      company_name = #{companyName,jdbcType=VARCHAR},
+      company_web = #{companyWeb,jdbcType=VARCHAR},
+      company_size = #{companySize,jdbcType=INTEGER},
+      ticket = #{ticket,jdbcType=INTEGER},
+      ticket_num = #{ticketNum,jdbcType=INTEGER},
+      privacy = #{privacy,jdbcType=INTEGER},
+      startyear = #{startyear,jdbcType=INTEGER},
+      recom_code = #{recomCode,jdbcType=VARCHAR},
+      verify_status = #{verifyStatus,jdbcType=BIT},
+      project_text = #{projectText,jdbcType=LONGVARCHAR},
+      intro = #{intro,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.houxiaopang.model.Designers" >
+    update designers
+    set tel = #{tel,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      email = #{email,jdbcType=VARCHAR},
+      qq = #{qq,jdbcType=VARCHAR},
+      wx = #{wx,jdbcType=VARCHAR},
+      school = #{school,jdbcType=VARCHAR},
+      blog_url = #{blogUrl,jdbcType=VARCHAR},
+      worktime = #{worktime,jdbcType=VARCHAR},
+      identity = #{identity,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      company_name = #{companyName,jdbcType=VARCHAR},
+      company_web = #{companyWeb,jdbcType=VARCHAR},
+      company_size = #{companySize,jdbcType=INTEGER},
+      ticket = #{ticket,jdbcType=INTEGER},
+      ticket_num = #{ticketNum,jdbcType=INTEGER},
+      privacy = #{privacy,jdbcType=INTEGER},
+      startyear = #{startyear,jdbcType=INTEGER},
+      recom_code = #{recomCode,jdbcType=VARCHAR},
+      verify_status = #{verifyStatus,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="updataVerifiedByUserId">
+    UPDATE designers SET verify_status= #{status,jdbcType=BIT} WHERE user_id = #{userId,jdbcType=INTEGER}
+  </update>
+</mapper>
