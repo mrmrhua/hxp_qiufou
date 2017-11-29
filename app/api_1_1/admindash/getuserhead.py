@@ -21,7 +21,7 @@ def getveristatus(info):
 class GetUserHead(Resource):
     @auth.login_required
     def get(self):
-        return jsonify({
+        r = jsonify({
           'code':0,
             'data': {'headimg': g.user.headimg
                           ,'nickname':g.user.nickname,
@@ -29,3 +29,4 @@ class GetUserHead(Resource):
                      'city':getcity(g.user.info),
                     'verify_status':getveristatus(g.user.info)}
         })
+        return r
