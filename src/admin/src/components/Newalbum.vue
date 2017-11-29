@@ -1,16 +1,14 @@
 <template id="newablue">
   <div class="conbody">
-    <p style="font-size: 16px;">上传作品集</p>
-<!--    <div class="labelpage">
+    <!--<p style="font-size: 16px;">上传作品集</p>-->
+    <div class="labelpage">
       <ul>
-&lt;!&ndash;        <li @click="showbasefrom" :class="{labelpage_active : basefrom}">上传本地作品</li>
-        <li @click="showworkfrom" :class="{labelpage_active : workfrom}">其它平台导入</li>&ndash;&gt;
-&lt;!&ndash;        <li >上传本地作品</li>
-        <li >其它平台导入</li>&ndash;&gt;
+        <li @click="showlocalfrom" :class="{labelpage_active : localfrom}">上传本地作品</li>
+        <li @click="showplatfrom" :class="{labelpage_active : platfrom}">其它平台导入</li>
       </ul>
-    </div>-->
-    <div class="content">
-      <form class="content_form">
+    </div>
+    <div class="content" id="content">
+      <form class="content_form" v-show="localfrom">
         <div class="context">
           <span class="err">*必填</span>
           <label>标　　题</label>
@@ -108,6 +106,44 @@
         </div>
         <div class="btn_image" @click="submit">提交材料</div>
       </form>
+      <form class="content_form" v-show="platfrom">
+        <div class="context">
+          <span class="err">*必填</span>
+          <label style="text-align: left;width: auto;margin-left: 50px">请选择平台</label>
+          <span style="color: #bbb;font-size: 12px;">(目前仅支持以下四个平台)</span>
+          <ul id="platname">
+            <li class="plat_can">站酷</li>
+            <li class="plat_can" style="pointer-events: none;background: #ffffff;color: #bbb">更多平台敬请期待</li>
+<!--            <li class="plat_can" style="pointer-events: none;background: #e0e0e0">UI中国</li>
+            <li class="plat_can" style="pointer-events: none;background: #e0e0e0">Bechance</li>
+            <li class="plat_can" style="pointer-events: none;background: #e0e0e0">Lofter</li>-->
+          </ul>
+        </div>
+        <div class="context" style="padding-bottom: 40px;margin-bottom: 0px">
+          <div>
+            <span class="err">*必填</span>
+            <label style="text-align: left;margin-left: 50px">请输入您的个人主页地址</label>
+          </div>
+          <span  style="position:absolute;top: auto;bottom:30px;left: 150px;font-size: 12px;color: #bbb">参考:www.zcool.com.cn/u/xxxxx 或 xxxxxxx.zcool.com.cn</span>
+          <span class="err" style="top: auto;bottom:10px;left: 150px">请填写正确地址</span>
+
+          <input type="text" v-model="prourl" style="width: 60%;height: 40px;margin: 20px 0 20px 150px">
+        </div>
+        <div class="context">
+          <label style="text-align: left;margin-left: 50px;font-size: 12px;width: auto">友情提示:</label>
+          <p style="width:60%;display: inline-block;font-size: 12px">您只能输入属于自己作品的链接。猴小胖不允许任何窃取他人创意成果的行为，一经查实将封禁账号，并追究法律责任！</p>
+        </div>
+        <div class="btn_image" style="width: 120px" @click="submitplatfrom">提交</div>
+      </form>
+      <form class="content_form" v-show="leading">
+        <div class="context" style="display: table;width: 100%">
+          <div class="leading">
+            <img src="../../static/img/wait.png" alt="" style="height: 54px;width: 54px">
+            <p style="font-size: 16px;margin-top: 58px">系统将为您导入，预计在十分钟内完成。</p>
+          </div>
+
+        </div>
+      </form>
     </div>
     <!--排序模态框-->
     <div class="mymodal" v-show="sortmodelshow">
@@ -180,6 +216,7 @@
     data(){
       return {
         flag: true,
+        platFlag:true,
         promptshow: false,
         title: '',
         desc: '',
@@ -203,7 +240,12 @@
         toolbar: ['bold', 'italic', 'underline', 'strikethrough',
           'color', '|', 'ol', 'ul',  '|',
           'link', '|', 'indent', 'outdent'
-        ]//自定义工具栏
+        ],//自定义工具栏
+
+        localfrom:true,
+        platfrom:false,
+        leading:false,
+        prourl:'',
       }
     },
     mounted(){
@@ -221,6 +263,7 @@
         cleanPaste: false,
       });
 
+      this.platclick();
 
       registerup(this);//初始化上传图片
       cropper(this.uploadImg, {
@@ -575,6 +618,110 @@
       show_upload_album: function () {
         this.modelshow = true;
       },
+      showlocalfrom() {//显示上传本地作品
+        this.localfrom = true;
+        this.platfrom = false;
+        this.leading = false;
+        document.getElementById("content").scrollTop = 0;
+      },
+      showplatfrom() {//显示其它平台导入
+        this.localfrom = false;
+        this.platfrom = true;
+        this.leading = false;
+        document.getElementById("content").scrollTop = 0;
+      },
+      platclick() {//擅长领域点击事件
+        let lis = document.getElementById("platname").children;
+        for (let i = 0, size = lis.length; i < size; i++) {
+          lis[i].onclick = function () {
+            if(this.className === "plat_can"){
+              for(let i = 0, size = lis.length; i < size; i++){
+                lis[i].className = "plat_can";
+              }
+            }
+            this.className = this.className === "plat_active" ? "plat_can" : "plat_active";
+          }
+        }
+      },
+      judgeUrl:function (platname,url) {
+        var Cts = url;
+        if(platname === '站酷'){
+          if(Cts === "http://www.zcool.com.cn" || Cts === "www.zcool.com.cn" || Cts === "zcool.com.cn"){
+            return 1;
+          }else {
+            if(Cts.indexOf("zcool.com.cn") != -1 ){
+              return true;
+            }
+          }
+        }
+        return ;
+      },
+      submitplatfrom:function () {
+        //选择平台
+        let lis = document.getElementById("platname").children;
+        this.platname = '';
+        for (let i = 0, size = lis.length; i < size; i++) {
+          if (lis[i].className === "plat_active") {
+            this.platname = lis[i].innerText;
+          }
+        }
+        if(this.platname === ''){
+          $(".err").eq(4).css("display", "block");
+        }else {
+          $(".err").eq(4).css("display", "none");
+        }
+        if(this.prourl === ''){
+          $(".err").eq(5).css("display", "block");
+        }else {
+          $(".err").eq(5).css("display", "none");
+        }
+        if($(".err").eq(5).css("display") === "none"){
+          if(!this.judgeUrl(this.platname,this.prourl)){
+            $(".err").eq(6).css("display", "block");
+          }else {
+            $(".err").eq(6).css("display", "none");
+          }
+        }
+        for (var i = 4; i < 7; i++) {
+          if ($(".err").eq(i).css("display") === "block") {
+            return;
+          }
+        }
+        if(this.platFlag){
+          this.platFlag = false;
+          var that = this;
+          $.ajax({
+            headers: {"Authorization": "Token " + token},
+            url: "http://www.houxiaopang.com/api/v1.2/verified/workinsert",
+            type: "POST",
+            data: {
+              url:that.prourl
+            },
+            success: function (data) {
+              that.platFlag = true;
+              data = JSON.parse(data);
+              if (data.code == 0) {
+                that.platfrom = false;
+                that.leading = true;
+              }
+              else if(data.code === -2){
+                alert("不支持此网站");
+              }else {
+                alert("网络拥挤，请稍后再试···");
+              }
+            },
+            error: function (e) {
+              that.platFlag = true;
+              if (e.status === 401) {
+                location.href = "http://houxiaopang.com/qrlogin";
+              } else {
+                alert("网络拥挤，请稍后再试···");
+              }
+            }
+          });
+        }
+
+      },
 
     },
     created(){
@@ -855,5 +1002,40 @@
   }
   .checkbox_span {
     margin-left: 20px;
+  }
+
+
+  .context > #platname{
+    overflow: hidden;
+    margin: 30px 0 0 150px;
+  }
+
+  .context > #platname > li {
+    float: left;
+    margin-right: 30px;
+    border: 1px solid #eeeeee;
+    padding: 5px 20px;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  .context > #platname >.plat_active ,.context > #label >.plat_active{
+    background: #fff;
+    color: #D01667;
+    border: 1px solid #D01667;
+  }
+  .context > #platname > .plat_can,.context > #label > .plat_can{
+    background: #fff;
+    color: #333333;
+  }
+  .context > #platname > li:hover{
+    color: #D01667;
+    border: 1px solid #D01667;
+  }
+  .leading{
+    text-align: center;
+    width: 100%;
+    height: 400px;
+    display: table-cell;
+    vertical-align: middle;
   }
 </style>

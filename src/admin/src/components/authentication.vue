@@ -146,9 +146,9 @@
 //                alert(res.data.msg)
                 that.flag = 1;
               } else {
-                alert(res.data.errorMsg)
+                alert("网络拥挤，请稍后再试。")
               }
-              that.ban_fag = false;
+              that.ban_flag = false;
             },
             error() {
               that.ban_flag = false;

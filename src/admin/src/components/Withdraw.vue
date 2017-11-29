@@ -38,12 +38,12 @@
     <div @click="tixian" class="btn">提交申请</div>
     <div class="mymodal" v-show="delmodel">
       <div class="conte">
-        <div style="background: #bbb;height: 30px;line-height: 30px;padding: 0 15px;">
-          <span style="color: #fff;">滑块验证</span><span
+        <div style="background: #DEDEDE;height: 30px;line-height: 30px;padding: 0 15px;">
+          <span>滑块验证</span><span
           style="float: right;cursor: pointer"
           @click="delmodel=false"><i class="iconfontyyy">&#xe67c;</i></span>
         </div>
-        <div style="position: relative">
+        <div style="width: 300px;margin: 50px auto">
           <div id="slider"></div>
         </div>
       </div>
@@ -73,15 +73,15 @@
     mounted(){
       var that = this
       $("#slider").slider({
-        width: 350, // width
+        width: 300, // width
         height: 40, // height
-        sliderBg: "rgb(134, 134, 131)", // 滑块背景颜色
-        color: "#fff", // 文字颜色
+        sliderBg: "#F2F4F5", // 滑块背景颜色
+        color: "#333333", // 文字颜色
         fontSize: 14, // 文字大小
-        bgColor: "#33CC00", // 背景颜色
+        bgColor: "rgba(255,68,91,0.7)", // 背景颜色
         textMsg: "按住滑块，拖拽验证", // 提示文字
         successMsg: "验证通过了哦", // 验证成功提示文字
-        successColor: "#fe6549", // 滑块验证成功提示文字颜色
+        successColor: "#fff", // 滑块验证成功提示文字颜色
         time: 400, // 返回时间
         callback: function (result) { // 回调函数，true(成功),false(失败)
           if (result) {
@@ -178,7 +178,7 @@
           },
           success(res){
             if (res.code === -1) {
-              alert(res.msg)
+              alert("网络拥挤，请稍后再试。")
             } else if (res.code === 0) {
               alert("提现申请已提交，请耐心等待。")
               that.$router.push('/account');
@@ -226,11 +226,12 @@
 
   .mymodal > .conte {
     width: 350px;
-    height: 70px;
+    height: 170px;
     overflow: hidden;
     background: #FFF;
     border-radius: 5px;
     padding: 0 0;
+    text-align: center
   }
 
   .info {
