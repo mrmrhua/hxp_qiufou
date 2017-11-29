@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Class-Path: mysql-connector-java-5.1.44.jar commons-codec-1.9.jar myba
+ tis-3.4.5.jar httpclient-4.5.3.jar commons-logging-1.2.jar xml-apis-1
+ .0.b2.jar dom4j-1.6.1.jar jsoup-1.10.2.jar httpcore-4.4.6.jar
+Main-Class: 
+

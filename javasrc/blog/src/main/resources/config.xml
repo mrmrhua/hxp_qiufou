@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rules>
+    <rule>
+        <name>zcool.com.cn</name>
+        <list>.card-box</list>
+        <url>.card-img .card-img-hover</url>
+        <category>.card-info .card-info-type</category>
+        <description>.txt-con</description>
+        <img>.reveal-work-wrap</img>
+        <nextpage>.laypage_next</nextpage>
+    </rule>
+
+
+
+</rules>
