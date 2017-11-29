@@ -19,8 +19,8 @@
     </div>
     <div class="project_list">
       <ul>
-        <li v-for="item in projectalbum" @click="jump(item.id)">
-          <img class="img" width="240" :src="item.url"/>
+        <li v-for="(item,index) in projectalbum" @click="jump(item.id)">
+          <div class="img" style="overflow: hidden;"><img width="240" :src="item.url"/></div>
           <p :title="item.title" v-html="item.title"></p>
           <p v-html="item.type"></p>
           <div class="option">
