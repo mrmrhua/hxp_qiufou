@@ -110,9 +110,9 @@
         <div class="context">
           <span class="err">*必填</span>
           <label style="text-align: left;width: auto;margin-left: 50px">请选择平台</label>
-          <span style="color: #bbb;font-size: 12px;">(目前仅支持以下四个平台)</span>
+<!--          <span style="color: #bbb;font-size: 12px;">(目前仅支持以下四个平台)</span>-->
           <ul id="platname">
-            <li class="plat_can">站酷</li>
+            <li class="plat_active">站酷</li>
             <li class="plat_can" style="pointer-events: none;background: #ffffff;color: #bbb">更多平台敬请期待</li>
 <!--            <li class="plat_can" style="pointer-events: none;background: #e0e0e0">UI中国</li>
             <li class="plat_can" style="pointer-events: none;background: #e0e0e0">Bechance</li>
@@ -647,10 +647,20 @@
         var Cts = url;
         if(platname === '站酷'){
           if(Cts === "http://www.zcool.com.cn" || Cts === "www.zcool.com.cn" || Cts === "zcool.com.cn"){
-            return 1;
-          }else {
-            if(Cts.indexOf("zcool.com.cn") != -1 ){
-              return true;
+            return ;
+          }
+          else {
+            if(Cts.indexOf('zcool.com.cn') > -1 ){
+              if(Cts.indexOf('www.') > -1){
+                var regex = /www\.(?=(zcool\.com\.cn))/.test(Cts);
+                if(regex){
+                return true;
+                }else {
+                  return;
+                }
+              }else {
+                return true;
+              }
             }
           }
         }
