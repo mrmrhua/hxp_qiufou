@@ -37,3 +37,4 @@ wx/templates/
 /jar/logs/
 /migrations/
 /nginx_for_mac.conf
+/cardimg/
