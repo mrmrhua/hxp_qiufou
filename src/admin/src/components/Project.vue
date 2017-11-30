@@ -20,11 +20,7 @@
     <div class="project_list">
       <ul>
         <li v-for="(item,index) in projectalbum" @click="jump(item.id)">
-<<<<<<< HEAD
-          <img class="img" width="240" :src="item.url"/>
-=======
           <div class="img" style="overflow: hidden;"><img width="240" :src="item.url"/></div>
->>>>>>> platform
           <p :title="item.title" v-html="item.title"></p>
           <p v-html="item.type"></p>
           <div class="option">
