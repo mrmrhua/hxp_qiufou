@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="index.css">
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <title>圈点批划</title>
+</head>
+<body style="min-width: 1200px;min-height: 400px">
+    <div class="correct-wrapper" id="app">
+        <div class="nav-wrapper">
+            <div class="correct-nav">
+                <div class="nav-left"><p><i class="iconfont">&#xe713;</i></p></div>
+                <div class="nav-right"><p>返回我的项目</p></div>
+            </div>
+        </div>
+        <div class="box-wrapper">
+            <div class="correct-box" id="cbox">
+                <div class="correct-left">
+                    <div class="correct-pic">
+
+                    </div>
+                    <div class="correct-pic">
+
+                    </div>
+                    <div class="correct-pic"></div>
+                    <div class="correct-pic"></div>
+                    <div class="correct-pic"></div>
+                    <div class="correct-pic"></div>
+                    <div class="correct-pic"></div>
+                    <div class="correct-pic"></div>
+                    <div class="correct-pic"></div>
+                </div>
+                <div class="correct-center" id="ccenter">
+                    <div class="turn-size">
+                        <div class="zoom-in"><i class="iconfont">&#xe601;</i></div>
+                        <div class="size-text">100%</div>
+                        <div class="zoom-out"><i class="iconfont">&#xe6f5;</i></div>
+                    </div>
+                    <div class="content-pic">
+                    </div>
+                </div>
+                <div class="correct-right">
+                    <div class="text-wrapper" style="overflow-y: auto">
+                        <div class="text-box">
+                            <div class="text-title"><div class="circle">1</div><p>吴鹏</p></div>
+                            <div class="text-content">论文字论文字评论文字论文字评论文字论文字评论文字论文字评论文字论文字评论文字论文字评论文字论文字评论文字论文字评</div>
+                            <div class="text-footer"><div class="footer-left">2017/10/12 20:23</div><div class="footer-right">回复</div></div>
+                        </div>
+                        <div class="text-box">
+                            <div class="text-title"><div class="circle">1</div><p>吴鹏</p></div>
+                            <div class="text-content">论文字论文字评论文字论文字评论文字论字论文字评论文字论文字评</div>
+                            <div class="text-footer"><div class="footer-left">2017/10/12 20:23</div><div class="footer-right">回复</div></div>
+                        </div>
+                        <div class="text-box">
+                            <div class="text-title"><div class="circle">1</div><p>吴鹏</p></div>
+                            <div class="text-content">论文字论文字论文字评论文字论文字评论文字论文字评论文字论文字评论文字论文字评</div>
+                            <div class="text-footer"><div class="footer-left">2017/10/12 20:23</div><div class="footer-right">回复</div></div>
+                        </div>
+                        <div class="text-box">
+                            <div class="text-title">
+                                <div>
+                                    <div class="circle">1</div><p>吴鹏</p>
+                                </div>
+                                <div>
+                                    <p>您回复了吴鹏</p>
+                                </div>
+                            </div>
+                            <div class="text-content">文字评论文字论文字评</div>
+                            <div class="text-footer"><div class="footer-left">2017/10/12 20:23</div><div class="footer-right">回复</div></div>
+                        </div>
+                        <div class="text-box">
+                            <div class="text-title">
+                                <div>
+                                    <div class="circle">1</div><p>吴鹏</p>
+                                </div>
+                                <div>
+                                    <p>您回复了吴鹏</p>
+                                </div>
+                            </div>
+                            <div class="text-content">文字评论文字论文字评</div>
+                            <div class="text-footer"><div class="footer-left">2017/10/12 20:23</div><div class="footer-right">回复</div></div>
+                        </div>
+                        <div class="text-box">
+                            <div class="text-title">
+                                <div>
+                                    <div class="circle">1</div><p>吴鹏</p>
+                                </div>
+                                <div>
+                                    <p>您回复了吴鹏</p>
+                                </div>
+                            </div>
+                            <div class="text-content">文字评论文字论文字评</div>
+                            <div class="text-footer"><div class="footer-left">2017/10/12 20:23</div><div class="footer-right">回复</div></div>
+                        </div>
+                    </div>
+                    <div class="submit-box">
+                        <div class="box-text"><textarea placeholder="输入内容"></textarea></div>
+                        <div class="cancel-btn"><p>取消</p></div>
+                        <div class="submit-btn"><p>提交</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+    var sWidth = document.getElementById("cbox").clientWidth;
+    var sHeight = document.getElementById("cbox").clientHeight;
+    var cWidth = sWidth-500;
+    var cHeight = sHeight;
+    var ccenter = document.getElementById("ccenter");
+    ccenter.style.width = cWidth+"px";
+    ccenter.style.height = cHeight+"px";
+</script>
+<script type="text/javascript">
+    new Vue({
+        el: '#app',
+        data: {
+            message: 'Hello Vue.js!'
+        }
+    })
+</script>
+</body>
+</html>
