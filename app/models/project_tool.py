@@ -95,3 +95,19 @@ class Projectwork(db.Model):
 
     def __repr__(self):
         return '<Designwork of %r>' % (self.work_url)
+
+
+
+class Comments(db.Model):
+    __tablename__ = 'comments'
+    id = db.Column(INTEGER(unsigned=True), primary_key=True)
+    image_id = db.Column(INTEGER(unsigned=True), db.ForeignKey('projectworks.id'))
+    user_id = db.Column(INTEGER(unsigned=True), db.ForeignKey('users.id'))
+    comment_index = db.Column(INTEGER(unsigned=True))
+    content = db.Column(db.Text)
+    description = db.Column(db.Text)
+    up_time = db.Column(db.DateTime)
+
+
+    def __repr__(self):
+        return '<Comments of %r>' % (self.id)
