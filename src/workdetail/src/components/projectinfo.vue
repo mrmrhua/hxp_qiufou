@@ -70,7 +70,7 @@
     } else if (type == 3) {
       type = "文本画册";
     } else if (type == 4) {
-      type = "海报展览";
+      type = "海报展板";
     } else if (type == 5) {
       type = "LOGO";
     } else if (type == 6) {
@@ -111,7 +111,7 @@
           success(result){
             if (result.code === 0) {
               that.projectinfo = result.data;
-              if(!result.data.not_saved){
+              if(result.data.not_saved){
                 ban();
               }
               that.projectinfo.category = categorychange(that.projectinfo.category);
