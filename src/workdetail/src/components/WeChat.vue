@@ -14,15 +14,7 @@
       <!--风格标签-->
       <div class="stylebox">
         <ul>
-          <li><div>扁平风</div></li>
-          <li><div>青春活泼</div></li>
-          <li><div>大客户经验</div></li>
-          <li><div>大客户经验</div></li>
-          <li><div>扁平风</div></li>
-          <li><div>大客户经验</div></li>
-          <li><div>大客户经验</div></li>
-          <li><div>大客户经验</div></li>
-          <li><div>大客户经验</div></li>
+          <li v-for="item in userinfo.tags"><div v-html="item"></div></li>
         </ul>
       </div>
       <!--擅长-->
@@ -150,7 +142,8 @@
           project_text: [],
           worktime: [],
           city:'北京 北京',
-          filed:[]
+          filed:[],
+          tags:[]
         },
         albums: [],
         pageinfo: {
