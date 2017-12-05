@@ -866,6 +866,7 @@
     overflow: hidden;
     text-align: center;
     line-height: 180px;
+    margin-bottom: 24px;
   }
 
   .di_list > ul > li:nth-child(3n) {
