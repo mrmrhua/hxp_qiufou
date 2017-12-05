@@ -5,6 +5,7 @@
     <title>网站维护中</title>
     <link rel="stylesheet" href="index.css">
 </head>
+
 <body>
     <div class="box">
             <img src="http://image.houxiaopang.com/deving/img/update.png">
@@ -16,10 +17,59 @@
                 </div>
                 <div class="time-box">
                         <img src="http://image.houxiaopang.com/deving/img/timeicon.png" style="vertical-align: text-bottom;display: inline-block;margin-right:10px ">
-                        <p style="font-size: 18px;color:#F88D31;line-height: 25px;vertical-align: text-bottom;display: inline-block;">预计恢复访问时间： 12:33</p>
+
+                        <p style="font-size: 18px;color:#F88D31;line-height: 25px;vertical-align: text-bottom;display: inline-block;">
+                            预计恢复访问时间：
+                            <label id="timeShow"></label>
+                        </p>
                 </div>
                 <p style="font-size: 18px;color:#F88D31;margin-top: 10px">请稍后访问</p>
             </div>
     </div>
+    <script language="JavaScript">
+        function getcookie(objname){
+            var arrstr = document.cookie.split("; ");
+            for(var i = 0;i < arrstr.length;i ++){
+                var temp = arrstr[i].split("=");
+                if(temp[0] == objname) return unescape(temp[1]);
+            }
+        }
+        function setCookie(name,value)
+        {
+            var Days = 30;
+            var exp = new Date();
+            exp.setTime(exp.getTime() + Days*24*60*60*1000);
+            document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+        }
+
+        nowtime=new Date();
+        var h = nowtime.getHours();
+        h = h + 2;
+        if(h>24){
+            h = h%24;
+        }
+        if(h<10){
+            h = "0"+h;
+        }
+
+        var m = nowtime.getMinutes();
+        if(m<10){
+            m = "0" + m;
+        }
+        var nh;
+        var nm;
+        if(h == getcookie("beforehour")){
+            nh = getcookie("beforehour");
+            nm = getcookie("beforeminutes");
+        }else {
+            nh = h;
+            nm =m ;
+            setCookie("beforehour",h);
+            setCookie("beforeminutes",m);
+        }
+
+        document.getElementById("timeShow").innerHTML = nh+" : "+nm;
+
+    </script>
 </body>
 </html>

@@ -38,9 +38,6 @@
     s.parentNode.insertBefore(g, s);
   })();</script><link href=./static/css/app.818d33d5c8c588c3ab2c70120f6ce12a.css rel=stylesheet></head><body><div style="display: none"><script type=text/javascript>var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
   document.write(unescape("%3Cspan id='cnzz_stat_icon_1261952519'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1261952519' type='text/javascript'%3E%3C/script%3E"));</script></div><div id=app></div><script src=https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js></script><script src=http://image.houxiaopang.com/static/baseform/js/qiniu.js></script><script src=https://cdn.staticfile.org/plupload/2.1.8/plupload.full.min.js></script><script src=./static/js/icheck.min.js></script><script src=./static/js/upwork.js></script><script src=./static/js/cropper.js></script><script src=./static/js/main.js></script><script src=./static/js/jquery.slider.min.js></script><script src=./static/js/module.min.js></script><script src=./static/js/hotkeys.min.js></script><script src=./static/js/uploader.min.js></script><script src=./static/js/simditor.min.js></script><script>var token = window.localStorage.token, login = false;
-window.localStorage.applystatus = "2";
-//todo 开发模式
-token = "robin"
 var applystatus = window.localStorage.applystatus;
 creatinit();
 function creatinit() {
@@ -106,17 +103,6 @@ function showmsginfo(that) {
     that.children[0].innerHTML = "&#xe610;";
     that.children[1].innerHTML = "展开";
   }
-
-
-  //&#xe820; xe611
-  /*var msgmore = i.nextElementSibling.nextElementSibling;
-   if (msgmore.style.display === "none") {
-   i.innerHTML = "&#xe820;";
-   msgmore.style.display = "block";
-   } else {
-   i.innerHTML = "&#xe611;";
-   msgmore.style.display = "none";
-   }*/
 }
 
 function ajax(options) {
@@ -126,8 +112,6 @@ function ajax(options) {
   if (!options.timeout) {
     options.timeout = 5000;
   }
-  //todo options.url 临时去掉https 的 s
-//    options.url = options.url.replace("https", "http")
   if (options.type === "get" || options.type === "GET") {
     options.url += "?";
     for (var i in options.data) {
@@ -158,7 +142,7 @@ function ajax(options) {
       if (ajax.readyState !== 4) {
         ajax.abort();
       }
-<<<<<<< HEAD
+
     }, options.timeout)
   }
   var opentype = options.type === "file" ? "post" : options.type;
@@ -175,28 +159,4 @@ function ajax(options) {
   } else {
     ajax.send(options.data);
   }
-}</script><script type=text/javascript src=./static/js/manifest.759164bc5f0d612932ab.js></script><script type=text/javascript src=./static/js/vendor.af55c1595e84c689fa94.js></script><script type=text/javascript src=./static/js/app.d22d6b3fcc4c1c680175.js></script></body></html>
-=======
-    };
-    if (options.timeout !== -1 && typeof(options.timeout) === "number") {
-      setTimeout(function () {
-        if (ajax.readyState !== 4) {
-          ajax.abort();
-        }
-      }, options.timeout)
-    }
-    var opentype = options.type === "file" ? "post" : options.type;
-    ajax.open(opentype, options.url, true);
-    if (options.token) {
-      ajax.setRequestHeader("Authorization", "Token " + token);
-    }
-    if (options.type === "get" || options.type === "GET") {
-      ajax.setRequestHeader("Content-type", "application/json;charset=utf-8")
-      ajax.send();
-    } else if(options.type === "post" || options.type === "POST"){
-      ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=utf-8")
-      ajax.send(options.data);
-    }else{
-      ajax.send(options.data);
-    }}</script><script type=text/javascript src=./static/js/manifest.e98e677d646ab371f6cb.js></script><script type=text/javascript src=./static/js/vendor.d15baf44f51281df7d8c.js></script><script type=text/javascript src=./static/js/app.cf50b152d46703037e9f.js></script></body></html>
->>>>>>> platform
+}</script><script type=text/javascript src=./static/js/manifest.f338e15e950ea5e138f0.js></script><script type=text/javascript src=./static/js/vendor.af55c1595e84c689fa94.js></script><script type=text/javascript src=./static/js/app.e57ed7af01242f12f543.js></script></body></html>
