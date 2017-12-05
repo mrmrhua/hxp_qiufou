@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./static/index.css">
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <title>圈点批划</title>
+</head>
+<body style="min-width: 1200px;min-height: 400px">
+    <div class="correct-wrapper" id="app">
+        <div class="nav-wrapper">
+            <div class="correct-nav">
+				<div @click="back" style="width:135px;display: flex;flex-direction: row;justify-content: flex-start;align-items: center;">
+					<div class="nav-left"><p><i class="iconfont">&#xe713;</i></p></div>
+					<div class="nav-right"><p>返回我的项目</p></div>
+				</div>
+            </div>
+        </div>
+        <div class="box-wrapper">
+            <div class="correct-box" id="cbox">
+                <div class="correct-left" >
+                    <div class="correct-pic" @click="toggleImg(i)" :class="{correct_pic_active :i.choose}"  v-for="i in itemsUrl">
+                        <img :src="i.workUrl" style="width: 100%;" >
+                    </div>
+                </div>
+                <div class="correct-center" id="ccenter">
+                    <div class="toggle-box">
+                        <div :class="[toggle_btn,{active_btn:isActive1}]" @click="togglePic('1')"><p>显示原图</p></div>
+                        <div :class="[toggle_btn,{active_btn:isActive2}]" @click="togglePic('2')"><p>显示批注</p></div>
+                    </div>
+                    <div class="content-pic">
+                        <img id="content-image" style="display: block;max-width: 100%;max-height: 100%;" :src="centerImgUrl.workUrl" alt="">
+                        <div id="lickfather" class="lickfather" v-show="(pz.length > 0)&&showpz" >
+                            <img :src="setbase(item.content)" v-show="item.show" :style="{zIndex : index}" v-for='(item,index) in pz' style="width: 100%;position: absolute;left: 0;top: 0;display: block;">
+                        </div>
+                    </div>
+                    <!-- <div class="turn-size">
+                        <div class="zoom-in"><i class="iconfont">&#xe601;</i></div>
+                        <div class="size-text">100%</div>
+                        <div class="zoom-out"><i class="iconfont">&#xe6f5;</i></div>
+                    </div> -->
+                </div>
+                <div class="correct-right">
+                    <div class="text-wrapper">
+                        <div class="text-box"  style='text-align: center;line-height: 100px;' v-show="pz.length === 0">
+                            还没有任何批注
+                        </div>
+                        <div class="text-box" v-show='pz.length > 0' v-for='(item,index) in pz'>
+                            <div class="text-title"><div class="circle" @click="togglePz(index)" v-text="item.commentIndex"></div></div>
+                            <div class="text-content" v-text="item.description"></div>
+                            <div class="text-footer"><div class="footer-left" v-text="item.upTime"></div><!--<div class="footer-right">回复</div>--></div>
+<!--回复内容显示框                           <div class="answer-box">
+                                <div><p style="color: #4762FF">您回复了吴鹏</p></div>
+                                <div>论文字论文字评论文字论文字评论文字论文字评论文字论文字评论文字论文字评论文字论文字评论文字论文字评论文字论文字评</div>
+                                <div style="margin-bottom: 10px;overflow: hidden"><div class="footer-left">2017/10/12 20:23</div></div>
+                            </div>-->
+                        </div>
+                    </div>
+<!--回复输入框                    <div class="submit-box">
+                        <div class="box-text"><textarea placeholder="输入内容"></textarea></div>
+                        <div class="cancel-btn"><p>取消</p></div>
+                        <div class="submit-btn"><p>提交</p></div>
+                    </div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+    var token = window.localStorage.token;
+    if(!token){
+        location.href ="http://www.houxiaopang.com/qrlogin"
+    }
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
+    function ajax(options) {
+    if (!options.type) {
+      options.type = "GET"
+    }
+    options.timeout = 5000;
+    options.url = options.url.replace("https", "http").replace("www.houxiaopang.com","118.89.44.108")
+    if (options.type === "get" || options.type === "GET") {
+      options.url += "?";
+      for (var i in options.data) {
+        options.url += i + "=" + options.data[i] + "&";
+      }
+      options.url = options.url.substring(0, options.url.length - 1);
+    } else {
+      var data = []
+      for (var i in options.data) {
+        data.push(i + "=" + options.data[i])
+      }
+      options.data = data.join("&")
+    }
+    var ajax = new XMLHttpRequest();
+    ajax.onreadystatechange = function () {
+      if (ajax.readyState === 4 && ajax.status === 200) {
+        options.success(eval("(" + ajax.responseText + ")"));
+      } else if (ajax.readyState === 4 && ajax.status !== 200) {
+        options.error(ajax);
+      }
+    };
+    if (options.timeout && typeof(options.timeout) === "number") {
+      setTimeout(function () {
+        if (ajax.readyState !== 4) {
+          ajax.abort();
+        }
+      }, options.timeout)
+    }
+    ajax.open(options.type, options.url, true);
+    if (options.token) {
+      ajax.setRequestHeader("Authorization", "Token " + token);
+    }
+    if (options.type === "get" || options.type === "GET") {
+      ajax.setRequestHeader("Content-type", "application/json;charset=utf-8")
+      ajax.send();
+    } else {
+      ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=utf-8")
+      ajax.send(options.data);
+    }
+  }
+    
+    
+
+</script>
+<script type="text/javascript">
+    new Vue({
+        el: '#app',
+        data: {
+            isActive1:false,
+            isActive2:true,
+            toggle_btn:'toggle_btn',
+            itemsUrl:[],
+            centerImgUrl:{},
+            pz:[],
+            showpz:true,
+        },
+        created(){
+            this.init();
+            var that = this;
+            window.onresize = function(){
+                that.init();
+                try {
+                    var a = document.getElementById("content-image")
+                    var lickfather = document.getElementById("lickfather")
+                    lickfather.style.top = a.offsetTop + "px";
+                    lickfather.style.left = a.offsetLeft + "px";
+                    lickfather.style.width = a.offsetWidth + 'px';
+                    lickfather.style.height = a.offsetHeight + 'px';
+                } catch(e) {
+                }
+            };
+            var post = getQueryString("post");
+            if(!post){
+                location.href="http://www.houxiaopang.com/404"
+            }else{
+                this.getinfo(post);
+            }
+        },
+        methods:{
+			back(){
+				var url = getQueryString("url");
+				try{
+					var a = url.split('\/');
+					url = a[0]+"/"+a[1]+"?id="+a[2];
+					location.href = "http://www.houxiaopang.com/admin/#/"+url;			
+				}catch(e){
+					location.href = "http://www.houxiaopang.com/admin/#/";			
+				}
+			},
+            init(){
+                var sWidth = document.getElementById("cbox").clientWidth;
+                var sHeight = document.getElementById("cbox").clientHeight;
+                var cWidth = sWidth-500;
+                var cHeight = sHeight;
+                var ccenter = document.getElementById("ccenter");
+                ccenter.style.width = cWidth+"px";
+                ccenter.style.height = cHeight+"px";
+                document.getElementsByClassName("content-pic")[0].style.height = cHeight - 80 +'px';
+            },
+            setbase(value){
+                return value.replace(/ /g, "+");
+            },
+            getinfo(id){
+                var that = this;
+                ajax({
+                  token:true,
+                  url: "http://www.houxiaopang.com/api/v1.2/circle/getworks",
+                  data: {
+                    id: id
+                  },
+                  success(res){
+                    if (res.code === 0) {
+                      res.data.works.forEach( function(element,index) {
+                        element.choose = false;
+                      });
+                      that.itemsUrl = res.data.works;
+                      that.toggleImg(res.data.works[0]);
+                    } else {
+                      alert("网络拥挤，请稍后再试。")
+                    }
+                  },
+                  error(){
+                    alert("网络拥挤，请稍后再试。")
+                  }
+                })
+            },
+            getCorrectinfo(id){
+                var that = this;
+                ajax({
+                  token:true,
+                  url: "http://www.houxiaopang.com/api/v1.2/circle/getcomments",
+                  data: {
+                    id: id
+                  },
+                  success(res){
+                    if (res.code === 0) {
+                      res.data.comments.forEach(function(item){
+                        item.show = true;
+                      })
+                      that.pz = res.data.comments
+                    } else {
+                      alert("网络拥挤，请稍后再试。")
+                    }
+                  },
+                  error(){
+                    alert("网络拥挤，请稍后再试。")
+                  }
+                })
+              },
+            toggleImg : function (value) {
+                if(this.centerImgUrl.id === value.id){
+                    return
+                }
+                this.itemsUrl.forEach( function(element) {
+                    if(value.id === element.id){
+                        element.choose = true;
+                    }else {
+                        element.choose = false;
+                    }
+                });
+                this.getCorrectinfo(value.id);
+                this.centerImgUrl = value;
+                this.isActive1 = false;
+                this.isActive2 = true;
+                this.$nextTick(function(){
+                    document.getElementById("content-image").onload = function(){
+                        var lickfather = document.getElementById("lickfather")
+                        lickfather.style.top = this.offsetTop + "px";
+                        lickfather.style.left = this.offsetLeft + "px";
+                        lickfather.style.width = this.width + 'px';
+                        lickfather.style.height = this.height + 'px';
+                    }
+                });
+            },
+            togglePic: function (index) {
+                if(index == '1'){
+                    this.isActive1 = true;
+                    this.isActive2 = false;
+                    this.showpz = false;
+                    this.pz.forEach( function(item) {
+                        item.show = false
+                    });
+                }else {
+                    this.isActive1 = false;
+                    this.isActive2 = true;
+                    this.showpz = true;
+                    this.pz.forEach( function(item) {
+                        item.show = true
+                    });
+                }
+            },
+            togglePz(index){
+                if(!this.isActive2){
+                    this.isActive1 = false;
+                    this.isActive2 = true;
+                    this.showpz = true;
+                }
+                if(this.pz[index].show){
+                    this.pz[index].show = false;
+                }else{
+                    this.pz[index].show = true;
+                }
+            }
+        }
+    })
+</script>
+</body>
+</html>

@@ -61,8 +61,10 @@ class Project(db.Model):
     # 是否有新更新
     isnew = db.Column(db.Boolean)
     title = db.Column(db.String(50))
+    # 本项目最新进度的时间
     up_time = db.Column(db.DateTime)
     posts = db.relationship('Post', backref='project',order_by='Post.up_time.desc()')
+    # 项目开始时间
     starttime = db.Column(db.DateTime)
     def __repr__(self):
         return '<Project: %r>' % (self.demand_id)
@@ -72,7 +74,7 @@ class Project(db.Model):
         elif self.status == 1:
             return '已结束'
         elif self.status == 2:
-            return '以中止'
+            return '已中止'
         else:
             return ''
 
@@ -95,3 +97,19 @@ class Projectwork(db.Model):
 
     def __repr__(self):
         return '<Designwork of %r>' % (self.work_url)
+
+
+
+class Comments(db.Model):
+    __tablename__ = 'comments'
+    id = db.Column(INTEGER(unsigned=True), primary_key=True)
+    image_id = db.Column(INTEGER(unsigned=True), db.ForeignKey('projectworks.id'))
+    user_id = db.Column(INTEGER(unsigned=True), db.ForeignKey('users.id'))
+    comment_index = db.Column(INTEGER(unsigned=True))
+    content = db.Column(db.Text)
+    description = db.Column(db.Text)
+    up_time = db.Column(db.DateTime)
+
+
+    def __repr__(self):
+        return '<Comments of %r>' % (self.id)

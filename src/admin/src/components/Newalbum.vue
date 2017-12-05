@@ -93,8 +93,8 @@
           <div style="float: left">
             <div class="upfile" style="padding-right: 30px;">
               <div class="upwrapper" style="height: 150px;">
-                <section class="addbtn" id="album_cover">
-                  <img id="cropedimg"
+                <section class="addbtn" id="album_cover" style="overflow: hidden;">
+                  <img id="cropedimg" style="height: auto;"
                        :src="ablumfile"
                        class="add-img" @click="show_upload_album">
                   <div class="zhezhao"><img
@@ -110,9 +110,9 @@
         <div class="context">
           <span class="err">*必填</span>
           <label style="text-align: left;width: auto;margin-left: 50px">请选择平台</label>
-          <span style="color: #bbb;font-size: 12px;">(目前仅支持以下四个平台)</span>
+<!--          <span style="color: #bbb;font-size: 12px;">(目前仅支持以下四个平台)</span>-->
           <ul id="platname">
-            <li class="plat_can">站酷</li>
+            <li class="plat_active">站酷</li>
             <li class="plat_can" style="pointer-events: none;background: #ffffff;color: #bbb">更多平台敬请期待</li>
 <!--            <li class="plat_can" style="pointer-events: none;background: #e0e0e0">UI中国</li>
             <li class="plat_can" style="pointer-events: none;background: #e0e0e0">Bechance</li>
@@ -151,7 +151,7 @@
         <div style="width: 100%;height: 50px;padding-left: 28px;padding-right:15px;padding-top: 15px;">
           <span>排序</span><span
           style="float: right;cursor: pointer"
-          @click="sortmodelshow=false"><i class="iconfontyyy">&#xe67c;</i></span>
+          @click="closeovser"><i class="iconfontyyy">&#xe67c;</i></span>
         </div>
         <div style="height: 495px;overflow-y: auto">
           <ul id="sort" style="margin: 0 auto;width: 645px;">
@@ -444,6 +444,10 @@
         document.body.style.overflow = "auto"
         this.modelshow = false
       },
+      closeovser(){
+        document.body.style.overflow = "auto";
+        this.sortmodelshow = false;
+      },
       sortover(){
         var newsort = [];
         $("#sort .item").each(function () {
@@ -647,10 +651,20 @@
         var Cts = url;
         if(platname === '站酷'){
           if(Cts === "http://www.zcool.com.cn" || Cts === "www.zcool.com.cn" || Cts === "zcool.com.cn"){
-            return 1;
-          }else {
-            if(Cts.indexOf("zcool.com.cn") != -1 ){
-              return true;
+            return ;
+          }
+          else {
+            if(Cts.indexOf('zcool.com.cn') > -1 ){
+              if(Cts.indexOf('www.') > -1){
+                var regex = /www\.(?=(zcool\.com\.cn))/.test(Cts);
+                if(regex){
+                return true;
+                }else {
+                  return;
+                }
+              }else {
+                return true;
+              }
             }
           }
         }

@@ -86,6 +86,7 @@ class ProjectPage(Resource):
         up_time = datetime.datetime.now()
         pro = Project.query.get(project_id)
         pro.isnew = True
+        pro.up_time = up_time
         p = Post(up_time=up_time, desc=desc, project_id=project_id)
         db.session.add(pro)
         db.session.add(p)

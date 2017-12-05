@@ -1,31 +1,34 @@
 <template>
   <div>
-    <div class="top">
-      <div class="head">
-        <a :href="'http://houxiaopang.com/workdetail/user/'+projectinfo.belong_id" target="_blank">
-          <img :src="projectinfo.belong_head">
-          <span>　{{projectinfo.belong_nick}}</span>
-        </a>
-      </div>
-      <div class="title">{{projectinfo.title}}</div>
-      <div class="category">
-        <ul>
-          <li>{{projectinfo.category}}</li>
-        </ul>
-      </div>
-      <div class="otherMsg">
-        <ul>
-          <li v-if="projectinfo.price !=='无' && projectinfo.price">参考价格：{{projectinfo.price}}</li>
-          <li v-if="projectinfo.not_business">禁止商用;</li>
-          <li v-if="projectinfo.not_anonymous">禁止转载;</li>
-          <li v-if="projectinfo.not_single">禁止个人使用</li>
+    <div class="top-wrapper">
+      <div class="top">
+        <div class="head">
+          <a :href="'http://houxiaopang.com/workdetail/user/'+projectinfo.belong_id" target="_blank">
+            <img :src="projectinfo.belong_head">
+            <span>　{{projectinfo.belong_nick}}</span>
+          </a>
+        </div>
+        <div class="title">{{projectinfo.title}}</div>
+        <div class="category">
+          <ul>
+            <li>{{projectinfo.category}}</li>
+          </ul>
+        </div>
+        <div class="otherMsg">
+          <ul>
+            <li style="margin-right: 25px;" v-if="projectinfo.price !=='无' && projectinfo.price">参考价格：{{projectinfo.price}}</li>
+            <li v-if="projectinfo.not_business">禁止商用<span v-if="projectinfo.not_anonymous || projectinfo.not_single">;</span></li>
+            <li v-if="projectinfo.not_anonymous">禁止转载<span v-if="projectinfo.not_single">;</span></li>
+            <li v-if="projectinfo.not_single">禁止个人使用</li>
 
-        </ul>
+          </ul>
+        </div>
+        <div class="time">{{projectinfo.up_time}}</div>
+
+
       </div>
-      <div class="time">{{projectinfo.up_time}}</div>
-
-
     </div>
+
 
     <div class="work">
       <div class="worklist">
@@ -67,7 +70,7 @@
     } else if (type == 3) {
       type = "文本画册";
     } else if (type == 4) {
-      type = "海报展览";
+      type = "海报展板";
     } else if (type == 5) {
       type = "LOGO";
     } else if (type == 6) {
@@ -108,7 +111,7 @@
           success(result){
             if (result.code === 0) {
               that.projectinfo = result.data;
-              if(!result.data.not_saved){
+              if(result.data.not_saved){
                 ban();
               }
               that.projectinfo.category = categorychange(that.projectinfo.category);
@@ -127,6 +130,10 @@
   }
 </script>
 <style scoped>
+  .top-wrapper{
+    width: 100%;
+    border-top: 1px solid #dedede;
+  }
   .top {
     width: 1000px;
     margin: 0 auto;
@@ -164,7 +171,7 @@
   .title {
     font-size: 32px;
     font-weight: 700;
-    line-height: 130px;
+    line-height: 90px;
 
   }
 
@@ -174,7 +181,7 @@
     line-height: 30px;
     clear: both;
     text-align: left;
-    margin: 18px 0 45px;
+    margin: 20px 0 45px;
   }
 
   .time {
@@ -215,17 +222,14 @@
     float: left;
     color: #969899;
   }
-  .otherMsg >ul >li:first-child{
 
-    margin-right: 25px;
-  }
 
   .work {
     width: 100%;
     background: #ffffff;
     overflow: hidden;
-    margin-top: 120px;
-    border-top: 1px solid #bbb;
+    margin-top: 60px;
+    border-top: 1px solid #dedede;
     padding: 0 0 150px;
   }
 

@@ -43,3 +43,13 @@ class ClientPostDemand(Resource):
         send_admin_email(ADMIN_EMAIL,'有新需求',email)
         return jsonify({"code":0})
 
+
+
+
+class SendSms(Resource):
+    def get(self):
+        from app.common import single_send
+        tel = '15700079780'
+        text = '【猴小胖】［猴小胖设计为您匹配了一个项目］微信h5设计，时间较紧12.5日出初稿。报价请进http://www.houxiaopang.com/demand/#/detail/9。报价截止时间12.3日晚6点'
+        r = single_send(tel, text=text)
+        print(r)

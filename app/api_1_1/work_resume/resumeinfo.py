@@ -33,6 +33,7 @@ class GetResumeInfo(Resource):
 
         t=  [{'title':i.title,'desc':i.content} for i in user.experiences]
         # print(di.startyear)
+        tags = [i.tag_name for i in user.tags]
         return jsonify({
             'code':0,
             'data':{
@@ -43,6 +44,7 @@ class GetResumeInfo(Resource):
                 'filed':field,
                 'worktime':de_worktime,
                 'project_text':t,
-                'intro':di.intro
+                'intro':di.intro,
+                'tags':tags
             }
         })
