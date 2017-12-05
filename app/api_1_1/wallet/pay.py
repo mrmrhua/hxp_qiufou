@@ -8,7 +8,7 @@ import datetime
 from config import ADMIN_TEL,live_key,test_key,pingxx_app_id,ADMIN_EMAIL
 from decimal import Decimal
 import pingpp
-
+from app.common import adminauth
 # HTTP
 # https://www.houxiaopang.com/api/v1.1/wxfwh/payrecord
 # Get
@@ -240,16 +240,15 @@ class GetPayHooks(Resource):
     def post(self):
         try:
             type = request.json.get("type")
-            print(request.json)
             if type=='charge.succeeded':
                 obj = request.json.get("data").get("object")
                 order_no= obj.get("order_no")
                 amount = obj.get("amount")
                 cf = CashFlow.query.filter_by(order_no=order_no).first()
-                cf.detail = '客户已支付'
+                cf.status = '客户已支付'
                 user_id = cf.related_user
-                w = Wallet.query.get(user_id)
-                w.frozenmoeny += amount
+                w = Wallet.query.filter_by(user_id=user_id).first()
+                w.frozen_money += amount
                 db.session.add(cf)
                 db.session.add(w)
                 db.session.commit()
@@ -257,3 +256,20 @@ class GetPayHooks(Resource):
             return Response(status=200)
         except:
             return Response(status=500)
+
+
+class OfflinePayHooks(Resource):
+    @adminauth.login_required
+    def post(self):
+        cf_id = request.values.get("cf_id")
+        cf = CashFlow.query.filter_by(id=cf_id).first()
+        cf.status = '客户已支付'
+        user_id = cf.related_user
+        w = Wallet.query.filter_by(user_id = user_id).first()
+        print(w)
+        amount = cf.change_money
+        w.frozen_money += amount
+        db.session.add(cf)
+        db.session.add(w)
+        db.session.commit()
+        return jsonify({"code":0})

@@ -111,7 +111,7 @@ api_v1_1.add_resource(RecomList,'/adminsystem/pricelist_tmp')
 api_v1_1.add_resource(DelRecom,'/adminsystem/pricelist/remove')
 
 
-
+# 服务号配置
 api_v1_1.add_resource(WxTest,'/wxpublic')
 
 api_v1_1.add_resource(WxUserinfo,'/wx_getuid')
@@ -138,7 +138,7 @@ api_v1_1.add_resource(GetCity,'/getcity')
 
 # 获取微信JSSDK的TICKET
 api_v1_1.add_resource(GetJsTicket,'/getjsticket')
-
+# 获取ACCESS_TOKEN
 api_v1_1.add_resource(TokenForTest,'/testtoken')
 
 api_v1_1.add_resource(PushDemand,'/adminsystem/demand/pushdemand')
@@ -215,4 +215,10 @@ api_v1_1.add_resource(GetAlipayCharge,'/getalipaycharge')
 api_v1_1.add_resource(GetPayHooks,'/pingxx/webhooks')
 
 
-api_v1_1.add_resource(SendSms,'/tmp/sendsms')
+# 发送短信
+# api_v1_1.add_resource(SendSms,'/tmp/sendsms')
+
+# 管理后台
+# 客户已经线下付款
+# http://www.houxiaopang.com/api/v1.1/offline/payhooks
+api_v1_1.add_resource(OfflinePayHooks,'/adminsystem/offline/payhooks')
