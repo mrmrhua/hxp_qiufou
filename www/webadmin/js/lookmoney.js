@@ -157,6 +157,34 @@ function pass(id) {//取消提现
         }
     })
 }
+function brokerthis(id,type){
+    if(type.trim() == "等待付款中"){
+        $.ajax({
+            type:'post',
+            url:'',
+            headers: {"Authorization": "Token " + window.localStorage.token},
+            url: "http://www.houxiaopang.com/api/v1.1/adminsystem/offline/payhooks",
+            data: {
+                cf_id: id,
+            },
+            success(res){
+                if (res.code === 0) {
+                    alert("成功。")
+                } else {
+                    alert("操作失败！")
+                }
+            },
+            error(){
+                alert("操作失败！")
+            }
+
+        })
+    }else{
+        alert("此现金流不支持此操作");
+    }
+
+}
+
 //获取需求
 function getDemand() {
     $.ajax({
@@ -175,12 +203,14 @@ function getDemand() {
                 var checktfoot = document.getElementById("checktfoot");
                 tbody.innerHTML = "";
                 operate.innerHTML = "";
-                console.log(applyer);
                 applyer.forEach(function (item, index) {
                     var strchecktfoot = `
         			 <tr><td><div class="checkbox"><input style="margin-top: 10px;" type="checkbox"
         			  onclick="checkCheck()"></div></td></tr>`;
                     checktfoot.innerHTML += strchecktfoot;
+                    var stroperate = `
+                    <tr><td><div><span onclick="brokerthis(${item.id},'${item.status }')" class="colorSpan">客户已线下付款</span></div></td></tr>`;
+                    operate.innerHTML += stroperate;
                     var strcontent = `
         					<tr>
         							<td><div>

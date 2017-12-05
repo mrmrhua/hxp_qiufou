@@ -143,7 +143,7 @@ function stop(id) {//终止项目
     $.ajax({
         type: "post",
         headers: {"Authorization": "Token " + window.localStorage.token},
-        url: "http://www.houxiaopang.com/api/v1.1//adminsystem/changeprojectstatus",
+        url: "http://www.houxiaopang.com/api/v1.1/adminsystem/changeprojectstatus",
         data: {
             project_id: id,
             status: 2
