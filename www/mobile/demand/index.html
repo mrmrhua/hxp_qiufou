@@ -8,8 +8,7 @@
       padding-right: 13px;
       position: relative;
       font-size: 14px;
-    }</style><link href=./static/css/app.1285754812ca9dbc177c8ac8a1ea7c44.css rel=stylesheet></head><body><div id=app></div><div id=loadingToast style=display:none><div class=weui-mask_transparent></div><div class=weui-toast><i class="weui-loading weui-icon_toast"></i><p id=loadText class=weui-toast__content></p></div></div><div class=js_dialog id=iosDialog2 style="display: none"><div class=weui-mask></div><div class=weui-dialog><div class=weui-dialog__bd id=iosDialogtext></div><div onclick=hideModal() class=weui-dialog__ft><a href=javascript:; class="weui-dialog__btn weui-dialog__btn_primary">确定</a></div></div></div><script type=text/javascript>//var token = window.localStorage.token;
-  var token = "robin";
+    }</style><link href=./static/css/app.1285754812ca9dbc177c8ac8a1ea7c44.css rel=stylesheet></head><body><div id=app></div><div id=loadingToast style=display:none><div class=weui-mask_transparent></div><div class=weui-toast><i class="weui-loading weui-icon_toast"></i><p id=loadText class=weui-toast__content></p></div></div><div class=js_dialog id=iosDialog2 style="display: none"><div class=weui-mask></div><div class=weui-dialog><div class=weui-dialog__bd id=iosDialogtext></div><div onclick=hideModal() class=weui-dialog__ft><a href=javascript:; class="weui-dialog__btn weui-dialog__btn_primary">确定</a></div></div></div><script type=text/javascript>var token = window.localStorage.token;
   var $loadingToast = document.getElementById('loadingToast');
   var $loadText = document.getElementById('loadText');
   var $iosDialog2 = document.getElementById("iosDialog2");
@@ -42,7 +41,6 @@
       options.type = "GET"
     }
     options.timeout = 5000;
-    options.url = options.url.replace("https", "http").replace("www.houxiaopang.com","118.89.44.108")
     if (options.type === "get" || options.type === "GET") {
       options.url += "?";
       for (var i in options.data) {
