@@ -93,8 +93,8 @@
           <div style="float: left">
             <div class="upfile" style="padding-right: 30px;">
               <div class="upwrapper" style="height: 150px;">
-                <section class="addbtn" id="album_cover">
-                  <img id="cropedimg"
+                <section class="addbtn" id="album_cover" style="overflow: hidden;">
+                  <img id="cropedimg" style="height: auto;"
                        :src="ablumfile"
                        class="add-img" @click="show_upload_album">
                   <div class="zhezhao"><img
@@ -151,7 +151,7 @@
         <div style="width: 100%;height: 50px;padding-left: 28px;padding-right:15px;padding-top: 15px;">
           <span>排序</span><span
           style="float: right;cursor: pointer"
-          @click="sortmodelshow=false"><i class="iconfontyyy">&#xe67c;</i></span>
+          @click="closeovser"><i class="iconfontyyy">&#xe67c;</i></span>
         </div>
         <div style="height: 495px;overflow-y: auto">
           <ul id="sort" style="margin: 0 auto;width: 645px;">
@@ -443,6 +443,10 @@
       close(){
         document.body.style.overflow = "auto"
         this.modelshow = false
+      },
+      closeovser(){
+        document.body.style.overflow = "auto";
+        this.sortmodelshow = false;
       },
       sortover(){
         var newsort = [];
