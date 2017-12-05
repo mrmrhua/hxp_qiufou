@@ -31,7 +31,7 @@ class DesignerRecom(Resource):
 class AllDemand(Resource):
     @adminauth.login_required
     def get(self):
-        ds = Demand.query.all()
+        ds = Demand.query.order_by(Demand.id.desc()).all()
         demand = [{
                 'title':i.title,
                 'description': i.description,
@@ -117,7 +117,7 @@ class CreateProject(Resource):
         designer = request.values.get("designer")
         st = datetime.datetime.now()
         title = getdemandtitle(demand_id)
-        pro = Project(status=0,demand_id=demand_id,user_id=designer,cat_id=demand.category,starttime=st,title=title)
+        pro = Project(status=0,demand_id=demand_id,user_id=designer,cat_id=demand.category,starttime=st,title=title,up_time=st)
         db.session.add(pro)
         db.session.commit()
         return jsonify({'code':0,'data':{"project_id":pro.id}})
@@ -137,8 +137,11 @@ class EndProject(Resource):
         db.session.commit()
         return jsonify({'code':0})
 
-
-
+def gettime(time):
+    if not time:
+        return ''
+    else:
+        return time.strftime("%Y-%m-%d %H:%M:%S")
 
   # http: // houxiaopang.com / api / v1.1 /adminsystem/seeallprojects
     # GET
@@ -156,7 +159,7 @@ class SeeAllProjects(Resource):
             'designer_id':i.user_id,
             'isNew':i.isnew,
             'status':i.get_status(),
-            'up_time':i.up_time.strftime("%Y-%m-%d %H:%M:%S"),
+            'up_time':gettime(i.up_time),
             'title':i.title,
             'starttime':i.starttime.strftime("%Y-%m-%d %H:%M:%S")
         } for i in pros ]
