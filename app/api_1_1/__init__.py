@@ -9,14 +9,13 @@ api_v1_1 = Api(api_1_1,catch_all_404s=True)
 from .apply import *
 from .login_verify import *
 from .applystatus import GetApplyStatus
-from .demand import GetDemandCenter,DemandDeatil,ReplyDemand,TMPReplyDemand,ClientPostDemand
-from .work_resume import GetAllWork,GetResumeInfo
+from .demand import *
 from .admindash import *
 from .adminsystem import *
 from .wxpublic import  *
 from .wallet import *
 from .project import *
-
+from .work_resume import *
 
 
 # wx verify info
@@ -214,3 +213,6 @@ api_v1_1.add_resource(GetAlipayCharge,'/getalipaycharge')
 # ping++ 支付成功的回调
 # http://www.houxiaopang.com/api/v1.1/pingxx/webhooks
 api_v1_1.add_resource(GetPayHooks,'/pingxx/webhooks')
+
+
+api_v1_1.add_resource(SendSms,'/tmp/sendsms')
