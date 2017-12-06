@@ -1,7 +1,7 @@
 from  flask import  session,jsonify,request,url_for,g
 import  random
 from flask_restful import Resource
-from app.models import User,db,Demand,CashFlow
+from app.models import *
 from config import ADMIN_TEL,ADMIN_EMAIL
 from app.common import send_admin_email,single_send,adminauth,decimal_default
 import datetime
@@ -45,11 +45,16 @@ class ConfirmPay(Resource):
             order_no = dt + str(100000 + int(cf.id))
             cf.order_no = order_no
             project_id = cf.project_id
+            pro= Project.query.get(project_id)
+            demand_id = pro.demand_id
+            db.session.add(cf)
+            db.session.commit()
+            return jsonify({"code": 0, "data": {"demand_id":demand_id}})
         elif cf.status=='提现审核中':
             cf.status = '已完成'
-        db.session.add(cf)
-        db.session.commit()
-        return  jsonify({"code":0,"data":{"project_id":project_id}})
+            db.session.add(cf)
+            db.session.commit()
+            return  jsonify({"code":0})
 
 
 # 因为一些原因无法转账，需要取消这笔操作,填写理由detail
@@ -127,5 +132,9 @@ class AdminChargeApply(Resource):
         when = datetime.datetime.now()
         cf = CashFlow(change_money=money,remark=feetype,related_user=designer_id,status='等待付款中',project_id=project_id,when=when,detail=desc)
         db.session.add(cf)
-        db.session.commit()
+        try:
+            db.session.commit()
+        except:
+            db.session.rollback()
+            return jsonify({"code":-1,"msg":"填写信息有误无法插入"})
         return jsonify({"code":0})
