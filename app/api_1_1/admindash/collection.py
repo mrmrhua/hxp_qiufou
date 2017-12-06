@@ -18,10 +18,26 @@ class GetCollection(Resource):
         # print(category)
         if not category:
             return jsonify({'code': -1, 'data': {'msg':"未得到品类"}})
-        if(category=="-1"):  #取全部作品
-            a = Album.query.filter_by(user_id=g.user.id).order_by(Album.up_time.desc()).all()
+
+        page = request.values.get("page")
+        if page and page != 'undefined':
+            page = int(page)
         else:
-            a = Album.query.filter_by(user_id=g.user.id,category=category).order_by(Album.up_time.desc()).all()
+            page = 1
+        # 每页数量
+        num = request.values.get("num")
+        if not num:
+            num = 12
+        PER_PAGE = num
+
+
+
+        if(category=="-1"):  #取全部作品
+            count =  Album.query.filter_by(user_id=g.user.id).count()
+            a = Album.query.filter_by(user_id=g.user.id).order_by(Album.up_time.desc()).paginate(page,PER_PAGE,False).items
+        else:
+            count = Album.query.filter_by(user_id=g.user.id,category=category).count()
+            a = Album.query.filter_by(user_id=g.user.id,category=category).order_by(Album.up_time.desc()).paginate(page,PER_PAGE,False).items
         album = []
         for each_al in a:
             cover_url = each_al.cover
@@ -30,4 +46,4 @@ class GetCollection(Resource):
             category = each_al.category
             each_album = {'cover_url': cover_url, 'title': title, 'album_id': album_id,'category':category}
             album.append(each_album)
-        return jsonify({'code': 0, 'data': album})
+        return jsonify({'code': 0, 'data': album,'total':count})
