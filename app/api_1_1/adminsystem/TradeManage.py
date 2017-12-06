@@ -132,6 +132,10 @@ class AdminChargeApply(Resource):
         when = datetime.datetime.now()
         cf = CashFlow(change_money=money,remark=feetype,related_user=designer_id,status='等待付款中',project_id=project_id,when=when,detail=desc)
         db.session.add(cf)
+        db.session.flush()
+        dt = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+        order_no = dt + str(100000 + int(cf.id))
+        cf.order_no = order_no
         try:
             db.session.commit()
         except:

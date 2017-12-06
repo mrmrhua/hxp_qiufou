@@ -54,6 +54,8 @@ class ProjectPage(Resource):
     def get(self):
         project_id = request.values.get("project_id")
         pro = Project.query.filter_by(id=project_id,user_id=g.user.id).order_by(Project.up_time.desc()).first()
+        if not pro:
+            return jsonify({"code": -1, "msg": "项目不存在"})
         posts = pro.posts
         postlist =  [ {"up_time":i.up_time.strftime("%Y-%m-%d %H:%M:%S"),
                        "imglist":[ n.work_url for n in i.works ],
