@@ -141,7 +141,6 @@ class GetAlipayCharge(Resource):
                     app_pay=True,
                 )
             )
-            print(charge)
             return jsonify({"code": 0,"data":{"charge":charge}})
         except Exception as e:
             return jsonify({"code": -1})
@@ -254,16 +253,19 @@ class GetPayHooks(Resource):
                 order_no= obj.get("order_no")
                 amount = obj.get("amount")
                 cf = CashFlow.query.filter_by(order_no=order_no).first()
+                if not cf:
+                    return Response(status=500)
                 cf.status = '客户已支付'
                 user_id = cf.related_user
                 w = Wallet.query.filter_by(user_id=user_id).first()
-                w.frozen_money += amount
+                w.frozen_money += Decimal(amount/100)
                 db.session.add(cf)
                 db.session.add(w)
                 db.session.commit()
                 send_admin_email(ADMIN_EMAIL,'一笔订单支付成功',json.dumps(request.json))
             return Response(status=200)
-        except:
+        except Exception as e:
+            print(e)
             return Response(status=500)
 
 

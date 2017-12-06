@@ -45,6 +45,9 @@ class Demand_User(db.Model):
     worklist = db.Column(db.Text, nullable=True)
     nickname = db.Column(db.String(20), nullable=True)
     recom = db.relationship('Demand_Recom',backref='apply')
+    # 放选用的作品集ID号
+    albumlist = db.Column(db.String(64))
+
     def __repr__(self):
         return '<Demand_User % r & %r>' % (self.demand_id,self.user_id)
 
@@ -56,8 +59,9 @@ class Demand_User(db.Model):
         ideas = replyform.get("ideas")
         howlong = replyform.get("howlong")
         howmuch = replyform.get("howmuch")
-
-        return Demand_User(demand_id=demand_id,user_id=designer_id,ideas=ideas,howlong=howlong, howmuch=howmuch)
+        # 封装好的字符串比如"[12,13,14]"
+        albumlist = replyform.get("albumlist")
+        return Demand_User(albumlist=albumlist,demand_id=demand_id,user_id=designer_id,ideas=ideas,howlong=howlong, howmuch=howmuch)
 
     # todo(TMP)
     @staticmethod
@@ -69,13 +73,15 @@ class Demand_User(db.Model):
         howmuch = replyform.get("howmuch")
         tel = replyform.get("tel")
         worklist = replyform.get("worklist")
+
         nickname=replyform.get("nickname")
         user_id = replyform.get("user_id")
-        if not user_id:
-            return Demand_User(demand_id=demand_id,ideas=ideas, howlong=howlong, howmuch=howmuch,
-                               worklist=worklist, tel=tel,nickname=nickname)
-        else:
-            return Demand_User(demand_id=demand_id, user_id=user_id, ideas=ideas, howlong=howlong, howmuch=howmuch,worklist=worklist,tel=tel,nickname=nickname)
+        # if not user_id:
+        #     return Demand_User(demand_id=demand_id,ideas=ideas, howlong=howlong, howmuch=howmuch,
+        #                        worklist=worklist, tel=tel,nickname=nickname)
+        # else:
+        return Demand_User(demand_id=demand_id, user_id=user_id, ideas=ideas, howlong=howlong,\
+            howmuch=howmuch,worklist=worklist,tel=tel,nickname=nickname)
 
 
 class Demand_Recom(db.Model):
@@ -90,6 +96,7 @@ class Demand_Recom(db.Model):
     # album_ids = db.Column(db.String(20), nullable=True)
     worklist = db.Column(db.Text, nullable=True)
     nickname = db.Column(db.String(20), nullable=True)
-
+    # 放选用的作品集ID号
+    albumlist = db.Column(db.String(64))
     def __repr__(self):
         return '<Demand_Recom % r  >' % (self.demand_id)
