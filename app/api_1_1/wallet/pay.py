@@ -44,6 +44,7 @@ class ChargeApply(Resource):
         cf = CashFlow(change_money=money,remark=feetype,related_user=g.user.id,status='收款申请中',project_id=project_id,when=when,detail=desc)
         db.session.add(cf)
         db.session.commit()
+        send_admin_email(A)
         return jsonify({"code":0})
 
 
@@ -57,16 +58,18 @@ class GetClientRecord(Resource):
     @clientauth.login_required
     def get(self):
         # 已经没有project_id了
-        project_id = request.values.get("project_id")
+        #project_id = request.values.get("project_id")
         cashflow_id  = request.values.get("cashflow")
         cf = CashFlow.query.get(cashflow_id)
+        if not cf.related_client and cf.related_client!=g.client.id:
+            return jsonify({"code":-1,"msg":"该项目已绑定他人"})
         # 绑定客户信息
         cf.related_client = g.client.id
-        if not project_id:
-            pro = Project.query.get(cf.project_id)
-            pro.client_id = g.client.id
-        else:
-            pro = Project.query.get(project_id)
+        #if not project_id:
+        pro = Project.query.get(cf.project_id)
+        pro.client_id = g.client.id
+        #else:
+            #pro = Project.query.get(project_id)
         db.session.add(cf)
         db.session.add(pro)
         db.session.commit()
@@ -75,8 +78,8 @@ class GetClientRecord(Resource):
         "feetype":cf.remark,
          "desc":cf.detail,
          "money":decimal_default(cf.change_money),
-         "designer_id":pro.user_id
-         }
+         "designer_id":pro.user_id,
+                 }
         return jsonify({"code": 0,"data":data})
 
 
