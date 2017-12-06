@@ -117,6 +117,21 @@ class CreateProject(Resource):
         designer = request.values.get("designer")
         st = datetime.datetime.now()
         title = getdemandtitle(demand_id)
+        # type = demand.category
+        # # todo
+        # # 分类之前是写死的，需要调整
+        # if (type == 1):
+        #     type = "PPT"
+        # elif (type == 2):
+        #     type = "UI"
+        # elif (type == 3):
+        #     type = "文本画册"
+        # elif (type == 4):
+        #     type = "海报展览"
+        # elif (type == 5):
+        #     type = "LOGO"
+        # elif (type == 6):
+        #     type = "企业形象设计（VI）"
         pro = Project(status=0,demand_id=demand_id,user_id=designer,cat_id=demand.category,starttime=st,title=title,up_time=st)
         db.session.add(pro)
         db.session.commit()
@@ -152,7 +167,6 @@ class SeeAllProjects(Resource):
         pros = Project.query.all()
         projects = [{
             "id":i.id,
-            "cat":getcatname(i.cat_id),
             "client":getclientname(i.client_id),
             'client_id':i.client_id,
             'designer':getdesignername(i.user_id),

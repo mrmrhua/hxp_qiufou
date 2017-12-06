@@ -35,16 +35,23 @@ class PayRecord(Resource):
 class ChargeApply(Resource):
     @auth.login_required
     def post(self):
-        project_id = request.values.get("project_id")
-        feetype = request.values.get("feetype")
-        money = request.values.get("money")
-        desc = request.values.get("desc")
-        # 生成CASHFLOW数据
-        when = datetime.datetime.now()
-        cf = CashFlow(change_money=money,remark=feetype,related_user=g.user.id,status='收款申请中',project_id=project_id,when=when,detail=desc)
-        db.session.add(cf)
-        db.session.commit()
-        return jsonify({"code":0})
+        try:
+            project_id = request.values.get("project_id")
+            feetype = request.values.get("feetype")
+            money = request.values.get("money")
+            desc = request.values.get("desc")
+            # 生成CASHFLOW数据
+            when = datetime.datetime.now()
+            cf = CashFlow(change_money=money,remark=feetype,related_user=g.user.id,status='收款申请中',project_id=project_id,when=when,detail=desc)
+            db.session.add(cf)
+            db.session.commit()
+            text = '现金流:'+ str(cf.id)
+            send_admin_email(ADMIN_EMAIL,'发起收款',text)
+            return jsonify({"code": 0})
+        except:
+            db.session.rollback()
+            return jsonify({"code": -1,'msg':"提交失败"})
+
 
 
 # HTTP
@@ -60,7 +67,7 @@ class GetClientRecord(Resource):
         #project_id = request.values.get("project_id")
         cashflow_id  = request.values.get("cashflow")
         cf = CashFlow.query.get(cashflow_id)
-        if not cf.related_client and cf.related_client!=g.client.id:
+        if ( cf.related_client) and  cf.related_client!=g.client.id:
             return jsonify({"code":-1,"msg":"该项目已绑定他人"})
         # 绑定客户信息
         cf.related_client = g.client.id

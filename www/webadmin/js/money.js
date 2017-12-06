@@ -125,8 +125,8 @@ function agren(id) {// 确定资金流动
         },
         success(res){
             if (res.code === 0) {
-                if (res.data.project_id) {
-                    var url = "收款账单地址: https://m.houxiaopang.com/demand/#/receipt?project_id=" + res.data.project_id + "&cashflow=" + id;
+                if (res.data.demand_id) {
+                    var url = "收款账单地址: https://m.houxiaopang.com/demand/#/receipt?demand_id=" + res.data.demand_id + "&cashflow=" + id;
                     document.getElementById("urladdress").innerHTML = url;
                     alert(url);
                 } else {
