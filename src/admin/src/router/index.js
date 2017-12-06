@@ -72,7 +72,7 @@ export default new Router({
         {
           path: 'demandinfo',
           component: Demandinfo
-        }
+        },
       ]
     },
     {

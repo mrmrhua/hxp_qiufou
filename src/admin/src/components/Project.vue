@@ -36,6 +36,7 @@
         <p style="font-size: 16px;color: #bfbfbf;font-weight: 900;">你还没有创建过任何作品</p>
         <router-link to="/newalbum" tag="div" class="btn_image">上传作品</router-link>
       </div>
+      <pagination :pageInfo="pageinfo" @change="pagechange"></pagination>
     </div>
     <div class="mymodal" v-show="delmodel">
       <div class="conte">
@@ -61,6 +62,7 @@
 </template>
 <script>
   import prompt from "@/components/Prompt"
+  import pagination from './Pagination'
   export default{
     props: ['showcategory'],
     data(){
@@ -71,6 +73,14 @@
         removeindex: -1,
         promptshow: false,
         category: "全部品类",
+        cc:-1,
+        pageinfo: {
+          total: 0,     // 记录总条数   默认空，如果小于pageNum则组件不显示   类型Number
+          pagenum: 12,    // 每页显示条数,默认10                              类型Number
+          current: 1,     // 当前页数，   默认为1                             类型Number
+          pagegroup: 3,     // 分页条数     默认为5，需传入奇数                  类型Number
+          skin: '#d01667',
+        }
       }
     },
     mounted(){
@@ -79,12 +89,13 @@
         $(this).click(function () {
           i = i === 0 ? -1 : i;
           that.category = $(this).text();
-          that.getCollection(i);
+          that.getCollection(i,that.pageinfo.current);
         });
       });
+//      this.chooseCategory();
     },
     created(){
-      this.getCollection(-1);
+      this.getCollection(-1,this.pageinfo.current);
     },
     methods: {
       showcategoryMethode(){
@@ -93,12 +104,13 @@
       jump(id){
         open("http://houxiaopang.com/workdetail/album/" + id);
       },
-      getCollection(c) {
+      getCollection(c,page) {
         var that = this;
         $.ajax({
           type: "GET",
           data: {
-            category: c
+            category: c,
+            page: page
           },
           url: 'http://www.houxiaopang.com/api/v1.1/designerdash/collection',
           headers: {"Authorization": "Token " + token},
@@ -106,6 +118,8 @@
           success: function (data) {
             if (data.code === 0) {
               that.projectalbum = [];
+              that.pageinfo.total = data.total;
+
               for (var i = 0, size = data.data.length; i < size; i++) {
                 var json = data.data[i];
                 var type = json.category;
@@ -184,10 +198,55 @@
             album_id: id
           }
         });
-      }
+      },
+      pagechange: function (current) {     // 页码改变传入新的页码，此处做回调
+        if(this.category == "全部品类"){
+          this.cc = -1;
+        } else if (this.category == "PPT") {
+          this.cc = 1;
+        } else if (this.category =="UI") {
+          this.cc = 2;
+        } else if (this.category =="文本画册") {
+          this.cc = 3;
+        } else if (this.category =="海报展板") {
+          type = "海报展板";
+          this.cc = 4;
+        } else if (this.category =="LOGO") {
+          this.cc = 5;
+        } else if (this.category =="企业形象设计（VI）") {
+          this.cc = 6;
+        } else if (this.category =="测试品类") {
+          this.cc = 0;
+        }
+        this.getCollection(this.cc, current);
+
+      },
+/*      chooseCategory(){
+        var that = this;
+        var li = document.getElementById("category").children;
+        for (var i = 0, size = li.length; i < size; i++) {
+          li[i].index = i;
+          li[i].onclick = function () {
+            $("#category").find("li").each(function () {
+              $(this).removeClass("active");
+            });
+            $(this).addClass("active");
+
+            if (this.index == 0) {
+              this.index = -1;
+            }
+            that.pageinfo.current = 1;
+            that.categroy = this.index;
+            that.getCollection(that.categroy, that.pageinfo.current);
+          }
+        }
+      },*/
+
+
     },
     components: {
-      prompt
+      prompt,
+      pagination
     }
   }
 </script>

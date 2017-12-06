@@ -75,9 +75,9 @@
         </div>
         <div class="di_list">
           <ul>
-            <li @click="open(item.post_id)" v-for="imgitem in item.imglist"><img style="cursor:pointer;"
-                                                                                 :src="imgitem+'?imageView2/1/w/200/h/150'"
-                                                                                 alt=""></li>
+            <li @click="open(imgitem)" v-for="imgitem in item.imglist"><img style="cursor:pointer;"
+                                                                            :src="imgitem+'?imageView2/1/w/200/h/150'"
+                                                                            alt=""></li>
           </ul>
           <div class="desc">{{item.desc}}</div>
         </div>
@@ -160,6 +160,7 @@
           <span class="btn_image" style="margin: 0 50px 0 0;height: 30px;line-height: 30px;width: 100px;float: right;"
                 @click="sortover">确定</span>
         </div>
+
       </div>
     </div>
     <!-- <prompt :prompt="prompt" :promptshow="promptshow"></prompt>-->
@@ -167,7 +168,7 @@
 </template>
 <script>
   import imgthumb from "./Imgthumb.vue"
-  //import prompt from "./Prompt.vue"
+  import prompt from "./Prompt.vue"
   function Pointer(x, y) {
     this.x = x;
     this.y = y;
@@ -228,7 +229,7 @@
         return value > 0 ? "+" + value.toFixed(2) : value.toFixed(2)
       },
       open(value){
-        location.href = "http://www.houxiaopang.com/correct?post=" + value + "&url=demand/demandinfo/12";
+        window.open(value)
       },
       getdemanddetail(){
         var that = this
@@ -866,7 +867,6 @@
     overflow: hidden;
     text-align: center;
     line-height: 180px;
-    margin-bottom: 24px;
   }
 
   .di_list > ul > li:nth-child(3n) {
