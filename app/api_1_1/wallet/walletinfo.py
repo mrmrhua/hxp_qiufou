@@ -1,11 +1,11 @@
 from  flask import jsonify,request,g,session
 from flask_restful import Resource
 from app.models import *
-from app.common import auth,single_send,decimal_default
+from app.common import auth,single_send,decimal_default,send_admin_email
 import random
 import time
 import datetime
-from config import ADMIN_TEL
+from config import ADMIN_TEL,ADMIN_EMAIL
 from decimal import Decimal
 
 
@@ -150,6 +150,7 @@ class WithdrawApply(Resource):
         text = '【猴小胖】有用户%s申请提现%s元，对方联系电话是%s，提现账号是%s，请尽快处理' % (username,money,tel,alipay)
         # todo
         # single_send(mobile=ADMIN_TEL, text=text)
+        send_admin_email(ADMIN_EMAIL,'提现申请')
         after_money= g.user.wallet.money-Decimal(money)
         cf = CashFlow(change_money=-Decimal(money),after_money=after_money,remark='提现',from_who='设计师钱包'\
                  ,to_who='设计师个人',related_user=g.user.id,status='提现审核中',when=datetime.datetime.now())

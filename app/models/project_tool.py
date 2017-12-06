@@ -51,7 +51,8 @@ class Project(db.Model):
     __tablename__ = 'projects'
     id = db.Column(INTEGER(unsigned=True), primary_key=True)
     demand_id = db.Column(INTEGER(unsigned=True), db.ForeignKey('demands.id'))
-    cat_id = db.Column(INTEGER(unsigned=True), db.ForeignKey('categories.id'))
+    cat_id = db.Column(INTEGER(unsigned=True))
+    # category =   db.Column(db.String(10))
     # 设计师是谁
     user_id = db.Column(INTEGER(unsigned=True), db.ForeignKey('users.id'))
     #   客户是谁
@@ -77,6 +78,8 @@ class Project(db.Model):
             return '已中止'
         else:
             return ''
+    def get_cat(self):
+        return self.category
 
 class Post(db.Model):
     __tablename__ = 'posts'

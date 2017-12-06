@@ -17,7 +17,6 @@ class Cli_ProjectList(Resource):
             'client': getclientname(i.client_id),
             'designer': getdesignername(i.user_id),
            "isnew":i.isnew,
-            "cat":getcatname(i.cat_id),
            "up_time":i.up_time.strftime("%Y-%m-%d %H:%M:%S"),
            "project_id":i.id }  for i in pros ]
         return jsonify({"code":0,"data":{"projects":projects}})
@@ -37,7 +36,6 @@ class De_ProjectList(Resource):
         projects =  [ {"title":i.title,
            "status":i.status,
            "isnew":i.isnew,
-           "cat":getcatname(i.cat_id),
            "up_time":i.up_time.strftime("%Y-%m-%d %H:%M:%S"),
            "project_id":i.id,
           'lastimg': getlastimg(i),
