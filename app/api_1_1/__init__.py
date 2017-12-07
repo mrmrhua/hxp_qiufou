@@ -40,6 +40,7 @@ api_v1_1.add_resource(NewCompanyPostApply,'/apply/companyform_new')
 
 
 api_v1_1.add_resource(GetAllWork,'/allwork')
+
 api_v1_1.add_resource(GetResumeInfo,'/resumeinfo')
 
 api_v1_1.add_resource(DemandDeatil,'/demanddetail')
