@@ -20,7 +20,7 @@ def getveristatus(info):
         return info.verify_status
 class GetUserHead(Resource):
     @auth.login_required
-    @cache.cached(timeout=30)
+    # @cache.cached(timeout=30)
     def get(self):
         r = jsonify({
           'code':0,

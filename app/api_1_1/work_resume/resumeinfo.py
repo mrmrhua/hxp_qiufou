@@ -7,7 +7,7 @@ from app import cache
 #获取简历页的个人信息
 class GetResumeInfo(Resource):
     # @auth.login_required
-    @cache.cached(timeout=30)
+    # @cache.cached(timeout=30)
     def get(self):
         designer_id = request.values.get("designer_id")
         if not designer_id:
