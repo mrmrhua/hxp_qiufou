@@ -1,7 +1,103 @@
-<!DOCTYPE html><html lang=zh-cmn-Hans><head><meta charset=UTF-8><title>猴小胖设计服务专家——找到更好的设计师</title><meta http-equiv=X-UA-Compatible content="ie=edge"><meta name=viewport content="width=device-width,initial-scale=1"><link rel="shortcut icon" href=http://image.houxiaopang.com/houicon.ico><script>//声明_czc对象:
-    var _czc = _czc || [];
-    //绑定siteid，请用您的siteid替换下方"XXXXXXXX"部分
-    _czc.push(["_setAccount", "1261952519"]);
-    _czc.push(["_trackPageview", "/作品详情"]);</script><link href=./static/css/app.30f82aba4a3f7e3e8a335ea315884ac0.css rel=stylesheet></head><body><div style="display: none"><script type=text/javascript>var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-  document.write(unescape("%3Cspan id='cnzz_stat_icon_1261952519'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1261952519' type='text/javascript'%3E%3C/script%3E"));</script></div><div id=app></div><script>var login = false;
-  var token = window.localStorage.token;</script><script src=https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js></script><script src=http://apps.bdimg.com/libs/jquery-lazyload/1.9.5/jquery.lazyload.js></script><script type=text/javascript src=./static/js/manifest.a36ee7f6dbdf666a2c07.js></script><script type=text/javascript src=./static/js/vendor.8dcb51988fed0b9fe009.js></script><script type=text/javascript src=./static/js/app.042ed5b3e7f2db361c2a.js></script></body></html>
+<!DOCTYPE html><html lang=zh-cmn-Hans><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,user-scalable=0"><link rel=stylesheet href=./static/css/example.css><link rel=stylesheet href=./static/css/weui.min.css><title>猴小胖设计服务专家</title><link href=./static/css/app.261de1d312305455e3f437d7b62c09bf.css rel=stylesheet></head><body><div id=app></div><div id=loadingToast style=display:none><div class=weui-mask_transparent></div><div class=weui-toast><i class="weui-loading weui-icon_toast"></i><p id=loadText class=weui-toast__content></p></div></div><div class=js_dialog id=iosDialog2 style="display: none"><div class=weui-mask></div><div class=weui-dialog><div class=weui-dialog__bd id=iosDialogtext></div><div onclick=hideModal() class=weui-dialog__ft><a href=javascript:; class="weui-dialog__btn weui-dialog__btn_primary">确定</a></div></div></div><script>var code = getQueryString("code");
+  var token = window.localStorage.token;
+  var path = null;
+  if (window.location.href.split("#").length > 1) {
+    path = window.location.href.split("#")[1];
+  }
+  window.localStorage.path = path;
+  var applystatus = window.localStorage.applystatus;
+  function getQueryString(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) return unescape(r[2]);
+    return null;
+  }
+  var $loadingToast = document.getElementById('loadingToast');
+  var $loadText = document.getElementById('loadText');
+  var $iosDialog2 = document.getElementById("iosDialog2");
+  var $iosDialogtext = document.getElementById("iosDialogtext");
+  function showload(text) {
+    if ($loadingToast.style.display !== 'none') return;
+    if (text) {
+      $loadText.innerText = text
+    } else {
+      $loadText.innerText = "加载中"
+    }
+    $loadingToast.style.display = "block"
+  }
+  function hideload() {
+    $loadingToast.style.display = "none"
+  }
+  function showModal(text) {
+    if ($iosDialog2.style.display !== 'none') return;
+    if (text) {
+      $iosDialogtext.innerText = text
+    } else {
+      $iosDialogtext.innerText = "网络拥挤，请稍后再试"
+    }
+    $iosDialog2.style.display = "block"
+  }
+  function hideModal() {
+    $iosDialog2.style.display = 'none'
+  }
+
+  function ajax(options) {
+    if (!options.type) {
+      options.type = "GET"
+    }
+    options.timeout = 5000;
+    //todo options.url 临时去掉https 的 s
+    //options.url = options.url.replace("https", "http")
+    if (options.type === "get" || options.type === "GET") {
+      options.url += "?";
+      for (var i in options.data) {
+        options.url += i + "=" + options.data[i] + "&";
+      }
+      options.url = options.url.substring(0, options.url.length - 1);
+    } else {
+      var data = []
+      for (var i in options.data) {
+        data.push(i + "=" + options.data[i])
+      }
+      options.data = data.join("&")
+    }
+    var ajax = new XMLHttpRequest();
+    ajax.onreadystatechange = function () {
+      if (ajax.readyState === 4 && ajax.status === 200) {
+        if (options.success) {
+          var res = JSON.parse(ajax.responseText);
+          if (res.code === 0) {
+            options.success(res);
+          } else {
+            if (res.msg) {
+              showModal(res.msg);
+            } else {
+              showModal()
+            }
+          }
+        }
+      } else if (ajax.readyState === 4 && ajax.status !== 200) {
+        if (options.error) {
+          options.error(ajax);
+        }
+      }
+    };
+    if (options.timeout && typeof(options.timeout) === "number") {
+      setTimeout(function () {
+        if (ajax.readyState !== 4) {
+          ajax.abort();
+        }
+      }, options.timeout)
+    }
+    ajax.open(options.type, options.url, true);
+    if (options.token) {
+      ajax.setRequestHeader("Authorization", "Token " + token);
+    }
+    if (options.type === "get" || options.type === "GET") {
+      ajax.setRequestHeader("Content-type", "application/json;charset=utf-8")
+      ajax.send();
+    } else {
+      ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=utf-8")
+      ajax.send(options.data);
+    }
+  }</script><script type=text/javascript src=./static/js/manifest.e9930688d1b02519f9a6.js></script><script type=text/javascript src=./static/js/vendor.c54c31dc7eeb9a4a537e.js></script><script type=text/javascript src=./static/js/app.7fd0becd0bc8dd342e60.js></script></body></html>
