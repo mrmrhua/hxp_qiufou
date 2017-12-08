@@ -46,6 +46,7 @@ api_v1_1.add_resource(GetResumeInfo,'/resumeinfo')
 api_v1_1.add_resource(DemandDeatil,'/demanddetail')
 api_v1_1.add_resource(ReplyDemand,'/replydemand')
 #临时用
+# 设计师报价
 api_v1_1.add_resource(TMPReplyDemand,'/replydemand_tmp')
 api_v1_1.add_resource(TokenVerify,'/token/authenticated')
 

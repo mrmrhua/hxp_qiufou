@@ -4,7 +4,7 @@ from flask_restful import Resource
 from flask_login import current_user
 from app.common import auth,send_mail_in_html,send_mail_in_text
 import json
-from app.models import User,db,Demand_User
+from app.models import User,db,Demand_User,Demand
 from config import APPLYSTATUS,SEX,ADMIN_EMAIL
 
 class ReplyDemand(Resource):
@@ -34,6 +34,7 @@ class TMPReplyDemand(Resource):
 
         # 成功报价,发送通知邮件
         id = request.values.get("demand_id")
-        text = '%r号需求收到报价' % id
+        d = Demand.query.get(id)
+        text = '%r 需求收到设计师%r报价,价格为%r,联系方式为%r' % (d.title,du.nickname,du.howmuch,du.tel)
         send_mail_in_text(ADMIN_EMAIL,'收到新的报价了',text)
         return jsonify({'code': 0})
