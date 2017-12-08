@@ -120,7 +120,5 @@ class WxVerify_Client(Resource):
                 db.session.rollback()()
 
         token = client.generate_auth_token().decode()
-        print(client)
-        print(token)
 
         return jsonify({'code': 0, 'data': {"token":token}})

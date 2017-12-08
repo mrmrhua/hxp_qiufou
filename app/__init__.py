@@ -10,7 +10,7 @@ from flask_sqlalchemy import SQLAlchemy
 from .assets import bundle
 from .exceptions import ValidationError
 from .libs import send_mail_in_text
-
+from flask.ext.cache import Cache
 db = SQLAlchemy()
 lm = LoginManager()
 mail = Mail()
@@ -20,6 +20,8 @@ sess = Session()
 cors = CORS()
 # alembic = Alembic()
 migrate = Migrate()
+cache = Cache(config={'CACHE_TYPE': 'simple'})
+
 
 def create_app():
     app = Flask(__name__,instance_relative_config=True,static_url_path='/static')
@@ -32,6 +34,7 @@ def create_app():
     db.init_app(app)
     lm.init_app(app)
     mail.init_app(app)
+    cache.init_app(app)
     if app.debug:
         toolbar.init_app(app)
         import logging

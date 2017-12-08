@@ -2,7 +2,7 @@ from  flask import jsonify,request
 from flask_restful import Resource
 from app.models import Album
 from random import shuffle
-
+from app import cache
 class GetAllWork(Resource):
     def get(self):
 
