@@ -7,7 +7,7 @@ from app.common import  support_jsonp
 # from flask_cors import cross_origin
 from flask_login import login_required
 from app.common import auth
-from app import cache
+# from app import cache
 def getcity(info):
     if not info:
         return ''
