@@ -19,7 +19,7 @@ div {
 	left: 0;
 	cursor: move;
 	text-align: center;
-  border: none;
+	border: 1px solid #ccc;
 	background: #fff;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -29,7 +29,7 @@ div {
 }
 
 .ui-slider-wrap .ui-slider-btn {
-	background: #FF445B url(../img/slider.png) no-repeat center;
+	background: #fff url(../img/slider.png) no-repeat center;
 }
 
 .ui-slider-wrap .ui-slider-btn.success {
