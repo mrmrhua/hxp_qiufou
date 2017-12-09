@@ -43,6 +43,7 @@ class De_ProjectList(Resource):
            'client':getclientname(i.client_id),
            'designer': getdesignername(i.user_id),
                        }  for i in pros ]
+        print(projects)
         return jsonify({"code":0,"data":{"projects":projects}})
 
 

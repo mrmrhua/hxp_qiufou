@@ -20,7 +20,7 @@ sess = Session()
 cors = CORS()
 # alembic = Alembic()
 migrate = Migrate()
-cache = Cache(config={'CACHE_TYPE': 'simple'})
+# cache = Cache(config={'CACHE_TYPE': 'simple'})
 
 
 def create_app():
@@ -34,7 +34,7 @@ def create_app():
     db.init_app(app)
     lm.init_app(app)
     mail.init_app(app)
-    cache.init_app(app)
+    # cache.init_app(app)
     if app.debug:
         toolbar.init_app(app)
         import logging

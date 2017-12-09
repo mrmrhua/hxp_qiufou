@@ -256,7 +256,7 @@ def verify_token(token):
     # todo
     if current_app.debug:
         if  token=='robin':
-            user = User.query.filter_by(id=32).first()
+            user = User.query.filter_by(id=29).first()
             g.user = user
             return True
     # admin帐户
