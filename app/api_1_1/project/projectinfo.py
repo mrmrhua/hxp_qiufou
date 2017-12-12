@@ -1,9 +1,10 @@
 from flask import request,jsonify,g
 from flask_restful import Resource
-from app.common import clientauth,auth,getcatname,getclientname,getdesignername
+from app.common import clientauth,auth,getcatname,getclientname,getdesignername,send_admin_email,send_mail_in_html
 from app.models import Project,Client,User,Post,db,Projectwork,Category
 import datetime
 import json
+from config import ADMIN_EMAIL
 
 # https://m.houxiaopang.com/api/v1.1/wxfwh/projectlist
 # GET
@@ -95,7 +96,10 @@ class ProjectPage(Resource):
             d = Projectwork(work_url=i)
             p.works.append(d)
         db.session.commit()
-        return jsonify({'code': 0})
+        title = '%r项目设计师上传了进度'  % pro.title
+        text = '进度图：%r' % imglist
+        send_admin_email(ADMIN_EMAIL, title, text)
+        return jsonify({'code': 0,'data':{'post_id':p.id}})
 
 
         # https://m.houxiaopang.com/api/v1.1/wxfwh/client/projectpage

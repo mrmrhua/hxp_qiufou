@@ -46,11 +46,13 @@ api_v1_1.add_resource(GetResumeInfo,'/resumeinfo')
 api_v1_1.add_resource(DemandDeatil,'/demanddetail')
 api_v1_1.add_resource(ReplyDemand,'/replydemand')
 #临时用
+# 设计师报价
 api_v1_1.add_resource(TMPReplyDemand,'/replydemand_tmp')
 api_v1_1.add_resource(TokenVerify,'/token/authenticated')
 
 api_v1_1.add_resource(ClientTokenVerify,'/wxfwh/token/clientauthenticated')
 
+# 上传作品集
 api_v1_1.add_resource(NewAlbum,'/newalbum')
 api_v1_1.add_resource(GetAlbum,'/designerdash/index/recent')
 api_v1_1.add_resource(GetCollection,'/designerdash/collection')
@@ -83,12 +85,14 @@ api_v1_1.add_resource(RemoveAll,'/designerdash/notice/removeall')
 
 
 # 管理后台
+# 查看所有设计师
 api_v1_1.add_resource(AllDesignerManage,'/adminsystem/alldesigner')
 
+# 推荐设计师（临时）
 api_v1_1.add_resource(DesignerRecom,'/adminsystem/recommend_tmp')
 
+# 设计师审核
 api_v1_1.add_resource(GetApplyinfo,'/adminsystem/applyinfo')
-
 
 api_v1_1.add_resource(AgreeApply,'/adminsystem/agreeapply')
 
@@ -97,9 +101,11 @@ api_v1_1.add_resource(DisAgreeApply,'/adminsystem/disagreeapply')
 
 api_v1_1.add_resource(AdminLogin,'/adminsystem/login')
 
+# 发送网站消息
 api_v1_1.add_resource(SendNotice,'/adminsystem/notice/sendnotice')
 api_v1_1.add_resource(ListNews,'/adminsystem/notice/allnotice')
 
+# 查看所有需求
 api_v1_1.add_resource(AllDemand,'/adminsystem/demand/all')
 
 api_v1_1.add_resource(DemandApply,'/adminsystem/demand/apply_tmp')

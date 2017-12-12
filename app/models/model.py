@@ -102,6 +102,7 @@ class User(UserMixin,db.Model):
         conn = Conn_db()
         conn.set('nonce'+str(self.id),nonce,12000)
         t = s.dumps({'id': self.id,'nonce':nonce})
+        # print("nonce_store:%r" % nonce)
         return t
 
     #验证token
@@ -114,9 +115,11 @@ class User(UserMixin,db.Model):
             return None  # valid token, but expired
         except BadSignature:
             return None  # invalid token
-        # print("id  %r" % data['id'])
-
+        # print("data is :  %r" % data)
+        # print('nonce ' not in data)
         # 验证随机数是否过期
+        if 'nonce' not in data.keys():
+            return None
         nonce = data['nonce']
         conn = Conn_db()
         if str(nonce) != conn.get("nonce"+str(data['id'])):

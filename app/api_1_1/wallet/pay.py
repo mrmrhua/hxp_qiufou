@@ -45,8 +45,8 @@ class ChargeApply(Resource):
             cf = CashFlow(change_money=money,remark=feetype,related_user=g.user.id,status='收款申请中',project_id=project_id,when=when,detail=desc)
             db.session.add(cf)
             db.session.commit()
-            text = '现金流:'+ str(cf.id)
-            send_admin_email(ADMIN_EMAIL,'发起收款',text)
+            text = 'cashflow:'+ str(cf.id)
+            send_admin_email(ADMIN_EMAIL,'设计师发起收款',text)
             return jsonify({"code": 0})
         except:
             db.session.rollback()

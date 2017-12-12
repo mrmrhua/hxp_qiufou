@@ -256,7 +256,7 @@ def verify_token(token):
     # todo
     if current_app.debug:
         if  token=='robin':
-            user = User.query.filter_by(id=32).first()
+            user = User.query.filter_by(id=29).first()
             g.user = user
             return True
     # admin帐户
@@ -306,7 +306,6 @@ def single_send(mobile,text):
     res =json.loads(requests.post(url,data=values).text)
     # res : {'msg': '发送成功', 'unit': 'RMB', 'count': 1, 'fee': 0.05, 'sid': 18693055958, 'mobile': '13250805157', 'code': 0}
     # 发送成功
-    print(res)
     if res.get("code")==0:
         return 0
     else:
