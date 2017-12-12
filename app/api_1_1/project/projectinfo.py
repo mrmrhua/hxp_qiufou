@@ -43,7 +43,6 @@ class De_ProjectList(Resource):
            'client':getclientname(i.client_id),
            'designer': getdesignername(i.user_id),
                        }  for i in pros ]
-        print(projects)
         return jsonify({"code":0,"data":{"projects":projects}})
 
 
@@ -100,7 +99,7 @@ class ProjectPage(Resource):
         title = '%r项目设计师上传了进度'  % pro.title
         text = '进度图：%r' % imglist
         send_admin_email(ADMIN_EMAIL, title, text)
-        return jsonify({'code': 0})
+        return jsonify({'code': 0,'data':{'post_id':p.id}})
 
 
         # https://m.houxiaopang.com/api/v1.1/wxfwh/client/projectpage
