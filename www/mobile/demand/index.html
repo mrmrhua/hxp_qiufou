@@ -44,7 +44,7 @@
     }
     options.timeout = 5000;
     //todo 临时
-    options.url = options.url.replace("https", "http").replace("httpss", "https")
+    options.url = options.url.replace("http", "https").replace("httpss", "https")
     if (options.type === "get" || options.type === "GET") {
       options.url += "?";
       for (var i in options.data) {
