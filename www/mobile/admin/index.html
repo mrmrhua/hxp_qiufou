@@ -27,7 +27,9 @@
     $loadingToast.style.display = "block"
   }
   function hideload() {
-    $loadingToast.style.display = "none"
+	if ($loadingToast.style.display !== 'none') {
+      $loadingToast.style.display = "none"
+    }
   }
   function showModal(text) {
     if ($iosDialog2.style.display !== 'none') return;
@@ -48,7 +50,7 @@
     }
     options.timeout = 5000;
     //todo options.url 临时去掉https 的 s
-    //options.url = options.url.replace("https", "http")
+    options.url = options.url.replace("http", "https").replace("https", "https")
     if (options.type === "get" || options.type === "GET") {
       options.url += "?";
       for (var i in options.data) {
@@ -69,12 +71,14 @@
           var res = JSON.parse(ajax.responseText);
           if (res.code === 0) {
             options.success(res);
+			hideload();
           } else {
             if (res.msg) {
               showModal(res.msg);
             } else {
               showModal()
             }
+            hideload();
           }
         }
       } else if (ajax.readyState === 4 && ajax.status !== 200) {
@@ -101,4 +105,4 @@
       ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=utf-8")
       ajax.send(options.data);
     }
-  }</script><script type=text/javascript src=./static/js/manifest.6fa1823892987f789c9e.js></script><script type=text/javascript src=./static/js/vendor.c54c31dc7eeb9a4a537e.js></script><script type=text/javascript src=./static/js/app.c2a76d2d8bda49b9f687.js></script></body></html>
+  }</script><script type=text/javascript src=./static/js/manifest.2ea282c501b134634d7d.js></script><script type=text/javascript src=./static/js/vendor.c54c31dc7eeb9a4a537e.js></script><script type=text/javascript src=./static/js/app.c2a76d2d8bda49b9f687.js></script></body></html>
