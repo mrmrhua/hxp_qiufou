@@ -22,7 +22,9 @@
     $loadingToast.style.display = "block"
   }
   function hideload() {
-    $loadingToast.style.display = "none"
+    if ($loadingToast.style.display !== 'none') {
+      $loadingToast.style.display = "none"
+    }
   }
   function showModal(text) {
     if ($iosDialog2.style.display !== 'none') return;
@@ -41,7 +43,8 @@
       options.type = "GET"
     }
     options.timeout = 5000;
-    options.url = options.url.replace("https", "http")
+    //todo 临时
+    //options.url = options.url.replace("https", "http")
     if (options.type === "get" || options.type === "GET") {
       options.url += "?";
       for (var i in options.data) {
@@ -58,7 +61,20 @@
     var ajax = new XMLHttpRequest();
     ajax.onreadystatechange = function () {
       if (ajax.readyState === 4 && ajax.status === 200) {
-        options.success(eval("(" + ajax.responseText + ")"));
+        if (options.success) {
+          var res = JSON.parse(ajax.responseText);
+          if (res.code === 0) {
+            options.success(res);
+            hideload();
+          } else {
+            if (res.msg) {
+              showModal(res.msg);
+            } else {
+              showModal()
+            }
+            hideload();
+          }
+        }
       } else if (ajax.readyState === 4 && ajax.status !== 200) {
         options.error(ajax);
       }
@@ -124,4 +140,4 @@
     }
     return type;
   }
-  var pptType = "";</script><script type=text/javascript src=./static/js/manifest.21245b5a1d4a505ce262.js></script><script type=text/javascript src=./static/js/vendor.6b41c57917c15c696f11.js></script><script type=text/javascript src=./static/js/app.40c7c0db57390bda6012.js></script></body></html>
+  var pptType = "";</script><script type=text/javascript src=./static/js/manifest.f64f46db357e23c95fb7.js></script><script type=text/javascript src=./static/js/vendor.6b41c57917c15c696f11.js></script><script type=text/javascript src=./static/js/app.40c7c0db57390bda6012.js></script></body></html>

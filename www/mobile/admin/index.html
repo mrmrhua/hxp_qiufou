@@ -27,7 +27,9 @@
     $loadingToast.style.display = "block"
   }
   function hideload() {
-    $loadingToast.style.display = "none"
+	if ($loadingToast.style.display !== 'none') {
+      $loadingToast.style.display = "none"
+    }
   }
   function showModal(text) {
     if ($iosDialog2.style.display !== 'none') return;
@@ -69,6 +71,7 @@
           var res = JSON.parse(ajax.responseText);
           if (res.code === 0) {
             options.success(res);
+			hideload();
           } else {
             if (res.msg) {
               showModal(res.msg);
@@ -102,4 +105,4 @@
       ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=utf-8")
       ajax.send(options.data);
     }
-  }</script><script type=text/javascript src=./static/js/manifest.356aafcfdf9925116831.js></script><script type=text/javascript src=./static/js/vendor.c54c31dc7eeb9a4a537e.js></script><script type=text/javascript src=./static/js/app.c2a76d2d8bda49b9f687.js></script></body></html>
+  }</script><script type=text/javascript src=./static/js/manifest.2ea282c501b134634d7d.js></script><script type=text/javascript src=./static/js/vendor.c54c31dc7eeb9a4a537e.js></script><script type=text/javascript src=./static/js/app.c2a76d2d8bda49b9f687.js></script></body></html>
