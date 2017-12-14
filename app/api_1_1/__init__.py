@@ -174,6 +174,7 @@ api_v1_1.add_resource(ConfirmPay,'/adminsystem/confirmpay')
 
 api_v1_1.add_resource(CancelPay,'/adminsystem/cancelpay')
 
+# 平台转账给设计师
 api_v1_1.add_resource(PayToDesigner,'/adminsystem/paytodesigner')
 
 
