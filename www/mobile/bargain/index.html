@@ -82,9 +82,6 @@
                   'onMenuShareQQ',
                   'onMenuShareWeibo'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
             });
-            wx.error(function (res) {
-                alert(res.errMsg);
-            });
         }
     })
     
@@ -120,6 +117,22 @@
 var code = getQueryString("code");
 var demand_id = getQueryString("state");
 if(demand_id){
+    wx.onMenuShareTimeline({
+      title: '快来帮我砍价！搏一搏单车变摩托！', // 分享标题
+      desc: '猴小胖品牌设计，致力于打造新一代设计服务平台，为中小企业提供省心省力的一站式设计解决方案', // 分享描述
+      link: 'https://m.houxiaopang.com/bargain/bargain?state='+demand_id, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+      imgUrl: 'http://image.houxiaopang.com/hd/bargain/bargin.png', // 分享图标
+      type: 'link', // 分享类型,music、video或link，不填默认为link
+      dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+    });
+    wx.onMenuShareAppMessage({
+        title: '快来帮我砍价！搏一搏单车变摩托！', // 分享标题
+        desc: '猴小胖品牌设计，致力于打造新一代设计服务平台，为中小企业提供省心省力的一站式设计解决方案', // 分享描述
+        link: 'https://m.houxiaopang.com/bargain/bargain?state='+demand_id, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        imgUrl: 'http://image.houxiaopang.com/hd/bargain/bargin.png', // 分享图标
+        type: 'link', // 分享类型,music、video或link，不填默认为link
+        dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+    });
     new Vue({
         el:"#box",
         data:{
