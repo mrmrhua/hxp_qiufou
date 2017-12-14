@@ -93,16 +93,17 @@ def GetTicket(noncestr,timestamp,url):
     conn = Conn_db()
     ticket = conn.get("jsapi_ticket")
     if not ticket or ticket=="None": #expired
-        token = '1t5jbnSr0TwMu3EEpd6DsT4WqXGZJUYGlT8Mwfpiiy6pzWyrgU5tGkqnw_mO241oyOeMTF9OLvUb6973CeER47VB9zynI3z2J7fzrQyj8dJI8Jqv22padJHTcmIQZEXjPHEbAAAYQN'
+        if current_app.debug:
+            token ='4_OwgxlkXQTk0ixW_F-ALsNqrCtB99jxI5YKP4dLHZYe3lIIGf-Hh45kwHas2lZS9nEgPeW1uH7ldjx8wZNAu9kgpaY5RxPdjy-s5nWTASU6ogszrfAVQFMwd797_xoo-975fyWVaGAoCIY9VnFDAaACABZW'
+        else:
+            token = wx_get_common_access_token()
         ticket = wxpublic_get_jsapi_ticket(token)
         conn.set("jsapi_ticket",ticket,6900)
     s = 'jsapi_ticket='+ ticket + '&noncestr='+ noncestr+'&timestamp='+timestamp+'&url='+url
-    print(s)
     # r = hashlib.sha1(s).hexdigest()
     h = hashlib.sha1()
     h.update(s.encode('utf-8'))
     r = h.hexdigest()
-    print(r)
     return r
 
 
