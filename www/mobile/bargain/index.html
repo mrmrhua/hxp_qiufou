@@ -49,8 +49,7 @@
             <p>Tips：邀请的好友越多，能砍</p>
             <p>的价格越高哦！</p>
         </div>
-        <button class="btn_share">分享给朋友来砍价&#8680;</p>
-        </button>
+        <button class="btn_share" type='share' onclick='shear()'>分享给朋友来砍价</button>
     </div>
     <div class="list-footer">
             <p>本活动由猴小胖平台提供技术支持</p>
@@ -71,7 +70,7 @@
         },
         success(res){
             wx.config({
-                debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
                 appId: 'wx35c4ce958bc7eb68', // 必填，公众号的唯一标识
                 timestamp: timestamp, // 必填，生成签名的时间戳
                 nonceStr: nonceStr, // 必填，生成签名的随机串
@@ -82,38 +81,29 @@
                   'onMenuShareQQ',
                   'onMenuShareWeibo'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
             });
-            wx.error(function (res) {
-                alert(res.errMsg);
-            });
         }
     })
-    
-    
-    function shear(){
-        var that = this;
-        wx.onMenuShareTimeline({
-          title: '猴小胖-项目进度', // 分享标题
-          desc: that.post.title, // 分享描述
-          link: 'https://m.houxiaopang.com/admin/#/schedule?id=' + that.project_id, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-          imgUrl: 'http://image.houxiaopang.com/login_v1/logo2.png', // 分享图标
-          type: 'link', // 分享类型,music、video或link，不填默认为link
-          dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-          success: function () {
-            showModal("分享成功")
-          },
-          cancel: function () {
-            showModal("取消")
-          },
-          fail: function (res) {
-            alert('wx.onMenuShareTimeline:fail: ' + JSON.stringify(res));
-          }
-        });
-      }
 </script>
 <script>
 var code = getQueryString("code");
 var demand_id = getQueryString("state");
 if(demand_id){
+    wx.onMenuShareTimeline({
+      title: '快来帮我砍价！搏一搏单车变摩托！', // 分享标题
+      desc: '猴小胖品牌设计，致力于打造新一代设计服务平台，为中小企业提供省心省力的一站式设计解决方案', // 分享描述
+      link: 'https://m.houxiaopang.com/bargain/bargain?state='+demand_id, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+      imgUrl: 'http://image.houxiaopang.com/hd/bargain/bargin.png', // 分享图标
+      type: 'link', // 分享类型,music、video或link，不填默认为link
+      dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+    });
+    wx.onMenuShareAppMessage({
+        title: '快来帮我砍价！搏一搏单车变摩托！', // 分享标题
+        desc: '猴小胖品牌设计，致力于打造新一代设计服务平台，为中小企业提供省心省力的一站式设计解决方案', // 分享描述
+        link: 'https://m.houxiaopang.com/bargain/bargain?state='+demand_id, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        imgUrl: 'http://image.houxiaopang.com/hd/bargain/bargin.png', // 分享图标
+        type: 'link', // 分享类型,music、video或link，不填默认为link
+        dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+    });
     new Vue({
         el:"#box",
         data:{
