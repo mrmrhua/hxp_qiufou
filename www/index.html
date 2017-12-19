@@ -9,7 +9,6 @@
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
     <!-- 禁止百度强制转码 -->
     <meta http-equiv="Cache-Control" content="no-transform "/>
-
     <link rel="shortcut icon" href="http://image.houxiaopang.com/houicon.ico">
     <link rel="stylesheet" type="text/css" href="https://cdn.staticfile.org/Swiper/3.4.2/css/swiper.min.css">
     <link rel="stylesheet" href="index.css">
@@ -52,6 +51,8 @@ var _hmt = _hmt || [];
 
 </head>
 <body style="overflow: auto;position: relative;">
+<div id="hxp_alert_modal"></div>
+<script src="http://www.houxiaopang.com/static/js/hxp-alert.js"></script>
 <h1 style="position: absolute;height: 200px;top: -200px;">
     37分钟帮你找到好设计师,logo在线制作,海报设计,vi设计,ppt制作,公司logo设计,商业计划书,二维码名片</h1>
 <div id="load" class="preloader" style="display: none">
@@ -538,7 +539,7 @@ var _hmt = _hmt || [];
     kh_btn.onclick = function(){
         if(ispost){
             if(kh_nickname.value.trim()==="" || kh_tel.value.trim()===""){
-                alert("您的称呼和联系方式不能为空！")
+                hxpAlert.show("您的称呼和联系方式不能为空！")
                 return
             }
             ispost = false
@@ -557,12 +558,12 @@ var _hmt = _hmt || [];
                         kh_from.style.display = 'none'
                         kh_alert.style.display = 'block'
                     }else{
-                        alert("需求发布失败！请刷新重试。")
+                        hxpAlert.show("需求发布失败！请刷新重试。")
                     }
                 },
                 error:function(){
                     ispost = true
-                    alert("需求发布失败！请刷新重试。")
+                    hxpAlert.show("需求发布失败！请刷新重试。")
                 }
             })
         }
