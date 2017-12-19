@@ -67,7 +67,7 @@
     var ajax = new XMLHttpRequest();
     ajax.onreadystatechange = function () {
       if (ajax.readyState === 4 && ajax.status === 200) {
-        if (options.success) {
+        if (options.success && !options.nojson) {
           var res = JSON.parse(ajax.responseText);
           if (res.code === 0) {
             options.success(res);
@@ -80,7 +80,10 @@
             }
             hideload();
           }
-        }
+        }else if(options.success && options.nojson){
+			options.success(res);
+			hideload();
+		}
       } else if (ajax.readyState === 4 && ajax.status !== 200) {
         if (options.error) {
           options.error(ajax);
@@ -105,4 +108,4 @@
       ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=utf-8")
       ajax.send(options.data);
     }
-  }</script><script type=text/javascript src=./static/js/manifest.4195b80803b84ff93dc3.js></script><script type=text/javascript src=./static/js/vendor.c54c31dc7eeb9a4a537e.js></script><script type=text/javascript src=./static/js/app.758a29ab9d90947ef3e6.js></script></body></html>
+  }</script><script type=text/javascript src=./static/js/manifest.07d130d707728504a204.js></script><script type=text/javascript src=./static/js/vendor.c54c31dc7eeb9a4a537e.js></script><script type=text/javascript src=./static/js/app.758a29ab9d90947ef3e6.js></script></body></html>
