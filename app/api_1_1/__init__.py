@@ -230,3 +230,6 @@ api_v1_1.add_resource(GetPayHooks,'/pingxx/webhooks')
 # 客户已经线下付款
 # http://www.houxiaopang.com/api/v1.1/offline/payhooks
 api_v1_1.add_resource(OfflinePayHooks,'/adminsystem/offline/payhooks')
+
+# 将URL转换为二维码
+api_v1_1.add_resource(TransferQrcode,'/designer/tranferqrcode')

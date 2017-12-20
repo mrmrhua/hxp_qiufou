@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang=zh-cmn-Hans><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,user-scalable=0"><link rel=stylesheet href=./static/css/example.css><link rel=stylesheet href=./static/css/weui.min.css><title>猴小胖设计服务专家</title><link href=./static/css/app.261de1d312305455e3f437d7b62c09bf.css rel=stylesheet></head><body><div id=app></div><div id=loadingToast style=display:none><div class=weui-mask_transparent></div><div class=weui-toast><i class="weui-loading weui-icon_toast"></i><p id=loadText class=weui-toast__content></p></div></div><div class=js_dialog id=iosDialog2 style="display: none"><div class=weui-mask></div><div class=weui-dialog><div class=weui-dialog__bd id=iosDialogtext></div><div onclick=hideModal() class=weui-dialog__ft><a href=javascript:; class="weui-dialog__btn weui-dialog__btn_primary">确定</a></div></div></div><script>var code = getQueryString("code");
+<!DOCTYPE html><html lang=zh-cmn-Hans><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,user-scalable=0"><link rel=stylesheet href=./static/css/example.css><link rel=stylesheet href=./static/css/weui.min.css><title>猴小胖设计服务专家</title><link href=./static/css/app.261de1d312305455e3f437d7b62c09bf.css rel=stylesheet></head><body><div id=app></div><div id=loadingToast style=display:none><div class=weui-mask_transparent></div><div class=weui-toast><i class="weui-loading weui-icon_toast"></i><p id=loadText class=weui-toast__content></p></div></div><div class=js_dialog id=iosDialog2 style="display: none"><div class=weui-mask></div><div class=weui-dialog><div class=weui-dialog__bd id=iosDialogtext></div><div onclick=hideModal() class=weui-dialog__ft><a href=javascript:; class="weui-dialog__btn weui-dialog__btn_primary">确定</a></div></div></div><script src=https://res.wx.qq.com/open/js/jweixin-1.3.1.js></script><script>var code = getQueryString("code");
   var token = window.localStorage.token;
   var login = false;
   var path = null;
@@ -27,9 +27,9 @@
     $loadingToast.style.display = "block"
   }
   function hideload() {
-	if ($loadingToast.style.display !== 'none') {
-      $loadingToast.style.display = "none"
-    }
+	if($loadingToast.style.display !== "none"){
+		$loadingToast.style.display = "none"
+	}
   }
   function showModal(text) {
     if ($iosDialog2.style.display !== 'none') return;
@@ -50,7 +50,7 @@
     }
     options.timeout = 5000;
     //todo options.url 临时去掉https 的 s
-    options.url = options.url.replace("http", "https").replace("https", "https")
+    //options.url = options.url.replace("https", "http")
     if (options.type === "get" || options.type === "GET") {
       options.url += "?";
       for (var i in options.data) {
@@ -67,7 +67,7 @@
     var ajax = new XMLHttpRequest();
     ajax.onreadystatechange = function () {
       if (ajax.readyState === 4 && ajax.status === 200) {
-        if (options.success) {
+        if (options.success && !options.nojson) {
           var res = JSON.parse(ajax.responseText);
           if (res.code === 0) {
             options.success(res);
@@ -80,7 +80,10 @@
             }
             hideload();
           }
-        }
+        }else if(options.success && options.nojson){
+			options.success(res);
+			hideload();
+		}
       } else if (ajax.readyState === 4 && ajax.status !== 200) {
         if (options.error) {
           options.error(ajax);
@@ -105,4 +108,4 @@
       ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=utf-8")
       ajax.send(options.data);
     }
-  }</script><script type=text/javascript src=./static/js/manifest.2ea282c501b134634d7d.js></script><script type=text/javascript src=./static/js/vendor.c54c31dc7eeb9a4a537e.js></script><script type=text/javascript src=./static/js/app.c2a76d2d8bda49b9f687.js></script></body></html>
+  }</script><script type=text/javascript src=./static/js/manifest.07d130d707728504a204.js></script><script type=text/javascript src=./static/js/vendor.c54c31dc7eeb9a4a537e.js></script><script type=text/javascript src=./static/js/app.758a29ab9d90947ef3e6.js></script></body></html>

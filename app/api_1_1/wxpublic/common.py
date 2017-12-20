@@ -3,9 +3,10 @@ import urllib
 import requests
 import redis
 # 获取access_token
-from flask import jsonify, request, current_app, make_response
+from flask import jsonify, request, current_app, make_response,send_file
 from flask_restful import Resource
-
+import qrcode
+from io import BytesIO
 
 def wxpublic_get_access_token(code):
     appid = "wx35c4ce958bc7eb68"
@@ -144,3 +145,23 @@ def ReturnText(openid,dever,text):
     r.content_type = 'applicaiton/xml'
     return r
 
+
+
+
+
+# 将URL转换成二维码
+class TransferQrcode(Resource):
+    def get(self):
+        url = request.values.get("url")
+        qr = qrcode.QRCode(
+            version=4,
+            error_correction=qrcode.constants.ERROR_CORRECT_H,
+            box_size=10,
+            border=1
+        )
+        qr.add_data(url)
+        img = qr.make_image()
+        byte_io = BytesIO()
+        img.save(byte_io, 'PNG')
+        byte_io.seek(0)
+        return  send_file(byte_io,mimetype='image/png')

@@ -8,7 +8,7 @@ try{
 	window.localStorage.test = "ok";
 	init();
 }catch(e){
-	alert("请勿使用safari的无痕浏览模式。")
+	hxpAlert.show("请勿使用safari的无痕浏览模式。")
 }
 
 function init(){
@@ -42,12 +42,12 @@ function init(){
 					}
 	            	location.href = result.data.url;
 	            }else{
-	            	alert("微信授权失败，请重试");
+	            	hxpAlert.show("微信授权失败，请重试");
 	           		location.href= "http://houxiaopang.com/qrlogin";
 	            }
 			},
 			error: function() {
-				alert("网络拥挤，请稍后再试");
+				hxpAlert.show("网络拥挤，请稍后再试");
 				location.href= "http://houxiaopang.com/qrlogin";
 			}
 		});

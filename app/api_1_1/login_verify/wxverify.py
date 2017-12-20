@@ -14,6 +14,7 @@ class WxVerify(Resource):
             return jsonify({'code': -1, 'data': {"message":"code mistake"}})
         code = request.args.get("code")
         result = get_access_token(code)
+        # print(result)
         if result is None:  # 验证失败,
             return jsonify({'code': -1, 'data': {'message': 'code mistake'}})
         userinfo = get_user_info(result.get('access_token'), result.get('openid'))
@@ -34,6 +35,7 @@ class WxVerify(Resource):
 
         # 根据unionid是否在库,决定是去填表还是去个人中心
         user = User.query.filter_by(unionid=unionid).first()
+        # print(user)
         if user is None:  # 第一次登陆
             applystatus = APPLYSTATUS['APPLYING']
             last_login = datetime.datetime.now()
@@ -80,7 +82,7 @@ class WxVerify(Resource):
 
         token = user.generate_auth_token().decode()
         applystatus = user.applystatus
-        print(url)
+        # print(url)
         return jsonify({'code': 0, 'data': {'url': url,'token':token,'applystatus':applystatus}})
 
 
