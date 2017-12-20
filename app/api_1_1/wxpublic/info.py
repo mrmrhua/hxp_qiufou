@@ -90,22 +90,22 @@ class GetCity(Resource):
 
 
 def GetTicket(noncestr,timestamp,url):
-    # conn = Conn_db()
-    # ticket = conn.get("jsapi_ticket")
+    conn = Conn_db()
+    ticket = conn.get("jsapi_ticket")
     # print(ticket)
-    # if not ticket or ticket=="None": #expired
-    #     if current_app.debug:
-    #         token= '5_s2Zyho-CJ8kDXC50c1jfSet8ZZmR48ZhmGwW8jVYDZMpzRIh2nDCN9NKZrAKm11RD6WGZ-Ltx06GrGXx0-40no8CFzA1VrFohzNnTiE573t2bYg1W7q_MhlwcZHJN6fvFJIDR0DCvBpGEHMKEBNjABAWTF'
-    #     else:
-    #         token = wx_get_common_access_token()
-    #         print("3:%r" % token)
-    #     ticket = wxpublic_get_jsapi_ticket(token)
-    #     print("4:%r" % ticket)
-    #     conn.set("jsapi_ticket",ticket,6900)
+    if not ticket or ticket=="None": #expired
+        if current_app.debug:
+            token= '5_s2Zyho-CJ8kDXC50c1jfSet8ZZmR48ZhmGwW8jVYDZMpzRIh2nDCN9NKZrAKm11RD6WGZ-Ltx06GrGXx0-40no8CFzA1VrFohzNnTiE573t2bYg1W7q_MhlwcZHJN6fvFJIDR0DCvBpGEHMKEBNjABAWTF'
+        else:
+            token = wx_get_common_access_token()
+            print("3:%r" % token)
+        ticket = wxpublic_get_jsapi_ticket(token)
+        print("4:%r" % ticket)
+        conn.set("jsapi_ticket",ticket,6900)
 
-    token = '5_s2Zyho-CJ8kDXC50c1jfSet8ZZmR48ZhmGwW8jVYDZMpzRIh2nDCN9NKZrAKm11RD6WGZ-Ltx06GrGXx0-40no8CFzA1VrFohzNnTiE573t2bYg1W7q_MhlwcZHJN6fvFJIDR0DCvBpGEHMKEBNjABAWTF'
-    ticket = wxpublic_get_jsapi_ticket(token)
-    print(ticket)
+   # token = '5_s2Zyho-CJ8kDXC50c1jfSet8ZZmR48ZhmGwW8jVYDZMpzRIh2nDCN9NKZrAKm11RD6WGZ-Ltx06GrGXx0-40no8CFzA1VrFohzNnTiE573t2bYg1W7q_MhlwcZHJN6fvFJIDR0DCvBpGEHMKEBNjABAWTF'
+   #  ticket = wxpublic_get_jsapi_ticket(token)
+   #  print(ticket)
     s = 'jsapi_ticket='+ ticket + '&noncestr='+ noncestr+'&timestamp='+timestamp+'&url='+url
     print(s)
     # r = hashlib.sha1(s).hexdigest()
