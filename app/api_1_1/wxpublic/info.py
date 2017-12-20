@@ -107,6 +107,7 @@ def GetTicket(noncestr,timestamp,url):
     ticket = wxpublic_get_jsapi_ticket(token)
     print(ticket)
     s = 'jsapi_ticket='+ ticket + '&noncestr='+ noncestr+'&timestamp='+timestamp+'&url='+url
+    print(s)
     # r = hashlib.sha1(s).hexdigest()
     h = hashlib.sha1()
     h.update(s.encode('utf-8'))
