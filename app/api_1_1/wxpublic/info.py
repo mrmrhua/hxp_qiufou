@@ -112,6 +112,7 @@ def GetTicket(noncestr,timestamp,url):
     h = hashlib.sha1()
     h.update(s.encode('utf-8'))
     r = h.hexdigest()
+    print(r)
     return r
 
 

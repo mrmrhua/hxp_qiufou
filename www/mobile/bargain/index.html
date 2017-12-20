@@ -57,7 +57,7 @@
         </div>
 </div>
 <script type="text/javascript" src="https://m.houxiaopang.com/bargain/static/index.js"></script>
-<script src="https://res.wx.qq.com/open/js/jweixin-1.3.1.js"></script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 <script type="text/javascript">
       var timestamp = Date.parse(new Date()) + "";
       timestamp = timestamp.substring(0, timestamp.length - 3);
@@ -76,63 +76,58 @@
                 timestamp: timestamp, // 必填，生成签名的时间戳
                 nonceStr: nonceStr, // 必填，生成签名的随机串
                 signature: res,// 必填，签名，见附录1
-                jsApiList: ['checkJsApi',
+                jsApiList: [
                   'onMenuShareTimeline',
-                  'onMenuShareAppMessage',
-                  'onMenuShareQQ',
-                  'onMenuShareWeibo'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+                  'onMenuShareAppMessage'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
             });
         }
     })
-    
-    
+
+
     function shear(){
-        function shear(){
-        var that = this;
-        wx.onMenuShareTimeline({
-          title: '猴小胖-项目进度', // 分享标题
+        //todo  提示图片
+      }
+
+
+      var onBridgeReady = function() {
+    // 分享到朋友圈;
+    WeixinJSBridge.on('menu:share:timeline', function(argv) {
+        WeixinJSBridge.invoke('shareTimeline', {
+            title: '猴小胖-项目进度', // 分享标题
+          desc: '猴小胖-项目进度', // 分享描述
+          link: 'https://m.houxiaopang.com/admin/#/schedule?id=', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+          imgUrl: 'http://image.houxiaopang.com/login_v1/logo2.png', // 分享图标
+          type: 'link', // 分享类型,music、video或link，不填默认为link
+          dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为
+        }, function() {});
+    });
+    //分享给朋友
+    WeixinJSBridge.on('menu:share:appmessage', function(argv) {
+        WeixinJSBridge.invoke('sendAppMessage', {
+           title: '猴小胖-项目进度', // 分享标题
           desc: '猴小胖-项目进度', // 分享描述
           link: 'https://m.houxiaopang.com/admin/#/schedule?id=', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
           imgUrl: 'http://image.houxiaopang.com/login_v1/logo2.png', // 分享图标
           type: 'link', // 分享类型,music、video或link，不填默认为link
           dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-          success: function () {
-            alert("分享成功")
-          },
-          cancel: function () {
-            alert("取消")
-          },
-          fail: function (res) {
-            alert('wx.onMenuShareTimeline:fail: ' + JSON.stringify(res));
-          }
-        });
-      }
+        }, function() {})
+    });
+    }
+
+if (document.addEventListener) {
+    document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+} else if (document.attachEvent) {
+    document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+    document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+}
 
 
-       // var that = this;
 
-      }
 </script>
 <script>
 var code = getQueryString("code");
 var demand_id = getQueryString("state");
 if(demand_id){
-    wx.onMenuShareTimeline({
-      title: '快来帮我砍价！搏一搏单车变摩托！', // 分享标题
-      desc: '猴小胖品牌设计，致力于打造新一代设计服务平台，为中小企业提供省心省力的一站式设计解决方案', // 分享描述
-      link: 'https://m.houxiaopang.com/bargain/bargain?state='+demand_id, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-      imgUrl: 'http://image.houxiaopang.com/hd/bargain/bargin.png', // 分享图标
-      type: 'link', // 分享类型,music、video或link，不填默认为link
-      dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-    });
-    wx.onMenuShareAppMessage({
-        title: '快来帮我砍价！搏一搏单车变摩托！', // 分享标题
-        desc: '猴小胖品牌设计，致力于打造新一代设计服务平台，为中小企业提供省心省力的一站式设计解决方案', // 分享描述
-        link: 'https://m.houxiaopang.com/bargain/bargain?state='+demand_id, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-        imgUrl: 'http://image.houxiaopang.com/hd/bargain/bargin.png', // 分享图标
-        type: 'link', // 分享类型,music、video或link，不填默认为link
-        dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-    });
     new Vue({
         el:"#box",
         data:{
