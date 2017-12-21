@@ -138,7 +138,9 @@ function closed(id) {//关闭
         }
     })
 }
-
+function looksc(id){
+    open("https://m.houxiaopang.com/demand/#/share?project_id="+id);
+}
 function stop(id) {//终止项目
     $.ajax({
         type: "post",
@@ -186,7 +188,7 @@ function getDemand() {
                     checktfoot.innerHTML += strchecktfoot;
                     var stroperate = `
         			<tr><td><div><!--<span onclick="javascript:window.top.open('http://houxiaopang.com/demand/#/detail/${item.demand_id}');" class="colorSpan">详情</span>-->
-        			<span onclick="closed(${item.id})" class="colorSpan">关闭</span> <span onclick="stop(${item.id})" class="colorSpan">终止</span>
+        			<span onclick="closed(${item.id})" class="colorSpan">关闭</span> <span onclick="stop(${item.id})" class="colorSpan">终止</span> <span onclick="looksc(${item.id})" class="colorSpan">查看进度</span>
                     　</div></td></tr>`;
                     operate.innerHTML += stroperate;
                     var strcontent = `

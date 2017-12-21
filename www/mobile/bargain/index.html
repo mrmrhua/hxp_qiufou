@@ -49,12 +49,24 @@
             <p>Tips：邀请的好友越多，能砍</p>
             <p>的价格越高哦！</p>
         </div>
-        <button onclick='shear()' type="share" class="btn_share">分享给朋友来砍价&#8680;</p>
+        <button onclick='shear(1)' type="share" class="btn_share">分享给朋友来砍价&#8680;</p>
         </button>
     </div>
     <div class="list-footer">
             <p>本活动由猴小胖平台提供技术支持</p>
         </div>
+</div>
+<div onclick='shear(0)' id="sharebox" style="position: fixed;top: 0;left: 0;right: 0;bottom: 0;z-index: 1024;background: rgba(0,0,0,0.8);display: none;">
+    <div style="position: relative;width: 100%;height: 100%;display: flex;flex-direction: column;align-items: center;">
+        <div style="width: 100px;margin-right: 10px;align-self: flex-end;">
+            <img src="http://image.houxiaopang.com/wx/web/share/rigthtop.png" style="width: 100%;">
+        </div>
+        <div style="color: #fff;font-size: 16px;margin-top: 10px;line-height: 30px;">
+            <p>点击右上角</p>
+            <p>分享到朋友圈</p>
+            <p>邀请好友帮你砍价</p>
+        </div>
+    </div>
 </div>
 <script type="text/javascript" src="https://m.houxiaopang.com/bargain/static/index.js"></script>
 <script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
@@ -71,7 +83,7 @@
         },
         success(res){
             wx.config({
-                debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
                 appId: 'wx35c4ce958bc7eb68', // 必填，公众号的唯一标识
                 timestamp: timestamp, // 必填，生成签名的时间戳
                 nonceStr: nonceStr, // 必填，生成签名的随机串
@@ -81,15 +93,18 @@
                   'onMenuShareAppMessage'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
             });
         },
-          error(){}
+        error(){}
     })
 
 
-    function shear(){
-        //todo  提示图片
+    function shear(type){
+       var box = document.getElementById("sharebox")
+        if(type === 0){
+            box.style.display = "none";
+        }else if(type === 1){
+            box.style.display = "block";
+        }
       }
-
-
       var onBridgeReady = function() {
     // 分享到朋友圈;
     WeixinJSBridge.on('menu:share:timeline', function(argv) {
