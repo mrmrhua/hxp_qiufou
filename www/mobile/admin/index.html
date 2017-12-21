@@ -83,7 +83,7 @@
             hideload();
           }
         } else if (options.success && options.nojson) {
-          options.success(res);
+          options.success(ajax.responseText);
           hideload();
         }
       } else if (ajax.readyState === 4 && ajax.status !== 200) {

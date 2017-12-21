@@ -2,7 +2,7 @@ from  flask import  session,jsonify,request,url_for
 import  random
 from flask_restful import Resource
 from flask_login import current_user,login_user
-from app.common import  support_jsonp,get_access_token,get_user_info,get_wx_head
+from app.common import  support_jsonp,get_access_token,get_user_info,get_wx_head,clientauth
 import json
 from app.models import User,db,Client
 from config import APPLYSTATUS
@@ -125,3 +125,9 @@ class WxVerify_Client(Resource):
         token = client.generate_auth_token().decode()
 
         return jsonify({'code': 0, 'data': {"token":token}})
+
+# 根据TOKEN返回客户ID
+class GetClientID(Resource):
+    @clientauth.login_required
+    def get(self):
+        return jsonify({'code': 0, 'data': {"id":g.client.id}})

@@ -129,5 +129,31 @@ class ClientProjectPage(Resource):
         return jsonify({"code": 0, "data": data})
 
 
+   # https://m.houxiaopang.com/api/v1.1/wxfwh/common/projectpage
+        # GET
+        # (其他人也可以查看）项目进度
+class CommonProjectPage(Resource):
+    @clientauth.login_required
+    def get(self):
+        project_id = request.values.get("project_id")
+        pro = Project.query.filter_by(id=project_id).order_by(Project.up_time.desc()).first()
+        if not pro:
+            return jsonify({"code":-1,"msg":"项目不存在"})
+        posts = pro.posts
+        postlist = [{"up_time": i.up_time.strftime("%Y-%m-%d %H:%M:%S"),
+                     "imglist": [n.work_url for n in i.works],
+                     "post_id": i.id,
+                     "desc": i.desc
+                     } for i in posts]
+
+        data = {"title": pro.title,
+                "client": getclientname(pro.client_id),
+                "designer": getdesignername(pro.user_id),
+                "postlist": postlist,
+                'starttime': pro.starttime.strftime("%Y-%m-%d %H:%M:%S"),
+                'demand_id': pro.demand_id}
+        return jsonify({"code": 0, "data": data})
+
+
 
 

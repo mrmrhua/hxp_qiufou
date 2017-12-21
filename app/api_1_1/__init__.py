@@ -20,6 +20,8 @@ from .work_resume import *
 
 # wx verify info
 api_v1_1.add_resource(WxVerify,'/wx_verify')
+# 根据TOKEN返回客户ID
+api_v1_1.add_resource(GetClientID,'/getclientid')
 
 api_v1_1.add_resource(WxVerify_Client,'/wx_verfify_client')
 
@@ -199,6 +201,9 @@ api_v1_1.add_resource(De_ProjectList,'/designer/projectlist')
 api_v1_1.add_resource(ProjectPage,'/wxfwh/projectpage')
 # 客户获取项目进度
 api_v1_1.add_resource(ClientProjectPage,'/wxfwh/client/projectpage')
+
+# （所有人都能看到）获取项目进度
+api_v1_1.add_resource(CommonProjectPage,'/wxfwh/common/projectpage')
 # 客户查看流水
 api_v1_1.add_resource(PayRecord,'/wxfwh/payrecord')
 
