@@ -66,7 +66,7 @@
     ajax.onreadystatechange = function () {
       if (ajax.readyState === 4 && ajax.status === 200) {
         if (options.success && !options.nojson) {
-          var res = JSON.parse();
+          var res = JSON.parse(ajax.responseText);
           if (res.code === 0) {
             options.success(res);
             hideload();
