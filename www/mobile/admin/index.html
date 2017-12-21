@@ -70,7 +70,7 @@
     ajax.onreadystatechange = function () {
       if (ajax.readyState === 4 && ajax.status === 200) {
         if (options.success && !options.nojson) {
-          var res = JSON.parse(ajax.responseText);
+		  var res = JSON.parse(ajax.responseText);
           if (res.code === 0) {
             options.success(res);
             hideload();
@@ -83,7 +83,7 @@
             hideload();
           }
         } else if (options.success && options.nojson) {
-          options.success(res);
+          options.success(ajax.responseText);
           hideload();
         }
       } else if (ajax.readyState === 4 && ajax.status !== 200) {
@@ -119,11 +119,11 @@
     data: {
       timestamp: timestamp,
       nonceStr: nonceStr,
-      url: encodeURI(location.href.split('#')[0]),
+      url: encodeURIComponent(location.href.split('#')[0]),
     },
     success(res){
       wx.config({
-        debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
         appId: 'wx35c4ce958bc7eb68', // 必填，公众号的唯一标识
         timestamp: timestamp, // 必填，生成签名的时间戳
         nonceStr: nonceStr, // 必填，生成签名的随机串
@@ -141,7 +141,7 @@
       WeixinJSBridge.invoke('shareTimeline', {
         title: '猴小胖-项目进度', // 分享标题
         desc: title, // 分享描述
-        link: 'https://m.houxiaopang.com/demand/#/share?id=' + project_id, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        link: 'https://m.houxiaopang.com/demand/#/workproject/share/' + project_id, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
         imgUrl: 'http://image.houxiaopang.com/login_v1/logo2.png', // 分享图标
         type: 'link', // 分享类型,music、video或link，不填默认为link
         dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
@@ -153,7 +153,7 @@
       WeixinJSBridge.invoke('sendAppMessage', {
         title: '猴小胖-项目进度', // 分享标题
         desc: title, // 分享描述
-        link: 'https://m.houxiaopang.com/demand/#/share?id=' + project_id, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        link: 'https://m.houxiaopang.com/demand/#/workproject/share/' + project_id, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
         imgUrl: 'http://image.houxiaopang.com/login_v1/logo2.png', // 分享图标
         type: 'link', // 分享类型,music、video或link，不填默认为link
         dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
