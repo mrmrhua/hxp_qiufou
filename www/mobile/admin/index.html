@@ -1,4 +1,12 @@
-<!DOCTYPE html><html lang=zh-cmn-Hans><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,user-scalable=0"><link rel=stylesheet href=./static/css/example.css><link rel=stylesheet href=./static/css/weui.min.css><title>猴小胖设计服务专家</title><link href=./static/css/app.261de1d312305455e3f437d7b62c09bf.css rel=stylesheet></head><body><div id=app></div><div id=loadingToast style=display:none><div class=weui-mask_transparent></div><div class=weui-toast><i class="weui-loading weui-icon_toast"></i><p id=loadText class=weui-toast__content></p></div></div><div class=js_dialog id=iosDialog2 style="display: none"><div class=weui-mask></div><div class=weui-dialog><div class=weui-dialog__bd id=iosDialogtext></div><div onclick=hideModal() class=weui-dialog__ft><a href=javascript:; class="weui-dialog__btn weui-dialog__btn_primary">确定</a></div></div></div><script src=https://res.wx.qq.com/open/js/jweixin-1.2.0.js></script><script>var code = getQueryString("code");
+<!DOCTYPE html><html lang=zh-cmn-Hans><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,user-scalable=0"><link rel=stylesheet href=./static/css/example.css><link rel=stylesheet href=./static/css/weui.min.css><title>猴小胖设计服务专家</title><link href=./static/css/app.261de1d312305455e3f437d7b62c09bf.css rel=stylesheet></head><body><div id=app></div><div onclick=wxshear(0) id=sharebox style="position: fixed;top: 0;left: 0;right: 0;bottom: 0;z-index: 1024;background: rgba(0,0,0,0.8);display: none"><div style="position: relative;width: 100%;height: 100%;display: flex;flex-direction: column;align-items: center"><div style="width: 100px;margin-right: 10px;align-self: flex-end"><img src=http://image.houxiaopang.com/wx/web/share/rigthtop.png style="width: 100%"></div><div style="color: #fff;font-size: 16px;margin-top: 10px;line-height: 30px"><p>点击右上角</p><p>分享给客户</p></div></div></div><div id=loadingToast style=display:none><div class=weui-mask_transparent></div><div class=weui-toast><i class="weui-loading weui-icon_toast"></i><p id=loadText class=weui-toast__content></p></div></div><div class=js_dialog id=iosDialog2 style="display: none"><div class=weui-mask></div><div class=weui-dialog><div class=weui-dialog__bd id=iosDialogtext></div><div onclick=hideModal() class=weui-dialog__ft><a href=javascript:; class="weui-dialog__btn weui-dialog__btn_primary">确定</a></div></div></div><script src=https://res.wx.qq.com/open/js/jweixin-1.2.0.js></script><script>function wxshear(type) {
+    var box = document.getElementById("sharebox")
+    if (type === 0) {
+      box.style.display = "none";
+    } else if (type === 1) {
+      box.style.display = "block";
+    }
+  }
+  var code = getQueryString("code");
   var token = window.localStorage.token;
   var login = false;
   var path = null;
@@ -68,7 +76,7 @@
     ajax.onreadystatechange = function () {
       if (ajax.readyState === 4 && ajax.status === 200) {
         if (options.success && !options.nojson) {
-		  var res = JSON.parse(ajax.responseText);
+          var res = JSON.parse(ajax.responseText);
           if (res.code === 0) {
             options.success(res);
             hideload();
@@ -108,7 +116,7 @@
       ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=utf-8")
       ajax.send(options.data);
     }
-  }</script><script>function share(title,project_id) {
+  }</script><script>function share(title, project_id) {
     var timestamp = Date.parse(new Date()) + "";
     timestamp = timestamp.substring(0, timestamp.length - 3);
     var nonceStr = "dsajkhdkjsahdkjash";
@@ -118,9 +126,10 @@
       data: {
         timestamp: timestamp,
         nonceStr: nonceStr,
-        url: encodeURI(location.href.split('#')[0]),
+        url: encodeURI(location.href.split('#')[0])
       },
       success(res){
+        res = JSON.parse(res)
         wx.config({
           debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
           appId: 'wx35c4ce958bc7eb68', // 必填，公众号的唯一标识

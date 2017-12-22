@@ -9,6 +9,7 @@
     <link href="css/phone.css" rel="stylesheet" type="text/css"/>
     <link href="css/skin1.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
     <script type="text/javascript" src="js/project.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
@@ -32,6 +33,9 @@
     </script>
 </head>
 <body>
+<div style="position: absolute;top: 30px;right: 200px;width: 100px;height: 100px;z-index: 20;">
+    <div id="qrcode" style="position: relative;width: 100%;height: 100%;"></div>
+</div>
 <div class="place">
     <span>位置：</span>
     <ul class="placeul">

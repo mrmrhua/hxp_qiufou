@@ -1,4 +1,8 @@
 $(document).ready(function () {
+
+    document.onclick = function(){
+        $("#qrcode").css("display","none");
+    }
     tableMove();
     getDemand();
 });
@@ -138,8 +142,13 @@ function closed(id) {//关闭
         }
     })
 }
-function looksc(id){
-    open("https://m.houxiaopang.com/demand/#/share?project_id="+id);
+
+function looksc(e,id){
+    e.stopPropagation()
+    $('#qrcode').html("")
+    $('#qrcode').qrcode({width: 100,height: 100,text:"https://m.houxiaopang.com/demand/#/workproject/share/"+id});
+    //open();
+    $('#qrcode').css("display","block")
 }
 function stop(id) {//终止项目
     $.ajax({
@@ -188,7 +197,7 @@ function getDemand() {
                     checktfoot.innerHTML += strchecktfoot;
                     var stroperate = `
         			<tr><td><div><!--<span onclick="javascript:window.top.open('http://houxiaopang.com/demand/#/detail/${item.demand_id}');" class="colorSpan">详情</span>-->
-        			<span onclick="closed(${item.id})" class="colorSpan">关闭</span> <span onclick="stop(${item.id})" class="colorSpan">终止</span> <span onclick="looksc(${item.id})" class="colorSpan">查看进度</span>
+        			<span onclick="closed(${item.id})" class="colorSpan">关闭</span> <span onclick="stop(${item.id})" class="colorSpan">终止</span> <span onclick="looksc(event,${item.id})" class="colorSpan">查看进度</span>
                     　</div></td></tr>`;
                     operate.innerHTML += stroperate;
                     var strcontent = `

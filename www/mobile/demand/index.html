@@ -8,7 +8,15 @@
       padding-right: 13px;
       position: relative;
       font-size: 14px;
-    }</style><link href=./static/css/app.1285754812ca9dbc177c8ac8a1ea7c44.css rel=stylesheet></head><body><div id=app></div><div id=loadingToast style=display:none><div class=weui-mask_transparent></div><div class=weui-toast><i class="weui-loading weui-icon_toast"></i><p id=loadText class=weui-toast__content></p></div></div><div class=js_dialog id=iosDialog2 style="display: none"><div class=weui-mask></div><div class=weui-dialog><div class=weui-dialog__bd id=iosDialogtext></div><div onclick=hideModal() class=weui-dialog__ft><a href=javascript:; class="weui-dialog__btn weui-dialog__btn_primary">确定</a></div></div></div><script type=text/javascript>var token = window.localStorage.token;
+    }</style><link href=./static/css/app.1285754812ca9dbc177c8ac8a1ea7c44.css rel=stylesheet></head><body><div id=app></div><div onclick=shear(0) id=sharebox style="position: fixed;top: 0;left: 0;right: 0;bottom: 0;z-index: 1024;background: rgba(0,0,0,0.8);display: none"><div style="position: relative;width: 100%;height: 100%;display: flex;flex-direction: column;align-items: center"><div style="width: 100px;margin-right: 10px;align-self: flex-end"><img src=http://image.houxiaopang.com/wx/web/share/rigthtop.png style="width: 100%"></div><div style="color: #fff;font-size: 16px;margin-top: 10px;line-height: 30px"><p>点击右上角</p><p>分享给客户</p></div></div></div><div id=loadingToast style=display:none><div class=weui-mask_transparent></div><div class=weui-toast><i class="weui-loading weui-icon_toast"></i><p id=loadText class=weui-toast__content></p></div></div><div class=js_dialog id=iosDialog2 style="display: none"><div class=weui-mask></div><div class=weui-dialog><div class=weui-dialog__bd id=iosDialogtext></div><div onclick=hideModal() class=weui-dialog__ft><a href=javascript:; class="weui-dialog__btn weui-dialog__btn_primary">确定</a></div></div></div><script type=text/javascript>function shear(type) {
+    var box = document.getElementById("sharebox")
+    if (type === 0) {
+      box.style.display = "none";
+    } else if (type === 1) {
+      box.style.display = "block";
+    }
+  }
+  var token = window.localStorage.token;
   /*var path = null;
   if (window.location.href.split("/#/").length === 2) {
     path = window.location.href.split("/#/")[1];
@@ -149,4 +157,46 @@
     }
     return type;
   }
-  var pptType = "";</script><script type=text/javascript src=./static/js/manifest.639fe11de41b5f24e785.js></script><script type=text/javascript src=./static/js/vendor.6b41c57917c15c696f11.js></script><script type=text/javascript src=./static/js/app.39e355b2117956eadc97.js></script></body></html>
+  var pptType = "";</script><script>function wxshare(desc,url) {
+    var timestamp = Date.parse(new Date()) + "";
+    timestamp = timestamp.substring(0, timestamp.length - 3);
+    var nonceStr = "dsajkhdkjsahdkjash";
+    ajax({
+      url: "https://www.houxiaopang.com/api/v1.1/getjsticket",
+      nojson: true,
+      data: {
+        timestamp: timestamp,
+        nonceStr: nonceStr,
+        url: encodeURI(location.href.split('#')[0]),
+      },
+      success(res){
+        wx.config({
+          debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+          appId: 'wx35c4ce958bc7eb68', // 必填，公众号的唯一标识
+          timestamp: timestamp, // 必填，生成签名的时间戳
+          nonceStr: nonceStr, // 必填，生成签名的随机串
+          signature: res,// 必填，签名，见附录1
+          jsApiList: ['onMenuShareTimeline',
+            'onMenuShareAppMessage'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+        });
+      }
+    })
+    wx.ready(function () {
+      wx.onMenuShareAppMessage({
+        title: '猴小胖-项目进度', // 分享标题
+        desc: desc, // 分享描述
+        link: url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        imgUrl: 'http://image.houxiaopang.com/login_v1/logo2.png', // 分享图标
+        type: 'link', // 分享类型,music、video或link，不填默认为link
+        dataUrl: '' // 如果type是music或video，则要提供数据链接，默认为空
+      });
+      wx.onMenuShareTimeline({
+        title: '猴小胖-项目进度', // 分享标题
+        desc: desc, // 分享描述
+        link: url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        imgUrl: 'http://image.houxiaopang.com/login_v1/logo2.png', // 分享图标
+        type: 'link', // 分享类型,music、video或link，不填默认为link
+        dataUrl: '' // 如果type是music或video，则要提供数据链接，默认为空
+      });
+    })
+  }</script><script type=text/javascript src=./static/js/manifest.523222d5544d0a16099f.js></script><script type=text/javascript src=./static/js/vendor.6b41c57917c15c696f11.js></script><script type=text/javascript src=./static/js/app.5b9d16be5c0a32a428c1.js></script></body></html>
