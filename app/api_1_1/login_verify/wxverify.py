@@ -1,4 +1,4 @@
-from  flask import  session,jsonify,request,url_for
+from  flask import  session,jsonify,request,url_for,g
 import  random
 from flask_restful import Resource
 from flask_login import current_user,login_user
