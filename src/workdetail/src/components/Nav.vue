@@ -53,7 +53,11 @@
   </div>
 </template>
 <script>
-
+  /*
+  * 与 admin 中的nav.vue 一样
+  * 注意：作品精选 栏加了下划线
+  *
+  * */
   function getDateTimeStamp(dateStr) {
     return Date.parse(dateStr.replace(/-/gi, "/"));
   }

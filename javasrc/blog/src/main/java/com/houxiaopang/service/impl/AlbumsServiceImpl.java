@@ -3,12 +3,14 @@ package com.houxiaopang.service.impl;
 import com.houxiaopang.dao.AlbumsMapper;
 import com.houxiaopang.detailparser.ZhangkuAlbumDetailParser;
 import com.houxiaopang.model.Albums;
+import com.houxiaopang.model.Notices;
 import com.houxiaopang.parser.ZhangkuAlbumParser;
 import com.houxiaopang.pojo.Album;
 import com.houxiaopang.pojo.Rule;
 import com.houxiaopang.service.AlbumsService;
 import com.houxiaopang.service.AsyncTask;
 import com.houxiaopang.service.DesignWorksService;
+import com.houxiaopang.service.NoticeService;
 import com.houxiaopang.util.CategoryUtil;
 import com.houxiaopang.util.SendEmail;
 import com.houxiaopang.util.Sprid;
@@ -35,6 +37,10 @@ public class AlbumsServiceImpl implements AlbumsService {
 
     @Autowired
     DesignWorksService designWorksService;
+
+    @Autowired
+    NoticeService noticeService;
+
 
     /**
      * 爬取作品，并导入数据库
@@ -64,9 +70,11 @@ public class AlbumsServiceImpl implements AlbumsService {
         if (albums.size() == 0) {
             throw new RuntimeException("警告，用户：" + userId + "，解析站酷相册:" + url + "，获取的相册为空。");
         }
+        int totalAlbums = albums.size();
         List<Album> rm = new ArrayList<>();
         for (int i = 0, size = albums.size(); i < size; i++) {
             if (CategoryUtil.formatCateId(albums.get(i).getCategory()) == 0) {
+                //去除不支持的品类
                 rm.add(albums.get(i));
                 continue;
             }
@@ -85,6 +93,18 @@ public class AlbumsServiceImpl implements AlbumsService {
             }
         }
         albums.removeAll(rm);
+
+        //去重
+        List<Album> rma = new ArrayList<>();
+        List<Albums> byUserId = albumsMapper.findByUserId(userId);
+        for (int i = 0, size = albums.size(); i < size; i++) {
+            for (int j = 0, jsize = byUserId.size(); j < jsize; j++) {
+                if (albums.get(i).getTitle().equals(byUserId.get(j).getTitle())) {
+                    rma.add(albums.get(i));
+                }
+            }
+        }
+        albums.removeAll(rma);
         List<Albums> albums1s = new ArrayList<>();
         for (Album album : albums) {
             Albums albums1 = new Albums();
@@ -101,13 +121,39 @@ public class AlbumsServiceImpl implements AlbumsService {
             albumsMapper.insertList(albums1s);
             designWorksService.insertList(albums, albums1s);
         } else {
-            throw new RuntimeException("警告，用户：" + userId + "，解析站酷相册:" + url + "，导入的相册为空。");
+            logger.info("导入结果警告，用户：" + userId + "，解析站酷相册:" + url + "，导入的相册为空。请检查。");
+            try {
+                Notices notices = new Notices();
+                notices.setTitle("平台导入结果通知");
+                notices.setContent("<p>导入地址为：" + url + "</p><p>共获取到作品数：" + totalAlbums + "</p><p>共导入作品数：0</p><p>请检查地址是否正确。</p><p>提示：去除了作品名重复或品类不相符的作品。</p>");
+                notices.setUpTime(new Date());
+                noticeService.add(notices, userId);
+            } catch (Exception e) {
+                logger.error(e.getMessage(), e);
+                logger.info("导入作品发送用户：" + userId + "，发送通知失败。开始发送邮件通知管理员");
+                SendEmail.send(null, "导入作品发送通知失败", "<html>用户：" + userId + "<p>发送通知内容：</p><p>导入地址为：" + url + "</p><p>共获取到作品数：" + totalAlbums + "</p><p>共导入作品数：0</p><p>请检查地址是否正确。</p><p>提示：去除了作品名重复或品类不相符的作品。<p/><html>");
+            }
+            SendEmail.send(null, "导入结果通知邮件", "警告，用户：" + userId + "，解析站酷相册:" + url + "，导入的相册为空。请检查。");
+            return;
         }
-        logger.info("导入结果：【用户：" + userId + "，导入站酷相册:" + url + "，共导入相册数量：" + albumsize);
+        StringBuilder sb = new StringBuilder("导入结果：【用户：" + userId + "，导入站酷相册：" + url + "，爬取到相册数：" + totalAlbums + "，共导入相册数量：" + albumsize + "，导入的相册id为：【");
+        for (Albums albums1 : albums1s) {
+            sb.append(albums1.getId()).append("，");
+        }
+        sb.append("】");
+        logger.info(sb.toString());
+        // 提醒用户导入结果
         try {
-            SendEmail.sendisSSL("284595745@qq.com", "导入结果通知邮件", "导入结果：【用户：" + userId + "，导入站酷相册:" + url + "，共导入相册数量：" + albumsize);
+            Notices notices = new Notices();
+            notices.setTitle("平台导入结果通知");
+            notices.setContent("<p>导入地址为：" + url + "</p><p>共获取到作品数：" + totalAlbums + "</p><p>共导入作品数：" + albumsize + "</p><p>提示：去除了作品名重复或品类不相符的作品。</p>");
+            notices.setUpTime(new Date());
+            noticeService.add(notices, userId);
         } catch (Exception e) {
-            logger.error("报错邮件发送失败。");
+            logger.error(e.getMessage(), e);
+            logger.info("导入作品发送用户：" + userId + "，发送通知失败。开始发送邮件通知管理员");
+            SendEmail.send(null, "导入作品发送通知失败", "<html>用户：" + userId + "<p>发送通知内容：</p><p>导入地址为：" + url + "</p><p>共获取到作品数：" + totalAlbums + "</p><p>共导入作品数：" + albumsize + "</p><p>提示：去除了作品名重复或品类不相符的作品。<p/><html>");
         }
+        SendEmail.send(null, "导入结果通知邮件", sb.toString());
     }
 }

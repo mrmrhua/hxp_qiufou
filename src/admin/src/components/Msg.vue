@@ -80,7 +80,7 @@
           }, 1000)
         }
       },
-      getinfo(){
+      getinfo(){ //获取所有消息
         var that = this;
         $.ajax({
           url: "http://www.houxiaopang.com/api/v1.1/designerdash/notice/all",
@@ -101,15 +101,15 @@
                 });
               }
             } else {
-              alert("网络拥挤，请稍后再试···");
+              hxpAlert.show("网络拥挤，请稍后再试···");
             }
           },
           error(){
-            alert("网络拥挤，请稍后再试···");
+            hxpAlert.show("网络拥挤，请稍后再试···");
           }
         });
       },
-      remove(){
+      remove(){ // 清空消息
         var that = this;
         that.delmodel = false;
         $.ajax({
@@ -124,16 +124,16 @@
                 that.notice = [];
               }, 1000);
             } else {
-              alert("网络拥挤，请稍后再试···");
+              hxpAlert.show("网络拥挤，请稍后再试···");
             }
 
           },
           error(){
-            alert("网络拥挤，请稍后再试···");
+            hxpAlert.show("网络拥挤，请稍后再试···");
           }
         });
       },
-      removemsg(){
+      removemsg(){ // 删除提示
         this.delmodel = true;
       }
     }

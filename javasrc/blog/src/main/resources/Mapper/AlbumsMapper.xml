@@ -33,6 +33,9 @@
     from albums
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="findByUserId"  resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+    select * from albums where user_id = #{user_id,jdbcType=INTEGER}
+  </select>
   <insert id="insertList" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.List">
     insert into albums (user_id, title, category, up_time, cover, description) values
     <foreach collection="list" item="item" separator=",">

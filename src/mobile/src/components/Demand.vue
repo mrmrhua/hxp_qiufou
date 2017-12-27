@@ -58,9 +58,9 @@
   </div>
 </template>
 <script>
-  export default{
+  export default {
     props: ['login'],
-    data(){
+    data() {
       return {
         project: [],
         processing: [],
@@ -69,26 +69,30 @@
         left: 0
       }
     },
-    created(){
+    created() {
       if (this.login) {
+        this.getUserid()
         this.getdemandlist()
       }
     },
-    watch:{
-        'login'(){
+    watch: {
+      'login'() {
+        if (this.login) {
+          this.getUserid()
           this.getdemandlist()
         }
+      }
     },
     methods: {
-      next(id){
+      next(id) {
         this.$router.push({
-          path: "schedule",
+          path: "/workproject/schedule",
           query: {
             id: id
           }
         })
       },
-      choose(idx){
+      choose(idx) {
         this.tabbar.forEach(function (item, index) {
           item.active = false
           if (idx === index) {
@@ -97,14 +101,31 @@
         })
         this.left = idx === 0 ? 0 : "-100%";
       },
-      getdemandlist(){
+      getUserid() {
+        ajax({
+          url: "https://www.houxiaopang.com/api/v1.1/getclientid",
+          token: true,
+          type: "GET",
+          success(res) {
+            if (res.code === 0) {
+              window.localStorage.hxpclientid = res.data.id
+            } else {
+              window.localStorage.hxpclientid = null
+            }
+          },
+          error() {
+            window.localStorage.hxpclientid = null
+          }
+        })
+      },
+      getdemandlist() {
         showload("加载中")
         var that = this;
         ajax({
           url: "https://www.houxiaopang.com/api/v1.1/wxfwh/projectlist",
           type: "GET",
           token: true,
-          success(res){
+          success(res) {
             if (res.code === 0) {
               res.data.projects.forEach(function (item) {
                 //0: 进行中， 1： 已结束， 2: 已关闭
@@ -120,7 +141,7 @@
             }
             hideload()
           },
-          error(){
+          error() {
             showModal("网络拥挤，请稍后再试。")
             hideload()
           }

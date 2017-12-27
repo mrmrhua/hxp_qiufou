@@ -11,6 +11,15 @@
       <ul>
         <li @click="choose(index)" v-for="(item,index) in type" :class="{labelpage_active : item.selected}">{{item.name}}</li>
       </ul>
+      <div @click="shearqrcode = !shearqrcode" style="position:absolute;right:15px;top:15px;cursor: pointer">
+        分享给客户
+      </div>
+      <div v-show="shearqrcode"
+           style="position: absolute;right: 0;top: 44px;background: #fff;padding: 15px;border: 1px solid #dedede;z-index: 15;">
+        <img style="width: 150px;"
+             :src="'http://www.houxiaopang.com/api/v1.1/designer/tranferqrcode?url=https://m.houxiaopang.com/admin/#/schedule?id='+this.$route.query.id"
+             alt="">
+      </div>
     </div>
     <div v-show="type[2].selected&&!shoukuang" class="di_info">
       <div style="font-size: 18px;">该项目支付记录</div>
@@ -29,8 +38,9 @@
           <td>{{item.remark}}</td>
           <td>{{setmoney(item.change_money)}}</td>
           <td>
-            <span>{{item.status}}</span>　<i class="iconfontyyy" :title="item.detail"
-                                            style="vertical-align: -2px;font-size: 20px;color:#f00;cursor: pointer;">&#xe691;</i>
+            <span>{{item.status}}</span>　
+            <i class="iconfontyyy" :title="item.detail"
+               style="vertical-align: -2px;font-size: 20px;color:#f00;cursor: pointer;">&#xe691;</i>
           </td>
         </tr>
         </tbody>
@@ -73,13 +83,13 @@
           <i v-show="index != 0"
              style="display: block;position:absolute;width: 14px;height: 14px;background: #fe6549;top: 10px;left: -7px;border-radius: 50%;"></i>
         </div>
-        <div class="di_list">
+        <div class="di_list" @click="open(item.post_id)">
           <ul>
-            <li @click="open(imgitem)" v-for="imgitem in item.imglist"><img style="cursor:pointer;"
-                                                                            :src="imgitem+'?imageView2/1/w/200/h/150'"
-                                                                            alt=""></li>
+            <li v-for="imgitem in item.imglist">
+              <img :src="imgitem+'?imageView2/1/w/200/h/150'" alt=""></li>
           </ul>
-          <div class="desc">{{item.desc}}</div>
+          <div v-show="item.desc && item.desc.trim()!=''" class="desc">{{item.desc}}</div>
+          <div style="text-align: center;font-size: 16px;color:#666;padding-bottom: 30px;">点击查看详情</div>
         </div>
       </div>
     </div>
@@ -160,7 +170,6 @@
           <span class="btn_image" style="margin: 0 50px 0 0;height: 30px;line-height: 30px;width: 100px;float: right;"
                 @click="sortover">确定</span>
         </div>
-
       </div>
     </div>
     <!-- <prompt :prompt="prompt" :promptshow="promptshow"></prompt>-->
@@ -168,7 +177,7 @@
 </template>
 <script>
   import imgthumb from "./Imgthumb.vue"
-  import prompt from "./Prompt.vue"
+  //import prompt from "./Prompt.vue"
   function Pointer(x, y) {
     this.x = x;
     this.y = y;
@@ -206,11 +215,12 @@
         project_id: null,
         money: null,
         description: "",//发起收款注释
-        imgupload: false
+        imgupload: false,
+        shearqrcode: false
       }
     },
     components: {
-      imgthumb,
+      imgthumb, // 上传图片的显示组件
       //prompt
     },
     created(){
@@ -222,16 +232,16 @@
       }
     },
     mounted(){
-      registerup(this);//初始化上传图片
+      registerup(this);//初始化上传图片功能
     },
     methods: {
       setmoney(value){
         return value > 0 ? "+" + value.toFixed(2) : value.toFixed(2)
       },
-      open(value){
-        window.open(value)
+      open(value){ // 进入圈点批划查看页
+        location.href = "http://www.houxiaopang.com/correct?post=" + value + "&url=demand/demandinfo/" + this.project_id;
       },
-      getdemanddetail(){
+      getdemanddetail(){ // 获取项目详情
         var that = this
         var id = this.post.demand_id
         $.ajax({
@@ -241,15 +251,15 @@
             if (res.code === 0) {
               that.demanddetail = res.data
             } else {
-              alert("网络拥挤，请稍后再试。")
+              hxpAlert.show("网络拥挤，请稍后再试。")
             }
           },
           error(){
-            alert("网络拥挤，请稍后再试。")
+            hxpAlert.show("网络拥挤，请稍后再试。")
           }
         })
       },
-      getinfo(id){
+      getinfo(id){ // 获取项目进度
         var that = this
         $.ajax({
           url: "http://www.houxiaopang.com/api/v1.1/wxfwh/projectpage",
@@ -261,15 +271,15 @@
             if (res.code === 0) {
               that.post = res.data
             } else {
-              alert("网络拥挤，请稍候再试")
+              hxpAlert.show("网络拥挤，请稍候再试")
             }
           },
           error(){
-            alert("网络拥挤，请稍候再试")
+            hxpAlert.show("网络拥挤，请稍候再试")
           }
         })
       },
-      getpayinfo(id){
+      getpayinfo(id){ // 获取项目流水
         var that = this
         $.ajax({
           url: "http://www.houxiaopang.com/api/v1.1/designer/getcashflow",
@@ -283,17 +293,17 @@
             }
           },
           error(){
-            alert("网络拥挤，请稍候再试")
+            hxpAlert.show("网络拥挤，请稍候再试")
           }
         })
       },
-      submitpage(){
+      submitpage(){ // 提交项目进度
         if (this.img_url.length <= 0) {
-          alert("请上传图片。")
+          hxpAlert.show("请上传图片。")
           return
         }
         if (this.imgupload) {
-          alert("请等待图片上传完成。");
+          hxpAlert.show("请等待图片上传完成。");
           return
         }
         var that = this
@@ -308,26 +318,26 @@
           },
           success(res){
             if (res.code === 0) {
-              that.post.postlist.unshift({desc: that.desc, imglist: that.img_url})
+              that.post.postlist.unshift({desc: that.desc, imglist: that.img_url, post_id: res.data.post_id})
               that.img_url = [];
               that.desc = "";
               that.img_index = 0;
             } else {
-              alert("网络拥挤，请稍候再试。")
+              hxpAlert.show("网络拥挤，请稍候再试。")
             }
           },
           error(){
-            alert("网络拥挤，请稍候再试。")
+            hxpAlert.show("网络拥挤，请稍候再试。")
           }
         })
       },
-      submitpay(){
+      submitpay(){ // 发起收款
         if (this.money === null || this.money.trim() === "") {
-          alert("请输入费用")
+          hxpAlert.show("请输入费用")
           return
         }
         if (!/(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/.test(this.money)) {
-          alert("费用格式不正确")
+          hxpAlert.show("费用格式不正确")
           return
         }
         var feetype = null
@@ -351,21 +361,21 @@
             if (res.code === 0) {
               that.successmoney = true
             } else {
-              alert("网络拥挤，请稍候再试。")
+              hxpAlert.show("网络拥挤，请稍候再试。")
             }
           },
           error(){
-            alert("网络拥挤，请稍候再试。")
+            hxpAlert.show("网络拥挤，请稍候再试。")
           }
         })
       },
-      wangchengmoney(){
+      wangchengmoney(){ // 发起收款完成
         this.choosemoneytype(0);
         this.money = null;
         this.description = "";
         this.successmoney = false
       },
-      initPhoto(){
+      initPhoto(){ // 初始化排序功能
         $("#sort .item").each(function (i) {
           this.init = function () { // 初始化
             this.box = $(this).parent();
@@ -502,7 +512,7 @@
           this.init();
         });
       },
-      sort(){
+      sort(){ // 开始排序
         window.scrollTo(0, 0);
         document.body.style.overflow = "hidden"
         this.sortmodelshow = true;
@@ -518,11 +528,11 @@
         });
 
       },
-      close(){
+      close(){ // 关闭排序模态框
         document.body.style.overflow = "auto"
         this.sortmodelshow = false
       },
-      sortover(){
+      sortover(){ // 完成排序
         var newsort = [];
         $("#sort .item").each(function () {
           newsort.push($(this).attr("index"));
@@ -538,7 +548,7 @@
           this.sortmodelshow = false;
         });
       },
-      appendImg: function () {
+      appendImg: function () { // 添加图片
         this.imgupload = true
         var file_input = document.getElementById("file");
         for (var i = 0, size = file_input.files.length; i < size; i++) {
@@ -551,11 +561,11 @@
           }
         });
       },
-      rm(index){
+      rm(index){ // 删除图片
         this.img_url.splice(index, 1);
         this.img_index--;
       },
-      choose(idx){
+      choose(idx){ // 选择显示的类目（项目进度、项目流水、项目详情）
         if (this.type[idx].selected) return
         var that = this;
         this.type.forEach(function (item, index) {
@@ -572,7 +582,7 @@
           that.getpayinfo(that.project_id)
         }
       },
-      choosemoneytype(idx){
+      choosemoneytype(idx){ // 设置发起收款的费用类型
         this.moneyType.forEach(function (item, index) {
           item.selected = false
           if (idx === index) {
@@ -638,6 +648,7 @@
     width: 100%;
     height: 50px;
     margin-top: 10px;
+    position: relative;
   }
 
   .di_moneytype {
@@ -852,6 +863,7 @@
     padding: 10px 0 10px 20px;
     margin-left: 10px;
     border-left: 1px solid #fe6549;
+    cursor: pointer;
   }
 
   .di_list > ul {
@@ -867,6 +879,7 @@
     overflow: hidden;
     text-align: center;
     line-height: 180px;
+    margin-bottom: 24px;
   }
 
   .di_list > ul > li:nth-child(3n) {

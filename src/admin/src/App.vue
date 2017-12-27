@@ -1,9 +1,11 @@
 <template>
   <div class="warp" id="box">
+    <!--头部组件-->
     <myNav @userinfo="userinfo" @shownotice="shownoticeMethod" @showoption="showoptionMethod" :show_option="show_option"
            :shownotice="shownotice"></myNav>
     <div class="main">
       <div class="content_home">
+        <!--左边的选项-->
         <div class="left">
           <div class="top">
             <p><img style="width: 70px;border-radius: 50%;"
@@ -22,12 +24,15 @@
             </ul>
           </div>
         </div>
+        <!--右边的页面显示-->
         <div class="right">
+          <!--各个页面的路由-->
           <router-view :showcategory="showcategory" @showcategory="showcategoryMethod"  @showshare="showShareMethod" :show_share="show_share"
                        @showdemo="showDemoMethod" :show_demo="show_demo"></router-view>
         </div>
       </div>
     </div>
+    <!--页脚组件-->
     <foot></foot>
   </div>
 </template>
@@ -54,9 +59,9 @@
     },
     mounted(){
       var that = this;
+      // 统一管理点击事件
       document.onclick = function () {
         if (that.shownotice) {
-
           that.shownotice = false;
         }
         if (that.show_option) {
@@ -82,11 +87,18 @@
           return address.join("·")
         }
       },
-      userinfo(data) {
+      userinfo(data) { // 用户信息
         this.nickname = data.nickname;
         this.headimg = data.headimg;
         this.city = data.city;
       },
+
+
+      /*
+      * 以下是各个页面中子组件传回来的事件
+      * 统一实现点击页面隐藏显示的框，如点击nav中的头像时，显示操作框，点击其他地方，隐藏操作框
+      *
+      * */
       showoptionMethod(){
         if (this.shownotice) {
           this.shownotice = false;

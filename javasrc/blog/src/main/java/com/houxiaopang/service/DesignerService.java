@@ -14,5 +14,4 @@ public interface DesignerService {
      */
     int updataVerifiedByUserId(Integer userId);
 
-
 }

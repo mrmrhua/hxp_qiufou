@@ -2,13 +2,13 @@
   <router-view :login="login"></router-view>
 </template>
 <script>
-  export default{
-    data(){
+  export default {
+    data() {
       return {
         login: false
       }
     },
-    created(){
+    created() {
       showload("加载中");
       var code = getQueryString("code");
       if (code) {
@@ -23,7 +23,10 @@
     },
     methods: {
       wxlogin() {
-        location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx35c4ce958bc7eb68&redirect_uri=https%3A%2F%2Fm.houxiaopang.com%2Fdemand%2F%23%2Fworkproject&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+        if (this.$route.path === "/workproject" || this.$route.path === "/workproject/")
+          location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx35c4ce958bc7eb68&redirect_uri=https%3A%2F%2Fm.houxiaopang.com%2Fdemand%2F%23%2Fworkproject&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+        else
+          location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx35c4ce958bc7eb68&redirect_uri=https%3A%2F%2Fm.houxiaopang.com%2Fdemand%2F%23" + encodeURIComponent(this.$route.path) + "&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
       },
       authenticated() {
         var that = this
@@ -31,17 +34,17 @@
           url: "https://www.houxiaopang.com/api/v1.1/wxfwh/token/clientauthenticated",
           token: true,
           timeout: 5000,
-          success(res){
+          success(res) {
             if (res.code === 0) {
               that.login = true
-              if(that.$route.path == "/workproject" || that.$route.path == "/workproject/"){
+              if (that.$route.path === "/workproject" || that.$route.path === "/workproject/") {
                 that.$router.push("/workproject/demand")
               }
             }
           },
-          error(error){
+          error(error) {
             hideload();
-            that.login = true
+            //that.login = true
             if (error.status === 401) {
               that.wxlogin();
             } else {
@@ -51,23 +54,24 @@
         })
       },
       getuid(code) {
+        var that = this
         ajax({
           url: "https://www.houxiaopang.com/api/v1.1/wx_verfify_client",
           data: {
             code: code
           },
           timeout: 5000,
-          success(res){
+          success(res) {
             if (res.code === 0) {
               window.localStorage.token = res.data.token
               token = res.data.token
-              location.href = "https://m.houxiaopang.com/demand/#/workproject"
+              location.href = "https://m.houxiaopang.com/demand/#" + that.$route.path
             } else {
               showModal("登录失败，请重试。")
             }
             hideload();
           },
-          error(){
+          error() {
             hideload();
             showModal("登录失败，请重试。")
           }

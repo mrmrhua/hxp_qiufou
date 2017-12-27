@@ -68,10 +68,11 @@
       }
     },
     created(){
-      this.getbind();
+      this.getbind(); // 获取钱包信息
     },
     mounted(){
       var that = this
+      // 初始化滑块验证
       $("#slider").slider({
         width: 300, // width
         height: 40, // height
@@ -94,13 +95,13 @@
       setMoney(value){
         return value.toFixed(2)
       },
-      tixian(){
+      tixian(){ //提现点击事件
         if (this.code === null || this.code.trim() === "") {
-          alert("请填写短信验证码。")
+          hxpAlert.show("请填写短信验证码。")
           return
         }
         if (this.subing) {
-          alert("提现申请已经提交。")
+          hxpAlert.show("提现申请已经提交。")
           return
         }
         this.subing = true
@@ -131,7 +132,7 @@
         this.delmodel = false
         $("#slider").slider("restore");
       },
-      sendsliderapi(){
+      sendsliderapi(){ // 发送短信验证码
         var that = this
         $.ajax({
           url: "http://www.houxiaopang.com/api/v1.1/designer/verifysend",
@@ -161,7 +162,7 @@
             }
           },
           error(){
-            alert("网络拥挤，请稍后再试。")
+            hxpAlert.show("网络拥挤，请稍后再试。")
           }
         })
       },
@@ -178,16 +179,16 @@
           },
           success(res){
             if (res.code === -1) {
-              alert("网络拥挤，请稍后再试。")
+              hxpAlert.show("网络拥挤，请稍后再试。")
             } else if (res.code === 0) {
-              alert("提现申请已提交，请耐心等待。")
+              hxpAlert.show("提现申请已提交，请耐心等待。")
               that.$router.push('/account');
             }
             that.subing = false
           },
           error(){
             that.subing = false
-            alert("网络拥挤，请稍后再试。")
+            hxpAlert.show("网络拥挤，请稍后再试。")
           }
         })
       },

@@ -27,16 +27,16 @@
               </div>
               <div class='time_right'>共{{item.imglist.length}}张图片</div>
             </div>
-            <div class='detail'>
+            <div class='detail' @click="next(item.post_id,item.desc)">
               <div class='context' v-html="setDesc(item.desc)"></div>
               <div class='imglist'>
-                <div @click="showimgview(imgindex,item.imglist)" class='imgwarp'
+                <div class='imgwarp'
                      v-for="(imgitem,imgindex) in item.imglist"
                      v-if="imgindex < 2">
                   <img class="previewer-demo-img" :src="imgitem">
                 </div>
               </div>
-              <div @click="next(item.post_id)" class='total'>点击查看更多</div>
+              <div class='total'>点击查看更多</div>
             </div>
           </div>
         </div>
@@ -62,7 +62,7 @@
             <div style="margin-top: 10px;">
               <p style="font-size: 18px;">参考图片</p>
               <ul style="width: 100%;display: flex;justify-content: space-between;flex-flow: wrap;margin-top: 5px;">
-                <li @click="showimgview(index,1)" v-for="(item,index) in demanddetail.desc_img"
+                <li @click="showimgview(index)" v-for="(item,index) in demanddetail.desc_img"
                     style="overflow:hidden;width: 49%;height: 100px;background: #000;margin-bottom: 5px;">
                   <img class="previewer-demo-img" style="width: 100%;" :src="item+'?imageView2/1/w/200/h/150'" alt="">
                 </li>
@@ -139,16 +139,16 @@
         });
         return list;
       },
-      showimgview (num, type) {
-        if (type === 1) this.list = this.demanddetail.desc_img;
-        else this.list = type;
+      showimgview (num) {
+        this.list = this.demanddetail.desc_img;
         this.$nextTick(function () {
           this.$refs.previewer.show(num)
         })
       },
-      next(id){
+      next(id, desc){
+        window.localStorage.postdesc = desc
         this.$router.push({
-          path: "circle",
+          path: "/workproject/circle",
           query: {
             id: id,
           }
@@ -236,6 +236,7 @@
           success(res){
             if (res.code === 0) {
               that.post = res.data
+              wxshare(that.post.title, "https://m.houxiaopang.com/demand/#/workproject/share/" + id)//desc , url
             } else {
               showModal("网络拥挤，请稍候再试")
             }
@@ -289,6 +290,7 @@
     border-left: 1px solid #ed5fa0;
     width: 100%;
     float: right;
+    padding-bottom: 20px;
   }
 
   .zz {
@@ -401,6 +403,7 @@
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     overflow: hidden;
+
   }
 
   .imglist {
@@ -421,6 +424,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    border: 1px solid #dedede;
   }
 
   .imglist > .imgwarp:nth-child(2n) {

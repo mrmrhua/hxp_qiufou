@@ -31,7 +31,7 @@
           </div>
         </li>
       </ul>
-      <div  v-show="projectalbum.length === 0" style="text-align: center">
+      <div v-show="projectalbum.length === 0" style="text-align: center">
         <i class="iconfontyyy" style="font-size:200px;color: #bfbfbf;">&#xe617;</i>
         <p style="font-size: 16px;color: #bfbfbf;font-weight: 900;">你还没有创建过任何作品</p>
         <router-link to="/newalbum" tag="div" class="btn_image">上传作品</router-link>
@@ -41,7 +41,7 @@
     <div class="mymodal" v-show="delmodel">
       <div class="conte">
         <div style="background: #DEDEDE;height: 30px;line-height: 30px;padding: 0 15px;text-align: center;">
-          <span >删除提醒</span><span
+          <span>删除提醒</span><span
           style="float: right;cursor: pointer"
           @click="delmodel=false"><i class="iconfontyyy">&#xe67c;</i></span>
         </div>
@@ -73,38 +73,50 @@
         removeindex: -1,
         promptshow: false,
         category: "全部品类",
-        cc:-1,
+        cc: -1,
         pageinfo: {
           total: 0,     // 记录总条数   默认空，如果小于pageNum则组件不显示   类型Number
           pagenum: 12,    // 每页显示条数,默认10                              类型Number
           current: 1,     // 当前页数，   默认为1                             类型Number
-          pagegroup: 3,     // 分页条数     默认为5，需传入奇数                  类型Number
+          pagegroup: 5,     // 分页条数     默认为5，需传入奇数                  类型Number
           skin: '#d01667',
         }
       }
     },
     mounted(){
       var that = this;
+      // 初始化品类选择
       $(".pinglei_ul > li").each(function (i) {
         $(this).click(function () {
           i = i === 0 ? -1 : i;
           that.category = $(this).text();
-          that.getCollection(i,that.pageinfo.current);
+          that.pageinfo.current = 1;
+          that.getCollection(i, that.pageinfo.current);
         });
       });
 //      this.chooseCategory();
     },
     created(){
-      this.getCollection(-1,this.pageinfo.current);
+      this.init();
     },
     methods: {
-      showcategoryMethode(){
+      init(){
+        if (login) {
+          this.getCollection(-1, this.pageinfo.current);
+        } else {
+          var that = this;
+          setTimeout(function () {
+            that.init();
+          }, 1000);
+        }
+      },
+      showcategoryMethode(){ // qpp.vue  显示品类选择框
         this.$emit("showcategory");
       },
-      jump(id){
+      jump(id){ // 查看作品详情
         open("http://houxiaopang.com/workdetail/album/" + id);
       },
-      getCollection(c,page) {
+      getCollection(c, page) { // 分页功能
         var that = this;
         $.ajax({
           type: "GET",
@@ -147,24 +159,24 @@
                 that.projectalbum.push(obj);
               }
             } else {
-              alert("网络拥挤，请稍后再试···");
+              hxpAlert.show("网络拥挤，请稍后再试···");
             }
           },
           error(e){
             if (e.status === 401) {
               location.href = "http://houxiaopang.com/qrlogin";
             } else {
-              alert("网络拥挤，请稍后再试···");
+              hxpAlert.show("网络拥挤，请稍后再试···");
             }
           }
         });
       },
-      rm(id, index){
+      rm(id, index){ // 删除作品点击事件
         this.removeid = id;
         this.removeindex = index;
         this.delmodel = true;
       },
-      remove(){
+      remove(){ // 删除作品
         var that = this;
         that.delmodel = false;
         // 删除相册:
@@ -183,15 +195,15 @@
                 that.promptshow = false;
               }, 1000);
             } else {
-              alert("网络拥挤，请稍候再试···");
+              hxpAlert.show("网络拥挤，请稍候再试···");
             }
           },
           error(){
-            alert("网络拥挤，请稍候再试···");
+            hxpAlert.show("网络拥挤，请稍候再试···");
           }
         });
       },
-      edit(id){
+      edit(id){ // 编辑作品，跳转到上传作品。（编辑）
         this.$router.push({
           path: "/newalbum",
           query: {
@@ -200,53 +212,30 @@
         });
       },
       pagechange: function (current) {     // 页码改变传入新的页码，此处做回调
-        if(this.category == "全部品类"){
+        if (this.category === "全部品类") {
           this.cc = -1;
-        } else if (this.category == "PPT") {
+        } else if (this.category === "PPT") {
           this.cc = 1;
-        } else if (this.category =="UI") {
+        } else if (this.category === "UI") {
           this.cc = 2;
-        } else if (this.category =="文本画册") {
+        } else if (this.category === "文本画册") {
           this.cc = 3;
-        } else if (this.category =="海报展板") {
-          type = "海报展板";
+        } else if (this.category === "海报展板") {
+          //type = "海报展板";
           this.cc = 4;
-        } else if (this.category =="LOGO") {
+        } else if (this.category === "LOGO") {
           this.cc = 5;
-        } else if (this.category =="企业形象设计（VI）") {
+        } else if (this.category === "企业形象设计（VI）") {
           this.cc = 6;
-        } else if (this.category =="测试品类") {
+        } else if (this.category === "测试品类") {
           this.cc = 0;
         }
         this.getCollection(this.cc, current);
-
       },
-/*      chooseCategory(){
-        var that = this;
-        var li = document.getElementById("category").children;
-        for (var i = 0, size = li.length; i < size; i++) {
-          li[i].index = i;
-          li[i].onclick = function () {
-            $("#category").find("li").each(function () {
-              $(this).removeClass("active");
-            });
-            $(this).addClass("active");
-
-            if (this.index == 0) {
-              this.index = -1;
-            }
-            that.pageinfo.current = 1;
-            that.categroy = this.index;
-            that.getCollection(that.categroy, that.pageinfo.current);
-          }
-        }
-      },*/
-
-
     },
     components: {
-      prompt,
-      pagination
+      prompt,  // 好看的成功提示框
+      pagination // 页码插件
     }
   }
 </script>

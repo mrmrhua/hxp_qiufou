@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.houxiaopang.dao.SubscribtionMapper" >
+  <resultMap id="BaseResultMap" type="com.houxiaopang.model.Subscribtion" >
+    <id column="notice_id" property="noticeId" jdbcType="INTEGER" />
+    <id column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="isread" property="isread" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    notice_id, user_id, isread
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.houxiaopang.model.SubscribtionKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from subscribtion
+    where notice_id = #{noticeId,jdbcType=INTEGER}
+      and user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.houxiaopang.model.SubscribtionKey" >
+    delete from subscribtion
+    where notice_id = #{noticeId,jdbcType=INTEGER}
+      and user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.houxiaopang.model.Subscribtion" >
+    insert into subscribtion (notice_id, user_id, isread
+      )
+    values (#{noticeId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{isread,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.houxiaopang.model.Subscribtion" >
+    insert into subscribtion
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="noticeId != null" >
+        notice_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="isread != null" >
+        isread,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="noticeId != null" >
+        #{noticeId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="isread != null" >
+        #{isread,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.houxiaopang.model.Subscribtion" >
+    update subscribtion
+    <set >
+      <if test="isread != null" >
+        isread = #{isread,jdbcType=INTEGER},
+      </if>
+    </set>
+    where notice_id = #{noticeId,jdbcType=INTEGER}
+      and user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.houxiaopang.model.Subscribtion" >
+    update subscribtion
+    set isread = #{isread,jdbcType=INTEGER}
+    where notice_id = #{noticeId,jdbcType=INTEGER}
+      and user_id = #{userId,jdbcType=INTEGER}
+  </update>
+</mapper>

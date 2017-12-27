@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.houxiaopang.dao.CommentsMapper" >
+  <resultMap id="BaseResultMap" type="com.houxiaopang.model.Comments" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="image_id" property="imageId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="comment_index" property="commentIndex" jdbcType="INTEGER" />
+    <result column="up_time" property="upTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.houxiaopang.model.CommentsWithBLOBs" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+    <result column="description" property="description" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, image_id, user_id, comment_index, up_time
+  </sql>
+  <sql id="Blob_Column_List" >
+    content, description
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from comments
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByImageId" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from comments
+    where image_id = #{imageId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from comments
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.houxiaopang.model.CommentsWithBLOBs" >
+    insert into comments (id, image_id, user_id, 
+      comment_index, up_time, content, 
+      description)
+    values (#{id,jdbcType=INTEGER}, #{imageId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
+      #{commentIndex,jdbcType=INTEGER}, #{upTime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR}, 
+      #{description,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.houxiaopang.model.CommentsWithBLOBs" >
+    insert into comments
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="imageId != null" >
+        image_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="commentIndex != null" >
+        comment_index,
+      </if>
+      <if test="upTime != null" >
+        up_time,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="imageId != null" >
+        #{imageId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="commentIndex != null" >
+        #{commentIndex,jdbcType=INTEGER},
+      </if>
+      <if test="upTime != null" >
+        #{upTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.houxiaopang.model.CommentsWithBLOBs" >
+    update comments
+    <set >
+      <if test="imageId != null" >
+        image_id = #{imageId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="commentIndex != null" >
+        comment_index = #{commentIndex,jdbcType=INTEGER},
+      </if>
+      <if test="upTime != null" >
+        up_time = #{upTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.houxiaopang.model.CommentsWithBLOBs" >
+    update comments
+    set image_id = #{imageId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
+      comment_index = #{commentIndex,jdbcType=INTEGER},
+      up_time = #{upTime,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=LONGVARCHAR},
+      description = #{description,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.houxiaopang.model.Comments" >
+    update comments
+    set image_id = #{imageId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
+      comment_index = #{commentIndex,jdbcType=INTEGER},
+      up_time = #{upTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -93,8 +93,8 @@
           <div style="float: left">
             <div class="upfile" style="padding-right: 30px;">
               <div class="upwrapper" style="height: 150px;">
-                <section class="addbtn" id="album_cover">
-                  <img id="cropedimg"
+                <section class="addbtn" id="album_cover" style="overflow: hidden;">
+                  <img id="cropedimg" style="height: auto;"
                        :src="ablumfile"
                        class="add-img" @click="show_upload_album">
                   <div class="zhezhao"><img
@@ -151,7 +151,7 @@
         <div style="width: 100%;height: 50px;padding-left: 28px;padding-right:15px;padding-top: 15px;">
           <span>排序</span><span
           style="float: right;cursor: pointer"
-          @click="sortmodelshow=false"><i class="iconfontyyy">&#xe67c;</i></span>
+          @click="closeovser"><i class="iconfontyyy">&#xe67c;</i></span>
         </div>
         <div style="height: 495px;overflow-y: auto">
           <ul id="sort" style="margin: 0 auto;width: 645px;">
@@ -249,6 +249,7 @@
       }
     },
     mounted(){
+        // 初始化富文本插件
       this.editor = new Simditor({
         textarea: $('#editor'),
         placeholder: '',
@@ -262,16 +263,19 @@
         pasteImage: false,
         cleanPaste: false,
       });
-
+      // 初始化平台选择点击事件
       this.platclick();
 
       registerup(this);//初始化上传图片
+
+      // 初始化截图插件
       cropper(this.uploadImg, {
         img: "#new_img",
         preview: "#img-preview",
         aspectRatio: 4 / 3,
         inputImage: "#inputImage"
       });
+      // 初始化选择宽状态
       $("input[type='checkbox']").iCheck({
         checkboxClass: 'icheckbox_square-red',
         radioClass: 'iradio_square-red',
@@ -282,12 +286,12 @@
       });
     },
     components: {
-      'imgthumb': imgthumb,
+      'imgthumb': imgthumb,  // 上传图片的渲染样式
       // BounceLoader
-      prompt
+      prompt // 好看的成功提示框
     },
     methods: {
-      initPhoto(){
+      initPhoto(){ // 初始化排序功能
         $("#sort .item").each(function (i) {
           this.init = function () { // 初始化
             this.box = $(this).parent();
@@ -424,7 +428,7 @@
           this.init();
         });
       },
-      sort(){
+      sort(){ // 排序点击事件
         window.scrollTo(0, 0);
         document.body.style.overflow = "hidden"
         this.sortmodelshow = true;
@@ -440,11 +444,15 @@
         });
 
       },
-      close(){
+      close(){ // 关闭模态框
         document.body.style.overflow = "auto"
         this.modelshow = false
       },
-      sortover(){
+      closeovser(){ // 关闭排序模态框
+        document.body.style.overflow = "auto";
+        this.sortmodelshow = false;
+      },
+      sortover(){ //结束排序
         var newsort = [];
         $("#sort .item").each(function () {
           newsort.push($(this).attr("index"));
@@ -489,14 +497,14 @@
           },
         });
       },
-      changeImg: function () {
+      changeImg: function () { // 添加图片点击
         document.getElementById("inputImage").click();
       },
-      rm(index){
+      rm(index){ // 删除图片
         this.img_url.splice(index, 1);
         this.img_index--;
       },
-      submit: function () {
+      submit: function () { // 提交作品
         this.desc = this.editor.getValue()
         //禁止右键保存选中
         let ban = $("input[type='radio'][name='ban']:checked");
@@ -554,7 +562,7 @@
 
 
         if (this.imgupload) {
-          alert("请等待图片上传完成。")
+          hxpAlert.show("请等待图片上传完成。")
           return
         }
         //todo 提交
@@ -588,7 +596,7 @@
                   that.$router.push({path: '/'});
                 }, 1000);
               } else {
-                alert("网络拥挤，请稍后再试···");
+                hxpAlert.show("网络拥挤，请稍后再试···");
               }
             },
             error: function (e) {
@@ -596,13 +604,13 @@
               if (e.status === 401) {
                 location.href = "http://houxiaopang.com/qrlogin";
               } else {
-                alert("网络拥挤，请稍后再试···");
+                hxpAlert.show("网络拥挤，请稍后再试···");
               }
             }
           });
         }
       },
-      appendImg: function () {
+      appendImg: function () { // 添加图片
         this.imgupload = true
         var file_input = document.getElementById("file");
         for (var i = 0, size = file_input.files.length; i < size; i++) {
@@ -615,7 +623,7 @@
           }
         });
       },
-      show_upload_album: function () {
+      show_upload_album: function () { // 显示模态框
         this.modelshow = true;
       },
       showlocalfrom() {//显示上传本地作品
@@ -630,7 +638,7 @@
         this.leading = false;
         document.getElementById("content").scrollTop = 0;
       },
-      platclick() {//擅长领域点击事件
+      platclick() {//平台类别选择
         let lis = document.getElementById("platname").children;
         for (let i = 0, size = lis.length; i < size; i++) {
           lis[i].onclick = function () {
@@ -643,7 +651,7 @@
           }
         }
       },
-      judgeUrl:function (platname,url) {
+      judgeUrl:function (platname,url) { // 验证导入平台的地址
         var Cts = url;
         if(platname === '站酷'){
           if(Cts === "http://www.zcool.com.cn" || Cts === "www.zcool.com.cn" || Cts === "zcool.com.cn"){
@@ -666,7 +674,7 @@
         }
         return ;
       },
-      submitplatfrom:function () {
+      submitplatfrom:function () { // 提交导入平台作品
         //选择平台
         let lis = document.getElementById("platname").children;
         this.platname = '';
@@ -715,9 +723,9 @@
                 that.leading = true;
               }
               else if(data.code === -2){
-                alert("不支持此网站");
+                hxpAlert.show("不支持此网站");
               }else {
-                alert("网络拥挤，请稍后再试···");
+                hxpAlert.show("网络拥挤，请稍后再试···");
               }
             },
             error: function (e) {
@@ -725,7 +733,7 @@
               if (e.status === 401) {
                 location.href = "http://houxiaopang.com/qrlogin";
               } else {
-                alert("网络拥挤，请稍后再试···");
+                hxpAlert.show("网络拥挤，请稍后再试···");
               }
             }
           });
@@ -739,7 +747,7 @@
       this.album_id = this.$route.query.album_id;
       if (this.album_id) {
         var that = this;
-        $.ajax({
+        $.ajax({ // 获取作品信息（编辑）
           type: "get",
           url: "http://www.houxiaopang.com/api/v1.1/newalbum",
           headers: {"Authorization": "Token " + token},
@@ -782,17 +790,17 @@
                 $(".up-img").removeClass("up-opcity");
               });
             } else {
-              alert("网络拥挤，请稍后再试···");
+              hxpAlert.show("网络拥挤，请稍后再试···");
             }
           },
           error(){
-            alert("网络拥挤，请稍后再试···");
+            hxpAlert.show("网络拥挤，请稍后再试···");
           }
         });
       }
     },
     watch: {
-      "$route"(){
+      "$route"(){ // 清空作品表单填写的信息
         this.title = '';
         this.desc = '';
         this.editor.setValue('');

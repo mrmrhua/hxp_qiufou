@@ -30,19 +30,24 @@ const Schedule = resolve => require(['./components/Schedule.vue'], resolve);
 const WeChat = resolve => require(['./components/WeChat.vue'], resolve);
 //圈点批划
 const Circle = resolve => require(['./components/Circle.vue'], resolve);
-
-
 const Annotation = resolve => require(['./components/Annotation.vue'], resolve);
-
+//项目进度分享页
+const Share = resolve => require(['./components/Share.vue'], resolve);
 //import Price from './components/Price.vue' // 报价页面
 //import replay from "./components/Replay.vue" // 入驻申请
-
 Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
     component: notfond
   },
+  /*{
+   path: "/circle",
+   component: Circle,
+   meta: {
+   title: '项目进度'
+   }
+   },*/
   {
     path: '/detail/:id',
     component: Workdetail,
@@ -50,6 +55,14 @@ const routes = [
       title: '项目报价'
     }
   },
+  /*{
+   path: "/annotation",
+   component: Annotation,
+   meta: {
+   title: '项目进度'
+   }
+
+   },*/
   {
     path: '/workproject',
     component: DemandMessage,
@@ -60,6 +73,13 @@ const routes = [
         meta: {
           title: '项目管理'
         }
+      },
+      {
+        path: "share/:id",
+        meta: {
+          title: '项目进度'
+        },
+        component: Share
       },
       {
         path: 'schedule',

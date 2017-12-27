@@ -3,18 +3,21 @@
     <div class="info">
       <div class="fg"></div>
     </div>
-    <div class="userinfo" style="margin-top: 120px">
+    <div class="userinfo" style="margin-top: 120px;min-height:245px;">
       <div class="head_div"><img :src="userinfo.headimg"></div>
       <p v-html="userinfo.nickname"></p>
       <!--所在城市&工作经验-->
       <div class="cityexp_box">
-        <p><i></i><span v-text="setcity(userinfo.city)"></span></p>
-        <p style="margin-left: 150px"><i></i><span v-html="setexp(userinfo.exp)" ></span></p>
+        <p><i class="iconfontyyy" style="color: #bbb;">&#xe601;</i><span v-text="' '+setcity(userinfo.city)"></span></p>
+        <p style="margin-left: 150px"><i class="iconfontyyy" style="color: #000;">&#xe672;</i><span
+          v-html="' '+setexp(userinfo.exp)"></span></p>
       </div>
       <!--风格标签-->
       <div class="stylebox">
         <ul>
-          <li v-for="item in userinfo.tags"><div v-html="item"></div></li>
+          <li v-for="item in userinfo.tags">
+            <div v-html="item"></div>
+          </li>
         </ul>
       </div>
       <!--擅长-->
@@ -24,26 +27,25 @@
           <li v-for="item in userinfo.filed" v-html="item"></li>
         </ul>
       </div>
-      <div v-show="userinfo.worktime.length>0" class="worktime" >
+      <div v-show="userinfo.worktime.length>0" class="worktime">
         <span class="span">可工作时间：</span>
         <ul style="width: 800px;padding-top: 10px;margin: 0 auto;">
           <li v-for="item in userinfo.worktime" v-html="formatWorktime(item)"></li>
         </ul>
       </div>
     </div>
-
     <!--个人简历-->
-    <div  class="userinfo" v-show="userinfo.intro">
-      <div  style="overflow: hidden;margin-top: 20px;">
-        <span class="span" >个人简介</span>
+    <div class="userinfo" v-show="userinfo.intro">
+      <div style="overflow: hidden;margin-top: 20px;">
+        <span class="span">个人简介</span>
         <div style="width: 660px;;margin: 20px auto;text-align:left;padding: 14px" v-html="settext(userinfo.intro)">
         </div>
       </div>
     </div>
-      <!--项目经历-->
-    <div  class="userinfo" v-show="userinfo.project_text.length>0">
-      <div  style="overflow: hidden;margin-top: 20px;">
-        <span class="span" >项目经历</span>
+    <!--项目经历-->
+    <div class="userinfo" v-show="userinfo.project_text.length>0">
+      <div style="overflow: hidden;margin-top: 20px;">
+        <span class="span">项目经历</span>
         <ul id="project_text"
             style="width: 800px;line-height: 20px;margin:0 auto;overflow: hidden;">
           <li v-for="item in userinfo.project_text">
@@ -51,18 +53,18 @@
               <p style="font-weight: 600;" v-html="item.title"></p>
               <p style="margin-bottom: 10px;" v-html="item.desc"></p>
             </div>
-
           </li>
         </ul>
       </div>
       <!--<div v-show="userinfo.project_text.length>0" @click="showmore" class="more">-->
-        <!--<i class="iconfontyyy">&#xe8f8;</i>-->
-        <!--<span>展开</span>-->
+      <!--<i class="iconfontyyy">&#xe8f8;</i>-->
+      <!--<span>展开</span>-->
       <!--</div>-->
     </div>
     <div class="main">
-      <div style="height: 115px;background: #fff;width: 1100px;margin: 0 auto;text-align: center;padding-top: 35px;border-bottom: 1px solid #dedede;">
-        <span class="span" >作品案例</span>
+      <div
+        style="height: 115px;background: #fff;width: 1100px;margin: 0 auto;text-align: center;padding-top: 35px;border-bottom: 1px solid #dedede;">
+        <span class="span">作品案例</span>
         <ul id="category" class="category">
           <li class="active"><a>全部</a></li>
           <li><a>PPT定制</a></li>
@@ -75,10 +77,10 @@
       </div>
       <div class="content">
         <!--显示的品类-->
-        <ul style="overflow: hidden;">
+        <ul v-show="albums.length>0" style="overflow: hidden;">
           <li id="imgwarp" v-for="itme in albums">
             <a target="_blank" :href="'http://houxiaopang.com/workdetail/album/'+itme.work_id">
-              <img :data-original="itme.cover"  class="img">
+              <img :data-original="itme.cover" class="img">
             </a>
             <p>
               <a target="_blank" :href="'http://houxiaopang.com/workdetail/album/'+itme.work_id">
@@ -97,6 +99,11 @@
                 v-html="itme.category"></span></p>
           </li>
         </ul>
+        <div style="width: 100%;text-align: center;padding-top: 20px;padding-bottom: 20px;"
+             v-show="albums.length === 0">
+          <i class="iconfontyyy" style="font-size:200px;color: #bfbfbf;">&#xe617;</i>
+          <p style="color:#666;font-size: 18px;">没有找到作品</p>
+        </div>
         <pagination :pageInfo="pageinfo" @change="pagechange"></pagination>
       </div>
       <div style="height: 90px;background: #f5f5f5;width: 100%"></div>
@@ -142,9 +149,9 @@
         userinfo: {
           project_text: [],
           worktime: [],
-          city:'北京 北京',
-          filed:[],
-          tags:[]
+          city: '北京 北京',
+          filed: [],
+          tags: []
         },
         albums: [],
         pageinfo: {
@@ -163,13 +170,14 @@
       this.getuserworks(this.$route.params.id, this.categroy, this.pageinfo.current, 1);
     },
     mounted(){
+      // 初始化选择品类的点击事件
       this.chooseCategory();
     },
     components: {
       pagination
     },
     methods: {
-      setcity(value){
+      setcity(value){ // 设置城市
         var address = value.split(" ")
         if (address[0] === address[1]) {
           return address[0]
@@ -177,8 +185,8 @@
           return address.join("·")
         }
       },
-      setexp(exp){
-        if(!exp){
+      setexp(exp){ // 设置工作经验
+        if (!exp) {
           return "-"
         }
         var y = new Date().getFullYear();
@@ -188,25 +196,25 @@
           return (y - exp) + "年工作经验";
         }
       },
-      settext(value){
+      settext(value){ // 设置个人简介
         if (value) {
           return value.replace(/\r\n/g, "<br>").replace(/\n/g, "<br>");
         }
         return value
       },
-/*      showmore(){
-        this.more = !this.more;
-        if (this.more) {
-          $("#project_text").css("height", "auto");
-          $(".userinfo .more i").eq(0).html("&#xe8fa;");
-          $(".userinfo .more span").eq(0).html("收起");
-        } else {
-          $("#project_text").css("height", "62px");
-          $(".userinfo .more i").eq(0).html("&#xe8f8;");
-          $(".userinfo .more span").eq(0).html("展开");
-          window.scrollTo(0, 600);
-        }
-      },*/
+      /*      showmore(){
+       this.more = !this.more;
+       if (this.more) {
+       $("#project_text").css("height", "auto");
+       $(".userinfo .more i").eq(0).html("&#xe8fa;");
+       $(".userinfo .more span").eq(0).html("收起");
+       } else {
+       $("#project_text").css("height", "62px");
+       $(".userinfo .more i").eq(0).html("&#xe8f8;");
+       $(".userinfo .more span").eq(0).html("展开");
+       window.scrollTo(0, 600);
+       }
+       },*/
       /*jump(data){
        var id = data.id;
        if (data.name === "project") {
@@ -215,10 +223,10 @@
        window.open("http://houxiaopang.com/workdetail/#/user/" + id);
        }
        },*/
-      pagechange(current){
+      pagechange(current){ // 点击页码的回调
         this.getuserworks(this.$route.params.id, this.categroy, current);
       },
-      chooseCategory(){
+      chooseCategory(){ // 点击品类的处理
         var that = this;
         var li = document.getElementById("category").children;
         for (var i = 0, size = li.length; i < size; i++) {
@@ -238,7 +246,7 @@
           }
         }
       },
-      getuserinfo(id){
+      getuserinfo(id){ // 获取设计师的信息
         var that = this;
         $.ajax({
           type: "get",
@@ -248,13 +256,17 @@
           },
           success(data){
             if (data.code === 0) {
-              if (data.data.worktime == null || data.data.worktime == "") {
+              if (data.data.worktime === null || data.data.worktime === "") {
                 data.data.worktime = []
+              } else if (typeof data.data.worktime === 'string') {
+                data.data.worktime = JSON.parse(data.data.worktime)
               }
-              data.data.worktime = JSON.parse(data.data.worktime)
-              that.userinfo = data.data;
+              that.$nextTick(function () {
+                that.userinfo = data.data;
+              })
+
             } else {
-              alert(data.data.msg||"网络拥挤，请稍后再试···");
+              alert(data.data.msg || "网络拥挤，请稍后再试···");
             }
           },
           error(){
@@ -262,7 +274,7 @@
           }
         });
       },
-      getuserworks(id, c, page, flag){
+      getuserworks(id, c, page, flag){ // 获取设计师的作品
         var that = this;
         $.ajax({
           type: "get",
@@ -314,7 +326,7 @@
           }
         });
       },
-      formatWorktime(value){
+      formatWorktime(value){ // 设置工作时间的格式
         var worktime = "";
         if (value == "1") {
           worktime = "周一至周五白天";
@@ -329,7 +341,7 @@
         }
         return worktime;
       },
-      myfilter(value){
+      myfilter(value){ // 日期显示设置
         return getDateDiff(getDateTimeStamp(value));
       },
 
@@ -356,19 +368,21 @@
     height: 100%;
   }
 
-  .span{
-    font-size:18px;
-    color:#D01667;
-    line-height:19px;
+  .span {
+    font-size: 18px;
+    color: #D01667;
+    line-height: 19px;
   }
 
   ul {
     list-style: none;
   }
+
   a {
     text-decoration: none;
     color: #313131;
   }
+
   .userinfo {
     width: 1100px;
     margin: 20px auto;
@@ -382,7 +396,6 @@
     z-index: 0;
   }
 
-
   .userinfo > .head_div {
     margin: -70px auto 0 auto;
     width: 110px;
@@ -395,7 +408,7 @@
     display: inline-block;
     width: 100px;
     height: 100px;
-    margin-left: 5px;
+    margin-left: 0;
     margin-top: 5px;
     border-radius: 50%;
 
@@ -409,7 +422,7 @@
     color: #313131;
   }
 
-  .cityexp_box{
+  .cityexp_box {
     text-align: center;
     color: #999;
     height: 30px;
@@ -417,13 +430,13 @@
     font-size: 16px;
 
   }
-  .cityexp_box > p{
+
+  .cityexp_box > p {
     display: inline-block;
     position: relative;
   }
 
-
-  .cityexp_box > p > i {
+  /*.cityexp_box > p > i {
     background: url('http://image.houxiaopang.com/workdetail/dingwei.png') no-repeat;
     width: 12px;
     height: 17px;
@@ -431,25 +444,29 @@
     position: absolute;
     top: 6px;
     left: -20px;
-  }
-  .stylebox{
+  }*/
+
+  .stylebox {
     text-align: center;
     width: 800px;
     margin: 30px auto;
     overflow: hidden;
   }
-  .stylebox >ul{
+
+  .stylebox > ul {
     width: 100%;
   }
-  .stylebox >ul >li{
+
+  .stylebox > ul > li {
     display: inline-block;
     margin-right: 14px;
     margin-bottom: 10px;
   }
-  .stylebox >ul >li >div{
+
+  .stylebox > ul > li > div {
     border: 1px solid #d9d9d9;
     border-radius: 100px;
-    padding:0 25px;
+    padding: 0 25px;
   }
 
   .main {
@@ -458,11 +475,11 @@
 
   .sc {
     overflow: hidden;
-    margin:30px 0;
+    margin: 30px 0;
     text-align: center;
   }
 
-  .userinfo > .sc li{
+  .userinfo > .sc li {
     display: inline-block;
     padding: 0 25px;
     text-align: center;
@@ -476,11 +493,11 @@
 
   .worktime {
     overflow: hidden;
-    margin:30px 0;
+    margin: 30px 0;
     text-align: center;
   }
 
-  .userinfo > .worktime li{
+  .userinfo > .worktime li {
     display: inline-block;
     padding: 0 25px;
     text-align: center;
@@ -491,7 +508,6 @@
     background: #f5f5f5;
     color: #828282;
   }
-
 
   .userinfo > .more {
     width: 60px;
@@ -547,9 +563,15 @@
 
   .content > ul > li .img {
     width: 240px;
-    height: 180px;
     cursor: pointer;
     margin: 10px 10px 0;
+  }
+
+  .content > ul > li > a {
+    width: 260px;
+    overflow: hidden;
+    height: 190px;
+    display: block;
   }
 
   .content > ul > li > p {
@@ -579,7 +601,7 @@
     line-height: 42px;
   }
 
-  .content > ul > li > p  img {
+  .content > ul > li > p img {
     display: inline-block;
     width: 24px;
     border-radius: 50%;

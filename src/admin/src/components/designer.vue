@@ -279,7 +279,7 @@
   </div>
 </template>
 <script>
-  import VDistpicker from 'v-distpicker'
+  /*import VDistpicker from 'v-distpicker'*/
   import prompt from "@/components/Prompt"
 
   export default {
@@ -482,23 +482,26 @@
       }
     },
     components: {
-      VDistpicker,
-      prompt
+      /*VDistpicker,*/
+      prompt // 好看的成功提示
     },
     created() {
       this.getinfo();
     },
     mounted() {
+      // 初始化选择框样式插件
       $("input[type='checkbox']").iCheck({
         checkboxClass: 'icheckbox_square-red',
         radioClass: 'iradio_square-red',
         increaseArea: '20%' // optional
       });
+      // 初始化擅长领域点击事件
       this.categroyclick();
+      // 初始化预定义风格标签
       this.labelclick();
     },
     methods: {
-      getinfo() {
+      getinfo() { // 获取用户资料
         var that = this;
         if (login) {
           $.ajax({
@@ -550,7 +553,7 @@
               }
             },
             error(e) {
-              alert("网络拥挤，请稍后再试···");
+              hxpAlert.show("网络拥挤，请稍后再试···");
             }
           });
         } else {
@@ -559,7 +562,7 @@
           }, 1000)
         }
       },
-      getcity(va) {
+      getcity(va) { // 获取城市列表
         var that = this
         var id = 1;
         this.pro.forEach(function (item) {
@@ -577,11 +580,11 @@
               }
             }
             else {
-              alert("网络拥挤，请稍后再试。");
+              hxpAlert.show("网络拥挤，请稍后再试。");
             }
           },
           error() {
-            alert("网络拥挤，请稍后再试。");
+            hxpAlert.show("网络拥挤，请稍后再试。");
           }
         })
       },
@@ -597,7 +600,7 @@
       },
       addproject() {//添加项目经历
         if (this.project.title.trim() === "" || this.project.desc.trim() === "") {
-          alert("标题或简介不能为空！");
+          hxpAlert.show("标题或简介不能为空！");
           return;
         }
         this.worksetting.exp.push({
@@ -730,11 +733,11 @@
                   that.$router.go(0);
                 }, 1000);
               }
-              else alert("网络拥挤，请稍后再试···");
+              else hxpAlert.show("网络拥挤，请稍后再试···");
             },
             error() {
               that.flag = true;
-              alert("网络拥挤，请稍后再试···");
+              hxpAlert.show("网络拥挤，请稍后再试···");
             }
           });
         }
@@ -824,16 +827,16 @@
                   that.$router.go(0);
                 }, 1000);
               }
-              else alert("网络拥挤，请稍后再试···");
+              else hxpAlert.show("网络拥挤，请稍后再试···");
             },
             error() {
               that.flag = true;
-              alert("网络拥挤，请稍后再试···");
+              hxpAlert.show("网络拥挤，请稍后再试···");
             }
           });
         }
       },
-      uploadimg(ev) {
+      uploadimg(ev) { // 点击上传头像
         this.headimg_upload = window.URL.createObjectURL(ev.target.files[0]);
         var that = this;
         this.$nextTick(function () {
@@ -846,7 +849,7 @@
           this.modelshow = true;
         });
       },
-      chooseimg() {
+      chooseimg() { // 上传头像
         document.getElementById("headimgupload").click();
       },
       categroyclick() {//擅长领域点击事件
@@ -885,7 +888,7 @@
           },
         });
       },
-      removeproject(id, index) {
+      removeproject(id, index) { // 删除工作经历
         var that = this;//发请求删除 exp
         if (id) {
           $.ajax({
@@ -903,11 +906,11 @@
                 }, 1000);
                 that.worksetting.exp.splice(index, 1);
               } else {
-                alert("网络拥挤，请稍后再试···");
+                hxpAlert.show("网络拥挤，请稍后再试···");
               }
             },
             error() {
-              alert("网络拥挤，请稍后再试···");
+              hxpAlert.show("网络拥挤，请稍后再试···");
             }
           });
         } else {
@@ -927,11 +930,10 @@
           this.worksetting.intro = textVal;
         }
       },
-
-      showShareMethod(){
+      showShareMethod(){ // app.vue
         this.$emit("showshare");
       },
-      showDemoMethod(){
+      showDemoMethod(){ // app.vue
         this.$emit("showdemo");
       },
 

@@ -22,7 +22,7 @@
         <div class="r">{{payinfo.desc || '未填写'}}</div>
       </div>
       <div class="cell" style="justify-content: space-between">
-        <router-link :to="{name : 'projectdetail',params:{id:project_id}}" tag="div" class="l"
+        <router-link :to="{name : 'projectdetail',params:{id:demand_id}}" tag="div" class="l"
                      style="width: auto;color: #2570ff;font-size: 14px;">项目详情＞
         </router-link>
         <router-link :to="{name : 'user',query:{id:payinfo.designer_id}}" tag="div" class="r"
@@ -56,12 +56,12 @@
         payinfo: {
           money: 0
         },
-        project_id: null,
+        demand_id: null,
         cashflow: null
       }
     },
     created(){
-      this.project_id = this.$route.query.project_id
+      this.demand_id = this.$route.query.demand_id
       this.cashflow = this.$route.query.cashflow
       showload("加载中")
       var code = getQueryString("code");
@@ -77,7 +77,7 @@
     },
     methods: {
       wxlogin() {
-        location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx35c4ce958bc7eb68&redirect_uri=https%3A%2F%2Fm.houxiaopang.com%2Fdemand%2F%23%2Freceipt%3fproject_id%3d" + this.$route.query.project_id + "%26cashflow%3d" + this.$route.query.cashflow + "&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+        location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx35c4ce958bc7eb68&redirect_uri=https%3A%2F%2Fm.houxiaopang.com%2Fdemand%2F%23%2Freceipt%3fdemand_id%3d" + this.$route.query.demand_id + "%26cashflow%3d" + this.$route.query.cashflow + "&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
       },
       authenticated() {
         var that = this
@@ -87,7 +87,7 @@
           timeout: 5000,
           success(res){
             if (res.code === 0) {
-              if (!that.project_id || !that.cashflow) {
+              if (!that.demand_id || !that.cashflow) {
                 that.$router.push("/")
               } else {
                 that.getpayinfo()
@@ -115,7 +115,7 @@
           success(res){
             if (res.code === 0) {
               window.localStorage.token = res.data.token
-              location.href = "https://m.houxiaopang.com/demand/#/receipt?project_id=" + that.$route.query.project_id + "&cashflow=" + that.$route.query.cashflow;
+              location.href = "https://m.houxiaopang.com/demand/#/receipt?demand_id=" + that.$route.query.demand_id + "&cashflow=" + that.$route.query.cashflow;
             } else {
               showModal("登录失败，请重试。")
             }
@@ -144,7 +144,6 @@
         ajax({
           url: "https://www.houxiaopang.com/api/v1.1/getclientrecord",
           data: {
-            project_id: this.project_id,
             cashflow: this.cashflow
           },
           token: true,

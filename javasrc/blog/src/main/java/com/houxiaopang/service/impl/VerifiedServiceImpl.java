@@ -1,10 +1,9 @@
 package com.houxiaopang.service.impl;
 
-import com.houxiaopang.dao.DesignerMapper;
+import com.houxiaopang.dao.DesignersMapper;
 import com.houxiaopang.dao.VerifiedMapper;
 import com.houxiaopang.model.Verified;
 import com.houxiaopang.service.VerifiedService;
-import org.apache.tomcat.util.buf.UDecoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +20,7 @@ public class VerifiedServiceImpl implements VerifiedService {
     VerifiedMapper verifiedMapper;
 
     @Autowired
-    DesignerMapper designerMapper;
+    DesignersMapper designerMapper;
 
     @Override
     public int add(Verified verified) {

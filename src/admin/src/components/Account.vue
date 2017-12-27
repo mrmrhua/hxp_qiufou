@@ -8,7 +8,7 @@
       <div tag="div" class="btn" @click="tixian">提现</div>
     </div>
     <div class="trusteeship">
-      <span>猴小胖托管金额{{setMoney(walletinfo.frozen_money,1)}}元</span>
+      <span>猴小胖托管金额{{setMoney(walletinfo.frozen_money, 1)}}元</span>
       <div class="trust-pic">
         <img src="http://image.houxiaopang.com/account/img/reminder.png" alt="" style="width: 21px;height: 21px">
         <!--<span>客户已支付的项目费用将由猴小胖托管，在项目成功验收后支付给您</span>-->
@@ -85,8 +85,9 @@
         <td>{{item.remark}}</td>
         <td>{{setMoney(item.change_money)}}</td>
         <td>
-          <span>{{item.status}}</span>　<i :title="item.detail" v-show="item.detail" class="iconfontyyy"
-                                          style="vertical-align: -2px;font-size: 20px;color:#f00;cursor: pointer;">&#xe691;</i>
+          <span>{{item.status}}</span>　
+          <i :title="item.detail" v-show="item.detail" class="iconfontyyy"
+             style="vertical-align: -2px;font-size: 20px;color:#f00;cursor: pointer;">&#xe691;</i>
         </td>
       </tr>
       </tbody>
@@ -113,7 +114,7 @@
         isbind: 0,// 0 未绑定，1 显示绑定框，2已经绑定
         walletinfo: {
           money: 0,
-          frozen_money:0,
+          frozen_money: 0,
         },
         cashflow: [],
         delmodel: false,
@@ -133,6 +134,7 @@
     },
     mounted(){
       var that = this
+      //初始化滑块验证
       $("#slider").slider({
         width: 300, // width
         height: 40, // height
@@ -165,7 +167,7 @@
       },
       slider(){//发送验证码按钮点击
         if (this.tel === null || this.tel.trim() === "") {
-          alert("请填写手机号")
+          hxpAlert.show("请填写手机号")
           return
         }
 
@@ -194,7 +196,7 @@
         $("#slider").slider("restore");
       },
 
-      sendsliderapi(){
+      sendsliderapi(){ // 发送短信验证码
         var that = this
         $.ajax({
           url: "http://www.houxiaopang.com/api/v1.1/designer/verifysend",
@@ -212,18 +214,18 @@
           }
         })
       },
-      tixian(){
+      tixian(){ // 提现
         if (this.walletinfo.hasAlipay) {
-          if (parseInt(this.walletinfo.money) > 0) {
+          if (parseFloat(this.walletinfo.money) > 0) {
             this.$router.push('/account/withdraw')
           } else {
-            alert("账户余额不足。")
+            hxpAlert.show("账户余额不足。")
           }
         } else {
-          alert("您暂时没有绑定账号。")
+          hxpAlert.show("您暂时没有绑定账号。")
         }
       },
-      setMoney(value, pa){
+      setMoney(value, pa){ // 金额格式设置
         if (pa) {
           return value.toFixed(2)
         }
@@ -244,7 +246,7 @@
             }
           },
           error(){
-            alert("网络拥挤，请稍后再试。")
+            hxpAlert.show("网络拥挤，请稍后再试。")
           }
         })
       },
@@ -259,16 +261,16 @@
             }
           },
           error(){
-            alert("网络拥挤，请稍后再试。")
+            hxpAlert.show("网络拥挤，请稍后再试。")
           }
         })
       },
-      bindaccount(){
+      bindaccount(){ // 绑定支付宝
         if (this.code === null || this.code.trim === ""
           || this.name === null || this.name.trim === ""
           || this.tel === null || this.tel.trim === ""
           || this.alipay === null || this.alipay.trim === "") {
-          alert("表单需填写完整。");
+          hxpAlert.show("表单需填写完整。");
           return
         }
         if (this.subing) {
@@ -294,12 +296,12 @@
               that.walletinfo.alipay = that.alipay.trim()
               that.isbind = 2
             } else {
-              alert("验证码错误！")
+              hxpAlert.show("验证码错误！")
             }
             that.subing = false
           },
           error(){
-            alert("网络拥挤，请稍后再试！")
+            hxpAlert.show("网络拥挤，请稍后再试！")
             that.subing = false
           }
         })
@@ -488,28 +490,32 @@
     color: #348dff;
   }
 
-  .trusteeship{
+  .trusteeship {
     padding-left: 8px;
     font-size: 18px;
     color: #666666;
     display: flex;
     align-items: center;
   }
-  .trusteeship img{
+
+  .trusteeship img {
     cursor: pointer;
     margin-right: 13px;
   }
-  .trusteeship span:last-child{
+
+  .trusteeship span:last-child {
     display: none;
     font-size: 14px;
   }
-  .trust-pic{
-    margin-left:11px;
+
+  .trust-pic {
+    margin-left: 11px;
     display: flex;
     align-items: center;
     position: relative;
   }
-  .trust-pic:hover .pop-box{
+
+  .trust-pic:hover .pop-box {
     display: block;
   }
 

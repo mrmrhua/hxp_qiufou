@@ -89,26 +89,27 @@
       }
     },
     mounted(){
+        // 初始化品类选择
       this.chooseCategory();
     },
     components: {
-      pagination
+      pagination// 页码
     },
     methods: {
       /*jump(vlaue){
-        var id = vlaue.id;
-        alert(id)
-        if (vlaue.name === "project") {
-          //_czc.push(["_trackEvent", '查看作品详情', '点击', id]);
-        } else if (vlaue.name === "wechat") {
-          //_czc.push(["_trackEvent", '查看简历', '点击', id]);
-          window.open("http://houxiaopang.com/workdetail/#/user/" + id);
-        }
-      },*/
+       var id = vlaue.id;
+       alert(id)
+       if (vlaue.name === "project") {
+       //_czc.push(["_trackEvent", '查看作品详情', '点击', id]);
+       } else if (vlaue.name === "wechat") {
+       //_czc.push(["_trackEvent", '查看简历', '点击', id]);
+       window.open("http://houxiaopang.com/workdetail/#/user/" + id);
+       }
+       },*/
       pagechange: function (current) {     // 页码改变传入新的页码，此处做回调
         this.getdata(this.categroy, current);
       },
-      chooseCategory(){
+      chooseCategory(){ // 品类选择的函数
         var that = this;
         var li = document.getElementById("category").children;
         for (var i = 0, size = li.length; i < size; i++) {
@@ -129,10 +130,10 @@
           }
         }
       },
-      myfilter(value){
+      myfilter(value){ // 设置日期显示
         return getDateDiff(getDateTimeStamp(value));
       },
-      getdata(c, page){
+      getdata(c, page){ // 根据页码现在作品列表
         var that = this;
         // todo 此处添加 loading
         $.ajax({
@@ -172,7 +173,8 @@
               that.$nextTick(function () {
                 $("#imgwarp .img").lazyload({
                   effect: 'fadeIn'
-                });})
+                });
+              })
 
 
             } else {
@@ -185,7 +187,7 @@
         });
       }
     },
-    created(){
+    created(){ // 获取第一页的作品列表
       this.getdata(this.categroy, this.pageinfo.current);
     },
   }
@@ -235,9 +237,15 @@
 
   .content > ul > li .img {
     width: 240px;
-    height: 180px;
     cursor: pointer;
     margin: 10px 10px 0;
+  }
+
+  .content > ul > li > a {
+    width: 260px;
+    overflow: hidden;
+    height:190px;
+    display: block;
   }
 
   .content > ul > li > p {
@@ -272,7 +280,7 @@
     line-height: 42px;
   }
 
-  .content > ul > li > p  img {
+  .content > ul > li > p img {
     display: inline-block;
     width: 24px;
     border-radius: 50%;

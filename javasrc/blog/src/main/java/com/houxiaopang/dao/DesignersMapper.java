@@ -20,4 +20,5 @@ public interface DesignersMapper {
     int updateByPrimaryKey(Designers record);
 
     int updataVerifiedByUserId(@Param("userId") Integer userId, @Param("status") Boolean status);
+
 }

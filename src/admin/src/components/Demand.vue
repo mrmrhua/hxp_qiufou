@@ -40,7 +40,7 @@
       this.getdemandlist()
     },
     methods: {
-      choose(idx){
+      choose(idx){ // 分类查看（已完成，未完成）
         var that = this
         if (this.type[idx].selected) return;
         this.type.forEach(function (item, index) {
@@ -55,7 +55,7 @@
           }
         })
       },
-      next(id){
+      next(id){ // 进入项目详情
         this.$router.push({
           path: "/demand/demandinfo",
           query: {
@@ -63,7 +63,7 @@
           }
         })
       },
-      getdemandlist(){
+      getdemandlist(){ // 获取项目列表
         var that = this;
         $.ajax({
           url: "http://www.houxiaopang.com/api/v1.1/designer/projectlist",
@@ -81,11 +81,11 @@
               })
               that.demandlist = that.processing
             } else {
-              alert("网络拥挤，请稍后再试。")
+              hxpAlert.show("网络拥挤，请稍后再试。")
             }
           },
           error(){
-            alert("网络拥挤，请稍后再试。")
+            hxpAlert.show("网络拥挤，请稍后再试。")
           }
         })
       }

@@ -118,15 +118,12 @@
       }
     },
     methods:{
-      submitForm: function () {
-//        submit_btn
-
+      submitForm: function () { // 提交表单
         if(document.getElementById("frontFile").files.length !== 1 || document.getElementById("backFile").files.length !== 1
           || this.success.name.trim() ==='' || this.success.name === null || this.success.card.trim() ==='' || this.success.card === null){
-          alert("请将表单信息提写完整后再提交信息");
+          hxpAlert.show("请将表单信息提写完整后再提交信息");
           return ;
         }
-//        ban.style.disabled = false;
         var fd  = new FormData();
         fd.append("cardimgup",document.getElementById("frontFile").files[0])
         fd.append("cardimgdown",document.getElementById("backFile").files[0])
@@ -143,24 +140,22 @@
             token: true,
             success(res) {
               if (res.code === 0) {
-//                alert(res.data.msg)
                 that.flag = 1;
               } else {
-                alert("网络拥挤，请稍后再试。")
+                hxpAlert.show("网络拥挤，请稍后再试。")
               }
               that.ban_flag = false;
             },
             error() {
               that.ban_flag = false;
-              alert("网络拥挤，请稍后再试。")
+              hxpAlert.show("网络拥挤，请稍后再试。")
             }
           })
         }else {
-          alert("请等待表单提交")
+          hxpAlert.show("请等待表单提交")
         }
       },
-
-      appendImg: function (id) {
+      appendImg: function (id) { // 图片上传
         var file_input = document.getElementById(id).files[0];
         var url = window.URL.createObjectURL(file_input);
         if(id === 'frontFile'){
@@ -170,45 +165,12 @@
         }
 
       },
-//      show_upload_album: function () {
-//        this.modelshow = true;
-//      },
-
-/*document.getElementById("tt").onclick = function  () {
-      var fd  = new FormData();
-      fd.append("cardimgup",document.getElementById("cardimgup").files[0])
-      fd.append("cardimgdown",document.getElementById("cardimgdown").files[0])
-      fd.append("userId",12)
-      fd.append("name","墨迹")
-      fd.append("card","6321321dsa231321dsa")
-      ajax({
-        type:"file",
-        timeout:-1,
-        url:'http://127.0.0.1:9181/api/v1.2/verified/addVerified',
-        data:fd,
-        success(res){
-          if(res.code === 0){
-            alert(res.data.msg)
-          }else{
-            alert(res.data.errorMsg)
-          }
-        },
-        error(){
-          alert("网络拥挤，请稍后再试。")
-        }
-      })
-
-    }
-
-      }*/
-
-
     },
     created(){
       var that = this;
+      /*实名认证获取状态*/
       ajax({
         url: "http://www.houxiaopang.com/api/v1.2/verified/getverified",
-//        url: "http://192.168.0.101:9181/api/v1.2/verified/getverified",
         token : true,
         timeout:6000,
         success(res){
@@ -218,11 +180,11 @@
                 that.success = res.data.verified;
               }
           } else {
-            alert("网络拥挤，请稍后再试!")
+            hxpAlert.show("网络拥挤，请稍后再试!")
           }
         },
         error(){
-          alert("网络拥挤，请稍后再试！")
+          hxpAlert.show("网络拥挤，请稍后再试！")
         }
       })
     }

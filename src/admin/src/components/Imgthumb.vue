@@ -17,13 +17,13 @@
       }
     },
     created(){
-      if (this.demand) {
+      if (this.demand) { // 设置项目中的图片渲染大小
         this.width = "240px"
         this.height = "180px"
       }
     },
     methods: {
-      delconfirm: function () {
+      delconfirm: function () { // 删除图片
         this.$emit('img_url', this.index);
       }
     }

@@ -20,4 +20,6 @@ public interface AlbumsMapper {
     int updateByPrimaryKey(Albums record);
 
     int insertList(List<Albums> albums);
+
+    List<Albums> findByUserId(Integer userId);
 }

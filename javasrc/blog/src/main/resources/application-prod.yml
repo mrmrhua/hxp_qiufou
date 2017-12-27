@@ -1,2 +1,20 @@
-server:
-  port: 9181
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://182.254.128.242:5117/hxp?useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: dev
+    password: qclouding123
+    druid:
+          initial-size: 1
+          pool-prepared-statements: true
+          validation-query: SELECT 'x'
+          test-on-borrow: false
+          test-on-return: false
+          test-while-idle: true
+          time-between-eviction-runs-millis: 60000
+          min-evictable-idle-time-millis: 300000
+          filters: stat
+          max-active: 20
+          max-wait: 60000
+          min-idle: 1
+          max-pool-prepared-statement-per-connection-size: 20

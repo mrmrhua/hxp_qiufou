@@ -2,6 +2,8 @@ package com.houxiaopang.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.text.SimpleDateFormat;
 import java.util.Map;
@@ -10,10 +12,13 @@ import java.util.Map;
  * author robin on 2017/11/8.
  */
 public class JsonUtil {
+    private static final Logger logger = LoggerFactory.getLogger(JsonUtil.class);
+
     public static String successResp(Map<String, Object> o) {
         try {
             return "{\"code\":0,\"data\":" + objectFormat(o) + "}";
         } catch (JsonProcessingException e) {
+            logger.error(e.getMessage(), e);
             return "{\"code\":" + -1 + ",\"data\":{\"errorMsg:\"" + "服务器内部错误" + "\"}}";
         }
     }
@@ -22,6 +27,7 @@ public class JsonUtil {
         try {
             return "{\"code\":0,\"data\":{\"" + name + "\":" + objectFormat(value) + "}}";
         } catch (JsonProcessingException e) {
+            logger.error(e.getMessage(), e);
             return "{\"code\":" + -1 + ",\"data\":{\"errorMsg:\"" + "服务器内部错误" + "\"}}";
         }
     }

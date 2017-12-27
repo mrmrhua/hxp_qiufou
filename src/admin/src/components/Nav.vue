@@ -69,6 +69,7 @@
       }
     },
     methods: {
+        // 退出登录
       exit(){
         $.ajax({
           type: "post",
@@ -84,13 +85,15 @@
         location.href = "http://houxiaopang.com";
 
       },
+      // 跳转到个人简历页
       jump(){
         open("http://houxiaopang.com/workdetail/#/user/" + this.userid);
       },
-      showoptionMethod(){
+
+      showoptionMethod(){ // app.vue
         this.$emit("showoption");
       },
-      shownoticeMethod(){
+      shownoticeMethod(){ // app.vue
         this.$emit("shownotice");
         this.$nextTick(function () {
           if (this.noticenum > 0) {
@@ -112,7 +115,7 @@
 
         });
       },
-      settime(value){
+      settime(value){ // 设置时间格式
         return getDateDiff(getDateTimeStamp(value));
       },
       getMsg(){
@@ -133,7 +136,7 @@
           },
         });
       },
-      getnoticenum(){
+      getnoticenum(){ //获取未读的通知数
         var that = this;
         $.ajax({
           url: 'http://www.houxiaopang.com/api/v1.1/designerdash/notice/unreadnum',
@@ -151,6 +154,7 @@
       },
     },
     created(){
+        // 创建时进行登录/登录验证
       var that = this;
       if (token) {//token存在，验证token是否过期
         $.ajax({
@@ -160,12 +164,12 @@
           success(data){
             if (data.code === 0) {
               window.localStorage.applystatus = data.data.applystatus;
-              if (data.data.applystatus !== 2) {
+              if (data.data.applystatus !== 2) { // 状态码不对，未完成入驻。跳转到入驻页
                 location.href = 'http://www.houxiaopang.com/apply'
                 return
               }
-              login = true;
-              $.ajax({
+              login = true; // 设置登录
+              $.ajax({ // 获取用户基本信息
                 url: 'http://www.houxiaopang.com/api/v1.1/designerdash/header',
                 type: "GET",
                 headers: {"Authorization": "Token " + token},

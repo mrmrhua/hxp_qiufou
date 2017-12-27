@@ -1,6 +1,6 @@
 <template>
   <div class="c_warp">
-    <div class="c_desc">
+    <div v-show="desc&&desc.trim() !=''" class="c_desc">
       <div style="font-size: 16px;">设计师备注：</div>
       <div style="font-size: 12px;margin-top: 5px;" v-html="setDesc(desc)"></div>
     </div>
@@ -16,7 +16,7 @@
     data(){
       return {
         imglist: [],
-        desc: ""
+        desc: null
       }
     },
     created(){
@@ -25,14 +25,14 @@
         this.$router.push("/")
         return
       }
+      this.desc = window.localStorage.postdesc
       this.getinfo(id)
-      hideload();
     },
     methods: {
       getinfo(id){
         var that = this;
         ajax({
-          url: "http://www.houxiaopang.com/api/v1.2/circle/getprojectworks",
+          url: "https://www.houxiaopang.com/api/v1.2/circle/getprojectworks",
           data: {
             id: id
           },
@@ -42,15 +42,17 @@
             } else {
               showModal("网络拥挤，请稍后再试。")
             }
+            hideload();
           },
           error(){
             showModal("网络拥挤，请稍后再试。")
+            hideload();
           }
         })
       },
       next(id, src){
         this.$router.push({
-          path: "annotation",
+          path: "/workproject/annotation",
           query: {
             id: id,
             src: src
@@ -58,7 +60,14 @@
         })
       },
       setDesc(value){
-        return value.replace(/\r\n/g, "<br>").replace(/\n/g, "<br>")
+        if (value) {
+          if (value.trim() === "") {
+            return "未填写"
+          }
+          return value.replace(/\r\n/g, "<br>").replace(/\n/g, "<br>")
+        } else {
+          return "未填写"
+        }
       },
     }
 
@@ -90,5 +99,6 @@
     height: 120px;
     margin-bottom: 10px;
     justify-content: center;
+    border: 1px solid #dedede;
   }
 </style>

@@ -45,7 +45,9 @@
 </template>
 
 <script>
-
+  /*
+  * 显示禁用右键
+  * */
   function ban() {
     document.body.onmouseup = function(e){     //在body里点击触发事件
       var res = document.getElementById('banbox');      //找到id为box的div
@@ -102,7 +104,7 @@
        window.open("http://houxiaopang.com/workdetail/#/user/" + this.projectinfo.belong_id);
        },*/
 
-      getingf(id){
+      getingf(id){ // 获取作品详情
         var that = this;
         $.ajax({
           type: "GET",

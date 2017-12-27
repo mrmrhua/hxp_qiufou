@@ -1,7 +1,20 @@
-server:
-  port: 443
-  ssl:
-    key-store: classpath:keystore.p12
-    key-store-password: 123456
-    keyStoreType: PKCS12
-    keyAlias: tomcat
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://mysql.rdsmbhsvs1vn5cx.rds.gz.baidubce.com/hxp?useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: dyh
+    password: baiduding123
+    druid:
+      initial-size: 1
+      pool-prepared-statements: true
+      validation-query: SELECT 'x'
+      test-on-borrow: false
+      test-on-return: false
+      test-while-idle: true
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      filters: stat
+      max-active: 20
+      max-wait: 60000
+      min-idle: 1
+      max-pool-prepared-statement-per-connection-size: 20

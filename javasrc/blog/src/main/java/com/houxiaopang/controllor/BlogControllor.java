@@ -28,8 +28,6 @@ public class BlogControllor {
     CaseService caseService;
 
 
-
-
     @GetMapping("/404")
     String notfond() {
         return "404";
@@ -55,6 +53,9 @@ public class BlogControllor {
         return mav;
     }
 
+    /**
+     * @return 案例中心首页
+     */
     @GetMapping("")
     ModelAndView home() {
         return introduce("1", "12");
@@ -134,11 +135,7 @@ public class BlogControllor {
             return JsonUtil.errorResp(-1, "参数错误。");
         }
         cases.setDate(new Date());
-        try {
-            caseService.insert(cases);
-        } catch (Exception e) {
-            return JsonUtil.errorResp(-1, "数据库错误。");
-        }
+        caseService.insert(cases);
         return JsonUtil.successResp("msg", "成功。");
     }
 
@@ -152,11 +149,7 @@ public class BlogControllor {
             return JsonUtil.errorResp(-1, "参数错误。");
         }
         design.setDate(new Date());
-        try {
-            designService.insert(design);
-        } catch (Exception e) {
-            return JsonUtil.errorResp(-1, "数据库错误。");
-        }
+        designService.insert(design);
         return JsonUtil.successResp("msg", "成功。");
     }
 

@@ -12,6 +12,8 @@ import com.houxiaopang.service.DemandService;
 import com.houxiaopang.service.UserService;
 import com.houxiaopang.util.HttpUtil;
 import com.houxiaopang.util.JsonUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,7 +33,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v1.2/bargain")
 public class BargainControllor {
-
+    private static final Logger logger = LoggerFactory.getLogger(BargainControllor.class);
     @Autowired
     BargainTableService bargainTableService;
 
@@ -117,9 +119,9 @@ public class BargainControllor {
             if (resultUser == null) {
                 userService.addUser(user);
             }
-            System.out.println(user.getUid());
             return JsonUtil.successResp("msg", user.getUid());
         } catch (IOException e) {
+            logger.error(e.getMessage(), e);
             return JsonUtil.errorResp(-1, "登录失败。");
         }
     }
@@ -145,7 +147,7 @@ public class BargainControllor {
         User user = userService.getUserByUid(token);
         Demand d = new Demand();
         d.setDemandId(demandId);
-        if (bargainService.isBargained(user.getId(),demandId)) {
+        if (bargainService.isBargained(user.getId(), demandId)) {
             return JsonUtil.errorResp(-2, "msg", "该用户已经砍过价。");
         }
         Demand demand = demandService.getDeamndByDemandId(demandId);
@@ -158,11 +160,7 @@ public class BargainControllor {
         } else {
             return JsonUtil.errorResp(-2, "已砍到目标价。");
         }
-        try {
-            bargainService.addBargain(new Bargain(demandId, user.getId(), new Date(), money), d);
-        } catch (Exception e) {
-            return JsonUtil.errorResp(-1, "存储失败。");
-        }
+        bargainService.addBargain(new Bargain(demandId, user.getId(), new Date(), money), d);
         return JsonUtil.successResp("money", money + "");
     }
 
@@ -175,11 +173,7 @@ public class BargainControllor {
             return JsonUtil.errorResp(-1, "参数错误。");
         }
         demand.setEndMoney(demand.getStartMoney());
-        try {
-            demandService.addDemand(demand);
-        } catch (Exception e) {
-            return JsonUtil.errorResp(-1, "数据库错误。");
-        }
+        demandService.addDemand(demand);
         return JsonUtil.successResp("msg", "成功");
     }
 

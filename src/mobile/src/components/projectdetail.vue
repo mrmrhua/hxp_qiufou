@@ -6,7 +6,7 @@
       <div class="workcontent">
         <div
           style="padding-bottom:10px;border-bottom:1px solid #dedede;color: #262626;font-size: 1.2rem;line-height: 1.8rem;margin-bottom: 1rem;overflow-wrap: break-word"
-          v-html="info.description+'都很少看见啊哈的空间撒谎都快就撒谎就肯定撒电话手机卡号的空间撒谎框架的哈萨克几号的空间撒都很少看见啊哈的看接受到'"></div>
+          v-html="info.description"></div>
         <p style="margin-top: 10px;"><span class="left">工期:</span><span v-html="info.howlong"></span></p>
         <p style="margin: 10px 0;"><span class="left">预算:</span><span v-html="info.howmuch"></span></p>
       </div>

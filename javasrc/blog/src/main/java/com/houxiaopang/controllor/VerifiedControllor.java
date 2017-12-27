@@ -1,12 +1,12 @@
 package com.houxiaopang.controllor;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.houxiaopang.model.Notices;
 import com.houxiaopang.model.Verified;
 import com.houxiaopang.pojo.AlbumEnum;
 import com.houxiaopang.pojo.Rule;
 import com.houxiaopang.service.AlbumsService;
 import com.houxiaopang.service.AsyncTask;
+import com.houxiaopang.service.NoticeService;
 import com.houxiaopang.service.VerifiedService;
 import com.houxiaopang.util.*;
 import org.dom4j.DocumentException;
@@ -33,13 +33,15 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v1.2/verified")
 public class VerifiedControllor {
-    private static final Logger logger = LoggerFactory.getLogger(BlogControllor.class);
+    private static final Logger logger = LoggerFactory.getLogger(VerifiedControllor.class);
     @Autowired
     VerifiedService verifiedService;
     @Autowired
     AlbumsService albumsService;
     @Autowired
     AsyncTask asyncTask;
+    @Autowired
+    NoticeService noticeService;
 
 
     /**
@@ -52,7 +54,7 @@ public class VerifiedControllor {
     String selectVerified(HttpServletRequest request) {
         Integer userId;
         try {
-            userId = getUserId(request);
+            userId = HttpUtil.getUserId(request);
         } catch (Exception e) {
             return JsonUtil.errorResp(-1, "未登录或网络拥挤。");
         }
@@ -81,7 +83,7 @@ public class VerifiedControllor {
     String addVerified(HttpServletRequest request, Verified verified, @RequestParam("cardimgup") MultipartFile file1, @RequestParam("cardimgdown") MultipartFile file2) {
         Integer userId;
         try {
-            userId = getUserId(request);
+            userId = HttpUtil.getUserId(request);
         } catch (Exception e) {
             return JsonUtil.errorResp(-1, "未登录或网络拥挤。");
         }
@@ -96,6 +98,7 @@ public class VerifiedControllor {
             File file1ex = new File(file1name);
             if (!file1ex.getParentFile().exists()) {
                 if (!file1ex.getParentFile().mkdirs()) {
+                    logger.error("实名认证，上传时，无法创建文件夹");
                     return JsonUtil.errorResp(-1, "上传失败。");
                 }
             }
@@ -109,6 +112,7 @@ public class VerifiedControllor {
             File file2ex = new File(file2name);
             if (!file2ex.getParentFile().exists()) {
                 if (!file2ex.getParentFile().mkdirs()) {
+                    logger.error("实名认证，上传时，无法创建文件夹");
                     return JsonUtil.errorResp(-1, "上传失败。");
                 }
             }
@@ -119,6 +123,7 @@ public class VerifiedControllor {
             out.flush();
             out.close();
         } catch (IOException e) {
+            logger.error(e.getMessage(), e);
             return JsonUtil.errorResp(-1, "上传失败。");
         }
         Verified resultVer = verifiedService.selectByUserId(verified.getUserId());
@@ -127,6 +132,7 @@ public class VerifiedControllor {
         } else {
             verifiedService.updataAllByUserId(verified);
         }
+        SendEmail.send(null, "实名认证审核通知", "用户：" + userId + "，提交实名认证申请。请尽快审核！");
         return JsonUtil.successResp("msg", "ok");
     }
 
@@ -147,11 +153,12 @@ public class VerifiedControllor {
             return JsonUtil.errorResp(-1, "权限不足。");
         }
         List<Verified> verifies = verifiedService.getAllByStatus();
-        for (Verified verified : verifies) { //todo 此处以后要修改
+        for (Verified verified : verifies) { //todo 此处以后要优化，数据量大的话，io压力大，响应时间太长。
             try {
                 verified.setCardImgUp(ImgUtil.getImgBase64(verified.getCardImgUp()));
                 verified.setCardImgDowm(ImgUtil.getImgBase64(verified.getCardImgDowm()));
             } catch (Exception e) {
+                logger.error(e.getMessage(), e);
                 return JsonUtil.errorResp(-1, "读取失败。");
             }
         }
@@ -179,37 +186,48 @@ public class VerifiedControllor {
         if (StringUtli.isEmpty(userId)) return JsonUtil.errorResp(-1, "参数错误。");
         int userid = Integer.parseInt(userId);
         int statu = Integer.parseInt(status);
+        verifiedService.updataStatusByUserId(userid, statu);
         try {
-            verifiedService.updataStatusByUserId(userid, statu);
+            // 实名认证结果通知
+            Notices notices = new Notices();
+            notices.setTitle("实名认证结果通知");
+            if (statu == 2) {
+                notices.setContent("<p>您提交的实名认证审核已通过。<p>");
+            } else {
+                notices.setContent("<p>您提交的实名认证审核未通过。<p>");
+            }
+            notices.setUpTime(new Date());
+            noticeService.add(notices, userid);
         } catch (Exception e) {
-            return JsonUtil.errorResp(-1, "数据库操作失败。");
+            logger.error("用户：" + userId + "实名认证发送通知报错：" + e.getMessage(), e);
         }
         return JsonUtil.successResp("msg", "ok");
     }
 
-    Integer getUserId(HttpServletRequest request) {
-        String token;
+    /*@GetMapping("/test")
+    String insert(String url, Integer userId) {
+        Map<String, Rule> map;
         try {
-            token = request.getHeader("Authorization").split(" ")[1];
-        } catch (Exception e) {
-            throw new RuntimeException("未登录");
+            map = DomParser.readConfig();
+        } catch (DocumentException e) {
+            logger.error(e.getMessage(), e);
+            return JsonUtil.errorResp(-1, "网络拥挤。请稍后再试。");
         }
-        try {
-            String response = HttpUtil.getResponse("http://www.houxiaopang.com/api/v1.1/designerdash/header", null, token);
-            ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode jsonNode = objectMapper.readTree(response);
-            int status = jsonNode.get("code").asInt();
-            if (status == 0) {
-                JsonNode data = jsonNode.get("data");
-                return data.get("userid").asInt();
-            } else {
-                throw new RuntimeException("未登录");
+        boolean flag = false;
+        for (AlbumEnum a : AlbumEnum.values()) {
+            if (url.contains(a.getName())) {
+                logger.info("用户:" + userId + "，开始爬取，站酷地址：" + url);
+                //启动爬虫线程
+                asyncTask.executeAsyncTask(url, map.get(a.getName()), userId);
+                flag = true;
             }
-        } catch (IOException e) {
-            throw new RuntimeException("未登录或服务器错误。");
         }
-    }
-
+        if (flag) {
+            return JsonUtil.successResp("msg", "导入中。");
+        } else {
+            return JsonUtil.errorResp(-2, "暂不支持此网站。");
+        }
+    }*/
 
     /**
      * 作品导入
@@ -229,7 +247,7 @@ public class VerifiedControllor {
         }
         Integer userId;
         try {
-            userId = getUserId(request);
+            userId = HttpUtil.getUserId(request);
         } catch (Exception e) {
             return JsonUtil.errorResp(-1, "未登录或网络拥挤。");
         }
@@ -237,7 +255,7 @@ public class VerifiedControllor {
         try {
             map = DomParser.readConfig();
         } catch (DocumentException e) {
-            logger.error("爬虫配置文件解析出错。" + e.getMessage());
+            logger.error(e.getMessage(), e);
             return JsonUtil.errorResp(-1, "网络拥挤。请稍后再试。");
         }
         boolean flag = false;

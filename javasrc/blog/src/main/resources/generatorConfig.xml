@@ -48,8 +48,8 @@
         </javaClientGenerator>
 
         <!-- 配置表信息 -->
-        <table schema="hxp" tableName="designers"
-               domainObjectName="Designers" enableCountByExample="false"
+        <table schema="hxp" tableName="subscribtion"
+               domainObjectName="Subscribtion" enableCountByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                enableUpdateByExample="false">
             <!-- schema即为数据库名 tableName为对应的数据库表 domainObjectName是要生成的实体类 enable*ByExample

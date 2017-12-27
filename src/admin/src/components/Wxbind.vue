@@ -24,10 +24,20 @@
       }
     },
     created(){
-      this.isBind()
+      this.init();
     },
     methods: {
-      isBind(){
+      init(){
+        if (login) {
+          this.isBind()
+        } else {
+          var that = this;
+          setTimeout(function () {
+            that.init()
+          }, 1000)
+        }
+      },
+      isBind(){ //  获取服务号绑定状态
         var that = this
         $.ajax({
           url: "http://www.houxiaopang.com/api/v1.1/isbind",
@@ -36,15 +46,15 @@
             if (res.code === 0) {
               that.isbind = res.data.isbind
             } else {
-              alert("网络拥挤，请稍后再试。")
+              hxpAlert.show("网络拥挤，请稍后再试。")
             }
           },
           error(){
-            alert("网络拥挤，请稍后再试。")
+            hxpAlert.show("网络拥挤，请稍后再试。")
           }
         })
       },
-      delBind(){
+      delBind(){ // 解绑服务号
         var that = this
         $.ajax({
           url: "http://www.houxiaopang.com/api/v1.1/delbind",
@@ -54,11 +64,11 @@
             if (res.code === 0) {
               that.isbind = false
             } else {
-              alert("网络拥挤，请稍后再试。")
+              hxpAlert.show("网络拥挤，请稍后再试。")
             }
           },
           error(){
-            alert("网络拥挤，请稍后再试。")
+            hxpAlert.show("网络拥挤，请稍后再试。")
           }
         })
       }
