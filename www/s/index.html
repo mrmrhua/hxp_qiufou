@@ -122,14 +122,14 @@
     }
     var code = gethashcode();
     var qrcode = document.getElementById("wxqrcode")
-    qrcode.src = "https://m.houxiaopang.com/api/v1.1/system_login?code=" + code
+    qrcode.src = "https://m.houxiaopang.com/wxapi/v1.1/system_login?code=" + code
 	qrcode.onload =  function(){
 		 document.getElementById("logo").style.display = 'block';
 	}
     setInterval(polling, 5000)
     function polling() {
         $.ajax({
-            url: "https://m.houxiaopang.com/api/v1.1/polling",
+            url: "https://m.houxiaopang.com/wxapi/v1.1/polling",
             data: {
                 'code': code
             },
